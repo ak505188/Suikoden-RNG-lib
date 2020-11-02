@@ -1,4 +1,4 @@
-import { div32ulo } from './lib';
+import { div32ulo } from './lib.js';
 
 export default class EnemyGroup {
   constructor(name, enemies) {

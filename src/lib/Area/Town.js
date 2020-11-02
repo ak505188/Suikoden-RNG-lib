@@ -1,4 +1,4 @@
-import Area from './Area';
+import Area from './Area.js';
 
 export default class Town extends Area {
   constructor(name, enemies, encounterTable) {

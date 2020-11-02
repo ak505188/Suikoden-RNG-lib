@@ -1,4 +1,4 @@
-import { mult32ulo } from './lib';
+import { mult32ulo } from './lib.js';
 
 export default class RNG {
   // rng used to determine next rng

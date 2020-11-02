@@ -1,5 +1,5 @@
-import createFight from '../Fight';
-import { div32ulo } from '../lib';
+import createFight from '../Fight.js';
+import { div32ulo } from '../lib.js';
 
 export default class Area {
   constructor(name, enemies, encounterTable, encounterRate, areaType) {

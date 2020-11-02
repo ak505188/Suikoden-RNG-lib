@@ -1,4 +1,5 @@
-import enemies from './enemies';
+import { enemies } from './enemies.js';
+import AreaFactory from './Area/AreaFactory.js';
 
 export function numToHexString(num) {
   return '0x' + `0000000${num.toString(16)}`.substr(-8);

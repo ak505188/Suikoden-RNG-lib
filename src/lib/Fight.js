@@ -1,4 +1,4 @@
-import { div32ulo } from './lib';
+import { div32ulo } from './lib.js';
 
 function isRun(r2) {
   let r3 = 100;

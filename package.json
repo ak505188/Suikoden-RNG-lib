@@ -3,5 +3,6 @@
   "homepage": "https://ak505188.github.io/Suikoden-RNG-Tool",
   "version": "0.1.0",
   "private": false,
-  "dependencies": {},
+  "type": "module",
+  "dependencies": {}
 }

@@ -1,5 +1,3 @@
-import RNG from './rng.js';
-
 const possibleCursors = [
   117,
   118,
@@ -41,7 +39,7 @@ const possibleCursors = [
   203
 ]
 
-const possibleR18s = [
+export const possibleR18s = [
   { r18: -14, cursor: 158 },
   { r18: -11, cursor: 155 },
   { r18: -8,  cursor: 152 },
@@ -63,7 +61,7 @@ const possibleR18s = [
   { r18: 27,  cursor: 117 },
 ]
 
-function isTripleWin(cursor, rng2, rngModifier = 0) {
+export function isTripleWin(cursor, rng2, rngModifier = 0) {
   let r18;
   if (cursor < 160) {
     r18 = 144 - cursor;
@@ -90,7 +88,7 @@ function isTripleWin(cursor, rng2, rngModifier = 0) {
 }
 
 // Triple Lose
-function isTripleLose(cursor, rng2, rngModifier = 0) {
+export function isTripleLose(cursor, rng2, rngModifier = 0) {
   let r18;
   if (cursor < 160) {
     r18 = 144 - cursor;
@@ -112,7 +110,7 @@ function isTripleLose(cursor, rng2, rngModifier = 0) {
   return r2 > r5;
 }
 
-function isDoubleWin(cursor, rng2, rngModifier = 0) {
+export function isDoubleWin(cursor, rng2, rngModifier = 0) {
   let r18;
   if (cursor < 160) {
     r18 = 144 - cursor;
@@ -131,7 +129,7 @@ function isDoubleWin(cursor, rng2, rngModifier = 0) {
   return r2 > r5;
 }
 
-function isDoubleLose(cursor, rng2, rngModifier = 0) {
+export function isDoubleLose(cursor, rng2, rngModifier = 0) {
   let r18;
   if (cursor < 160) {
     r18 = 144 - cursor;
@@ -150,7 +148,7 @@ function isDoubleLose(cursor, rng2, rngModifier = 0) {
   return r2 > r5;
 }
 
-function isPiss(cursor, rng2, rngModifier = 0) {
+export function isPiss(cursor, rng2, rngModifier = 0) {
   let r18;
   if (cursor < 160) {
     r18 = 144 - cursor;
@@ -174,7 +172,7 @@ function isPiss(cursor, rng2, rngModifier = 0) {
   return true;
 }
 
-function simulateRoll(cursor, rng, rngModifier = 0;) {
+export function simulateRoll(cursor, rng, rngModifier = 0) {
   rng.next();
   if (isTripleWin(cursor, rng.getRNG2(), rngModifier)) {
     rng.next();
@@ -201,7 +199,7 @@ function simulateRoll(cursor, rng, rngModifier = 0;) {
   return getStandardRollFull(rng, rngModifier);
 }
 
-function getStandardRollFull(rng, rngModifier = 0) {
+export function getStandardRollFull(rng, rngModifier = 0) {
   let counter = 0;
   let rolls = [];
   const changeCounter = count => counter = count;
@@ -216,7 +214,7 @@ function getStandardRollFull(rng, rngModifier = 0) {
   return rolls.join('');
 }
 
-function getStandardRollDie(rng, rngModifier = 0, canBeOne = true) {
+export function getStandardRollDie(rng, rngModifier = 0, canBeOne = true) {
   let counter = 0;
   const changeCounter = count => counter = count;
   let roll = null;
@@ -230,7 +228,7 @@ function getStandardRollDie(rng, rngModifier = 0, canBeOne = true) {
   return roll + 1;
 }
 
-function getStandardRoll(rng2, counter, changeCounter, rngModifier = 0) {
+export function getStandardRoll(rng2, counter, changeCounter, rngModifier = 0) {
   const r2 = (rng2 + rngModifier) % 100;
   counter = (counter + r2) & 0xff;
   changeCounter(counter);
@@ -239,16 +237,3 @@ function getStandardRoll(rng2, counter, changeCounter, rngModifier = 0) {
   }
   return null;
 }
-
-console.log('rng,' + possibleR18s.map(r18 => r18.r18).join());
-const rng = new RNG(0xd978f69d);
-for (let i = 0; i < 3600; i++) {
-  let str = `0x${rng.getRNG().toString(16)},`
-  for (const r18 of possibleR18s) {
-    const rngClone = new RNG(rng.rng);
-    str += simulateRoll(r18.cursor, rngClone) + ',';
-  }
-  console.log(str);
-  rng.next();
-}
-

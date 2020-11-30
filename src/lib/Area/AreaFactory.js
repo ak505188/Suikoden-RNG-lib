@@ -2,6 +2,7 @@ import EnemyGroup from '../EnemyGroup.js';
 import Dungeon from './Dungeon.js';
 import Town from './Town.js';
 import WorldMap from './WorldMap.js';
+import enemyImages from '../../assets/enemyImages.js';
 
 export default class AreaFactory {
   createArea(name, area) {
@@ -35,6 +36,7 @@ export default class AreaFactory {
       for (let k = 0; k < parseInt(encounter[j], 10); k++) {
         const enemy = enemies[encounter[j + 1]];
         enemy.name = name;
+        enemy.img = enemyImages[name];
         enemyGroup.push(enemies[encounter[j + 1]]);
       }
     }

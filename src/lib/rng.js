@@ -1,4 +1,4 @@
-import { mult32ulo } from './lib.js';
+import { div32ulo, mult32ulo } from './lib.js';
 
 export default class RNG {
   // rng used to determine next rng
@@ -31,6 +31,19 @@ export default class RNG {
     this.rng   = this.originalRNG;
     this.rng2  = this.calcRNG2(this.rng);
     this.count = 0;
+  }
+
+  isCliveAppearance() {
+    const a = div32ulo(0x7fff, 3);
+    const b = div32ulo(this.getRNG2(), a);
+    return b === 0;
+  }
+
+
+  isMarieAntonioDialogue() {
+    const a = div32ulo(0x7fff, 9);
+    const b = div32ulo(this.getRNG2(), a);
+    return b === 0;
   }
 
   // Returns the next set of RNG values

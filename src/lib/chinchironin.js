@@ -1,4 +1,4 @@
-const possibleCursors = [
+export const possibleCursors = [
   117,
   118,
   119,

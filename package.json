@@ -1,6 +1,6 @@
 {
-  "name": "suikoden-rng-tool",
-  "homepage": "https://ak505188.github.io/Suikoden-RNG-Tool",
+  "name": "suikoden-rng-lib",
+  "homepage": "https://ak505188.github.io/Suikoden-RNG-lib",
   "version": "0.1.0",
   "private": false,
   "type": "module",

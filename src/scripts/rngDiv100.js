@@ -1,6 +1,6 @@
-import RNG from './lib/rng.js';
+import RNG from '../lib/rng.js';
 
-const rng = new RNG(0x12);
+const rng = new RNG(0x43);
 
 for (let i = 0; i < 20000; i++) {
   const result = rng.getRNG2() % 100;

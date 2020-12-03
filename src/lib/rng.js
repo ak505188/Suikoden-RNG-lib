@@ -39,7 +39,6 @@ export default class RNG {
     return b === 0;
   }
 
-
   isMarieAntonioDialogue() {
     const a = div32ulo(0x7fff, 9);
     const b = div32ulo(this.getRNG2(), a);
@@ -57,6 +56,24 @@ export default class RNG {
       rng2 = this.calcRNG2(rng);
     }
     return { rng, rng2 };
+  }
+
+  static isRun(rng2) {
+    let r3 = 100;
+    r3 = rng2 % r3;
+    return r3 > 50 ? true : false;
+  }
+
+  static getWheelAttempts(rng) {
+    let counter = 0;
+    const success = pos => {
+      return pos >= 0x7f && pos <= 0xa0;
+    };
+    do {
+      counter++;
+      rng.next();
+    } while (!success(div32ulo(rng.getRNG2(), 0x5a)));
+    return --counter;
   }
 
   // Advances the RNG internally

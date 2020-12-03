@@ -60,11 +60,11 @@ export default class RNG {
   }
 
   // Advances the RNG internally
-  next() {
-    const next = this.getNext();
+  next(iterations = 1) {
+    const next = this.getNext(iterations);
     this.rng   = next.rng;
     this.rng2  = next.rng2;
-    this.count++;
+    this.count += iterations;
     return this;
   }
 

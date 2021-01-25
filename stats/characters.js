@@ -4,624 +4,624 @@ export const Characters = {
     SKL: 7,
     DEF: 5,
     SPD: 7,
-    MAG: 6,
-    LCK: 6
+    MGC: 6,
+    LUK: 6
   },
   'Alen': {
     PWR: 6,
     SKL: 3,
     DEF: 5,
     SPD: 4,
-    MAG: 5,
-    LCK: 4
+    MGC: 5,
+    LUK: 4
   },
   'Anji': {
     PWR: 6,
     SKL: 5,
     DEF: 3,
     SPD: 5,
-    MAG: 2,
-    LCK: 2
+    MGC: 2,
+    LUK: 2
   },
   'Antonio': {
     PWR: 3,
     SKL: 3,
     DEF: 3,
     SPD: 4,
-    MAG: 1,
-    LCK: 3
+    MGC: 1,
+    LUK: 3
   },
   'Blackman': {
     PWR: 5,
     SKL: 3,
     DEF: 6,
     SPD: 3,
-    MAG: 1,
-    LCK: 3
+    MGC: 1,
+    LUK: 3
   },
   'Camille': {
     PWR: 5,
     SKL: 8,
     DEF: 4,
     SPD: 5,
-    MAG: 5,
-    LCK: 3
+    MGC: 5,
+    LUK: 3
   },
   'Cleo': {
     PWR: 5,
     SKL: 6,
     DEF: 5,
     SPD: 6,
-    MAG: 6,
-    LCK: 2
+    MGC: 6,
+    LUK: 2
   },
   'Clive': {
     PWR: 6,
     SKL: 8,
     DEF: 3,
     SPD: 6,
-    MAG: 2,
-    LCK: 1
+    MGC: 2,
+    LUK: 1
   },
   'Crowley': {
     PWR: 2,
     SKL: 3,
     DEF: 1,
     SPD: 5,
-    MAG: 8,
-    LCK: 3
+    MGC: 8,
+    LUK: 3
   },
   'Eikei': {
     PWR: 5,
     SKL: 4,
     DEF: 5,
     SPD: 2,
-    MAG: 0,
-    LCK: 3
+    MGC: 0,
+    LUK: 3
   },
   'Eileen': {
     PWR: 2,
     SKL: 4,
     DEF: 2,
     SPD: 6,
-    MAG: 7,
-    LCK: 5
+    MGC: 7,
+    LUK: 5
   },
   'Flik': {
     PWR: 6,
     SKL: 6,
     DEF: 4,
     SPD: 6,
-    MAG: 5,
-    LCK: 4
+    MGC: 5,
+    LUK: 4
   },
   'Fu Su Lu': {
     PWR: 8,
     SKL: 1,
     DEF: 6,
     SPD: 1,
-    MAG: 0,
-    LCK: 1
+    MGC: 0,
+    LUK: 1
   },
   'Fukien': {
     PWR: 2,
     SKL: 3,
     DEF: 4,
     SPD: 4,
-    MAG: 6,
-    LCK: 5
+    MGC: 6,
+    LUK: 5
   },
   'Fuma': {
     PWR: 5,
     SKL: 5,
     DEF: 5,
     SPD: 6,
-    MAG: 1,
-    LCK: 3
+    MGC: 1,
+    LUK: 3
   },
   'Futch': {
     PWR: 5,
     SKL: 4,
     DEF: 5,
     SPD: 6,
-    MAG: 2,
-    LCK: 6
+    MGC: 2,
+    LUK: 6
   },
   'Gen': {
     PWR: 6,
     SKL: 5,
     DEF: 4,
     SPD: 4,
-    MAG: 2,
-    LCK: 4
+    MGC: 2,
+    LUK: 4
   },
   'Gon': {
     PWR: 4,
     SKL: 4,
     DEF: 5,
     SPD: 3,
-    MAG: 2,
-    LCK: 8
+    MGC: 2,
+    LUK: 8
   },
   'Gremio': {
     PWR: 13,
     SKL: 5,
     DEF: 6,
     SPD: 3,
-    MAG: 2,
-    LCK: 5
+    MGC: 2,
+    LUK: 5
   },
   'Grenseal': {
     PWR: 5,
     SKL: 4,
     DEF: 5,
     SPD: 5,
-    MAG: 6,
-    LCK: 3
+    MGC: 6,
+    LUK: 3
   },
   'Griffith': {
     PWR: 5,
     SKL: 3,
     DEF: 4,
     SPD: 3,
-    MAG: 2,
-    LCK: 3
+    MGC: 2,
+    LUK: 3
   },
   'Hellion': {
     PWR: 1,
     SKL: 1,
     DEF: 3,
     SPD: 3,
-    MAG: 7,
-    LCK: 4
+    MGC: 7,
+    LUK: 4
   },
   'Hix': {
     PWR: 5,
     SKL: 5,
     DEF: 4,
     SPD: 5,
-    MAG: 3,
-    LCK: 7
+    MGC: 3,
+    LUK: 7
   },
   'Humphrey': {
     PWR: 6,
     SKL: 3,
     DEF: 7,
     SPD: 2,
-    MAG: 1,
-    LCK: 3
+    MGC: 1,
+    LUK: 3
   },
   'Juppo': {
     PWR: 3,
     SKL: 7,
     DEF: 4,
     SPD: 4,
-    MAG: 4,
-    LCK: 6
+    MGC: 4,
+    LUK: 6
   },
   'Kage': {
     PWR: 4,
     SKL: 6,
     DEF: 5,
     SPD: 7,
-    MAG: 3,
-    LCK: 3
+    MGC: 3,
+    LUK: 3
   },
   'Kai': {
     PWR: 6,
     SKL: 3,
     DEF: 4,
     SPD: 2,
-    MAG: 1,
-    LCK: 3
+    MGC: 1,
+    LUK: 3
   },
   'Kamandol': {
     PWR: 4,
     SKL: 7,
     DEF: 2,
     SPD: 3,
-    MAG: 3,
-    LCK: 2
+    MGC: 3,
+    LUK: 2
   },
   'Kanak': {
     PWR: 5,
     SKL: 5,
     DEF: 4,
     SPD: 6,
-    MAG: 0,
-    LCK: 2
+    MGC: 0,
+    LUK: 2
   },
   'Kasim': {
     PWR: 7,
     SKL: 4,
     DEF: 6,
     SPD: 3,
-    MAG: 1,
-    LCK: 2
+    MGC: 1,
+    LUK: 2
   },
   'Kasumi': {
     PWR: 5,
     SKL: 6,
     DEF: 4,
     SPD: 8,
-    MAG: 4,
-    LCK: 3
+    MGC: 4,
+    LUK: 3
   },
   'Kessler': {
     PWR: 5,
     SKL: 5,
     DEF: 4,
     SPD: 3,
-    MAG: 2,
-    LCK: 3
+    MGC: 2,
+    LUK: 3
   },
   'Kimberly': {
     PWR: 4,
     SKL: 6,
     DEF: 4,
     SPD: 5,
-    MAG: 2,
-    LCK: 5
+    MGC: 2,
+    LUK: 5
   },
   'Kirke': {
     PWR: 5,
     SKL: 4,
     DEF: 4,
     SPD: 3,
-    MAG: 2,
-    LCK: 0
+    MGC: 2,
+    LUK: 0
   },
   'Kirkis': {
     PWR: 5,
     SKL: 8,
     DEF: 5,
     SPD: 6,
-    MAG: 5,
-    LCK: 3
+    MGC: 5,
+    LUK: 3
   },
   'Kreutz': {
     PWR: 6,
     SKL: 3,
     DEF: 6,
     SPD: 1,
-    MAG: 1,
-    LCK: 1
+    MGC: 1,
+    LUK: 1
   },
   'Krin': {
     PWR: 3,
     SKL: 6,
     DEF: 2,
     SPD: 8,
-    MAG: 1,
-    LCK: 1
+    MGC: 1,
+    LUK: 1
   },
   'Kuromimi': {
     PWR: 5,
     SKL: 4,
     DEF: 5,
     SPD: 5,
-    MAG: 2,
-    LCK: 5
+    MGC: 2,
+    LUK: 5
   },
   'Kwanda': {
     PWR: 6,
     SKL: 3,
     DEF: 8,
     SPD: 2,
-    MAG: 1,
-    LCK: 3
+    MGC: 1,
+    LUK: 3
   },
   'Leonardo': {
     PWR: 6,
     SKL: 3,
     DEF: 4,
     SPD: 4,
-    MAG: 1,
-    LCK: 1
+    MGC: 1,
+    LUK: 1
   },
   'Lepant': {
     PWR: 5,
     SKL: 5,
     DEF: 4,
     SPD: 4,
-    MAG: 3,
-    LCK: 4
+    MGC: 3,
+    LUK: 4
   },
   'Lester': {
     PWR: 4,
     SKL: 4,
     DEF: 3,
     SPD: 5,
-    MAG: 1,
-    LCK: 5
+    MGC: 1,
+    LUK: 5
   },
   'Liukan': {
     PWR: 3,
     SKL: 7,
     DEF: 3,
     SPD: 4,
-    MAG: 3,
-    LCK: 5
+    MGC: 3,
+    LUK: 5
   },
   'Lorelai': {
     PWR: 5,
     SKL: 7,
     DEF: 4,
     SPD: 3,
-    MAG: 2,
-    LCK: 2
+    MGC: 2,
+    LUK: 2
   },
   'Lotte': {
     PWR: 3,
     SKL: 4,
     DEF: 3,
     SPD: 5,
-    MAG: 6,
-    LCK: 4
+    MGC: 6,
+    LUK: 4
   },
   'Luc': {
     PWR: 0,
     SKL: 5,
     DEF: 1,
     SPD: 5,
-    MAG: 8,
-    LCK: 1
+    MGC: 8,
+    LUK: 1
   },
   'Maas': {
     PWR: 4,
     SKL: 5,
     DEF: 4,
     SPD: 4,
-    MAG: 2,
-    LCK: 4
+    MGC: 2,
+    LUK: 4
   },
   'Mace': {
     PWR: 6,
     SKL: 6,
     DEF: 6,
     SPD: 5,
-    MAG: 3,
-    LCK: 5
+    MGC: 3,
+    LUK: 5
   },
   'Meese': {
     PWR: 4,
     SKL: 5,
     DEF: 4,
     SPD: 4,
-    MAG: 2,
-    LCK: 4
+    MGC: 2,
+    LUK: 4
   },
   'Meg': {
     PWR: 4,
     SKL: 5,
     DEF: 4,
     SPD: 4,
-    MAG: 3,
-    LCK: 8
+    MGC: 3,
+    LUK: 8
   },
   'Milia': {
     PWR: 6,
     SKL: 3,
     DEF: 6,
     SPD: 3,
-    MAG: 1,
-    LCK: 4
+    MGC: 1,
+    LUK: 4
   },
   'Milich': {
     PWR: 5,
     SKL: 4,
     DEF: 5,
     SPD: 4,
-    MAG: 6,
-    LCK: 1
+    MGC: 6,
+    LUK: 1
   },
   'Mina': {
     PWR: 2,
     SKL: 4,
     DEF: 4,
     SPD: 4,
-    MAG: 6,
-    LCK: 6
+    MGC: 6,
+    LUK: 6
   },
   'Moose': {
     PWR: 4,
     SKL: 6,
     DEF: 4,
     SPD: 4,
-    MAG: 2,
-    LCK: 4
+    MGC: 2,
+    LUK: 4
   },
   'Morgan': {
     PWR: 6,
     SKL: 3,
     DEF: 5,
     SPD: 2,
-    MAG: 0,
-    LCK: 1
+    MGC: 0,
+    LUK: 1
   },
   'Mose': {
     PWR: 5,
     SKL: 5,
     DEF: 5,
     SPD: 4,
-    MAG: 1,
-    LCK: 3
+    MGC: 1,
+    LUK: 3
   },
   'Odessa': {
     PWR: 5,
     SKL: 8,
     DEF: 5,
     SPD: 8,
-    MAG: 7,
-    LCK: 6
+    MGC: 7,
+    LUK: 6
   },
   'Pahn': {
     PWR: 7,
     SKL: 5,
     DEF: 6,
     SPD: 2,
-    MAG: 0,
-    LCK: 4
+    MGC: 0,
+    LUK: 4
   },
   'Pesmerga': {
     PWR: 8,
     SKL: 2,
     DEF: 6,
     SPD: 3,
-    MAG: 1,
-    LCK: 0
+    MGC: 1,
+    LUK: 0
   },
   'Quincy': {
     PWR: 4,
     SKL: 8,
     DEF: 5,
     SPD: 5,
-    MAG: 1,
-    LCK: 5
+    MGC: 1,
+    LUK: 5
   },
   'Ronnie': {
     PWR: 6,
     SKL: 4,
     DEF: 6,
     SPD: 4,
-    MAG: 0,
-    LCK: 3
+    MGC: 0,
+    LUK: 3
   },
   'Rubi': {
     PWR: 5,
     SKL: 6,
     DEF: 4,
     SPD: 6,
-    MAG: 6,
-    LCK: 0
+    MGC: 6,
+    LUK: 0
   },
   'Sansuke': {
     PWR: 3,
     SKL: 5,
     DEF: 5,
     SPD: 4,
-    MAG: 1,
-    LCK: 4
+    MGC: 1,
+    LUK: 4
   },
   'Sarah': {
     PWR: 5,
     SKL: 3,
     DEF: 5,
     SPD: 3,
-    MAG: 4,
-    LCK: 2
+    MGC: 4,
+    LUK: 2
   },
   'Sergei': {
     PWR: 2,
     SKL: 6,
     DEF: 6,
     SPD: 3,
-    MAG: 2,
-    LCK: 2
+    MGC: 2,
+    LUK: 2
   },
   'Sheena': {
     PWR: 5,
     SKL: 4,
     DEF: 5,
     SPD: 6,
-    MAG: 6,
-    LCK: 6
+    MGC: 6,
+    LUK: 6
   },
   'Sonya': {
     PWR: 6,
     SKL: 5,
     DEF: 4,
     SPD: 7,
-    MAG: 5,
-    LCK: 3
+    MGC: 5,
+    LUK: 3
   },
   'Stallion': {
     PWR: 3,
     SKL: 6,
     DEF: 5,
     SPD: 8,
-    MAG: 4,
-    LCK: 4
+    MGC: 4,
+    LUK: 4
   },
   'Sydonia': {
     PWR: 4,
     SKL: 6,
     DEF: 3,
     SPD: 6,
-    MAG: 3,
-    LCK: 2
+    MGC: 3,
+    LUK: 2
   },
   'Sylvina': {
     PWR: 3,
     SKL: 5,
     DEF: 4,
     SPD: 6,
-    MAG: 5,
-    LCK: 6
+    MGC: 5,
+    LUK: 6
   },
   'Tai Ho': {
     PWR: 6,
     SKL: 7,
     DEF: 3,
     SPD: 5,
-    MAG: 1,
-    LCK: 4
+    MGC: 1,
+    LUK: 4
   },
   'Tengaar': {
     PWR: 3,
     SKL: 6,
     DEF: 4,
     SPD: 5,
-    MAG: 7,
-    LCK: 2
+    MGC: 7,
+    LUK: 2
   },
   'Ted': {
     PWR: 5,
     SKL: 7,
     DEF: 4,
     SPD: 6,
-    MAG: 7,
-    LCK: 4
+    MGC: 7,
+    LUK: 4
   },
   'Valeria': {
     PWR: 6,
     SKL: 4,
     DEF: 6,
     SPD: 3,
-    MAG: 3,
-    LCK: 4
+    MGC: 3,
+    LUK: 4
   },
   'Varkas': {
     PWR: 6,
     SKL: 3,
     DEF: 5,
     SPD: 3,
-    MAG: 1,
-    LCK: 2
+    MGC: 1,
+    LUK: 2
   },
   'Viktor': {
     PWR: 9,
     SKL: 2,
     DEF: 7,
     SPD: 5,
-    MAG: 3,
-    LCK: 4
+    MGC: 3,
+    LUK: 4
   },
   'Warren': {
     PWR: 5,
     SKL: 4,
     DEF: 5,
     SPD: 3,
-    MAG: 2,
-    LCK: 3
+    MGC: 2,
+    LUK: 3
   },
   'Yam Koo': {
     PWR: 5,
     SKL: 6,
     DEF: 3,
     SPD: 6,
-    MAG: 2,
-    LCK: 4
+    MGC: 2,
+    LUK: 4
   }
 }
 
@@ -668,8 +668,8 @@ export const LevelupStatOrder = [
   'SKL',
   'DEF',
   'SPD',
-  'MAG',
-  'LCK',
+  'MGC',
+  'LUK',
   'HP'
 ]
 

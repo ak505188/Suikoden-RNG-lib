@@ -3,7 +3,7 @@ import { Characters, getCharacterStatGrowth, getGrowthValue, LevelupStatOrder  }
 
 export function characterLevelUps(name, startingLevel, levelsGained, rng) {
   let level = startingLevel;
-  const statGrowths = { 'PWR': 0, 'SKL': 0, 'DEF': 0, 'SPD': 0, 'MAG': 0, 'LCK': 0, 'HP': 0 };
+  const statGrowths = { 'PWR': 0, 'SKL': 0, 'DEF': 0, 'SPD': 0, 'MGC': 0, 'LUK': 0, 'HP': 0 };
   while (level++ < startingLevel + levelsGained) {
     const levelGrowths = characterLevelUp(name, level, rng);
     for (const [stat, growth] of Object.entries(levelGrowths)) {

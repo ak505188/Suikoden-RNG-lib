@@ -1,4 +1,4 @@
-import RNG from '../rng.js';
+import RNG from '../lib/rng.js';
 import { Characters, getCharacterStatGrowth, getGrowthValue, LevelupStatOrder  } from './characters.js';
 
 export function characterLevelUps(name, startingLevel, levelsGained, rng) {

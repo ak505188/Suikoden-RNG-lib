@@ -29,10 +29,11 @@ export function calculateLevelupGrowth(rngNormalized, growthValue, isHP = false)
   return Math.floor((growthValue + maxRNG) / 256);
 }
 
-export function generateCharacterMultipleLevelup(rng, name, startingLevel, iterations) {
+export function generateCharacterMultipleLevelup(rng, name, startingLevel, iterations, stringify = false) {
   const levelups = [];
   for (let i = 0; i < iterations; i++) {
-    levelups.push(Object.values(characterLevelUp(name, startingLevel, rng)).toString());
+    const levelup = characterLevelUp(name, startingLevel, rng)
+    levelups.push(stringify ? Object.values(levelup).toString() : levelup);
   }
   return levelups;
 }

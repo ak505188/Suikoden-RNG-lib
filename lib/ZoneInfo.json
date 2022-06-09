@@ -1,0 +1,2078 @@
+{
+  "0": {
+    "0": {
+      "townName": "Gregminster",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main town, exit to WM"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Home"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "Home 2nd floor"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Inn lobby"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Inn 2nd floor"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Inn Attic"
+        },
+        "6": {
+          "encounterRate": 5,
+          "screenName": "Item/Armor Shop"
+        },
+        "7": {
+          "encounterRate": 5,
+          "screenName": "Sonya's House"
+        },
+        "8": {
+          "encounterRate": 5,
+          "screenName": "Rune Shop"
+        },
+        "9": {
+          "encounterRate": 5,
+          "screenName": "Milich's House"
+        },
+        "10": {
+          "encounterRate": 5,
+          "screenName": "Milich's House 2nd floor"
+        },
+        "11": {
+          "encounterRate": 5,
+          "screenName": "Appraiser"
+        },
+        "13": {
+          "encounterRate": 5,
+          "screenName": "House NW of fountain"
+        },
+        "14": {
+          "encounterRate": 5,
+          "screenName": "House W of 13"
+        },
+        "15": {
+          "encounterRate": 5,
+          "screenName": "House SW Corner"
+        },
+        "16": {
+          "encounterRate": 5,
+          "screenName": "Ted / Windy Soul Eater cutscene"
+        },
+        "17": {
+          "encounterRate": 5,
+          "screenName": "Bridge screen"
+        }
+      }
+    },
+    "1": {
+      "townName": "Rockland",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main town, exit to WM"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "SW House"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "NE of Inn House"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Grady's Mansion Main"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Inn"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Item Shop"
+        },
+        "6": {
+          "encounterRate": 5,
+          "screenName": "Armor Shop"
+        },
+        "7": {
+          "encounterRate": 5,
+          "screenName": "Grady's Mansion NE Room"
+        },
+        "8": {
+          "encounterRate": 5,
+          "screenName": "Grady's Mansion SE Room"
+        },
+        "9": {
+          "encounterRate": 5,
+          "screenName": "Grady's Mansion NW Room"
+        },
+        "10": {
+          "encounterRate": 5,
+          "screenName": "Grady's Mansion SW Room"
+        }
+      }
+    },
+    "2": {
+      "townName": "Lenankamp",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main town, exit to WM"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Secret Hideout"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "Inn"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Inn 2nd floor"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Rune Shop"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Armor Shop"
+        },
+        "6": {
+          "encounterRate": 5,
+          "screenName": "Blacksmith"
+        },
+        "7": {
+          "encounterRate": 5,
+          "screenName": "Item Shop"
+        },
+        "8": {
+          "encounterRate": 5,
+          "screenName": "NW House (Krin's house)"
+        },
+        "9": {
+          "encounterRate": 5,
+          "screenName": "SW House"
+        }
+      }
+    },
+    "3": {
+      "townName": "Magician's Island",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Entrance"
+        },
+        "1": {
+          "encounterRate": 4,
+          "screenName": "Entrance +1"
+        },
+        "2": {
+          "encounterRate": 4,
+          "screenName": "Entrance +3"
+        },
+        "3": {
+          "encounterRate": 4,
+          "screenName": "Entrance +4 / Golem screen"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Golem screen + 1"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Leknaat's Tower Start"
+        },
+        "6": {
+          "encounterRate": 5,
+          "screenName": "Leknaat's Staircase Start"
+        },
+        "7": {
+          "encounterRate": 5,
+          "screenName": "Staircase 1"
+        },
+        "8": {
+          "encounterRate": 5,
+          "screenName": "Staircase 2"
+        },
+        "9": {
+          "encounterRate": 5,
+          "screenName": "Staircase 3"
+        },
+        "10": {
+          "encounterRate": 5,
+          "screenName": "Main room"
+        },
+        "11": {
+          "encounterRate": 5,
+          "screenName": "Leknaat's room"
+        },
+        "12": {
+          "encounterRate": 4,
+          "screenName": "Entrance +2"
+        }
+      }
+    },
+    "4": {
+      "townName": "Sarady",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main town, exit to WM"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Inn"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "Item Shop"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "NE House (Fortune/Prosperity guy)"
+        }
+      }
+    },
+    "5": {
+      "townName": "Kwaba",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Gate / Guards area"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "North Screen"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "South Screen"
+        }
+      }
+    },
+    "6": {
+      "townName": "Mt. Seifu",
+      "screens": {
+        "0": {
+          "encounterRate": 2,
+          "screenName": "Entrance"
+        },
+        "1": {
+          "encounterRate": 2,
+          "screenName": "Entrance +1"
+        },
+        "2": {
+          "encounterRate": 2,
+          "screenName": "Entrance +2"
+        },
+        "3": {
+          "encounterRate": 2,
+          "screenName": "SW Fork room (Antique)"
+        },
+        "4": {
+          "encounterRate": 2,
+          "screenName": "NW fork 1000"
+        },
+        "5": {
+          "encounterRate": 2,
+          "screenName": "Entrance +3"
+        },
+        "6": {
+          "encounterRate": 2,
+          "screenName": "Entrance +4"
+        },
+        "7": {
+          "encounterRate": 2,
+          "screenName": "Entrance +5"
+        },
+        "8": {
+          "encounterRate": 2,
+          "screenName": "Entrance +6 / QA Room -1"
+        },
+        "9": {
+          "encounterRate": 2,
+          "screenName": "Queen Ant Room"
+        },
+        "10": {
+          "encounterRate": 2,
+          "screenName": "Queen Ant Room +1"
+        },
+        "11": {
+          "encounterRate": 2,
+          "screenName": "Queen Ant Room +2"
+        },
+        "12": {
+          "encounterRate": 2,
+          "screenName": "Outside before V&S"
+        },
+        "13": {
+          "encounterRate": 2,
+          "screenName": "V&S screen"
+        }
+      }
+    },
+    "7": {
+      "townName": "Mt. Tigerwolf",
+      "screens": {
+        "0": {
+          "encounterRate": 2,
+          "screenName": "Entrance"
+        },
+        "1": {
+          "encounterRate": 2,
+          "screenName": "Entrance +1"
+        },
+        "2": {
+          "encounterRate": 3,
+          "screenName": "Entrance +2"
+        },
+        "3": {
+          "encounterRate": 2,
+          "screenName": "Entrance +3"
+        },
+        "4": {
+          "encounterRate": 3,
+          "screenName": "Entrance +4"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Ledon's Inn Screen"
+        },
+        "6": {
+          "encounterRate": 2,
+          "screenName": "Ledon's Inn Screen +1"
+        },
+        "7": {
+          "encounterRate": 3,
+          "screenName": "Ledon's Inn Screen +2"
+        },
+        "8": {
+          "encounterRate": 3,
+          "screenName": "Ledon's Inn Screen +3"
+        },
+        "9": {
+          "encounterRate": 2,
+          "screenName": "Exit"
+        }
+      }
+    },
+    "9": {
+      "townName": "Gregminster Palace",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Screen with fountains and Dragon later"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Kraze screen"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "Throne screen"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Screen #1 behind throne, inaccessible"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Screen #2 behind throne"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Screen #3 behind throne"
+        },
+        "6": {
+          "encounterRate": 5,
+          "screenName": "Screen #4 behind throne"
+        },
+        "7": {
+          "encounterRate": 5,
+          "screenName": "Screen #5 behind throne"
+        },
+        "8": {
+          "encounterRate": 5,
+          "screenName": "Long Hallway"
+        },
+        "9": {
+          "encounterRate": 5,
+          "screenName": "Flying Garden"
+        },
+        "10": {
+          "encounterRate": 5,
+          "screenName": "Bridge screen"
+        }
+      }
+    }
+  },
+  "1": {
+    "0": {
+      "townName": "Seika",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Onil's House"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "Item Shop"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Rune Shop"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Inn"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Mathiu's House"
+        }
+      }
+    },
+    "1": {
+      "townName": "Kaku",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Item Shop"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "SW House (Flik later)"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Inn"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Blacksmith"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Tavern"
+        },
+        "6": {
+          "encounterRate": 5,
+          "screenName": "Cursed Area (Tai Ho / Gaspar room)"
+        },
+        "7": {
+          "encounterRate": 5,
+          "screenName": "Armor"
+        },
+        "8": {
+          "encounterRate": 5,
+          "screenName": "Chinchironin Screen"
+        }
+      }
+    },
+    "2": {
+      "townName": "Kouan",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "SW House"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "Inn"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Armor Shop"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Appraiser"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Kraze's Manse"
+        },
+        "6": {
+          "encounterRate": 5,
+          "screenName": "Kraze's Manse SW Room (Water Rune Piece)"
+        },
+        "7": {
+          "encounterRate": 5,
+          "screenName": "Kraze's Manse 2nd floor"
+        },
+        "8": {
+          "encounterRate": 5,
+          "screenName": "Kraze's Manse 2nd floor West room (Hex Doll)"
+        },
+        "9": {
+          "encounterRate": 5,
+          "screenName": "Kraze's Manse 2nd floor East room"
+        },
+        "11": {
+          "encounterRate": 5,
+          "screenName": "Lepant's Manse Roof"
+        },
+        "12": {
+          "encounterRate": 5,
+          "screenName": "Lepant's Manse Attic"
+        },
+        "13": {
+          "encounterRate": 2,
+          "screenName": "Lepant's Manse 2nd floor main"
+        },
+        "14": {
+          "encounterRate": 2,
+          "screenName": "Lepant's Manse 2nd floor west room"
+        },
+        "15": {
+          "encounterRate": 2,
+          "screenName": "Lepant's Manse 2nd floor east room"
+        },
+        "17": {
+          "encounterRate": 2,
+          "screenName": "Lepant's Manse Robot Room"
+        },
+        "20": {
+          "encounterRate": 2,
+          "screenName": "Lepant's Manse Front Door entrance room"
+        },
+        "28": {
+          "encounterRate": 5,
+          "screenName": "Wheel Room"
+        },
+        "29": {
+          "encounterRate": 2,
+          "screenName": "Wheel Room 1 North"
+        },
+        "30": {
+          "encounterRate": 5,
+          "screenName": "Wheel Room 2 North (Kirinji)"
+        }
+      }
+    },
+    "3": {
+      "townName": "Garan",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main"
+        }
+      }
+    },
+    "4": {
+      "townName": "Great Forest",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main"
+        },
+        "1": {
+          "encounterRate": 2,
+          "screenName": "Forest Screen #1"
+        },
+        "2": {
+          "encounterRate": 2,
+          "screenName": "Forest Screen #2"
+        },
+        "3": {
+          "encounterRate": 2,
+          "screenName": "Forest Screen #3 (Viki)"
+        },
+        "4": {
+          "encounterRate": 2,
+          "screenName": "Forest Screen E of #3"
+        },
+        "5": {
+          "encounterRate": 2,
+          "screenName": "Forest Screen SW of #3"
+        },
+        "6": {
+          "encounterRate": 5,
+          "screenName": "Kobold Village"
+        },
+        "7": {
+          "encounterRate": 5,
+          "screenName": "Inn"
+        },
+        "8": {
+          "encounterRate": 5,
+          "screenName": "Sansuke's House"
+        },
+        "9": {
+          "encounterRate": 5,
+          "screenName": "Item Shop"
+        },
+        "10": {
+          "encounterRate": 5,
+          "screenName": "Blacksmith"
+        },
+        "11": {
+          "encounterRate": 5,
+          "screenName": "Kobold Village Item Shop"
+        },
+        "12": {
+          "encounterRate": 5,
+          "screenName": "Kobold Village Gon's House"
+        },
+        "13": {
+          "encounterRate": 5,
+          "screenName": "Kobold Village Inn"
+        }
+      }
+    },
+    "7": {
+      "townName": "Kwaba",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Gate / Guards area"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "North Screen"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "South Screen"
+        }
+      }
+    }
+  },
+  "3": {
+    "0": {
+      "townName": "Antei",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Kimberly's house"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "Armor Shop"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Rune Shop"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Item Shop"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Tesla's house"
+        },
+        "6": {
+          "encounterRate": 5,
+          "screenName": "Inn"
+        },
+        "7": {
+          "encounterRate": 5,
+          "screenName": "Inn 2nd floor"
+        }
+      }
+    },
+    "1": {
+      "townName": "Teien",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Gen's house"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "Kamandol's house"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Blacksmith"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Inn"
+        }
+      }
+    },
+    "2": {
+      "townName": "Rikon",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Appraiser"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "Item Shop"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Inn"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Inn 2nd floor"
+        }
+      }
+    },
+    "3": {
+      "townName": "Sonierre",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Entrance to prison"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Screen #1"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "Screen #2"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Screen #3"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Screen #4"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Screen #5"
+        },
+        "6": {
+          "encounterRate": 5,
+          "screenName": "Screen #6 (1st room past stairs)"
+        },
+        "7": {
+          "encounterRate": 5,
+          "screenName": "Last screen"
+        }
+      }
+    },
+    "4": {
+      "townName": "Scarletia",
+      "screens": {
+        "0": {
+          "encounterRate": 0,
+          "screenName": "Entrance"
+        },
+        "1": {
+          "encounterRate": 3,
+          "screenName": "Bottom floor front"
+        },
+        "2": {
+          "encounterRate": 3,
+          "screenName": "Bottom floor small room/hallway left side (Red Paint)"
+        },
+        "3": {
+          "encounterRate": 3,
+          "screenName": "Top floor"
+        },
+        "4": {
+          "encounterRate": 3,
+          "screenName": "Secret Room"
+        }
+      }
+    },
+    "5": {
+      "townName": "Northern Checkpoint",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Only Screen"
+        }
+      }
+    },
+    "6": {
+      "townName": "Garan",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Only Screen"
+        }
+      }
+    },
+    "7": {
+      "townName": "Lorimar",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Only Screen"
+        }
+      }
+    },
+    "8": {
+      "townName": "Dragon's Den",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Scarletia area entrance/exit"
+        },
+        "1": {
+          "encounterRate": 3,
+          "screenName": "Screen #1"
+        },
+        "2": {
+          "encounterRate": 3,
+          "screenName": "Screen #2"
+        },
+        "3": {
+          "encounterRate": 3,
+          "screenName": "Screen #3"
+        },
+        "4": {
+          "encounterRate": 3,
+          "screenName": "Screen #4"
+        },
+        "5": {
+          "encounterRate": 3,
+          "screenName": "Screen #5"
+        },
+        "6": {
+          "encounterRate": 3,
+          "screenName": "Screen #6"
+        },
+        "7": {
+          "encounterRate": 3,
+          "screenName": "Screen #7"
+        },
+        "8": {
+          "encounterRate": 3,
+          "screenName": "Dragon Screen"
+        },
+        "9": {
+          "encounterRate": 5,
+          "screenName": "Dragon Screen +1"
+        },
+        "10": {
+          "encounterRate": 5,
+          "screenName": "Dragon Knight Fortress Area entrance/exit"
+        }
+      }
+    }
+  },
+  "4": {
+    "0": {
+      "townName": "Warrior's Village",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Chief's House"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "Armor Shop"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Inn"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Meese house"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Item Shop"
+        }
+      }
+    },
+    "1": {
+      "townName": "Qlon",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Entrance"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Temple"
+        },
+        "3": {
+          "encounterRate": 2,
+          "screenName": "Cave Screen #1"
+        },
+        "4": {
+          "encounterRate": 2,
+          "screenName": "Cave Screen #2"
+        },
+        "5": {
+          "encounterRate": 2,
+          "screenName": "Cave Screen #3 SW Stairs room (Crimson Cape)"
+        },
+        "6": {
+          "encounterRate": 2,
+          "screenName": "Cave Screen #3"
+        },
+        "7": {
+          "encounterRate": 2,
+          "screenName": "Cave Screen #3 NE Stairs room (Medicine, Flowing Crystal)"
+        },
+        "8": {
+          "encounterRate": 2,
+          "screenName": "Cave Screen #4"
+        },
+        "9": {
+          "encounterRate": 2,
+          "screenName": "Cave Screen #4 NE Room (Old Book Vol. 2)"
+        },
+        "10": {
+          "encounterRate": 2,
+          "screenName": "Window Crystal Room"
+        },
+        "11": {
+          "encounterRate": 2,
+          "screenName": "Cave Screen #5 ($5000)"
+        },
+        "12": {
+          "encounterRate": 2,
+          "screenName": "Cave Screen #6"
+        },
+        "13": {
+          "encounterRate": 2,
+          "screenName": "Cave Screen #7 NE Room (War Scroll)"
+        },
+        "14": {
+          "encounterRate": 2,
+          "screenName": "Cave Screen #7 (Crowley Screen)"
+        },
+        "15": {
+          "encounterRate": 2,
+          "screenName": "Cave Screen #8"
+        },
+        "16": {
+          "encounterRate": 2,
+          "screenName": "Cave Screen #8 NE Room (Medicine, Silverlet)"
+        },
+        "17": {
+          "encounterRate": 2,
+          "screenName": "Cave Screen #9"
+        },
+        "18": {
+          "encounterRate": 2,
+          "screenName": "Cave Screen #10"
+        },
+        "19": {
+          "encounterRate": 2,
+          "screenName": "Cave Screen #10 Room along path (Mega Medicine, Skill Rune Piece)"
+        },
+        "20": {
+          "encounterRate": 2,
+          "screenName": "Cave Screen #11"
+        },
+        "21": {
+          "encounterRate": 2,
+          "screenName": "Cave Screen #12"
+        },
+        "22": {
+          "encounterRate": 2,
+          "screenName": "Star Dragon Sword screen"
+        },
+        "23": {
+          "encounterRate": 2,
+          "screenName": "Screen behind SDS"
+        }
+      }
+    },
+    "2": {
+      "townName": "Neclord's Castle",
+      "screens": {
+        "0": {
+          "encounterRate": 2,
+          "screenName": "Doesn't exist because of [5,0]?"
+        },
+        "1": {
+          "encounterRate": 2,
+          "screenName": "Screen #1"
+        },
+        "2": {
+          "encounterRate": 2,
+          "screenName": "Screen #2"
+        },
+        "3": {
+          "encounterRate": 2,
+          "screenName": "Screen #3"
+        },
+        "4": {
+          "encounterRate": 2,
+          "screenName": "Balcony between 2&3"
+        },
+        "5": {
+          "encounterRate": 2,
+          "screenName": "Screen #4 (Painting's screen)"
+        },
+        "6": {
+          "encounterRate": 2,
+          "screenName": "Screen #4 NW Room (Sound setting 1)"
+        },
+        "7": {
+          "encounterRate": 2,
+          "screenName": "Screen #4 middle room (Antitoxin)"
+        },
+        "8": {
+          "encounterRate": 2,
+          "screenName": "Screen #4 SE room (Medicine)"
+        },
+        "9": {
+          "encounterRate": 2,
+          "screenName": "Screen #5"
+        },
+        "10": {
+          "encounterRate": 2,
+          "screenName": "Balcony between 5&6"
+        },
+        "11": {
+          "encounterRate": 2,
+          "screenName": "Screen #7 (Room with coffin room)"
+        },
+        "12": {
+          "encounterRate": 2,
+          "screenName": "Screen #7 SE room (Earth boots)"
+        },
+        "13": {
+          "encounterRate": 2,
+          "screenName": "Screen #7 SW room (Green Paint)"
+        },
+        "14": {
+          "encounterRate": 2,
+          "screenName": "Coffin Room"
+        },
+        "15": {
+          "encounterRate": 2,
+          "screenName": "Screen #8"
+        },
+        "16": {
+          "encounterRate": 2,
+          "screenName": "Screen #8 NE room (Antitoxin)"
+        },
+        "17": {
+          "encounterRate": 2,
+          "screenName": "Screen #8 S room (Earth rune piece)"
+        },
+        "18": {
+          "encounterRate": 2,
+          "screenName": "Screen #8 NW room (Magic rune piece)"
+        },
+        "19": {
+          "encounterRate": 2,
+          "screenName": "Screen #8 SW room (Cape of Darkness)"
+        },
+        "20": {
+          "encounterRate": 2,
+          "screenName": "Screen #9"
+        },
+        "21": {
+          "encounterRate": 2,
+          "screenName": "Balcony between #9 and #10"
+        },
+        "22": {
+          "encounterRate": 2,
+          "screenName": "Screen #10 (leads back to #8 other side)"
+        },
+        "23": {
+          "encounterRate": 2,
+          "screenName": "Neclord / Pesmerga room"
+        },
+        "24": {
+          "encounterRate": 2,
+          "screenName": "Basement (Save crystal)"
+        },
+        "25": {
+          "encounterRate": 2,
+          "screenName": "Screen #1 left door"
+        },
+        "26": {
+          "encounterRate": 2,
+          "screenName": "Screen #1 right door"
+        },
+        "27": {
+          "encounterRate": 2,
+          "screenName": "Screen #6"
+        }
+      }
+    },
+    "3": {
+      "townName": "Lorimar",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Only Screen"
+        }
+      }
+    },
+    "4": {
+      "townName": "?",
+      "screens": {
+        "0": {
+          "encounterRate": null,
+          "screenName": "Broken 1st screen of Cave of the Past https://ibb.co/BBw4RFg"
+        }
+      }
+    },
+    "5": {
+      "townName": "Neclord's Castle Entrance",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Entrance, area switches to 2 in the Castle"
+        }
+      }
+    }
+  },
+  "5": {
+    "0": {
+      "townName": "Dragon's Den",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Scarletia area entrance/exit"
+        },
+        "1": {
+          "encounterRate": 3,
+          "screenName": "Screen #1"
+        },
+        "2": {
+          "encounterRate": 3,
+          "screenName": "Screen #2"
+        },
+        "3": {
+          "encounterRate": 3,
+          "screenName": "Screen #3"
+        },
+        "4": {
+          "encounterRate": 3,
+          "screenName": "Screen #4"
+        },
+        "5": {
+          "encounterRate": 3,
+          "screenName": "Screen #5"
+        },
+        "6": {
+          "encounterRate": 3,
+          "screenName": "Screen #6"
+        },
+        "7": {
+          "encounterRate": 3,
+          "screenName": "Screen #7"
+        },
+        "8": {
+          "encounterRate": 3,
+          "screenName": "Dragon Screen"
+        },
+        "9": {
+          "encounterRate": 3,
+          "screenName": "Dragon Screen +1"
+        },
+        "10": {
+          "encounterRate": 5,
+          "screenName": "Dragon Knight Fortress Area entrance/exit"
+        }
+      }
+    },
+    "1": {
+      "townName": "Seek Valley",
+      "screens": {
+        "0": {
+          "encounterRate": 2,
+          "screenName": "Start"
+        },
+        "1": {
+          "encounterRate": 2,
+          "screenName": "Screen #1"
+        },
+        "2": {
+          "encounterRate": 2,
+          "screenName": "Inaccessible, https://ibb.co/V2yCGTR. North west has exit to zone 3. Big screen!"
+        },
+        "3": {
+          "encounterRate": 2,
+          "screenName": "Screen #2"
+        },
+        "4": {
+          "encounterRate": 2,
+          "screenName": "Screen #3"
+        },
+        "5": {
+          "encounterRate": 2,
+          "screenName": "Screen #3 East Fork"
+        },
+        "6": {
+          "encounterRate": 2,
+          "screenName": "Screen with Mace's house"
+        },
+        "7": {
+          "encounterRate": 2,
+          "screenName": "Screen #3 West fork path"
+        },
+        "8": {
+          "encounterRate": 2,
+          "screenName": "Screen #4"
+        },
+        "9": {
+          "encounterRate": 2,
+          "screenName": "Screen #5 (Crystal Core)"
+        },
+        "10": {
+          "encounterRate": 2,
+          "screenName": "End"
+        }
+      }
+    },
+    "2": {
+      "townName": "Dragon Knights' Fortress",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Entrance"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Building floor 1"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "Building floor 2"
+        }
+      }
+    },
+    "3": {
+      "townName": "Flying Garden",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Where you land with Black"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Screen below"
+        }
+      }
+    },
+    "4": {
+      "townName": "Seek Valley",
+      "screens": {
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Mace's House"
+        }
+      }
+    }
+  },
+  "6": {
+    "0": {
+      "townName": "Kirov",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "West Stew house"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "East Stew house"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Item Shop"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Armor Shop"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Kun To's house"
+        }
+      }
+    },
+    "1": {
+      "townName": "Kalekka",
+      "screens": {
+        "0": {
+          "encounterRate": 4,
+          "screenName": "Main"
+        },
+        "1": {
+          "encounterRate": 4,
+          "screenName": "Tavern"
+        },
+        "2": {
+          "encounterRate": 4,
+          "screenName": "NW House (Flower Painting)"
+        },
+        "3": {
+          "encounterRate": 4,
+          "screenName": "Leon's House"
+        },
+        "4": {
+          "encounterRate": 4,
+          "screenName": "NE House"
+        },
+        "5": {
+          "encounterRate": 4,
+          "screenName": "SW Item Shop"
+        }
+      }
+    },
+    "2": {
+      "townName": "Secret Factory",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Entrance"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Building"
+        }
+      }
+    }
+  },
+  "7": {
+    "0": {
+      "townName": "Moravia",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Entrance"
+        },
+        "1": {
+          "encounterRate": 3,
+          "screenName": "Screen #1"
+        },
+        "2": {
+          "encounterRate": 3,
+          "screenName": "Screen #2"
+        },
+        "3": {
+          "encounterRate": 3,
+          "screenName": "Screen #3"
+        },
+        "4": {
+          "encounterRate": 3,
+          "screenName": "Screen #4"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Kasim's Room / Throne Room"
+        },
+        "6": {
+          "encounterRate": 5,
+          "screenName": "Balcony (all)"
+        },
+        "7": {
+          "encounterRate": 3,
+          "screenName": "Screen #5"
+        },
+        "8": {
+          "encounterRate": 3,
+          "screenName": "Screen #6"
+        },
+        "9": {
+          "encounterRate": 5,
+          "screenName": "Screen #7"
+        },
+        "10": {
+          "encounterRate": 5,
+          "screenName": "Screen #9"
+        },
+        "11": {
+          "encounterRate": 5,
+          "screenName": "Screen #10 (Mega Medicine)"
+        },
+        "12": {
+          "encounterRate": 5,
+          "screenName": "Screen #11 (Needle)"
+        },
+        "13": {
+          "encounterRate": 5,
+          "screenName": "Jail"
+        },
+        "15": {
+          "encounterRate": 5,
+          "screenName": "Screen #8"
+        }
+      }
+    },
+    "1": {
+      "townName": "Northern Checkpoint",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Only Screen"
+        }
+      }
+    }
+  },
+  "8": {
+    "0": {
+      "townName": "Village of the Past",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "SW House"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "SE House (Champion Crystal)"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Chief's House"
+        }
+      }
+    },
+    "1": {
+      "townName": "Burnt Village of the Past",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "SW House"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "SE House (Champion's Crystal)"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Chief's House"
+        }
+      }
+    }
+  },
+  "9": {
+    "0": {
+      "townName": "Shasazarade",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Entrance"
+        }
+      }
+    },
+    "1": {
+      "townName": "Kaku",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Item Shop"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "SW House (Flik later)"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Inn"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Blacksmith"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Tavern"
+        },
+        "6": {
+          "encounterRate": 5,
+          "screenName": "Cursed Area (Tai Ho / Gaspar room)"
+        },
+        "7": {
+          "encounterRate": 5,
+          "screenName": "Armor"
+        },
+        "8": {
+          "encounterRate": 5,
+          "screenName": "Chinchironin Screen"
+        }
+      }
+    },
+    "2": {
+      "townName": "Kirov",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "West Stew house"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "East Stew house"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Item Shop"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Armor Shop"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Kun To's house"
+        }
+      }
+    },
+    "3": {
+      "townName": "Pirates' Hideout",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Entrance"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Inside Building"
+        }
+      }
+    },
+    "4": {
+      "townName": "Toran Castle Dungeon",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Dock"
+        },
+        "9": {
+          "encounterRate": 2,
+          "screenName": "Screen #1"
+        },
+        "10": {
+          "encounterRate": 2,
+          "screenName": "Screen #2"
+        },
+        "11": {
+          "encounterRate": 2,
+          "screenName": "Screen #3"
+        },
+        "12": {
+          "encounterRate": 2,
+          "screenName": "Screen #4"
+        },
+        "13": {
+          "encounterRate": 2,
+          "screenName": "Screen #5"
+        },
+        "14": {
+          "encounterRate": 2,
+          "screenName": "Screen #6"
+        },
+        "15": {
+          "encounterRate": 2,
+          "screenName": "Screen #7"
+        },
+        "16": {
+          "encounterRate": 2,
+          "screenName": "Screen #8 (Save Crystal)"
+        },
+        "17": {
+          "encounterRate": 2,
+          "screenName": "Screen #9"
+        },
+        "18": {
+          "encounterRate": 2,
+          "screenName": "Screen #10"
+        },
+        "19": {
+          "encounterRate": 2,
+          "screenName": "Screen #11 (Last Screen"
+        }
+      }
+    },
+    "5": {
+      "townName": "Teien",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Gen's house"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "Kamandol's house"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Blacksmith"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Inn"
+        }
+      }
+    },
+    "49": {
+      "townName": "Shasazarade",
+      "screens": {
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Screen #1"
+        },
+        "2": {
+          "encounterRate": 3,
+          "screenName": "Screen #2"
+        },
+        "3": {
+          "encounterRate": 3,
+          "screenName": "Screen #3"
+        },
+        "4": {
+          "encounterRate": 3,
+          "screenName": "Screen #4"
+        },
+        "5": {
+          "encounterRate": 3,
+          "screenName": "Screen #5"
+        },
+        "6": {
+          "encounterRate": 3,
+          "screenName": "Screen #6 (Shell Screen)"
+        },
+        "7": {
+          "encounterRate": 3,
+          "screenName": "Area left of Screen #6 (Thunder Rune)"
+        }
+      }
+    }
+  },
+  "10": {
+    "0": {
+      "townName": "Luikan's Hermitage",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Luikan's House"
+        }
+      }
+    }
+  },
+  "11": {
+    "0": {
+      "townName": "Gregminster",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main town, exit to WM"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Home"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "Home 2nd floor"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Inn lobby"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Inn 2nd floor"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Inn Attic"
+        },
+        "6": {
+          "encounterRate": 5,
+          "screenName": "Item/Armor Shop"
+        },
+        "7": {
+          "encounterRate": 5,
+          "screenName": "Sonya's House"
+        },
+        "8": {
+          "encounterRate": 5,
+          "screenName": "Rune Shop"
+        },
+        "9": {
+          "encounterRate": 5,
+          "screenName": "Milich's House"
+        },
+        "10": {
+          "encounterRate": 5,
+          "screenName": "Milich's House 2nd floor"
+        },
+        "11": {
+          "encounterRate": 5,
+          "screenName": "Appraiser"
+        },
+        "13": {
+          "encounterRate": 5,
+          "screenName": "House NW of fountain"
+        },
+        "14": {
+          "encounterRate": 5,
+          "screenName": "House W of 13"
+        },
+        "15": {
+          "encounterRate": 5,
+          "screenName": "House SW Corner"
+        },
+        "16": {
+          "encounterRate": 5,
+          "screenName": "Ted / Windy Soul Eater cutscene"
+        },
+        "17": {
+          "encounterRate": 5,
+          "screenName": "Bridge screen"
+        }
+      }
+    },
+    "1": {
+      "townName": "Rockland",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main town, exit to WM"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "SW House"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "NE of Inn House"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Grady's Mansion Main"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Inn"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Item Shop"
+        },
+        "6": {
+          "encounterRate": 5,
+          "screenName": "Armor Shop"
+        },
+        "7": {
+          "encounterRate": 5,
+          "screenName": "Grady's Mansion NE Room"
+        },
+        "8": {
+          "encounterRate": 5,
+          "screenName": "Grady's Mansion SE Room"
+        },
+        "9": {
+          "encounterRate": 5,
+          "screenName": "Grady's Mansion NW Room"
+        },
+        "10": {
+          "encounterRate": 5,
+          "screenName": "Grady's Mansion SW Room"
+        }
+      }
+    },
+    "2": {
+      "townName": "Lenankamp",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main town, exit to WM"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Secret Hideout"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "Inn"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Inn 2nd floor"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Rune Shop"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Armor Shop"
+        },
+        "6": {
+          "encounterRate": 5,
+          "screenName": "Blacksmith"
+        },
+        "7": {
+          "encounterRate": 5,
+          "screenName": "Item Shop"
+        },
+        "8": {
+          "encounterRate": 5,
+          "screenName": "NW House (Krin's house)"
+        },
+        "9": {
+          "encounterRate": 5,
+          "screenName": "SW House"
+        }
+      }
+    },
+    "3": {
+      "townName": "Sarady",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Main town, exit to WM"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Inn"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "Item Shop"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "NE House (Fortune/Prosperity guy)"
+        }
+      }
+    },
+    "4": {
+      "townName": "Kwaba",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Gate / Guards area"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "North Screen"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "South Screen"
+        }
+      }
+    },
+    "5": {
+      "townName": "Mt. Seifu",
+      "screens": {
+        "0": {
+          "encounterRate": 2,
+          "screenName": "Entrance"
+        },
+        "1": {
+          "encounterRate": 2,
+          "screenName": "Entrance +1"
+        },
+        "2": {
+          "encounterRate": 2,
+          "screenName": "Entrance +2"
+        },
+        "3": {
+          "encounterRate": 2,
+          "screenName": "SW Fork room (Antique)"
+        },
+        "4": {
+          "encounterRate": 2,
+          "screenName": "NW fork 1000"
+        },
+        "5": {
+          "encounterRate": 2,
+          "screenName": "Entrance +3"
+        },
+        "6": {
+          "encounterRate": 2,
+          "screenName": "Entrance +4"
+        },
+        "7": {
+          "encounterRate": 2,
+          "screenName": "Entrance +5"
+        },
+        "8": {
+          "encounterRate": 2,
+          "screenName": "Entrance +6 / QA Room -1"
+        },
+        "9": {
+          "encounterRate": 2,
+          "screenName": "Queen Ant Room"
+        },
+        "10": {
+          "encounterRate": 2,
+          "screenName": "Queen Ant Room +1"
+        },
+        "11": {
+          "encounterRate": 2,
+          "screenName": "Queen Ant Room +2"
+        },
+        "12": {
+          "encounterRate": 2,
+          "screenName": "Outside before V&S"
+        },
+        "13": {
+          "encounterRate": 2,
+          "screenName": "V&S screen"
+        }
+      }
+    },
+    "6": {
+      "townName": "Mt. Tigerwolf",
+      "screens": {
+        "0": {
+          "encounterRate": 2,
+          "screenName": "Entrance"
+        },
+        "1": {
+          "encounterRate": 2,
+          "screenName": "Entrance +1"
+        },
+        "2": {
+          "encounterRate": 3,
+          "screenName": "Entrance +2"
+        },
+        "3": {
+          "encounterRate": 2,
+          "screenName": "Entrance +3"
+        },
+        "4": {
+          "encounterRate": 3,
+          "screenName": "Entrance +4"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Ledon's Inn Screen"
+        },
+        "6": {
+          "encounterRate": 2,
+          "screenName": "Ledon's Inn Screen +1"
+        },
+        "7": {
+          "encounterRate": 3,
+          "screenName": "Ledon's Inn Screen +2"
+        },
+        "8": {
+          "encounterRate": 3,
+          "screenName": "Ledon's Inn Screen +3"
+        },
+        "9": {
+          "encounterRate": 2,
+          "screenName": "Exit"
+        }
+      }
+    },
+    "8": {
+      "townName": "Gregminster Palace",
+      "screens": {
+        "0": {
+          "encounterRate": 5,
+          "screenName": "Screen with fountains"
+        },
+        "1": {
+          "encounterRate": 5,
+          "screenName": "Kraze screen"
+        },
+        "2": {
+          "encounterRate": 5,
+          "screenName": "Throne screen"
+        },
+        "3": {
+          "encounterRate": 5,
+          "screenName": "Screen #1 behind throne"
+        },
+        "4": {
+          "encounterRate": 5,
+          "screenName": "Screen #2 behind throne"
+        },
+        "5": {
+          "encounterRate": 5,
+          "screenName": "Screen #3 behind throne"
+        },
+        "6": {
+          "encounterRate": 5,
+          "screenName": "Screen #4 behind throne"
+        },
+        "7": {
+          "encounterRate": 5,
+          "screenName": "Screen #5 behind throne"
+        },
+        "8": {
+          "encounterRate": 5,
+          "screenName": "Long Hallway"
+        },
+        "9": {
+          "encounterRate": 5,
+          "screenName": "Flying Garden"
+        },
+        "10": {
+          "encounterRate": 5,
+          "screenName": "Bridge screen"
+        }
+      }
+    }
+  }
+}

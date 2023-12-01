@@ -1,0 +1,187 @@
+RNG:280c65ae I:0
+After Wait Cursor:198 RNG:7731f Index:305
+dba223b I:309 triple win
+Roll:123 RNG:dba223b Index:309
+be1ea717 I:313 triple win
+Roll:123 RNG:be1ea717 Index:313
+698074ed I:315 triple lose
+Roll:111 RNG:698074ed Index:315
+99304ab4 I:458 is normal roll 146
+Roll:146 RNG:99304ab4 Index:458
+146 Accurate
+
+RNG:a6d67f4f I:1
+After Wait Cursor:133 RNG:b2bbabfe Index:240
+5b086dac I:242 triple lose
+Roll:111 RNG:5b086dac Index:242
+fab118f1 I:247 is_piss
+Roll:OUT RNG:fab118f1 Index:247
+be1ea717 I:313 is normal roll 233
+Roll:233 RNG:be1ea717 Index:313
+233 Inaccurate, was 223
+
+RNG:ea3876dc I:2
+After Wait Cursor:192 RNG:5cc05704 Index:314
+31a6a7c4 I:378 is normal roll 236
+Roll:236 RNG:31a6a7c4 Index:378
+236 Accurate
+
+RNG:b869d3e5 I:3
+After Wait Cursor:171 RNG:81546640 Index:302
+7731f I:305 double win
+Roll:456 RNG:7731f Index:305
+3139a66c triple win
+Roll:222 RNG:f07e8d06 Index:392
+8626b1d7 I:633 is normal roll 456
+Roll:456 RNG:8626b1d7 Index:633
+314f59a6 I:872 is normal roll 246
+Roll:246 RNG:314f59a6 Index:872
+246 Inaccurate, rolled 124, paused at index 852 so didn't go that far
+
+RNG:cbbd2eba I:4
+After Wait Cursor:191 RNG:a9c8f435 Index:307
+fc0b573 I:381 is normal roll 133
+Roll:133 RNG:fc0b573 Index:381
+133 Accurate
+
+RNG:c1a5c16b I:5
+After Wait Cursor:165 RNG:1d973979 Index:303
+d97c86be triple win
+Roll:444 RNG:f7dc9db3 Index:317
+3837821f I:561 is normal roll 114
+Roll:114 RNG:3837821f Index:561
+114 Inaccurate, 125. Index at 856 on pause
+
+RNG:b84424c8 I:6
+After Wait Cursor:143 RNG:f965b9d3 Index:285
+544b5feb I:389 is normal roll 346
+Roll:346 RNG:544b5feb Index:389
+346 Accurate
+
+RNG:72e8c961 I:7
+After Wait Cursor:132 RNG:9b68f27d Index:299
+e0e0bdc3 I:301 triple lose
+Roll:111 RNG:e0e0bdc3 Index:301
+7731f I:305 triple win
+Roll:123 RNG:7731f Index:305
+dba223b I:309 triple win
+Roll:123 RNG:dba223b Index:309
+be1ea717 I:313 triple win
+Roll:123 RNG:be1ea717 Index:313
+698074ed I:315 triple lose
+Roll:111 RNG:698074ed Index:315
+99304ab4 I:458 is normal roll 146
+Roll:146 RNG:99304ab4 Index:458
+146 Accurate
+
+RNG:3c7f7c86 I:8
+After Wait Cursor:143 RNG:cde43c09 Index:287
+bde695fd I:427 is normal roll 224
+Roll:224 RNG:bde695fd Index:427
+224 Accurate
+
+RNG:efdd0947 I:9
+After Wait Cursor:149 RNG:7b218407 Index:329
+54e1289d I:523 is normal roll 126
+Roll:126 RNG:54e1289d Index:523
+126 Accurate
+
+RNG:addac574 I:10
+After Wait Cursor:119 RNG:d9f645f3 Index:253
+ab4040e6 I:296 is normal roll 344
+Roll:344 RNG:ab4040e6 Index:296
+344 Accurate
+
+RNG:da079a9d I:11
+After Wait Cursor:136 RNG:bb4377c8 Index:262
+b0fa01fb I:373 is normal roll 224
+Roll:224 RNG:b0fa01fb Index:373
+224 Accurate
+
+RNG:98c6db12 I:12
+After Wait Cursor:188 RNG:ccc3cf5f Index:241
+17dff6c5 I:547 is normal roll 244
+Roll:244 RNG:17dff6c5 Index:547
+244 Accurate
+
+RNG:a556f2e3 I:13
+After Wait Cursor:192 RNG:e197ec0d Index:283
+2c75c7b8 I:342 is normal roll 244
+Roll:244 RNG:2c75c7b8 Index:342
+244 Accurate
+
+RNG:6298c4e0 I:14
+After Wait Cursor:149 RNG:52986d1a Index:292
+abaca402 I:476 is normal roll 111
+Roll:111 RNG:abaca402 Index:476
+ec8f27a2 I:700 is normal roll 345
+Roll:345 RNG:ec8f27a2 Index:700
+345 Accurate
+
+RNG:ac484399 I:15
+After Wait Cursor:120 RNG:4c92806b Index:261
+1656b847 I:265 triple win
+Roll:123 RNG:1656b847 Index:265
+deb26f51 I:407 is normal roll 125
+Roll:125 RNG:deb26f51 Index:407
+125 Accurate
+
+RNG:80b3965e I:16
+After Wait Cursor:162 RNG:473004a0 Index:334
+84f6b15a I:484 is normal roll 235
+Roll:235 RNG:84f6b15a Index:484
+235 Accurate
+
+RNG:aefbda3f I:17
+After Wait Cursor:187 RNG:20f85a5b Index:277
+1e7cb6a4 I:282 is_piss
+Roll:OUT RNG:1e7cb6a4 Index:282
+b613a148 I:390 is normal roll 345
+Roll:345 RNG:b613a148 Index:390
+345 Inaccurate, rolled 122 index at 719 after pause
+
+RNG:9754f0c I:18
+After Wait Cursor:117 RNG:bb4377c8 Index:262
+95268786 I:264 triple lose
+Roll:111 RNG:95268786 Index:264
+4390af96 I:312 is normal roll 145
+Roll:145 RNG:4390af96 Index:312
+145 Accurate
+
+RNG:f4508055 I:19
+After Wait Cursor:149 RNG:4e08b115 Index:339
+4dccde5f I:497 is normal roll 456
+Roll:456 RNG:4dccde5f Index:497
+eb0036a8 I:678 is normal roll 146
+Roll:146 RNG:eb0036a8 Index:678
+146 Accurate
+
+
+--- Incorrect ones
+RNG:b869d3e5 I:3
+After Wait Cursor:171 RNG:81546640 Index:302
+7731f I:305 double win
+Roll:456 RNG:7731f Index:305
+3139a66c triple win
+Roll:222 RNG:f07e8d06 Index:392
+8626b1d7 I:633 is normal roll 456
+Roll:456 RNG:8626b1d7 Index:633
+314f59a6 I:872 is normal roll 246
+Roll:246 RNG:314f59a6 Index:872
+246 Inaccurate, rolled 124, paused at index 852 so didn't go that far
+
+RNG:c1a5c16b I:5
+After Wait Cursor:165 RNG:1d973979 Index:303
+d97c86be triple win
+Roll:444 RNG:f7dc9db3 Index:317
+3837821f I:561 is normal roll 114
+Roll:114 RNG:3837821f Index:561
+114 Inaccurate, 125. Index at 856 on pause
+
+RNG:aefbda3f I:17
+After Wait Cursor:187 RNG:20f85a5b Index:277
+1e7cb6a4 I:282 is_piss
+Roll:OUT RNG:1e7cb6a4 Index:282
+b613a148 I:390 is normal roll 345
+Roll:345 RNG:b613a148 Index:390
+345 Inaccurate, rolled 122 index at 719 after pause

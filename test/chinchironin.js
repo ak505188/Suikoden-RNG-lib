@@ -43,7 +43,9 @@ describe("Rolls should match TaiHoRolls_0x12", () => {
   const sim_results = [];
 
   for (let i = 0; i < NUM_ROLLS_TO_TEST; i++) {
-    sim_results.push({ index: rng.count, rng: rng.getRNG(), ...simulateOpponentRollsFromGameStart(rng.cloneKeepIndex(), true, 203, 0) });
+    const sim_result = simulateOpponentRollsFromGameStart(rng.cloneKeepIndex(), true, 203, 0);
+    const rolls = sim_result.rolls.map(res => res.roll);
+    sim_results.push({ index: rng.count, rng: rng.getRNG(), wait: sim_result.wait, rolls });
     rng.next();
   }
 
@@ -77,7 +79,9 @@ describe("Rolls should match Gaspar 0x43", () => {
   const rng = new RNG(0x43);
 
   for (let i = 0; i < NUM_ROLLS_TO_TEST; i++) {
-    const result = { index: rng.count, rng: rng.getRNG(), ...simulateOpponentRollsFromGameStart(rng.cloneKeepIndex(), false, 441, 0) };
+    const sim_result = simulateOpponentRollsFromGameStart(rng.cloneKeepIndex(), false, 441, 0);
+    const rolls = sim_result.rolls.map(res => res.roll);
+    const result = { index: rng.count, rng: rng.getRNG(), wait: sim_result.wait, rolls };
     it(`${i} should match.`, () => {
       assert.deepStrictEqual(
         result,

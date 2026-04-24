@@ -1,5 +1,4 @@
-import RNG from '../lib/rng.js';
-import { Characters, getCharacterStatGrowth, getGrowthValue, LevelupStatOrder  } from './characters.js';
+import { Characters, getGrowthValue, LevelupStatOrder  } from './characters.js';
 
 export function characterLevelUps(name, startingLevel, levelsGained, rng) {
   let level = startingLevel;
@@ -14,7 +13,6 @@ export function characterLevelUps(name, startingLevel, levelsGained, rng) {
 }
 
 export function characterLevelUp(name, level, rng) {
-  const growths = Characters[name];
   const levelupGrowths = {};
   LevelupStatOrder.forEach(stat => {
     rng.next();
@@ -31,8 +29,8 @@ export function calculateLevelupGrowth(rngNormalized, growthValue, isHP = false)
 
 export function generateCharacterMultipleLevelup(rng, name, startingLevel, iterations, stringify = false) {
   const levelups = [];
-  for (let i = 0; i < iterations; i++) {
-    const levelup = characterLevelUp(name, startingLevel, rng)
+  for (let i = 1; i <= iterations; i++) {
+    const levelup = characterLevelUp(name, startingLevel + i, rng)
     levelups.push(stringify ? Object.values(levelup).toString() : levelup);
   }
   return levelups;

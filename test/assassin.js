@@ -1,6 +1,6 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import RNG from '../lib/rng.js';
+import RNG, { determineAssassinMove, simulateAssassinTurn, simulateAssassinFight } from '../lib/rng.js';
 
 describe("Damage Roll Calculation Tests", () => {
   const rng = new RNG(0x49e384c7);
@@ -18,17 +18,17 @@ describe("Damage Roll Calculation Tests", () => {
 describe("Determine move tests", () => {
   it('RNG 0xebc70acf should give Melee', () => {
     const rng = new RNG(0xebc70acf);
-    const assassin_move = rng.determineAssassinMove();
+    const assassin_move = determineAssassinMove(rng);
     assert.strictEqual(assassin_move.move_name, 'Melee');
   });
   it('RNG 0x49e384c7 should give Shuriken', () => {
     const rng = new RNG(0x49e384c7);
-    const assassin_move = rng.determineAssassinMove();
+    const assassin_move = determineAssassinMove(rng);
     assert.strictEqual(assassin_move.move_name, 'Shuriken');
   });
   it('RNG 0xbc09a663 should give Shuriken', () => {
     const rng = new RNG(0xbc09a663);
-    const assassin_move = rng.determineAssassinMove();
+    const assassin_move = determineAssassinMove(rng);
     assert.strictEqual(assassin_move.move_name, 'Shuriken');
   });
 });
@@ -37,7 +37,7 @@ describe("Damage Roll Calculation Tests", () => {
   const rng = new RNG(0xebc70acf);
   const arm = 81;
 
-  const turn1 = RNG.simulateAssassinTurn(rng, arm);
+  const turn1 = simulateAssassinTurn(rng, arm);
   const rng_after_t1 = rng.getRNG();
 
   it('Move name should == Melee', () => {
@@ -50,7 +50,7 @@ describe("Damage Roll Calculation Tests", () => {
     assert.strictEqual(rng_after_t1, 0x49e384c7);
   });
 
-  const turn2 = RNG.simulateAssassinTurn(rng, arm);
+  const turn2 = simulateAssassinTurn(rng, arm);
 
   it('Move name should == Shuriken', () => {
     assert.strictEqual(turn2.move_name, 'Shuriken');
@@ -67,7 +67,7 @@ describe("Damage Roll Calculation Test with same RNG different ARM", () => {
   const rng = new RNG(0xebc70acf);
   const arm = 78;
 
-  const turn1 = RNG.simulateAssassinTurn(rng, arm);
+  const turn1 = simulateAssassinTurn(rng, arm);
   const rng_after_t1 = rng.getRNG();
 
   it('Move name should == Melee', () => {
@@ -80,7 +80,7 @@ describe("Damage Roll Calculation Test with same RNG different ARM", () => {
     assert.strictEqual(rng_after_t1, 0x49e384c7);
   });
 
-  const turn2 = RNG.simulateAssassinTurn(rng, arm);
+  const turn2 = simulateAssassinTurn(rng, arm);
 
   it('Move name should == Shuriken', () => {
     assert.strictEqual(turn2.move_name, 'Shuriken');
@@ -97,7 +97,7 @@ describe("Damage Roll Calculation Test with different RNG different ARM", () => 
   const rng = new RNG(0xebaa0acf);
   const arm = 86;
 
-  const turn1 = RNG.simulateAssassinTurn(rng, arm);
+  const turn1 = simulateAssassinTurn(rng, arm);
   const rng_after_t1 = rng.getRNG();
 
   it('Move name should == Shuriken', () => {
@@ -110,7 +110,7 @@ describe("Damage Roll Calculation Test with different RNG different ARM", () => 
     assert.strictEqual(rng_after_t1, 0x032684c7);
   });
 
-  const turn2 = RNG.simulateAssassinTurn(rng, arm);
+  const turn2 = simulateAssassinTurn(rng, arm);
 
   it('Move name should == Melee', () => {
     assert.strictEqual(turn2.move_name, 'Melee');
@@ -127,7 +127,7 @@ describe("Full fight sim test", () => {
   const rng = new RNG(0xebaa0acf);
   const arm = 86;
 
-  const results = RNG.simulateAssassinFight(rng, arm);
+  const results = simulateAssassinFight(rng, arm);
 
   it('T1 should == Shuriken', () => {
     assert.strictEqual(results.turns[0].move_name, 'Shuriken');

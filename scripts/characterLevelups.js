@@ -89,7 +89,6 @@ const moravia_mcd_45_krin_dies = {
   Flik:     { level: 47, levels_gained: 4 },
   Kasumi:   { level: 38, levels_gained: 8, skip: true },
   Stallion: { level: 16, levels_gained: 8, skip: true },
-  Krin:     { level: 7, levels_gained: 8, skip: true },
   Tengaar:  { level: 42, levels_gained: 7 }
 };
 
@@ -97,6 +96,80 @@ const kobolds_luc = {
   Kirkis:   { level: 15, levels_gained: 3 },
   Luc:      { level: 12, levels_gained: 6 }
 }
+
+const party_sonierre = {
+  McDohl:   { level: 27, levels_gained: 2 },
+  Gremio:   { level: 27, levels_gained: 2, skip: true },
+  Viktor:   { level: 27, levels_gained: 2, skip: true },
+  Humphrey: { level: 23, levels_gained: 4, skip: true }
+}
+
+const party_lenankamp_manip = {
+  McDohl:   { level: 8, levels_gained: 3 },
+  Gremio:   { level: 8, levels_gained: 3 },
+  Viktor:   { level: 8, levels_gained: 3 },
+  Cleo:     { level: 8, levels_gained: 3 },
+}
+
+const party_res_rune = {
+  McDohl:   { level: 29, levels_gained: 6 },
+  Viktor:   { level: 35, levels_gained: 6 },
+  Cleo:     { level: 25, levels_gained: 7 },
+  Luc:      { level: 18, levels_gained: 8 },
+  Flik:     { level: 31, levels_gained: 4 },
+}
+
+const party_3l1d1h = {
+  McDohl:   { level: 41, levels_gained: 2 },
+  Viktor:   { level: 40, levels_gained: 4, skip: true },
+  Cleo:     { level: 40, levels_gained: 4 },
+  Luc:      { level: 36, levels_gained: 7 },
+  Flik:     { level: 41, levels_gained: 3 },
+  Hix:      { level: 38, levels_gained: 5, skip: true },
+}
+
+const party_neclord = {
+  Cleo:     { level: 44, levels_gained: 1 },
+  Luc:      { level: 43, levels_gained: 1 },
+  Flik:     { level: 44, levels_gained: 1 },
+}
+
+const party_shell = {
+  McDohl:   { level: 51, levels_gained: 1, skip: true },
+  Viktor:   { level: 44, levels_gained: 2, skip: true },
+  Cleo:     { level: 45, levels_gained: 2, skip: true },
+  Luc:      { level: 48, levels_gained: 2 },
+  Grenseal: { level: 29, levels_gained: 1, skip: true },
+  Tengaar:  { level: 50, levels_gained: 1 },
+};
+
+const party_sonya = {
+  McDohl:   { level: 52, levels_gained: 1, skip: true },
+  Viktor:   { level: 46, levels_gained: 1, skip: true },
+  Cleo:     { level: 47, levels_gained: 2, skip: true },
+  Luc:      { level: 48, levels_gained: 1 },
+  Grenseal: { level: 30, levels_gained: 2, skip: true },
+  Tengaar:  { level: 50, levels_gained: 1 },
+};
+
+const party_zombie_dragon = {
+  McDohl:   { level: 22, levels_gained: 2 },
+  Gremio:   { level: 22, levels_gained: 2 },
+  Viktor:   { level: 22, levels_gained: 1, skip: true },
+  Cleo:     { level: 22, levels_gained: 2 },
+  "Tai Ho": { level: 10, levels_gained: 1, skip: true },
+  Camille:  { level: 10, levels_gained: 1, skip: true },
+}
+
+const party_gregminster_b1 = {
+  McDohl:   { level: 54, levels_gained: 1, skip: true },
+  Viktor:   { level: 49, levels_gained: 4, skip: true },
+  Flik:     { level: 52, levels_gained: 2, skip: true },
+  Luc:      { level: 50, levels_gained: 4 },
+  Hellion:  { level: 33, levels_gained: 6, skip: true },
+  Tengaar:  { level: 53, levels_gained: 1 },
+}
+
 
 // const party = party_flik_lived_neclord_krin_dies;
 
@@ -117,55 +190,90 @@ const kobolds_luc = {
 
 // const RNG_INDEXES = KRIN_DIES_RNG_INDEXES;
 
-const RNG_INDEXES = KOBOLD_INDEXES;
-const party = kobolds_luc;
-const STARTING_RNG = MARCO_STARTING_RNG;
+// B1 Luc 2nd w/Medicine
+// B1 Luc 3rd w/Medicine
+// B2 Luc 4th w/Medicine
+// B3 Luc 3rd w/Medicine
+// B3 Luc 4th w/Medicine
 
-RNG_INDEXES.forEach(RNG_INDEX => {
-  const rng = new RNG(STARTING_RNG).next(RNG_INDEX);
-  const levels_gained = Object.values(party).map(char => char.levels_gained);
+const STARTING_RNG = 0x42;
+const levelups_to_generate = [
+  // // McDohl 1st, McDohl 2nd, Kasumi Atk
+  // { label: '1923 0x55', party: moravia_mcd_45, rng_indexes: [13401, 12817, 12695] },
+  // // McDohl 2nd dead Krin, Kasumi Atk Krin dead
+  // { label: '1923 0x55 Krin dead', party: moravia_mcd_45_krin_dies, rng_indexes: [12880, 13316] },
+  // // McDohl 2nd, McDohl 1st, Kasumi Atk
+  // { label: '2011 0x55', party: moravia_mcd_45, rng_indexes: [12937, 12864, 12896] },
+  // // McDohl 2nd, McDohl 2nd Kasumi Atk
+  // { label: '2011 0x55', party: moravia_mcd_45_krin_dies, rng_indexes: [12866, 12929] },
+  // McDohl 1st WINNER, Kasumi > 160SPD Krin dies, Kasumi > 160SPD no one dies
+  // { label: '2839 0x55', party: moravia_mcd_45, rng_indexes: [13895, 14334, 14339] },
 
-  const character_results = Object.entries(party).map(([name, data]) => {
-    if (data.skip) return;
-    const lvl_index = levels_gained.indexOf(data.levels_gained);
-    const starting_levels = [
-      ...levels_gained.slice(0, lvl_index),
-      ...levels_gained.slice(lvl_index + 1)
-    ];
+  // { label: '2424 Krin dead', party: moravia_mcd_45_krin_dies, rng_indexes: [13637] },
+  // McDohl 2nd, McDohl 1st
+  // { label: '2431', party: moravia_mcd_45, rng_indexes: [13236, 13815] },
+  // McDohl 1st Krin dead
+  // { label: '2431', party: moravia_mcd_45_krin_dies, rng_indexes: [13336] },
+  // { label: '2431 Krin dead', party: moravia_mcd_45_krin_dies, rng_indexes: [13260] },
+  // { label: '1601 McD 1st', party: moravia_mcd_45, rng_indexes: [12441, 12450] },
+  // { label: 'Sonya', party: party_sonya, rng_indexes: [28574, 28289] }
+  // { label: 'Zombie Dragons', party: party_zombie_dragon, rng_indexes: [15592] },
+  // McDohl 2nd, McDohl 1st, McDohl 2nd Kasumi Atk
+  { label: '2050 0x55', party: moravia_mcd_45, rng_indexes: [12891, 14351, 13154] },
+  // McDohl 2nd Krin dead, McDohl 2nd Krin dead Kasumi Atk
+  { label: '2050 0x55 Krin dead', party: moravia_mcd_45_krin_dies, rng_indexes: [13476, 12960] },
+  { label: 'Gregminster B1', party: party_gregminster_b1, rng_indexes: [24794, 24856, 26514, 26522] }
+];
 
-    const permutations = generateLevelPermutations(starting_levels);
-    return permutations.map(starting_levels_gained => {
-      const rng_to_use = rng.cloneKeepIndex().next(starting_levels_gained * 7);
-      const rng_to_use_index = rng_to_use.count;
-      const stats = generateCharacterMultipleLevelup(
-        rng_to_use,
-        name,
-        data.level,
-        data.levels_gained
-      ).reduce((total, stats) => {
-        Object.entries(stats).forEach(([stat, value]) => {
-          if (total[stat] == undefined) {
-            total[stat] = value;
-          } else {
-            total[stat] += value
-          }
-        })
-        return total;
-      }, {});
-      return { name, start: starting_levels_gained, index: rng_to_use_index, ...stats };
-    })
-  }).filter(res => res !== undefined);
+levelups_to_generate.forEach(levelup => generateLevelups(levelup));
 
-  const csv_headers = ['name','start','index','PWR','SKL','DEF','SPD','MGC','LUK','HP'];
-  const toCsv = (headers = csv_headers, results) => {
+function generateLevelups({ label, party, rng_indexes, headers }) {
+  rng_indexes.forEach(rng_index => {
+    const rng = new RNG(STARTING_RNG).next(rng_index);
+    const levels_gained = Object.values(party).map(char => char.levels_gained);
+
+    const character_results = Object.entries(party).map(([name, data]) => {
+      if (data.skip) return;
+      const lvl_index = levels_gained.indexOf(data.levels_gained);
+      const starting_levels = [
+        ...levels_gained.slice(0, lvl_index),
+        ...levels_gained.slice(lvl_index + 1)
+      ];
+
+      const permutations = generateLevelPermutations(starting_levels);
+      return permutations.map(starting_levels_gained => {
+        const rng_to_use = rng.cloneKeepIndex().next(starting_levels_gained * 7);
+        const rng_to_use_index = rng_to_use.count;
+        const stats = generateCharacterMultipleLevelup(
+          rng_to_use,
+          name,
+          data.level,
+          data.levels_gained
+        ).reduce((total, stats) => {
+          Object.entries(stats).forEach(([stat, value]) => {
+            if (total[stat] == undefined) {
+              total[stat] = value;
+            } else {
+              total[stat] += value
+            }
+          })
+          return total;
+        }, {});
+        return { name, start: starting_levels_gained, index: rng_to_use_index, ...stats };
+      })
+    }).filter(res => res !== undefined);
+
+    const csv_headers = [rng_index, 'start','index','PWR','SKL','DEF','SPD','MGC','LUK','HP'];
     const csv = [
-      headers.join(','),
-      ...results
+      ...character_results
         .flat(3)
         .map(result => Object.values(result).join(','))
-    ];
-    return csv.join('\n');
-  }
+    ].join('\n');
 
-  console.log(toCsv(csv_headers, character_results));
-});
+    if (label) console.log(label, rng_index);
+    if (headers) console.log(csv_headers.join(','));
+    console.log(csv);
+  });
+
+}
+

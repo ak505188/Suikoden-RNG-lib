@@ -1,4 +1,4 @@
-import { Characters, getGrowthValue, LevelupStatOrder  } from './characters.js';
+import { getGrowthValue, LevelupStatOrder  } from './characters.js';
 
 export function characterLevelUps(name, startingLevel, levelsGained, rng) {
   let level = startingLevel;

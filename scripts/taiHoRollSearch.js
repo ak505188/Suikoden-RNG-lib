@@ -1,8 +1,8 @@
 import RNG from '../lib/rng.js';
 import { simulateOpponentRollsFromGameStart } from '../lib/chinchironin.js';
 
-const START_INDEX = 12800;
-const END_INDEX = 15000;
+const START_INDEX = 15000;
+const END_INDEX = 16000;
 
 const rng = new RNG(0x12).next(START_INDEX);
 const games = [];

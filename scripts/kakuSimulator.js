@@ -42,12 +42,16 @@ class NPC {
     switch(this.direction) {
       case 0:
         this.y = this.y + 2;
+        break;
       case 1:
         this.y = this.y - 2;
+        break;
       case 2:
         this.x = this.x - 2;
+        break;
       case 3:
         this.x = this.x + 2;
+        break;
     }
   }
 

@@ -94,11 +94,7 @@ describe('0x3fb703c0 Sim Test', () => {
   const tracker = [];
   const sim_length = 10000;
   for (let i = 1; i <= sim_length; i++) {
-    const events = kaku.simulateMovement(rng);
-    console.log(`Frame ${i}, index: ${rng.count}:`);
-    if (events.length > 0) {
-      console.log(events);
-    }
+    kaku.simulateMovement(rng);
     tracker.push({ rng: rng.getRNG2(), rng_index: rng.count });
   }
 
@@ -136,11 +132,7 @@ describe('0x56c35961 Sim Test', () => {
   const tracker = [];
   const sim_length = 10000;
   for (let i = 1; i <= sim_length; i++) {
-    const events = kaku.simulateMovement(rng);
-    console.log(`Frame ${i}, index: ${rng.count}:`);
-    if (events.length > 0) {
-      console.log(events);
-    }
+    kaku.simulateMovement(rng);
     tracker.push({ rng: rng.getRNG2(), rng_index: rng.count });
   }
 
@@ -228,11 +220,7 @@ describe('0x874c7841 Sim Test', () => {
   const tracker = [];
   const sim_length = 10000;
   for (let i = 1; i <= sim_length; i++) {
-    const events = kaku.simulateMovement(rng);
-    console.log(`Frame ${i}, index: ${rng.count}:`);
-    if (events.length > 0) {
-      console.log(events);
-    }
+    kaku.simulateMovement(rng);
     tracker.push({ rng: rng.getRNG2(), rng_index: rng.count });
   }
 
@@ -251,11 +239,7 @@ describe('0x27959cc0 Sim Test', () => {
   const tracker = [];
   const sim_length = 10000;
   for (let i = 1; i <= sim_length; i++) {
-    const events = kaku.simulateMovement(rng);
-    console.log(`Frame ${i}, index: ${rng.count}:`);
-    if (events.length > 0) {
-      console.log(events);
-    }
+    kaku.simulateMovement(rng);
     tracker.push({ rng: rng.getRNG2(), rng_index: rng.count });
   }
 

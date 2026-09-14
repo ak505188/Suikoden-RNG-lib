@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import Character from '../lib/Game/Combat/Characters/Character.js';
-import { CHARACTERS } from '../lib/Game/Combat/Characters/Characters.js';
+import Character from '../lib/Game/Battle/Character.js';
+import CHARACTERS from '../lib/Game/Characters.js';
 
 describe('Character ATK', () => {
   it('McDohl ATK = 18 (Wolf Fang Staff lvl 1 + PWR 13)', () => {

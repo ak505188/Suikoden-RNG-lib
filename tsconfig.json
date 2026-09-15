@@ -12,6 +12,6 @@
     "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": ["lib/**/*.js", "stats/**/*.js", "test/**/*.js", "index.js"],
-  "exclude": ["node_modules", "scripts"]
+  "include": ["lib/**/*.js", "stats/**/*.js", "test/**/*.js", "scripts/**/*.js", "index.js"],
+  "exclude": ["node_modules"]
 }

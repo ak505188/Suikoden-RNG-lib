@@ -1,10 +1,10 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import RNG from '../../lib/rng.js';
-import { flamingArrowRand } from '../../lib/Game/Magic/SpellRNG/FlamingArrow.js';
-
+import { flamingArrowRand, dancingFlamesRand } from '../../lib/Game/Magic/SpellRNG/Fire.js';
 
 const cases = [
+  { rng: 0x1b65fc6a, calls: 512 },
   { rng: 0x11111111, calls: 524 },
   { rng: 0xcafebabe, calls: 540 },
   { rng: 0xdeadbeef, calls: 536 },
@@ -34,4 +34,11 @@ describe("Flaming Arrow Rand tests", () => {
       assert.strictEqual(flamingArrowRand(r).calls, calls);
     });
   };
+});
+
+describe("Dancing Flames Rand tests", () => {
+  it("Should always be 150", () => {
+    const r = new RNG(0x11111111);
+    assert.strictEqual(dancingFlamesRand(r).calls, 150);
+  });
 });

@@ -3,6 +3,7 @@ import assert from 'node:assert';
 import RNG from '../lib/rng.js';
 import Character from '../lib/Game/Battle/Character.js';
 import CHARACTERS from '../lib/Game/Characters.js';
+import { CHARACTER_KEYS } from '../lib/Game/Keys.js';
 import { calculateLevelupGrowth, getGrowthValue } from '../lib/Game/Growths.js';
 import { STATS } from '../lib/Game/Constants.js';
 
@@ -58,14 +59,14 @@ describe('getGrowthValue', () => {
 describe('Character#calculateLevelups (single level)', () => {
   it('is deterministic for a given RNG state (McDohl, level 24 -> 25, 0x12 @ 30000)', () => {
     const rng = new RNG(0x12).next(30000);
-    const character = new Character(CHARACTERS.MCDOHL);
+    const character = new Character(CHARACTER_KEYS.MCDOHL);
     const growth = character.calculateLevelups(1, 24, rng);
     assert.deepStrictEqual(growth, { PWR: 2, SKL: 2, DEF: 2, SPD: 3, MGC: 2, LUK: 3, HP: 11 });
   });
 
   it('advances the RNG by exactly one roll per stat', () => {
     const rng = new RNG(0x12).next(30000);
-    const character = new Character(CHARACTERS.MCDOHL);
+    const character = new Character(CHARACTER_KEYS.MCDOHL);
     character.calculateLevelups(1, 24, rng);
     assert.strictEqual(rng.count, 30000 + 7);
   });
@@ -74,14 +75,14 @@ describe('Character#calculateLevelups (single level)', () => {
 describe('Character#calculateLevelups (multiple levels)', () => {
   it('sums growths across levels (McDohl, 24 -> 27, 0x12 @ 30000)', () => {
     const rng = new RNG(0x12).next(30000);
-    const character = new Character(CHARACTERS.MCDOHL);
+    const character = new Character(CHARACTER_KEYS.MCDOHL);
     const growth = character.calculateLevelups(3, 24, rng);
     assert.deepStrictEqual(growth, { PWR: 6, SKL: 7, DEF: 5, SPD: 9, MGC: 7, LUK: 7, HP: 33 });
   });
 
   it('advances the RNG by 7 rolls per level', () => {
     const rng = new RNG(0x12).next(30000);
-    const character = new Character(CHARACTERS.MCDOHL);
+    const character = new Character(CHARACTER_KEYS.MCDOHL);
     character.calculateLevelups(3, 24, rng);
     assert.strictEqual(rng.count, 30000 + 3 * 7);
   });
@@ -94,12 +95,12 @@ describe('Character#calculateLevelups (multiple levels)', () => {
 // are processed in as well as the growth math itself.
 describe('Party levelups (regression baseline, 0x12 @ 30000)', () => {
   const party = [
-    { key: 'MCDOHL', name: 'McDohl', level: 24, levels_gained: 1 },
-    { key: 'GREMIO', name: 'Gremio', level: 24, levels_gained: 1 },
-    { key: 'VIKTOR', name: 'Viktor', level: 24, levels_gained: 1 },
-    { key: 'CLEO', name: 'Cleo', level: 24, levels_gained: 1 },
-    { key: 'KIRKIS', name: 'Kirkis', level: 18, levels_gained: 2 },
-    { key: 'VALERIA', name: 'Valeria', level: 27, levels_gained: 1 },
+    { key: CHARACTER_KEYS.MCDOHL, name: 'McDohl', level: 24, levels_gained: 1 },
+    { key: CHARACTER_KEYS.GREMIO, name: 'Gremio', level: 24, levels_gained: 1 },
+    { key: CHARACTER_KEYS.VIKTOR, name: 'Viktor', level: 24, levels_gained: 1 },
+    { key: CHARACTER_KEYS.CLEO, name: 'Cleo', level: 24, levels_gained: 1 },
+    { key: CHARACTER_KEYS.KIRKIS, name: 'Kirkis', level: 18, levels_gained: 2 },
+    { key: CHARACTER_KEYS.VALERIA, name: 'Valeria', level: 27, levels_gained: 1 },
   ];
 
   const expected = {
@@ -114,7 +115,7 @@ describe('Party levelups (regression baseline, 0x12 @ 30000)', () => {
   const rng = new RNG(0x12).next(30000);
   const levelUps = {};
   for (const member of party) {
-    const character = new Character(CHARACTERS[member.key]);
+    const character = new Character(member.key);
     levelUps[member.name] = character.calculateLevelups(member.levels_gained, member.level, rng);
   }
 

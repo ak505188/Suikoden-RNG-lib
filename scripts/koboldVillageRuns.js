@@ -16,7 +16,6 @@ const wm_battles = Areas['Pannu Yakuta Area'].generateEncounters(base_rng.clone(
 const newRNGFromBattle = battle => {
   const rng = new RNG(0x12);
   rng.rng = battle.battle_rng;
-  rng.rng2 = rng.calcRNG2(rng.rng);
   rng.count = battle.battle_index;
   return rng;
 }

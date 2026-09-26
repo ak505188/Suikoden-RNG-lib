@@ -52,7 +52,7 @@ const enemyParty = new EnemyParty([zombieDragon]);
 // Run
 
 describe('Zombie Dragon 1 turn tests', () => {
-  const party = new PlayerParty([Viktor, Gremio, McDohl, Cleo, Tai_Ho, Camille]);
+  const party = new PlayerParty([Viktor, Gremio, McDohl, Cleo, Camille, Tai_Ho]);
   /** @param {Action[]} actions */
   const actions = [
     { type: ACTION_TYPES.ATTACK },
@@ -67,28 +67,25 @@ describe('Zombie Dragon 1 turn tests', () => {
 
   battle.run();
 
-  // it('rng == 0x27bc4952', () => {
-  //   assert.strictEqual(battle.rng.getRNG(), 0x27bc4952);
-  // });
-  // it('Viktor HP == 325', () => {
-  //   assert.strictEqual(battle.party.getCombatant(Viktor.name).HP, 325);
-  // });
-  // it('Gremio HP == 103', () => {
-  //   assert.strictEqual(battle.party.getCombatant(Gremio.name).HP, 103);
-  // });
-  // it('McDohl HP == 220', () => {
-  //   assert.strictEqual(battle.party.getCombatant(McDohl.name).HP, 220);
-  // });
-  // it('Cleo HP == 180', () => {
-  //   assert.strictEqual(battle.party.getCombatant(Cleo.name).HP, 180);
-  // });
-  // it('Camille HP == 4', () => {
-  //   assert.strictEqual(battle.party.getCombatant(Camille.name).HP, 4);
-  // });
-  // it('Tai Ho HP == 66', () => {
-  //   assert.strictEqual(battle.party.getCombatant(Tai_Ho.name).HP, 66);
-  // });
-  // it('Zombie Dragon HP == 2635', () => {
-  //   assert.strictEqual(battle.enemies.getCombatant(zombieDragon.name).HP, 2635);
-  // });
+  it('rng == 0x27bc4952', () => {
+    assert.strictEqual(battle.rng.getRNG(), 0x27bc4952);
+  });
+  it('Viktor HP == 325', () => {
+    assert.strictEqual(battle.party.getCombatantByName(Viktor.name).HP, 325);
+  });
+  it('Gremio HP == 103', () => {
+    assert.strictEqual(battle.party.getCombatantByName(Gremio.name).HP, 103);
+  });
+  it('McDohl HP == 220', () => {
+    assert.strictEqual(battle.party.getCombatantByName(McDohl.name).HP, 220);
+  });
+  it('Cleo HP == 180', () => {
+    assert.strictEqual(battle.party.getCombatantByName(Cleo.name).HP, 180);
+  });
+  it('Camille HP == 4', () => {
+    assert.strictEqual(battle.party.getCombatantByName(Camille.name).HP, 4);
+  });
+  it('Zombie Dragon HP == 2635', () => {
+    assert.strictEqual(battle.enemies.getCombatantByName(zombieDragon.name).HP, 2635);
+  });
 });

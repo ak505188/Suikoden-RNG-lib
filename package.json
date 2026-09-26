@@ -4,6 +4,10 @@
   "version": "0.1.0",
   "private": false,
   "type": "module",
+  "imports": {
+    "#lib/*": "./lib/*",
+    "#game/*": "./lib/Game/*"
+  },
   "scripts": {
     "test": "node --test",
     "lint": "eslint .",

@@ -58,25 +58,25 @@ describe('Character attack timing', () => {
     const c = new Character(CHARACTER_KEYS.MCDOHL);
     assert.strictEqual(c.attackTiming.damage, 72);
     assert.strictEqual(c.attackTiming.free, 128);
-    assert.strictEqual(c.reactionFrames, 36);
+    assert.strictEqual(c.reactionFrames(), 36);
   });
 
   it('Eileen reaction = 28 (own reaction script)', () => {
     const c = new Character(CHARACTER_KEYS.EILEEN);
-    assert.strictEqual(c.reactionFrames, 28);
+    assert.strictEqual(c.reactionFrames(), 28);
   });
 
   it('Fire or Lightning rune piece replaces the reaction with 34', () => {
     const c = new Character(CHARACTER_KEYS.EILEEN);
     c.weapon.setRunePiece(WEAPON_ELEMENTS.FIRE);
-    assert.strictEqual(c.reactionFrames, 34);
+    assert.strictEqual(c.reactionFrames(), 34);
     c.weapon.setRunePiece(WEAPON_ELEMENTS.LIGHTNING);
-    assert.strictEqual(c.reactionFrames, 34);
+    assert.strictEqual(c.reactionFrames(), 34);
   });
 
   it('Other rune pieces keep the character reaction', () => {
     const c = new Character(CHARACTER_KEYS.EILEEN);
     c.weapon.setRunePiece(WEAPON_ELEMENTS.EARTH);
-    assert.strictEqual(c.reactionFrames, 28);
+    assert.strictEqual(c.reactionFrames(), 28);
   });
 });

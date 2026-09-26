@@ -7,10 +7,12 @@ import { CHARACTER_KEYS, ENEMY_KEYS } from '../lib/Game/Keys.js';
 import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
 import { ACTION_TYPES } from '../lib/Game/Battle/Actions.js';
 import { RUNES } from '../lib/Game/Magic/Runes.js';
+import { STATUS } from '../lib/Game/Constants.js';
 import Battle from '../lib/Game/Battle/Battle.js';
 import RNG from '../lib/rng.js';
 
 // Seeds for a fresh RNG with the attack resolved first: seed 1 hits, seed 7 misses (both directions).
+// Seed 7 also produces the counters below, where the target can counter.
 const HIT_SEED = 1;
 const MISS_SEED = 7;
 
@@ -18,6 +20,12 @@ const MISS_SEED = 7;
 const makeGremio = (SKL = 68) => new Character(CHARACTER_KEYS.GREMIO)
   .setLVL(22)
   .setStats({ PWR: 64, SKL, DEF: 84, SPD: 49, MGC: 39, LUK: 66, HP: 201 })
+  .rest();
+
+/** @param {number} SKL */
+const makeMcDohl = SKL => new Character(CHARACTER_KEYS.MCDOHL)
+  .setLVL(22)
+  .setStats({ PWR: 76, SKL, DEF: 74, SPD: 86, MGC: 80, LUK: 79, HP: 244 })
   .rest();
 
 const makeCleo = () => new Character(CHARACTER_KEYS.CLEO)
@@ -68,6 +76,7 @@ describe('Party basic attack', () => {
     assert.strictEqual(battle.events.size, 0);
     assert.strictEqual(ant.busyUntil, 112);
     assert.strictEqual(gremio.busyUntil, 120);
+    assert.strictEqual(ant.fx & 0x2, 0x2); // its dodge sets 0x2
   });
 
   it('waits on a busy target without using RNG', () => {
@@ -97,6 +106,117 @@ describe('Enemy basic attack', () => {
     assert.strictEqual(battle.events.size, 0);
     assert.strictEqual(gremio.busyUntil, 101);
     assert.strictEqual(dragon.busyUntil, 108);
+  });
+});
+
+describe('Counters', () => {
+  /** McDohl (Medium range) misses an Elite Soldier (species bit 1), which counters. */
+  const partyCountered = (primed = false) => {
+    const mcdohl = makeMcDohl(1), soldier = new Enemy(ENEMY_KEYS.ELITE_SOLDIER_1);
+    const battle = makeBattle([mcdohl], [soldier], MISS_SEED);
+    mcdohl.setAction({ type: ACTION_TYPES.ATTACK });
+    mcdohl.fx = 0x2;
+    if (primed) soldier.fx = 0x2;
+    battle.resolvePartyAttack(mcdohl);
+    return { battle, mcdohl, soldier };
+  };
+
+  it('monster counters a party miss: roll at +110, attacker free +177, retaliator free +148', () => {
+    const { battle, mcdohl, soldier } = partyCountered();
+    assert.deepStrictEqual([...battle.events.keys()], [110]);
+    assert.strictEqual(mcdohl.busyUntil, 177);
+    assert.strictEqual(soldier.busyUntil, 148);
+  });
+
+  it('the counter damages the attacker on the roll tick', () => {
+    const { battle, mcdohl } = partyCountered();
+    let hpBefore = null;
+    runTicks(battle, 0, 110, tick => { if (tick === 109) hpBefore = mcdohl.HP; });
+    assert.strictEqual(hpBefore, 244);
+    assert.ok(mcdohl.HP < 244);
+  });
+
+  it('a primed retaliator (it dodged earlier) counters sooner: roll at +106', () => {
+    const { battle, mcdohl, soldier } = partyCountered(true);
+    assert.deepStrictEqual([...battle.events.keys()], [106]);
+    assert.strictEqual(mcdohl.busyUntil, 173);
+    assert.strictEqual(soldier.busyUntil, 144);
+  });
+
+  it('effect flags: the attacker\'s are cleared, the counter steps clear the retaliator\'s', () => {
+    const { mcdohl, soldier } = partyCountered(true);
+    assert.strictEqual(mcdohl.fx, 0);
+    assert.strictEqual(soldier.fx, 0);
+  });
+
+  /** An Elite Soldier (species bit 0, not the first enemy) misses McDohl, who counters. */
+  const enemyCountered = defending => {
+    const mcdohl = makeMcDohl(150), ant = new Enemy(ENEMY_KEYS.SOLDIER_ANT), soldier = new Enemy(ENEMY_KEYS.ELITE_SOLDIER_1);
+    const battle = makeBattle([mcdohl], [ant, soldier], MISS_SEED);
+    mcdohl.defending = defending;
+    const result = battle.resolveEnemyAttack(soldier, mcdohl);
+    return { battle, mcdohl, soldier, result };
+  };
+
+  it('party member counters an enemy miss: roll at +103, retaliator free +126, attacker free +184', () => {
+    const { battle, mcdohl, soldier } = enemyCountered(true);
+    assert.deepStrictEqual([...battle.events.keys()], [103]);
+    assert.strictEqual(mcdohl.busyUntil, 126);
+    assert.strictEqual(soldier.busyUntil, 184);
+  });
+
+  it('Defend guarantees the counter with no coin flip (1 rand() call: the hit roll)', () => {
+    assert.strictEqual(enemyCountered(true).battle.rng.getCount(), 1);
+  });
+
+  it('without Defend or Counter Rune, a coin flip decides (2 rand() calls)', () => {
+    assert.strictEqual(enemyCountered(false).battle.rng.getCount(), 2);
+  });
+
+  it('the first enemy can never be countered', () => {
+    const mcdohl = makeMcDohl(150), soldier = new Enemy(ENEMY_KEYS.ELITE_SOLDIER_1);
+    const battle = makeBattle([mcdohl], [soldier], MISS_SEED);
+    mcdohl.defending = true;
+    battle.resolveEnemyAttack(soldier, mcdohl);
+    assert.strictEqual(battle.events.size, 0); // a plain miss
+  });
+});
+
+describe('Battle start', () => {
+  it('clears statuses except Poison and Balloon', () => {
+    const gremio = makeGremio();
+    Object.assign(gremio.status, {
+      [STATUS.POISON]: true, [STATUS.BALLOON]: 2, [STATUS.BUCKET]: true, [STATUS.UNBALANCED]: 1, [STATUS.SLEEP]: true,
+    });
+    makeBattle([gremio], [new ZombieDragon()], HIT_SEED);
+    assert.deepStrictEqual(gremio.status, {
+      [STATUS.POISON]: true, [STATUS.BALLOON]: 2, [STATUS.BUCKET]: false, [STATUS.UNBALANCED]: 0, [STATUS.SLEEP]: false,
+    });
+  });
+});
+
+describe('Balloon', () => {
+  it('at 3 or more removes a combatant at battle start, for the whole battle', () => {
+    const floating = makeGremio(), almost = makeCleo(), dragon = new ZombieDragon();
+    floating.status[STATUS.BALLOON] = 3;
+    almost.status[STATUS.BALLOON] = 2;
+    const battle = makeBattle([floating, almost], [dragon], HIT_SEED);
+    assert.strictEqual(floating.removedFromFight, true);
+    assert.strictEqual(floating.outOfFight, true);
+    assert.strictEqual(almost.removedFromFight, false);
+
+    battle.roundStart();
+    assert.strictEqual(floating.acted, true); // no turn
+  });
+
+  it('is only checked at battle start', () => {
+    const floating = makeGremio();
+    const battle = makeBattle([floating], [new ZombieDragon()], HIT_SEED);
+    floating.status[STATUS.BALLOON] = 3;
+    battle.roundStart();
+    assert.strictEqual(floating.removedFromFight, false); // until the next battle
+    makeBattle([floating], [new ZombieDragon()], HIT_SEED);
+    assert.strictEqual(floating.removedFromFight, true);
   });
 });
 

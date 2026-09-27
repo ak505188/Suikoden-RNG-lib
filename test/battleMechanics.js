@@ -8,7 +8,7 @@ import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
 import { ACTION_TYPES } from '../lib/Game/Battle/Actions.js';
 import { RUNES } from '../lib/Game/Magic/Runes.js';
 import { STATUS } from '../lib/Game/Constants.js';
-import Battle from '../lib/Game/Battle/Battle.js';
+import Battle, { PHASE_STATE } from '../lib/Game/Battle/Battle.js';
 import RNG from '../lib/rng.js';
 
 // Seeds for a fresh RNG with the attack resolved first: seed 1 hits, seed 7 misses (both directions).
@@ -207,6 +207,45 @@ describe('Battle start', () => {
     assert.deepStrictEqual(gremio.status, {
       [STATUS.POISON]: true, [STATUS.BALLOON]: 2, [STATUS.BUCKET]: false, [STATUS.UNBALANCED]: 0, [STATUS.SLEEP]: false,
     });
+  });
+});
+
+describe('Unbalanced', () => {
+  it('lasts through the next round, clearing at its end', () => {
+    const gremio = makeGremio(), dragon = new ZombieDragon();
+    const battle = makeBattle([gremio], [dragon], HIT_SEED);
+    const endRound = () => {
+      battle.resetTurn();
+      battle.phase = PHASE_STATE.ROUND_END_WAIT;
+      battle.turn.rollGate = 1;
+      battle.turnStep();
+      assert.strictEqual(battle.phase, PHASE_STATE.ROUND_OVER);
+    };
+    gremio.unbalance(); // lands in round 0
+    endRound();
+    assert.strictEqual(gremio.status[STATUS.UNBALANCED], 1); // still on for round 1
+    endRound();
+    assert.strictEqual(gremio.status[STATUS.UNBALANCED], 0);
+    endRound();
+    assert.strictEqual(gremio.status[STATUS.UNBALANCED], 0);
+  });
+
+  it('limits an action plan to Defend or Item', () => {
+    const gremio = makeGremio();
+    const battle = makeBattle([gremio], [new ZombieDragon()], HIT_SEED);
+    gremio.unbalance();
+    assert.throws(() => battle.party.setActionPlan([{ type: ACTION_TYPES.ATTACK }]), /Unbalanced/);
+    battle.party.setActionPlan([{ type: ACTION_TYPES.ITEM, itemId: 'MEDICINE' }]);
+    battle.party.setActionPlan([]); // unplanned members Defend
+    assert.strictEqual(gremio.action.type, ACTION_TYPES.DEFEND);
+  });
+
+  it("doesn't decay on enemies", () => {
+    const dragon = new ZombieDragon();
+    const battle = makeBattle([makeGremio()], [dragon], HIT_SEED);
+    dragon.unbalance();
+    battle.party.decayStatuses();
+    assert.strictEqual(dragon.status[STATUS.UNBALANCED], 2);
   });
 });
 

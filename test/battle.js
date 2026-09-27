@@ -140,11 +140,7 @@ describe('5 Bandit best version battle tests', () => {
   const enemyParty = EnemyParty.fromFormation(AREAS.MT_SEIFU.scripted[1]);
   const battle = new Battle({ party, enemies: enemyParty, rng, turns: [actions] });
 
-  console.log(battle.party);
-  console.log(battle.enemies);
-
   battle.playTurnTickBased(actions);
-
 
   it('rng == 0x66c25dd8', () => {
     assert.strictEqual(battle.rng.getRNG(), 0x66c25dd8);
@@ -166,5 +162,16 @@ describe('5 Bandit best version battle tests', () => {
   });
   it('Ted HP == 56', () => {
     assert.strictEqual(battle.party.getCombatantByName(Ted.name).HP, 56);
+  });
+  it('damage rolls match the capture', () => {
+    const damage = battle.log.ofType('damage').map(({ tick, actor, target, amount }) => ({ tick, actor, target, amount }));
+    assert.deepStrictEqual(damage, [
+      { tick: 77, actor: 'Cleo', target: 'Bandit (yellow) #1', amount: 63 }, // crit
+      { tick: 82, actor: 'Ted', target: 'Bandit (green) #5', amount: 32 },
+      { tick: 103, actor: 'McDohl', target: 'Bandit (red) #2', amount: 24 },
+      { tick: 289, actor: 'Gremio', target: 'Bandit (red) #2', amount: 28 },
+      { tick: 393, actor: 'Pahn', target: 'Bandit (red) #3', amount: 38 }, // counter
+      { tick: 544, actor: 'Pahn', target: 'Bandit (green) #4', amount: 43 },
+    ]);
   });
 });

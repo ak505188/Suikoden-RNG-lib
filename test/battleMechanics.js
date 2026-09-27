@@ -182,6 +182,21 @@ describe('Counters', () => {
   });
 });
 
+describe('Waiting for the other side', () => {
+  it('an actor waits while an attack from the other side is in its continuation chain', () => {
+    const gremio = makeGremio(), cleo = makeCleo(), dragon = new ZombieDragon();
+    const battle = makeBattle([gremio, cleo], [dragon], HIT_SEED);
+    gremio.setAction({ type: ACTION_TYPES.ATTACK });
+    battle.resolvePartyAttack(gremio); // t0 = 0; Gremio's recover starts at +88
+    assert.strictEqual(gremio.attackUntil, 88);
+    battle.turn.tick = 88;
+    assert.strictEqual(battle.isWaitingForOtherSide(dragon), true);
+    assert.strictEqual(battle.isWaitingForOtherSide(cleo), false); // same side: no wait
+    battle.turn.tick = 89;
+    assert.strictEqual(battle.isWaitingForOtherSide(dragon), false);
+  });
+});
+
 describe('Battle start', () => {
   it('clears statuses except Poison and Balloon', () => {
     const gremio = makeGremio();

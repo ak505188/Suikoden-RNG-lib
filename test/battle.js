@@ -1,12 +1,12 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import Character from '../lib/Game/Battle/Character.js';
-import { CHARACTER_KEYS, UNITE_KEYS } from '../lib/Game/Keys.js';
+import Enemy from '../lib/Game/Battle/Enemy.js';
+import { CHARACTER_KEYS, ENEMY_KEYS, UNITE_KEYS } from '../lib/Game/Keys.js';
 import { AREAS } from '../lib/Game/Bestiary/Areas.js';
 import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
 import { RUNES } from '../lib/Game/Magic/Runes.js';
 import { ACTION_TYPES } from '../lib/Game/Battle/Actions.js';
-import ZombieDragon from '../lib/Game/Battle/Enemies/ZombieDragon.js';
 import Battle from '../lib/Game/Battle/Battle.js';
 import RNG from '../lib/rng.js';
 
@@ -48,7 +48,7 @@ describe('Zombie Dragon 1 turn tests', () => {
     .setLVL(9)
     .setStats({ PWR: 37, SKL: 53, DEF: 30, SPD: 40, MGC: 36, LUK: 28, HP: 91 });
 
-  const zombieDragon = new ZombieDragon();
+  const zombieDragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
   const enemyParty = new EnemyParty([zombieDragon]);
   const party = new PlayerParty([Viktor, Gremio, McDohl, Cleo, Camille, Tai_Ho]);
   /** @param {Action[]} actions */
@@ -240,9 +240,6 @@ describe('Varkas & Sydonia after 5 bandit above', () => {
 
   battle.run();
 
-  console.log('Pahn ARM', battle.party.getCombatantByName('Pahn').ARM);
-  console.log(battle.log.format());
-
   it('rng == 0xa16e5044', () => {
     assert.strictEqual(battle.rng.getRNG(), 0xa16e5044);
   });
@@ -264,4 +261,86 @@ describe('Varkas & Sydonia after 5 bandit above', () => {
   it('Ted HP == 56', () => {
     assert.strictEqual(battle.party.getCombatantByName(Ted.name).HP, 56);
   });
+});
+
+describe('Dragon tests', () => {
+  const McDohl = new Character(CHARACTER_KEYS.MCDOHL)
+    .setLVL(25)
+    .setEXP(679)
+    .setStats({ PWR: 82, SKL: 102, DEF: 80, SPD: 93, MGC: 86, LUK: 85, HP: 278 })
+    // TODO: Clear Inventory
+    .setRune(RUNES.SOUL_EATER);
+
+  const Viktor = new Character(CHARACTER_KEYS.VIKTOR)
+    .setLVL(25)
+    .setEXP(447)
+    .setStats({ PWR: 119, SKL: 48, DEF: 94, SPD: 68, MGC: 51, LUK: 65, HP: 432 })
+    .setRune(RUNES.HOLY);
+
+  const Kuromimi = new Character(CHARACTER_KEYS.KUROMIMI)
+    .setLVL(24)
+    .setEXP(0)
+    .setStats({ PWR: 77, SKL: 65, DEF: 74, SPD: 70, MGC: 40, LUK: 76, HP: 241 });
+
+  const Kirkis = new Character(CHARACTER_KEYS.KIRKIS)
+    .setLVL(20)
+    .setEXP(566)
+    .setStats({ PWR: 64, SKL: 99, DEF: 65, SPD: 76, MGC: 67, LUK: 50, HP: 196 })
+    .setRune(RUNES.WIND);
+
+  const Valeria = new Character(CHARACTER_KEYS.VALERIA)
+    .setLVL(28)
+    .setEXP(150)
+    .setStats({ PWR: 94, SKL: 74, DEF: 90, SPD: 68, MGC: 65, LUK: 75, HP: 320 })
+
+  const Gremio = new Character(CHARACTER_KEYS.GREMIO)
+    .setLVL(25)
+    .setEXP(674)
+    .setStats({ PWR: 65, SKL: 73, DEF: 90, SPD: 53, MGC: 42, LUK: 72, HP: 228 })
+    .setRune(RUNES.WIND);
+
+  const party = new PlayerParty([McDohl, Viktor, Kuromimi, Kirkis, Valeria, Gremio]).rest();
+
+  /** @param {Action[]} actions */
+  const actionsT1 = [
+    { type: ACTION_TYPES.DEFEND },
+    { type: ACTION_TYPES.UNITE, target: 1, uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.UNITE, target: 1, uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.ATTACK, target: 1 },
+    { type: ACTION_TYPES.ATTACK, target: 0 },
+  ];
+
+  /** @param {Action[]} actions */
+  const actionsT2 = [
+    { type: ACTION_TYPES.ATTACK, target: 0 },
+    { type: ACTION_TYPES.UNITE, target: 0, uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.UNITE, target: 0, uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.ATTACK, target: 0 },
+    { type: ACTION_TYPES.ATTACK, target: 0 },
+  ];
+
+  const rng = new RNG(0x43).next(7750);
+  const rngCloneForTest = rng.cloneKeepIndex();
+
+  it ('rng at start == 0x980a9e75', () => {
+    assert.strictEqual(rngCloneForTest.getRNG(), 0x980a9e75);
+  });
+
+  // const enemyParty = EnemyParty.fromFormation(AREAS.PANNU_YAKUTA.scripted[0]);
+  // const battle = new Battle({ party, enemies: enemyParty, rng, turns: [actionsT1, actionsT2] });
+  //
+  // battle.run();
+
+  // it('rng == 0xa16e5044', () => {
+  //   assert.strictEqual(battle.rng.getRNG(), 0xa16e5044);
+  // });
+  // it('rng count after battle 18283', () => {
+  //   assert.strictEqual(battle.rng.count, 18283);
+  // });
+  // it('McDohl HP == 8', () => {
+  //   assert.strictEqual(battle.party.getCombatantByName(McDohl.name).HP, 8);
+  // });
+  // it('Gremio HP == 40', () => {
+  //   assert.strictEqual(battle.party.getCombatantByName(Gremio.name).HP, 40);
+  // });
 });

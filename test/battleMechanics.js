@@ -2,7 +2,6 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import Character from '../lib/Game/Battle/Character.js';
 import Enemy from '../lib/Game/Battle/Enemy.js';
-import ZombieDragon from '../lib/Game/Battle/Enemies/ZombieDragon.js';
 import { CHARACTER_KEYS, ENEMY_KEYS, UNITE_KEYS } from '../lib/Game/Keys.js';
 import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
 import { ACTION_TYPES } from '../lib/Game/Battle/Actions.js';
@@ -58,7 +57,7 @@ const runTicks = (battle, from, to, onTick = () => {}) => {
 
 describe('Party basic attack', () => {
   it('hit: damage roll at +64, target free at +100, attacker free at +120 (Gremio -> Zombie Dragon)', () => {
-    const gremio = makeGremio(), dragon = new ZombieDragon();
+    const gremio = makeGremio(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     const battle = makeBattle([gremio], [dragon], HIT_SEED);
     gremio.setAction({ type: ACTION_TYPES.ATTACK });
     const result = battle.resolvePartyAttack(gremio);
@@ -80,7 +79,7 @@ describe('Party basic attack', () => {
   });
 
   it('waits on a busy target without using RNG', () => {
-    const gremio = makeGremio(), dragon = new ZombieDragon();
+    const gremio = makeGremio(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     const battle = makeBattle([gremio], [dragon], HIT_SEED);
     gremio.setAction({ type: ACTION_TYPES.ATTACK });
     dragon.busyUntil = 50;
@@ -91,7 +90,7 @@ describe('Party basic attack', () => {
 
 describe('Enemy basic attack', () => {
   it('hit: damage roll at +57, target free at +102, attacker free at +108 (Zombie Dragon -> Gremio)', () => {
-    const gremio = makeGremio(), dragon = new ZombieDragon();
+    const gremio = makeGremio(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     const battle = makeBattle([gremio], [dragon], HIT_SEED);
     battle.resolveEnemyAttack(dragon, gremio);
     assert.deepStrictEqual([...battle.events.keys()], [57]);
@@ -100,7 +99,7 @@ describe('Enemy basic attack', () => {
   });
 
   it('miss: target free at +101, attacker free at +108', () => {
-    const gremio = makeGremio(), dragon = new ZombieDragon();
+    const gremio = makeGremio(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     const battle = makeBattle([gremio], [dragon], MISS_SEED);
     battle.resolveEnemyAttack(dragon, gremio);
     assert.strictEqual(battle.events.size, 0);
@@ -184,7 +183,7 @@ describe('Counters', () => {
 
 describe('Waiting for the other side', () => {
   it('an actor waits while an attack from the other side is in its continuation chain', () => {
-    const gremio = makeGremio(), cleo = makeCleo(), dragon = new ZombieDragon();
+    const gremio = makeGremio(), cleo = makeCleo(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     const battle = makeBattle([gremio, cleo], [dragon], HIT_SEED);
     gremio.setAction({ type: ACTION_TYPES.ATTACK });
     battle.resolvePartyAttack(gremio); // t0 = 0; Gremio's recover starts at +88
@@ -203,7 +202,7 @@ describe('Battle start', () => {
     Object.assign(gremio.status, {
       [STATUS.POISON]: true, [STATUS.BALLOON]: 2, [STATUS.BUCKET]: true, [STATUS.UNBALANCED]: 1, [STATUS.SLEEP]: true,
     });
-    makeBattle([gremio], [new ZombieDragon()], HIT_SEED);
+    makeBattle([gremio], [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)], HIT_SEED);
     assert.deepStrictEqual(gremio.status, {
       [STATUS.POISON]: true, [STATUS.BALLOON]: 2, [STATUS.BUCKET]: false, [STATUS.UNBALANCED]: 0, [STATUS.SLEEP]: false,
     });
@@ -212,7 +211,7 @@ describe('Battle start', () => {
 
 describe('Unbalanced', () => {
   it('lasts through the next round, clearing at its end', () => {
-    const gremio = makeGremio(), dragon = new ZombieDragon();
+    const gremio = makeGremio(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     const battle = makeBattle([gremio], [dragon], HIT_SEED);
     const endRound = () => {
       battle.resetTurn();
@@ -232,7 +231,7 @@ describe('Unbalanced', () => {
 
   it('limits an action plan to Defend or Item', () => {
     const gremio = makeGremio();
-    const battle = makeBattle([gremio], [new ZombieDragon()], HIT_SEED);
+    const battle = makeBattle([gremio], [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)], HIT_SEED);
     gremio.unbalance();
     assert.throws(() => battle.party.setActionPlan([{ type: ACTION_TYPES.ATTACK }]), /Unbalanced/);
     battle.party.setActionPlan([{ type: ACTION_TYPES.ITEM, itemId: 'MEDICINE' }]);
@@ -241,7 +240,7 @@ describe('Unbalanced', () => {
   });
 
   it("doesn't decay on enemies", () => {
-    const dragon = new ZombieDragon();
+    const dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     const battle = makeBattle([makeGremio()], [dragon], HIT_SEED);
     dragon.unbalance();
     battle.party.decayStatuses();
@@ -262,7 +261,7 @@ describe('Talisman Unite', () => {
    * turn ends. @param {(pahn: Character) => void} [setup] - after the plan, i.e. mid-round
    */
   const runGremioTurn = setup => {
-    const gremio = makeGremio(), pahn = makePahn(), dragon = new ZombieDragon();
+    const gremio = makeGremio(), pahn = makePahn(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     const battle = makeBattle([gremio, pahn], [dragon], HIT_SEED);
     battle.party.setActionPlan([TALISMAN, TALISMAN]);
     setup?.(pahn);
@@ -328,9 +327,53 @@ describe('Unite plans', () => {
   });
 });
 
+describe('Falcon Rune', () => {
+  const makeValeria = () => new Character(CHARACTER_KEYS.VALERIA)
+    .setLVL(30)
+    .setStats({ PWR: 100, SKL: 80, DEF: 80, SPD: 80, MGC: 50, LUK: 50, HP: 320 })
+    .rest();
+
+  /** Valeria (combatant 1) uses Falcon; ticks the round driver until her turn ends. */
+  const runValeriaTurn = (/** @type {number} */ target = 0, enemies = [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)]) => {
+    const valeria = makeValeria();
+    const battle = makeBattle([valeria], enemies, HIT_SEED);
+    battle.party.setActionPlan([{ type: ACTION_TYPES.RUNE, slot: 0, target }]);
+    battle.turn.pending = 1;
+    battle.phase = PHASE_STATE.COPY_ACTOR;
+    while (/** @type {string} */ (battle.phase) !== PHASE_STATE.ADVANCE_TURN) battle.tick();
+    return { battle, valeria, end: battle.turn.tick - 1 };
+  };
+
+  // t0 = tick 1 (the actor is copied at 0)
+  it('deals exactly 3x calc_damage at t0 + 159, with one rand() and no hit roll', () => {
+    const { battle, valeria } = runValeriaTurn();
+    const [damage] = battle.log.ofType('damage');
+    const dragon = battle.enemies.combatants[0];
+    assert.strictEqual(damage.tick, 1 + 159);
+    assert.strictEqual(damage.actor, valeria.label);
+    assert.strictEqual(damage.rng, 1);
+    assert.strictEqual(damage.amount, 3 * valeria.calcAttackDamage(dragon, new RNG(HIT_SEED), false));
+  });
+
+  it('holds the turn until t0 + 199, leaving the gate unchanged', () => {
+    const { battle, valeria, end } = runValeriaTurn();
+    assert.strictEqual(end, 1 + 199);
+    assert.strictEqual(battle.turn.rollGate, 0);
+    assert.strictEqual(valeria.busyUntil, 1 + 231);
+    assert.strictEqual(battle.enemies.combatants[0].busyUntil, 1 + 191);
+  });
+
+  it('retargets an invalid target to the first ready enemy', () => {
+    const dead = new Enemy(ENEMY_KEYS.SOLDIER_ANT), ant = new Enemy(ENEMY_KEYS.SOLDIER_ANT);
+    dead.setHP(0); // out of the fight from battle start
+    const { battle } = runValeriaTurn(0, [dead, ant]);
+    assert.strictEqual(battle.log.ofType('damage')[0].target, ant.label);
+  });
+});
+
 describe('Balloon', () => {
   it('at 3 or more removes a combatant at battle start, for the whole battle', () => {
-    const floating = makeGremio(), almost = makeCleo(), dragon = new ZombieDragon();
+    const floating = makeGremio(), almost = makeCleo(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     floating.status[STATUS.BALLOON] = 3;
     almost.status[STATUS.BALLOON] = 2;
     const battle = makeBattle([floating, almost], [dragon], HIT_SEED);
@@ -344,11 +387,11 @@ describe('Balloon', () => {
 
   it('is only checked at battle start', () => {
     const floating = makeGremio();
-    const battle = makeBattle([floating], [new ZombieDragon()], HIT_SEED);
+    const battle = makeBattle([floating], [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)], HIT_SEED);
     floating.status[STATUS.BALLOON] = 3;
     battle.roundStart();
     assert.strictEqual(floating.removedFromFight, false); // until the next battle
-    makeBattle([floating], [new ZombieDragon()], HIT_SEED);
+    makeBattle([floating], [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)], HIT_SEED);
     assert.strictEqual(floating.removedFromFight, true);
   });
 });
@@ -376,7 +419,7 @@ describe('Death', () => {
 
 describe('Event ordering', () => {
   it('runs a tick\'s events in owner index order, queue order within an owner', () => {
-    const viktor = new Character(CHARACTER_KEYS.VIKTOR), gremio = makeGremio(), dragon = new ZombieDragon();
+    const viktor = new Character(CHARACTER_KEYS.VIKTOR), gremio = makeGremio(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     const battle = makeBattle([viktor, gremio], [dragon], HIT_SEED);
     const log = [];
     battle.queueEvent(5, dragon, () => log.push('dragon'));
@@ -389,14 +432,14 @@ describe('Event ordering', () => {
   });
 
   it('rejects an owner from another battle', () => {
-    const battle = makeBattle([makeGremio()], [new ZombieDragon()], HIT_SEED);
-    assert.throws(() => battle.queueEvent(5, new ZombieDragon(), () => {}));
+    const battle = makeBattle([makeGremio()], [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)], HIT_SEED);
+    assert.throws(() => battle.queueEvent(5, new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON), () => {}));
   });
 });
 
 describe('Spell cast', () => {
   it('waits until nobody is busy, winds up for its frames, resolves, then finishes next tick', () => {
-    const cleo = makeCleo(), dragon = new ZombieDragon();
+    const cleo = makeCleo(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     const battle = makeBattle([cleo], [dragon], HIT_SEED);
     dragon.busyUntil = 50; // free from tick 51
     let resolvedAt = null, doneAt = null;

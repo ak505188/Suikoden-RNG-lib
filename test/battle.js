@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import Character from '../lib/Game/Battle/Character.js';
-import { CHARACTER_KEYS } from '../lib/Game/Keys.js';
+import { CHARACTER_KEYS, UNITE_KEYS } from '../lib/Game/Keys.js';
 import { AREAS } from '../lib/Game/Bestiary/Areas.js';
 import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
 import { RUNES } from '../lib/Game/Magic/Runes.js';
@@ -173,5 +173,95 @@ describe('5 Bandit best version battle tests', () => {
       { tick: 393, actor: 'Pahn', target: 'Bandit (red) #3', amount: 38 }, // counter
       { tick: 544, actor: 'Pahn', target: 'Bandit (green) #4', amount: 43 },
     ]);
+  });
+});
+
+describe('Varkas & Sydonia after 5 bandit above', () => {
+  const McDohl = new Character(CHARACTER_KEYS.MCDOHL)
+    .setLVL(5)
+    .setEXP(840)
+    .setStats({ PWR: 25, SKL: 36, DEF: 30, SPD: 30, MGC: 25, LUK: 27, HP: 26 })
+    .setHP(26);
+
+  const Gremio = new Character(CHARACTER_KEYS.GREMIO)
+    .setLVL(5)
+    .setEXP(840)
+    .setStats({ PWR: 27, SKL: 23, DEF: 29, SPD: 18, MGC: 14, LUK: 21, HP: 54 })
+    .setHP(40);
+
+  const Pahn = new Character(CHARACTER_KEYS.PAHN)
+    .setLVL(5)
+    .setEXP(840)
+    .setStats({ PWR: 39, SKL: 29, DEF: 31, SPD: 15, MGC: 7, LUK: 26, HP: 71 })
+
+  const Cleo = new Character(CHARACTER_KEYS.CLEO)
+    .setLVL(5)
+    .setEXP(840)
+    .setStats({ PWR: 23, SKL: 33, DEF: 27, SPD: 25, MGC: 36, LUK: 27, HP: 56 })
+    .setHP(18);
+
+  const Ted = new Character(CHARACTER_KEYS.TED)
+    .setLVL(5)
+    .setEXP(840)
+    .setStats({ PWR: 25, SKL: 33, DEF: 19, SPD: 28, MGC: 27, LUK: 25, HP: 56 })
+
+  const party = new PlayerParty([McDohl, Gremio, Pahn, Cleo, Ted]);
+
+  /** @param {Action[]} actions */
+  const actionsT1 = [
+    { type: ACTION_TYPES.DEFEND },
+    { type: ACTION_TYPES.UNITE, target: 1, uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.UNITE, target: 1, uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.ATTACK, target: 1 },
+    { type: ACTION_TYPES.ATTACK, target: 0 },
+  ];
+
+  /** @param {Action[]} actions */
+  const actionsT2 = [
+    { type: ACTION_TYPES.ATTACK, target: 0 },
+    { type: ACTION_TYPES.UNITE, target: 0, uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.UNITE, target: 0, uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.ATTACK, target: 0 },
+    { type: ACTION_TYPES.ATTACK, target: 0 },
+  ];
+
+  const rng = new RNG(0x19).next(18217);
+  const rngCloneForTest = rng.cloneKeepIndex();
+
+  it ('rng at start == 0xf8b88416', () => {
+    assert.strictEqual(rngCloneForTest.getRNG(), 0xf8b88416);
+  });
+  it ('rng count at start 18217', () => {
+    assert.strictEqual(rngCloneForTest.count, 18217);
+  });
+
+  const enemyParty = EnemyParty.fromFormation(AREAS.MT_SEIFU.scripted[2]);
+  const battle = new Battle({ party, enemies: enemyParty, rng, turns: [actionsT1, actionsT2] });
+
+  battle.run();
+
+  console.log('Pahn ARM', battle.party.getCombatantByName('Pahn').ARM);
+  console.log(battle.log.format());
+
+  it('rng == 0xa16e5044', () => {
+    assert.strictEqual(battle.rng.getRNG(), 0xa16e5044);
+  });
+  it('rng count after battle 18283', () => {
+    assert.strictEqual(battle.rng.count, 18283);
+  });
+  it('McDohl HP == 8', () => {
+    assert.strictEqual(battle.party.getCombatantByName(McDohl.name).HP, 8);
+  });
+  it('Gremio HP == 40', () => {
+    assert.strictEqual(battle.party.getCombatantByName(Gremio.name).HP, 40);
+  });
+  it('Pahn HP == 34', () => {
+    assert.strictEqual(battle.party.getCombatantByName(Pahn.name).HP, 34);
+  });
+  it('Cleo HP == 18', () => {
+    assert.strictEqual(battle.party.getCombatantByName(Cleo.name).HP, 18);
+  });
+  it('Ted HP == 56', () => {
+    assert.strictEqual(battle.party.getCombatantByName(Ted.name).HP, 56);
   });
 });

@@ -3,7 +3,7 @@ import assert from 'node:assert';
 import Character from '../lib/Game/Battle/Character.js';
 import Enemy from '../lib/Game/Battle/Enemy.js';
 import ZombieDragon from '../lib/Game/Battle/Enemies/ZombieDragon.js';
-import { CHARACTER_KEYS, ENEMY_KEYS } from '../lib/Game/Keys.js';
+import { CHARACTER_KEYS, ENEMY_KEYS, UNITE_KEYS } from '../lib/Game/Keys.js';
 import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
 import { ACTION_TYPES } from '../lib/Game/Battle/Actions.js';
 import { RUNES } from '../lib/Game/Magic/Runes.js';
@@ -246,6 +246,85 @@ describe('Unbalanced', () => {
     dragon.unbalance();
     battle.party.decayStatuses();
     assert.strictEqual(dragon.status[STATUS.UNBALANCED], 2);
+  });
+});
+
+const makePahn = () => new Character(CHARACTER_KEYS.PAHN)
+  .setLVL(22)
+  .setStats({ PWR: 80, SKL: 60, DEF: 80, SPD: 40, MGC: 20, LUK: 50, HP: 300 })
+  .rest();
+
+describe('Talisman Unite', () => {
+  const TALISMAN = { type: ACTION_TYPES.UNITE, target: 0, uniteKey: UNITE_KEYS.TALISMAN };
+
+  /**
+   * Gremio (combatant 1) won the turn roll with the Unite; ticks the round driver until his
+   * turn ends. @param {(pahn: Character) => void} [setup] - after the plan, i.e. mid-round
+   */
+  const runGremioTurn = setup => {
+    const gremio = makeGremio(), pahn = makePahn(), dragon = new ZombieDragon();
+    const battle = makeBattle([gremio, pahn], [dragon], HIT_SEED);
+    battle.party.setActionPlan([TALISMAN, TALISMAN]);
+    setup?.(pahn);
+    battle.turn.pending = 1;
+    battle.phase = PHASE_STATE.COPY_ACTOR;
+    while (/** @type {string} */ (battle.phase) !== PHASE_STATE.ADVANCE_TURN) battle.tick();
+    return { battle, gremio, pahn, dragon, end: battle.turn.tick - 1 };
+  };
+
+  // Live (TickBasedAlgorithm.md, PARTY_UNITE): Gremio starts -> damage S+75, target free S+112,
+  // handler done S+136, Gremio free S+176, Pahn free S+188. Here R = tick 1 (copy at 0), S = 2.
+  it('matches the live timeline when Gremio starts', () => {
+    const S = 2;
+    const { battle, gremio, pahn, dragon, end } = runGremioTurn();
+    const [damage] = battle.log.ofType('damage');
+    assert.strictEqual(damage.tick, S + 75);
+    assert.strictEqual(damage.actor, gremio.label);
+    assert.strictEqual(damage.rng, 2); // one calc_damage each, no hit or crit roll
+    assert.strictEqual(dragon.busyUntil, S + 75 + 37);
+    assert.strictEqual(end, S + 136);
+    assert.strictEqual(gremio.busyUntil, S + 176);
+    assert.strictEqual(pahn.busyUntil, S + 188);
+    assert.strictEqual(pahn.acted, true); // his turn is used up
+    assert.strictEqual(battle.turn.rollGate, 0); // gate unchanged
+  });
+
+  it('deals (Pahn roll + Gremio roll) x 2, Pahn rolling first', () => {
+    const { battle, gremio, pahn, dragon } = runGremioTurn();
+    const rng = new RNG(HIT_SEED);
+    const expected = (pahn.calcAttackDamage(dragon, rng, false) + gremio.calcAttackDamage(dragon, rng, false)) * 2;
+    assert.strictEqual(battle.log.ofType('damage')[0].amount, expected);
+  });
+
+  it('waits, with no RNG, while anyone is busy', () => {
+    const { battle } = runGremioTurn(pahn => { pahn.busyUntil = 40; });
+    assert.strictEqual(battle.log.ofType('unite')[0].tick, 41);
+    assert.strictEqual(battle.log.ofType('damage')[0].rng, 2);
+  });
+
+  it('a dead partner fails it: Defend fallback, gate 0, no RNG, and no Defend halving', () => {
+    const { battle, gremio, end } = runGremioTurn(pahn => { pahn.knockedOut = true; });
+    assert.strictEqual(end, 1);
+    assert.strictEqual(battle.rng.getCount(), 0);
+    assert.strictEqual(battle.log.ofType('defend')[0].detail, 'Talisman Attack failed');
+    assert.strictEqual(gremio.defending, false);
+  });
+});
+
+describe('Unite plans', () => {
+  it('needs every participant on the same Unite and target', () => {
+    const party = new PlayerParty([makeGremio(), makePahn()]);
+    const unite = { type: ACTION_TYPES.UNITE, target: 0, uniteKey: UNITE_KEYS.TALISMAN };
+    party.setActionPlan([unite, unite]);
+    for (const partner of [{ type: ACTION_TYPES.ATTACK }, { type: ACTION_TYPES.NOTHING }, { ...unite, target: 1 }])
+      assert.throws(() => party.setActionPlan([unite, partner]), /plan the same Unite action/);
+  });
+
+  it('rejects an unavailable Unite', () => {
+    const party = new PlayerParty([makeGremio(), makePahn()]);
+    const unite = { type: ACTION_TYPES.UNITE, target: 0, uniteKey: UNITE_KEYS.TALISMAN };
+    party.combatants[1].status[STATUS.POISON] = true;
+    assert.throws(() => party.setActionPlan([unite, unite]), /isn't available/);
   });
 });
 

@@ -7,6 +7,7 @@ import { CHARACTER_KEYS, UNITE_KEYS } from '../lib/Game/Keys.js';
 import {
   UNITES, UNITES_BY_CHARACTER, UNITES_BY_SLOT, availableUnites, disjointUniteSets,
 } from '../lib/Game/Unites.js';
+import { UNITE_RETURN_FRAMES, UNITE_TIMINGS } from '../lib/Game/Battle/UniteTimings.js';
 
 /** @typedef {import('../lib/Game/Unites.js').Unite} Unite */
 
@@ -95,5 +96,33 @@ describe('disjointUniteSets', () => {
       [UNITE_KEYS.BEAT_EM_UP, UNITE_KEYS.KOBOLD],
       [UNITE_KEYS.KOBOLD],
     ]);
+  });
+});
+
+describe('UNITE_TIMINGS', () => {
+  it('has one timing per participant, and a valid reaction owner', () => {
+    for (const [key, t] of Object.entries(UNITE_TIMINGS)) {
+      const u = UNITES[/** @type {keyof typeof UNITES} */ (key)];
+      assert.strictEqual(t.participants.length, u.participants.length, u.name);
+      assert.ok(t.reaction.by >= 0 && t.reaction.by < u.participants.length, u.name);
+    }
+  });
+
+  it('has return frames for every Unite participant', () => {
+    for (const u of Object.values(UNITES)) {
+      for (const p of u.participants) assert.ok(p in UNITE_RETURN_FRAMES, `${u.name}: ${p}`);
+    }
+  });
+
+  // Live, on the Varkas and Sydonia boss (TickBasedAlgorithm.md, PARTY_UNITE), all from S
+  it('reproduces the live Talisman timeline', () => {
+    const t = UNITE_TIMINGS[UNITE_KEYS.TALISMAN];
+    const [pahn, gremio] = t.participants;
+    assert.strictEqual(pahn.impact + 1, 67);   // damage tick when Pahn starts
+    assert.strictEqual(gremio.impact + 1, 75); // ... when Gremio starts
+    assert.strictEqual(pahn.impact + 1 + t.reaction.frames, 104); // target busy clears
+    assert.strictEqual(Math.max(pahn.done, gremio.done) + 1, 136); // handler done
+    assert.strictEqual(gremio.done + 1 + UNITE_RETURN_FRAMES[CHARACTER_KEYS.GREMIO], 176);
+    assert.strictEqual(pahn.done + 1 + UNITE_RETURN_FRAMES[CHARACTER_KEYS.PAHN], 188);
   });
 });

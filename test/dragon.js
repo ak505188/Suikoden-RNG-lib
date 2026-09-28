@@ -2,12 +2,13 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import Character from '../lib/Game/Battle/Character.js';
 import Enemy from '../lib/Game/Battle/Enemy.js';
-import { PlayerParty } from '../lib/Game/Battle/Party.js';
+import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
 import { ACTION_TYPES } from '../lib/Game/Battle/Actions.js';
 import { ENEMY_MOVES } from '../lib/Game/Battle/EnemyAI.js';
 import { CHARACTER_KEYS, ENEMY_KEYS } from '../lib/Game/Keys.js';
 import { RUNES } from '../lib/Game/Magic/Runes.js';
 import RNG from '../lib/rng.js';
+import Battle, { PHASE_STATE } from '../lib/Game/Battle/Battle.js';
 
 /** @typedef {import('../lib/Game/Battle/Actions.js').EnemyAction} EnemyAction */
 
@@ -185,5 +186,44 @@ describe('Dragon damage', () => {
     const selection = selectMove(0x6aa79987);
     assert.strictEqual(selection.move, ENEMY_MOVES.DRAGON_FIRE_BREATH);
     assert.deepStrictEqual(applyMove(selection.move, selection), [15, 50, 55, 41, 42, 49]);
+  });
+});
+
+describe('Dragon move timing', () => {
+  // Dragon.State, live 2026-09-28 (15 of each move), from T0 = the tick she becomes the current
+  // actor: AI at T+1, move roll M = T+37. The damage frame drifts over 5 frames (cause unknown);
+  // the sim uses the middle: Fire Breath D = M+266, Lightning P = M+17 and D = P+251. Her turn
+  // ends at B (D+21 / D+22), the gate is set to 30 at B+1, and the next turn roll is at B+31.
+  /** @param {number} seed */
+  const runDragonTurn = seed => {
+    const party = makeParty();
+    const battle = new Battle({ party, enemies: new EnemyParty([new Enemy(ENEMY_KEYS.DRAGON)]), rng: new RNG(seed), turns: [] });
+    battle.turn.pending = party.combatants.length + 1;
+    battle.phase = PHASE_STATE.COPY_ACTOR; // T0 = tick 0
+    while (/** @type {string} */ (battle.phase) !== PHASE_STATE.ADVANCE_TURN) battle.tick();
+    const doneTick = battle.turn.tick - 1;
+    while (!battle.log.ofType('turn').length) battle.tick();
+    return { battle, party, doneTick, nextRoll: battle.log.ofType('turn')[0].tick };
+  };
+
+  it('Fire Breath: damage at T+303, turn over at B = T+324, next roll at B+31', () => {
+    const { battle, doneTick, nextRoll } = runDragonTurn(0x6aa79987);
+    const damage = battle.log.ofType('damage');
+    assert.strictEqual(damage.length, 6);
+    assert.ok(damage.every(d => d.tick === 303));
+    assert.strictEqual(battle.enemies.combatants[0].busyUntil, 324);
+    assert.strictEqual(doneTick, 324 + 1); // DONE with gate 30 the tick after B
+    assert.strictEqual(nextRoll, 324 + 31);
+  });
+
+  it('Lightning: target reacts until P+214, damage at P+251 = T+305, B = T+327, next roll at B+31', () => {
+    const { battle, party, doneTick, nextRoll } = runDragonTurn(0xbb91433a); // hits slot 0
+    const [damage] = battle.log.ofType('damage');
+    assert.strictEqual(damage.tick, 305);
+    assert.strictEqual(damage.target, party.combatants[0].label);
+    assert.strictEqual(party.combatants[0].busyUntil, 54 + 214);
+    assert.strictEqual(battle.enemies.combatants[0].busyUntil, 327);
+    assert.strictEqual(doneTick, 327 + 1);
+    assert.strictEqual(nextRoll, 327 + 31);
   });
 });

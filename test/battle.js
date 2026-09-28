@@ -1,12 +1,12 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import Character from '../lib/Game/Battle/Character.js';
-import { CHARACTER_KEYS, UNITE_KEYS } from '../lib/Game/Keys.js';
+import Enemy from '../lib/Game/Battle/Enemy.js';
+import { CHARACTER_KEYS, ENEMY_KEYS, UNITE_KEYS } from '../lib/Game/Keys.js';
 import { AREAS } from '../lib/Game/Bestiary/Areas.js';
 import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
 import { RUNES } from '../lib/Game/Magic/Runes.js';
 import { ACTION_TYPES } from '../lib/Game/Battle/Actions.js';
-import ZombieDragon from '../lib/Game/Battle/Enemies/ZombieDragon.js';
 import Battle from '../lib/Game/Battle/Battle.js';
 import RNG from '../lib/rng.js';
 
@@ -48,7 +48,7 @@ describe('Zombie Dragon 1 turn tests', () => {
     .setLVL(9)
     .setStats({ PWR: 37, SKL: 53, DEF: 30, SPD: 40, MGC: 36, LUK: 28, HP: 91 });
 
-  const zombieDragon = new ZombieDragon();
+  const zombieDragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
   const enemyParty = new EnemyParty([zombieDragon]);
   const party = new PlayerParty([Viktor, Gremio, McDohl, Cleo, Camille, Tai_Ho]);
   /** @param {Action[]} actions */

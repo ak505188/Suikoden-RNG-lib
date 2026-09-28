@@ -7,6 +7,7 @@ import { PlayerParty } from '../lib/Game/Battle/Party.js';
 import { ACTION_TYPES } from '../lib/Game/Battle/Actions.js';
 import { ENEMY_MOVES } from '../lib/Game/Battle/EnemyAI.js';
 import RNG from '../lib/rng.js';
+import { RUNES } from '../lib/Game/Magic/Runes.js';
 
 describe('Enemy construction', () => {
   it('builds an enemy from its key', () => {
@@ -78,5 +79,52 @@ describe('Sydonia AI', () => {
     const p = params(5);
     assert.strictEqual(sydonia.selectAction(p).action, ACTION_TYPES.ATTACK);
     assert.strictEqual(p.rng.getCount(), 1);
+  });
+});
+
+/** @typedef {import('../lib/Game/Battle/Actions.js').EnemyAbilityAction} EnemyAbilityAction */
+
+describe('Dragon AI', () => {
+  const dragon = new Enemy(ENEMY_KEYS.DRAGON);
+  const select = (/** @type {any} */ p) => /** @type {EnemyAbilityAction} */ (dragon.selectAction(p));
+  /** @param {number} seed */
+  const params = seed => ({ party: new PlayerParty([new Character(CHARACTER_KEYS.MCDOHL)]), enemies: null, rng: new RNG(seed), turn_count: 1, tick: 0 });
+
+  // Both seeds pass the target roll on party member 1; the move roll is 25 (seed 5) or 90 (seed 12)
+  it('Lightning at the target when (r * 100) / 32767 < 51', () => {
+    const p = params(5);
+    const choice = select(p);
+    assert.strictEqual(choice.move, ENEMY_MOVES.DRAGON_LIGHTNING);
+    assert.strictEqual(choice.target, p.party.combatants[0]);
+    assert.strictEqual(p.rng.getCount(), 2);
+  });
+
+  it('Fire Breath otherwise', () => {
+    assert.strictEqual(select(params(12)).move, ENEMY_MOVES.DRAGON_FIRE_BREATH);
+  });
+
+  it('Fire Breath: one roll per member, halved; resisted and the slot-1 bug halve once more', () => {
+    const [slot1, slot2, fire] = [CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.CLEO]
+      .map(key => new Character(key).setLVL(20).rest());
+    slot1.setRune(RUNES.NONE); slot2.setRune(RUNES.NONE); fire.setRune(RUNES.FIRE);
+    const party = new PlayerParty([slot1, slot2, fire]);
+    const hits = new Map();
+    for (const c of party.combatants) c.takeDamage = amount => hits.set(c, amount);
+    ENEMY_MOVES.DRAGON_FIRE_BREATH.apply(dragon, { party, rng: new RNG(1) });
+
+    const rng = new RNG(1);
+    const roll = (/** @type {Character} */ c) => {
+      const b = 150 - c.MGC, r = rng.next().rand;
+      return Math.max(b + Math.trunc((Math.trunc(b / 2) - r % b) / 5), 1);
+    };
+    const half = (/** @type {number} */ n) => Math.trunc(n / 2);
+    assert.deepStrictEqual([...hits.values()], [half(half(roll(slot1))), half(roll(slot2)), half(half(roll(fire)))]);
+  });
+
+  it('Lightning: the particle phase rolls before the one damage roll', () => {
+    const target = new Character(CHARACTER_KEYS.MCDOHL).setLVL(20).rest();
+    const rng = new RNG(1);
+    ENEMY_MOVES.DRAGON_LIGHTNING.apply(dragon, { party: new PlayerParty([target]), rng, target });
+    assert.ok(rng.getCount() > 150); // 30 particles x 5 calls on the first tick alone
   });
 });

@@ -269,7 +269,8 @@ describe('Dragon tests', () => {
     .setEXP(679)
     .setStats({ PWR: 82, SKL: 102, DEF: 80, SPD: 93, MGC: 86, LUK: 85, HP: 278 })
     // TODO: Clear Inventory
-    .setRune(RUNES.SOUL_EATER);
+    .setRune(RUNES.SOUL_EATER)
+    .setWeaponLvl(8);
 
   const Viktor = new Character(CHARACTER_KEYS.VIKTOR)
     .setLVL(25)
@@ -303,21 +304,65 @@ describe('Dragon tests', () => {
 
   /** @param {Action[]} actions */
   const actionsT1 = [
+    { type: ACTION_TYPES.ATTACK },
+    { type: ACTION_TYPES.ATTACK },
     { type: ACTION_TYPES.DEFEND },
-    { type: ACTION_TYPES.UNITE, target: 1, uniteKey: UNITE_KEYS.TALISMAN },
-    { type: ACTION_TYPES.UNITE, target: 1, uniteKey: UNITE_KEYS.TALISMAN },
-    { type: ACTION_TYPES.ATTACK, target: 1 },
-    { type: ACTION_TYPES.ATTACK, target: 0 },
+    { type: ACTION_TYPES.ATTACK },
+    { type: ACTION_TYPES.RUNE },
+    { type: ACTION_TYPES.DEFEND },
   ];
 
   /** @param {Action[]} actions */
   const actionsT2 = [
-    { type: ACTION_TYPES.ATTACK, target: 0 },
-    { type: ACTION_TYPES.UNITE, target: 0, uniteKey: UNITE_KEYS.TALISMAN },
-    { type: ACTION_TYPES.UNITE, target: 0, uniteKey: UNITE_KEYS.TALISMAN },
-    { type: ACTION_TYPES.ATTACK, target: 0 },
-    { type: ACTION_TYPES.ATTACK, target: 0 },
+    { type: ACTION_TYPES.ATTACK },
+    { type: ACTION_TYPES.DEFEND },
+    { type: ACTION_TYPES.ATTACK },
+    { type: ACTION_TYPES.ATTACK },
+    { type: ACTION_TYPES.RUNE },
+    { type: ACTION_TYPES.ATTACK },
   ];
+
+  /** @param {Action[]} actions */
+  const actionsT3 = [
+    { type: ACTION_TYPES.ATTACK },
+    { type: ACTION_TYPES.ATTACK },
+    { type: ACTION_TYPES.ATTACK },
+    { type: ACTION_TYPES.ATTACK },
+    { type: ACTION_TYPES.RUNE },
+    { type: ACTION_TYPES.DEFEND },
+  ];
+
+  /** @param {Action[]} actions */
+  const actionsT4 = [
+    { type: ACTION_TYPES.ATTACK },
+    { type: ACTION_TYPES.ATTACK },
+    { type: ACTION_TYPES.DEFEND },
+    { type: ACTION_TYPES.ATTACK },
+    { type: ACTION_TYPES.RUNE },
+    { type: ACTION_TYPES.DEFEND },
+  ];
+
+  /** @param {Action[]} actions */
+  const actionsT5 = [
+    { type: ACTION_TYPES.DEFEND },
+    { type: ACTION_TYPES.DEFEND },
+    { type: ACTION_TYPES.DEFEND },
+    { type: ACTION_TYPES.RUNE, slot: 1 },
+    { type: ACTION_TYPES.RUNE },
+    { type: ACTION_TYPES.RUNE, slot: 1 },
+  ];
+
+  /** @param {Action[]} actions */
+  const actionsT6 = [
+    { type: ACTION_TYPES.DEFEND },
+    { type: ACTION_TYPES.DEFEND },
+    { type: ACTION_TYPES.ATTACK },
+    { type: ACTION_TYPES.RUNE, slot: 1 },
+    { type: ACTION_TYPES.RUNE },
+    { type: ACTION_TYPES.DEFEND },
+  ];
+
+  const actions = [actionsT1, actionsT2, actionsT3, actionsT4, actionsT5, actionsT6];
 
   const rng = new RNG(0x43).next(7750);
   const rngCloneForTest = rng.cloneKeepIndex();
@@ -326,21 +371,82 @@ describe('Dragon tests', () => {
     assert.strictEqual(rngCloneForTest.getRNG(), 0x980a9e75);
   });
 
-  // const enemyParty = EnemyParty.fromFormation(AREAS.PANNU_YAKUTA.scripted[0]);
-  // const battle = new Battle({ party, enemies: enemyParty, rng, turns: [actionsT1, actionsT2] });
-  //
-  // battle.run();
+  const enemyParty = EnemyParty.fromFormation(AREAS.PANNU_YAKUTA.scripted[0]);
+  const battle = new Battle({ party, enemies: enemyParty, rng, turns: [] });
 
-  // it('rng == 0xa16e5044', () => {
-  //   assert.strictEqual(battle.rng.getRNG(), 0xa16e5044);
-  // });
-  // it('rng count after battle 18283', () => {
-  //   assert.strictEqual(battle.rng.count, 18283);
-  // });
-  // it('McDohl HP == 8', () => {
-  //   assert.strictEqual(battle.party.getCombatantByName(McDohl.name).HP, 8);
-  // });
-  // it('Gremio HP == 40', () => {
-  //   assert.strictEqual(battle.party.getCombatantByName(Gremio.name).HP, 40);
-  // });
+  // The describe body runs before any it(), so each round's state is captured right after it plays
+  const snapshot = () => ({
+    rng: battle.rng.getRNG(),
+    count: battle.rng.count,
+    party: Object.fromEntries(battle.party.combatants.map(c => [c.name, c.HP])),
+    enemies: battle.enemies.combatants.map(c => c.HP),
+  });
+
+  const snapshots = actions.map(turn => {
+    battle.playTurnTickBased(turn);
+    return snapshot();
+  });
+
+  it('T1 rng == 0x8ddcf2e4', () => {
+    assert.strictEqual(snapshots[0].rng, 0x8ddcf2e4);
+  });
+  it('rng count after T1 == 8493', () => {
+    assert.strictEqual(snapshots[0].count, 8493);
+  });
+  it('McDohl HP == 246', () => {
+    assert.strictEqual(snapshots[0].party[McDohl.name], 246);
+  });
+  it('Dragon HP = 5457', () => {
+    assert.strictEqual(snapshots[0].enemies[0], 5457);
+  });
+
+  it('T2 rng == 0x68ea8ddd', () => {
+    assert.strictEqual(snapshots[1].rng, 0x68ea8ddd);
+  });
+  it('rng count after T2 == 9246', () => {
+    assert.strictEqual(snapshots[1].count, 9246);
+  });
+  it('Viktor HP == 329', () => {
+    assert.strictEqual(snapshots[1].party[Viktor.name], 329);
+  });
+  it('Dragon HP = 4669', () => {
+    assert.strictEqual(snapshots[1].enemies[0], 4669);
+  });
+
+  it('T3 rng count == 10007', () => {
+    assert.strictEqual(snapshots[2].count, 10007);
+  });
+  it('McDohl HP == 214', () => {
+    assert.strictEqual(snapshots[2].party[McDohl.name], 214);
+  });
+  it('Dragon HP = 3815', () => {
+    assert.strictEqual(snapshots[2].enemies[0], 3815);
+  });
+
+  it('T4 rng count == 10762', () => {
+    assert.strictEqual(snapshots[3].count, 10762);
+  });
+  it('McDohl HP == 181', () => {
+    assert.strictEqual(snapshots[3].party[McDohl.name], 181);
+  });
+  it('Dragon HP = 3117', () => {
+    assert.strictEqual(snapshots[3].enemies[0], 3117);
+  });
+
+  it('T4 rng count == 11522', () => {
+    assert.strictEqual(snapshots[4].count, 11522);
+  });
+  it('Kuromimi HP == 181', () => {
+    assert.strictEqual(snapshots[4].party[Kuromimi.name], 124);
+  });
+  it('Dragon HP = 1139', () => {
+    assert.strictEqual(snapshots[4].enemies[0], 1139);
+  });
+
+  it('T5 rng count == 11551', () => {
+    assert.strictEqual(snapshots[5].count, 11551);
+  });
+  it('Dragon HP = 0', () => {
+    assert.strictEqual(snapshots[5].enemies[0], 0);
+  });
 });

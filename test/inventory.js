@@ -10,6 +10,7 @@ import { CHARACTER_KEYS, ENEMY_KEYS, ITEM_KEYS } from '../lib/Game/Keys.js';
 import { ARMOR } from '../lib/Game/Armor.js';
 import { ARMOR_SLOT, STATUS } from '../lib/Game/Constants.js';
 import RNG from '../lib/rng.js';
+import { LOG_TYPES } from '../lib/Game/Battle/ActionLog.js';
 
 describe('Inventory', () => {
   it("fills in each item's default quantity", () => {
@@ -114,8 +115,8 @@ describe('Party item use', () => {
     assert.strictEqual(gremio.inventory.get(ITEM_KEYS.MEDICINE).quantity, 5);
     assert.strictEqual(gremio.busyUntil, 83); // self-targeted
     assert.strictEqual(battle.rng.getCount(), rngBefore);
-    assert.deepStrictEqual(battle.log.ofType('item').map(e => e.tick), [0]);
-    assert.deepStrictEqual(battle.log.ofType('damage').map(e => [e.tick, e.amount]), [[19, -100]]);
+    assert.deepStrictEqual(battle.log.ofType(LOG_TYPES.ITEM).map(e => e.tick), [0]);
+    assert.deepStrictEqual(battle.log.ofType(LOG_TYPES.DAMAGE).map(e => [e.tick, e.amount]), [[19, -100]]);
   });
 
   it('caps the heal at HPMax (Mega medicine)', () => {
@@ -139,7 +140,7 @@ describe('Party item use', () => {
     const battle = makeBattle([mcdohl, gremio]);
     gremio.busyUntil = 40;
     const end = playItemTurn(battle, mcdohl, { itemKey: ITEM_KEYS.MEDICINE });
-    assert.strictEqual(battle.log.ofType('item')[0].tick, 41);
+    assert.strictEqual(battle.log.ofType(LOG_TYPES.ITEM)[0].tick, 41);
     assert.strictEqual(end, 41 + 19);
   });
 
@@ -174,7 +175,7 @@ describe('Party item use', () => {
     const end = playItemTurn(battle, mcdohl, { itemKey: ITEM_KEYS.MEDICINE, target: 1 });
     assert.strictEqual(end, 0);
     assert.strictEqual(mcdohl.inventory.get(ITEM_KEYS.MEDICINE).quantity, 6);
-    assert.strictEqual(battle.log.ofType('defend').length, 1);
+    assert.strictEqual(battle.log.ofType(LOG_TYPES.DEFEND).length, 1);
   });
 
   it("rejects an item the character doesn't hold", () => {
@@ -213,8 +214,8 @@ describe('Sacrificial Buddha', () => {
     assert.strictEqual(gremio.inventory.has(ITEM_KEYS.SACRIFICIAL_BUDDHA), false);
     assert.strictEqual(gremio.busyUntil, 123);
     assert.deepStrictEqual([hp[112], hp[113]], [0, 100]);
-    assert.deepStrictEqual(battle.log.ofType('revive').map(e => e.tick), [0]);
-    assert.strictEqual(battle.log.ofType('death').length, 0);
+    assert.deepStrictEqual(battle.log.ofType(LOG_TYPES.REVIVE).map(e => e.tick), [0]);
+    assert.strictEqual(battle.log.ofType(LOG_TYPES.DEATH).length, 0);
   });
 
   it('dies normally without one', () => {

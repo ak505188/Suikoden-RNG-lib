@@ -9,6 +9,7 @@ import { RUNES } from '../lib/Game/Magic/Runes.js';
 import { STATUS } from '../lib/Game/Constants.js';
 import Battle, { PHASE_STATE } from '../lib/Game/Battle/Battle.js';
 import RNG from '../lib/rng.js';
+import { LOG_TYPES } from '../lib/Game/Battle/ActionLog.js';
 
 // Seeds for a fresh RNG with the attack resolved first: seed 1 hits, seed 7 misses (both directions).
 // Seed 7 also produces the counters below, where the target can counter.
@@ -276,7 +277,7 @@ describe('Talisman Unite', () => {
   it('matches the live timeline when Gremio starts', () => {
     const S = 2;
     const { battle, gremio, pahn, dragon, end } = runGremioTurn();
-    const [damage] = battle.log.ofType('damage');
+    const [damage] = battle.log.ofType(LOG_TYPES.DAMAGE);
     assert.strictEqual(damage.tick, S + 75);
     assert.strictEqual(damage.actor, gremio.label);
     assert.strictEqual(damage.rng, 2); // one calc_damage each, no hit or crit roll
@@ -292,20 +293,20 @@ describe('Talisman Unite', () => {
     const { battle, gremio, pahn, dragon } = runGremioTurn();
     const rng = new RNG(HIT_SEED);
     const expected = (pahn.calcAttackDamage(dragon, rng, false) + gremio.calcAttackDamage(dragon, rng, false)) * 2;
-    assert.strictEqual(battle.log.ofType('damage')[0].amount, expected);
+    assert.strictEqual(battle.log.ofType(LOG_TYPES.DAMAGE)[0].amount, expected);
   });
 
   it('waits, with no RNG, while anyone is busy', () => {
     const { battle } = runGremioTurn(pahn => { pahn.busyUntil = 40; });
-    assert.strictEqual(battle.log.ofType('unite')[0].tick, 41);
-    assert.strictEqual(battle.log.ofType('damage')[0].rng, 2);
+    assert.strictEqual(battle.log.ofType(LOG_TYPES.UNITE)[0].tick, 41);
+    assert.strictEqual(battle.log.ofType(LOG_TYPES.DAMAGE)[0].rng, 2);
   });
 
   it('a dead partner fails it: Defend fallback, gate 0, no RNG, and no Defend halving', () => {
     const { battle, gremio, end } = runGremioTurn(pahn => { pahn.knockedOut = true; });
     assert.strictEqual(end, 1);
     assert.strictEqual(battle.rng.getCount(), 0);
-    assert.strictEqual(battle.log.ofType('defend')[0].detail, 'Talisman Attack failed');
+    assert.strictEqual(battle.log.ofType(LOG_TYPES.DEFEND)[0].detail, 'Talisman Attack failed');
     assert.strictEqual(gremio.defending, false);
   });
 });
@@ -347,7 +348,7 @@ describe('Falcon Rune', () => {
   // t0 = tick 1 (the actor is copied at 0)
   it('deals exactly 3x calc_damage at t0 + 159, with one rand() and no hit roll', () => {
     const { battle, valeria } = runValeriaTurn();
-    const [damage] = battle.log.ofType('damage');
+    const [damage] = battle.log.ofType(LOG_TYPES.DAMAGE);
     const dragon = battle.enemies.combatants[0];
     assert.strictEqual(damage.tick, 1 + 159);
     assert.strictEqual(damage.actor, valeria.label);
@@ -367,7 +368,7 @@ describe('Falcon Rune', () => {
     const dead = new Enemy(ENEMY_KEYS.SOLDIER_ANT), ant = new Enemy(ENEMY_KEYS.SOLDIER_ANT);
     dead.setHP(0); // out of the fight from battle start
     const { battle } = runValeriaTurn(0, [dead, ant]);
-    assert.strictEqual(battle.log.ofType('damage')[0].target, ant.label);
+    assert.strictEqual(battle.log.ofType(LOG_TYPES.DAMAGE)[0].target, ant.label);
   });
 });
 

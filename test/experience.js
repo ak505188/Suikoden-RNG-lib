@@ -56,7 +56,7 @@ describe('Character.gainEXP', () => {
   it('keeps EXP under 1000 without levelling up or using RNG', () => {
     const c = new Character(CHARACTER_KEYS.MCDOHL).setLVL(10).setEXP(300);
     const rng = new RNG(0x12);
-    assert.strictEqual(c.gainEXP(699, rng), 0);
+    assert.strictEqual(c.gainEXP(699, rng).levels, 0);
     assert.strictEqual(c.EXP, 999);
     assert.strictEqual(c.LVL, 10);
     assert.strictEqual(rng.getCount(), 0);
@@ -65,7 +65,7 @@ describe('Character.gainEXP', () => {
   it('levels up once per 1000 EXP and keeps the remainder', () => {
     const c = new Character(CHARACTER_KEYS.MCDOHL).setLVL(10).setEXP(900);
     const rng = new RNG(0x12);
-    assert.strictEqual(c.gainEXP(2600, rng), 3);
+    assert.strictEqual(c.gainEXP(2600, rng).levels, 3);
     assert.strictEqual(c.EXP, 500);
     assert.strictEqual(c.LVL, 13);
     assert.strictEqual(rng.getCount(), 3 * 7);
@@ -82,7 +82,7 @@ describe('Character.gainEXP', () => {
   it('stops at LVL 99', () => {
     const c = new Character(CHARACTER_KEYS.MCDOHL).setLVL(98);
     const rng = new RNG(0x12);
-    assert.strictEqual(c.gainEXP(3000, rng), 1);
+    assert.strictEqual(c.gainEXP(3000, rng).levels, 1);
     assert.strictEqual(c.LVL, 99);
     assert.strictEqual(rng.getCount(), 7);
   });
@@ -134,5 +134,37 @@ describe('PlayerParty.awardEXP', () => {
     const expectedRNG = new RNG(0x12);
     expected.combatants.forEach(c => c.levelUp(1, c.LVL, expectedRNG));
     assert.deepStrictEqual(party.combatants.map(c => c.stats), expected.combatants.map(c => c.stats));
+  });
+});
+
+describe('Character.gainEXP growths', () => {
+  it('returns the stat gains it rolled and added', () => {
+    const c = new Character(CHARACTER_KEYS.MCDOHL).setLVL(10);
+    const before = { ...c.stats };
+    const { levels, growths } = c.gainEXP(2000, new RNG(0x12));
+    assert.strictEqual(levels, 2);
+    assert.deepStrictEqual(growths, new Character(CHARACTER_KEYS.MCDOHL).calculateLevelups(2, 10, new RNG(0x12)));
+    for (const [stat, gain] of Object.entries(growths)) assert.strictEqual(c.stats[stat], before[stat] + gain);
+  });
+
+  it('returns null growths without a level-up', () => {
+    const c = new Character(CHARACTER_KEYS.MCDOHL).setLVL(10);
+    assert.deepStrictEqual(c.gainEXP(500, new RNG(0x12)), { levels: 0, growths: null });
+  });
+});
+
+describe('PlayerParty.awardEXP removed members', () => {
+  it('gives a removed member nothing but still counts them in the split', () => {
+    const party = new PlayerParty([
+      new Character(CHARACTER_KEYS.MCDOHL).setLVL(20),
+      new Character(CHARACTER_KEYS.VIKTOR).setLVL(22),
+    ]);
+    party.combatants[1].removedFromFight = true; // e.g. Balloon
+    const enemyParty = new EnemyParty([new Enemy(ENEMY_KEYS.FURFUR), new Enemy(ENEMY_KEYS.FURFUR)]);
+    const lvl = enemyParty.combatants[0].LVL;
+    const results = party.awardEXP(enemyParty, new RNG(0x12));
+    assert.deepStrictEqual(results.map(r => r.character.name), [party.combatants[0].name]);
+    assert.strictEqual(results[0].exp, calculateBattleEXP(20, [lvl, lvl], 2));
+    assert.strictEqual(party.combatants[1].EXP, 0);
   });
 });

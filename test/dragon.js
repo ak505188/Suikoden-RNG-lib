@@ -9,6 +9,7 @@ import { CHARACTER_KEYS, ENEMY_KEYS } from '../lib/Game/Keys.js';
 import { RUNES } from '../lib/Game/Magic/Runes.js';
 import RNG from '../lib/rng.js';
 import Battle, { PHASE_STATE } from '../lib/Game/Battle/Battle.js';
+import { LOG_TYPES } from '../lib/Game/Battle/ActionLog.js';
 
 /** @typedef {import('../lib/Game/Battle/Actions.js').EnemyAction} EnemyAction */
 
@@ -202,13 +203,13 @@ describe('Dragon move timing', () => {
     battle.phase = PHASE_STATE.COPY_ACTOR; // T0 = tick 0
     while (/** @type {string} */ (battle.phase) !== PHASE_STATE.ADVANCE_TURN) battle.tick();
     const doneTick = battle.turn.tick - 1;
-    while (!battle.log.ofType('turn').length) battle.tick();
-    return { battle, party, doneTick, nextRoll: battle.log.ofType('turn')[0].tick };
+    while (!battle.log.ofType(LOG_TYPES.TURN).length) battle.tick();
+    return { battle, party, doneTick, nextRoll: battle.log.ofType(LOG_TYPES.TURN)[0].tick };
   };
 
   it('Fire Breath: damage at T+303, turn over at B = T+324, next roll at B+31', () => {
     const { battle, doneTick, nextRoll } = runDragonTurn(0x6aa79987);
-    const damage = battle.log.ofType('damage');
+    const damage = battle.log.ofType(LOG_TYPES.DAMAGE);
     assert.strictEqual(damage.length, 6);
     assert.ok(damage.every(d => d.tick === 303));
     assert.strictEqual(battle.enemies.combatants[0].busyUntil, 324);
@@ -218,7 +219,7 @@ describe('Dragon move timing', () => {
 
   it('Lightning: target reacts until P+214, damage at P+251 = T+305, B = T+327, next roll at B+31', () => {
     const { battle, party, doneTick, nextRoll } = runDragonTurn(0xbb91433a); // hits slot 0
-    const [damage] = battle.log.ofType('damage');
+    const [damage] = battle.log.ofType(LOG_TYPES.DAMAGE);
     assert.strictEqual(damage.tick, 305);
     assert.strictEqual(damage.target, party.combatants[0].label);
     assert.strictEqual(party.combatants[0].busyUntil, 54 + 214);

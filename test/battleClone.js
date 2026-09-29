@@ -9,6 +9,7 @@ import { CHARACTER_KEYS, ENEMY_KEYS, ITEM_KEYS } from '../lib/Game/Keys.js';
 import { STATUS, WEAPON_ELEMENTS } from '../lib/Game/Constants.js';
 import CHARACTERS from '../lib/Game/Characters.js';
 import RNG from '../lib/rng.js';
+import { LOG_TYPES } from '../lib/Game/Battle/ActionLog.js';
 
 const ATTACK = { type: ACTION_TYPES.ATTACK, target: 0 };
 
@@ -75,7 +76,7 @@ describe('Battle.clone', () => {
     copyMcdohl.weapon.setRunePiece(WEAPON_ELEMENTS.FIRE);
     copy.enemies.combatants[0].setHP(1);
     copy.rng.next();
-    copy.log.record({ type: 'roundStart', round: 0, tick: 0, rng: 0 });
+    copy.log.record({ type: LOG_TYPES.ROUND_START, round: 0, tick: 0, rng: 0 });
 
     assert.strictEqual(mcdohl.HP, 220);
     assert.strictEqual(mcdohl.stats.PWR, 70);

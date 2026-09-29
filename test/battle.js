@@ -9,23 +9,17 @@ import { RUNES } from '../lib/Game/Magic/Runes.js';
 import { ACTION_TYPES } from '../lib/Game/Battle/Actions.js';
 import Battle from '../lib/Game/Battle/Battle.js';
 import RNG from '../lib/rng.js';
+import { LOG_TYPES } from '../lib/Game/Battle/ActionLog.js';
 
 /** @typedef {import('../lib/Game/Battle/Actions.js').Action} Action */
 
-/**
- * The RNG is where the round ended: for the round that ends the battle, that's before the
- * post-battle drop roll (result.rng.battleEnd), which is what these captures recorded.
- * @param {Battle} battle
- */
-const snapshot = (battle) => {
-  const rng = battle.result?.rng.battleEnd ?? battle.rng.snapshot();
-  return {
-    rng: rng.current,
-    count: rng.count,
-    party: Object.fromEntries(battle.party.combatants.map(c => [c.name, c.HP])),
-    enemies: battle.enemies.combatants.map(c => c.HP),
-  };
-};
+/** @param {Battle} battle */
+const snapshot = (battle) => ({
+  rng: battle.rng.getRNG(),
+  count: battle.rng.count,
+  party: Object.fromEntries(battle.party.combatants.map(c => [c.name, c.HP])),
+  enemies: battle.enemies.combatants.map(c => c.HP),
+});
 
 describe('Zombie Dragon 1 turn tests', () => {
   const McDohl = new Character(CHARACTER_KEYS.MCDOHL)
@@ -158,18 +152,19 @@ describe('5 Bandit best version battle tests', () => {
   battle.playTurn(actions);
 
   it('rng == 0x66c25dd8', () => {
-    assert.strictEqual(battle.result.rng.battleEnd.current, 0x66c25dd8);
+    assert.strictEqual(battle.rng.getRNG(), 0x66c25dd8);
   });
   it('rng count after battle 18215', () => {
-    assert.strictEqual(battle.result.rng.battleEnd.count, 18215);
+    assert.strictEqual(battle.rng.count, 18215);
   });
   // Not captured here: the next capture (Varkas & Sydonia, below) starts on this RNG, so it only
-  // holds while nothing else rolls in between.
+  // holds while nothing else rolls in between. Finished on a copy, so the checks here still see
+  // the battle as it ended.
   it('rng after drop == 0xf8b88416 (next battle\'s start)', () => {
-    assert.strictEqual(battle.result.rng.afterDrop.current, 0xf8b88416);
+    assert.strictEqual(battle.clone().finish().result.rng.afterDrop.current, 0xf8b88416);
   });
   it('rng count after drop 18217 (next battle\'s start)', () => {
-    assert.strictEqual(battle.result.rng.afterDrop.count, 18217);
+    assert.strictEqual(battle.clone().finish().result.rng.afterDrop.count, 18217);
   });
   it('McDohl HP == 26', () => {
     assert.strictEqual(battle.party.getCombatantByName(McDohl.name).HP, 26);
@@ -187,7 +182,7 @@ describe('5 Bandit best version battle tests', () => {
     assert.strictEqual(battle.party.getCombatantByName(Ted.name).HP, 56);
   });
   it('damage rolls match the capture', () => {
-    const damage = battle.log.ofType('damage').map(({ tick, actor, target, amount }) => ({ tick, actor, target, amount }));
+    const damage = battle.log.ofType(LOG_TYPES.DAMAGE).map(({ tick, actor, target, amount }) => ({ tick, actor, target, amount }));
     assert.deepStrictEqual(damage, [
       { tick: 77, actor: 'Cleo', target: 'Bandit (yellow) #1', amount: 63 }, // crit
       { tick: 82, actor: 'Ted', target: 'Bandit (green) #5', amount: 32 },
@@ -264,10 +259,10 @@ describe('Varkas & Sydonia after 5 bandit above', () => {
   battle.run();
 
   it('rng == 0xa16e5044', () => {
-    assert.strictEqual(battle.result.rng.battleEnd.current, 0xa16e5044);
+    assert.strictEqual(battle.rng.getRNG(), 0xa16e5044);
   });
   it('rng count after battle 18283', () => {
-    assert.strictEqual(battle.result.rng.battleEnd.count, 18283);
+    assert.strictEqual(battle.rng.count, 18283);
   });
   it('McDohl HP == 8', () => {
     assert.strictEqual(battle.party.getCombatantByName(McDohl.name).HP, 8);

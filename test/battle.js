@@ -2,7 +2,7 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import Character from '../lib/Game/Battle/Character.js';
 import Enemy from '../lib/Game/Battle/Enemy.js';
-import { CHARACTER_KEYS, ENEMY_KEYS, UNITE_KEYS } from '../lib/Game/Keys.js';
+import { CHARACTER_KEYS, ENEMY_KEYS, ITEM_KEYS, UNITE_KEYS } from '../lib/Game/Keys.js';
 import { AREAS } from '../lib/Game/Bestiary/Areas.js';
 import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
 import { RUNES } from '../lib/Game/Magic/Runes.js';
@@ -11,6 +11,14 @@ import Battle from '../lib/Game/Battle/Battle.js';
 import RNG from '../lib/rng.js';
 
 /** @typedef {import('../lib/Game/Battle/Actions.js').Action} Action */
+
+/** @param {Battle} battle */
+const snapshot = (battle) => ({
+  rng: battle.rng.getRNG(),
+  count: battle.rng.count,
+  party: Object.fromEntries(battle.party.combatants.map(c => [c.name, c.HP])),
+  enemies: battle.enemies.combatants.map(c => c.HP),
+});
 
 describe('Zombie Dragon 1 turn tests', () => {
   const McDohl = new Character(CHARACTER_KEYS.MCDOHL)
@@ -268,7 +276,7 @@ describe('Dragon tests', () => {
     .setLVL(25)
     .setEXP(679)
     .setStats({ PWR: 82, SKL: 102, DEF: 80, SPD: 93, MGC: 86, LUK: 85, HP: 278 })
-    // TODO: Clear Inventory
+    .clearInventory()
     .setRune(RUNES.SOUL_EATER)
     .setWeaponLvl(8);
 
@@ -374,17 +382,9 @@ describe('Dragon tests', () => {
   const enemyParty = EnemyParty.fromFormation(AREAS.PANNU_YAKUTA.scripted[0]);
   const battle = new Battle({ party, enemies: enemyParty, rng, turns: [] });
 
-  // The describe body runs before any it(), so each round's state is captured right after it plays
-  const snapshot = () => ({
-    rng: battle.rng.getRNG(),
-    count: battle.rng.count,
-    party: Object.fromEntries(battle.party.combatants.map(c => [c.name, c.HP])),
-    enemies: battle.enemies.combatants.map(c => c.HP),
-  });
-
   const snapshots = actions.map(turn => {
     battle.playTurnTickBased(turn);
-    return snapshot();
+    return snapshot(battle);
   });
 
   it('T1 rng == 0x8ddcf2e4', () => {
@@ -448,5 +448,151 @@ describe('Dragon tests', () => {
   });
   it('Dragon HP = 0', () => {
     assert.strictEqual(snapshots[5].enemies[0], 0);
+  });
+});
+
+describe('Golem 3 FurFur no force to test Medicine', () => {
+  const McDohl = new Character(CHARACTER_KEYS.MCDOHL)
+    .setLVL(4)
+    .setEXP(120)
+    .setStats({ PWR: 22, SKL: 32, DEF: 27, SPD: 26, MGC: 22, LUK: 24, HP: 7 })
+    .setHP(7);
+
+  const Gremio = new Character(CHARACTER_KEYS.GREMIO)
+    .setLVL(4)
+    .setEXP(120)
+    .setRune(RUNES.HOLY)
+    .setStats({ PWR: 25, SKL: 20, DEF: 26, SPD: 16, MGC: 12, LUK: 18, HP: 46 })
+    .setHP(40);
+
+  const Pahn = new Character(CHARACTER_KEYS.PAHN)
+    .setLVL(4)
+    .setEXP(120)
+    .setStats({ PWR: 36, SKL: 26, DEF: 28, SPD: 14, MGC: 6, LUK: 23, HP: 60 })
+    .setHP(7);
+
+  const Ted = new Character(CHARACTER_KEYS.TED)
+    .setLVL(4)
+    .setEXP(120)
+    .setStats({ PWR: 22, SKL: 30, DEF: 17, SPD: 24, MGC: 24, LUK: 23, HP: 46 })
+
+  const Cleo = new Character(CHARACTER_KEYS.CLEO)
+    .setLVL(4)
+    .setEXP(120)
+    .setStats({ PWR: 20, SKL: 30, DEF: 24, SPD: 22, MGC: 32, LUK: 25, HP: 47 })
+
+  const party = new PlayerParty([McDohl, Gremio, Pahn, Ted, Cleo]);
+  const enemyParty = EnemyParty.fromFormation(AREAS.MAGICIANS_ISLAND.scripted[0]);
+
+  const rng = new RNG(0x17).next(141);
+
+  const battle1 = new Battle({ party, enemies: enemyParty, rng });
+  const battle2 = battle1.clone();
+
+  /** @param {Action[]} actions */
+  const actionsT1v1 = [
+    { type: ACTION_TYPES.DEFEND },
+    { type: ACTION_TYPES.UNITE, uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.UNITE, uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.ITEM, itemKey: ITEM_KEYS.MEDICINE, target: 2 },
+    { type: ACTION_TYPES.DEFEND }
+  ];
+
+  /** @param {Action[]} actions */
+  const actionsT2v1 = [
+    { type: ACTION_TYPES.ATTACK },
+    { type: ACTION_TYPES.UNITE,  uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.UNITE,  uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.DEFEND },
+    { type: ACTION_TYPES.DEFEND },
+  ];
+
+  /** @param {Action[]} actions */
+  const actionsT1v2 = [
+    { type: ACTION_TYPES.DEFEND },
+    { type: ACTION_TYPES.UNITE, uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.UNITE, uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.ITEM, itemKey: ITEM_KEYS.MEDICINE, target: 2 },
+    { type: ACTION_TYPES.ATTACK }
+  ];
+
+  const actionsT2v2 = [
+    { type: ACTION_TYPES.DEFEND },
+    { type: ACTION_TYPES.UNITE,  uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.UNITE,  uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.DEFEND },
+    { type: ACTION_TYPES.DEFEND },
+  ];
+
+  const actionsV1 = [actionsT1v1, actionsT2v1];
+  const actionsV2 = [actionsT1v2, actionsT2v2];
+
+  const snapshotsV1 = actionsV1.map(turn => {
+    battle1.playTurnTickBased(turn);
+    return snapshot(battle1);
+  });
+
+  const snapshotsV2 = actionsV2.map(turn => {
+    battle2.playTurnTickBased(turn);
+    return snapshot(battle2);
+  });
+
+  it('rng count after T1 == 166', () => {
+    assert.strictEqual(snapshotsV1[0].count, 166);
+  });
+  it('McDohl HP == 7', () => {
+    assert.strictEqual(snapshotsV1[0].party[McDohl.name], 7);
+  });
+  it('Gremio HP == 32', () => {
+    assert.strictEqual(snapshotsV1[0].party[Gremio.name], 32);
+  });
+  it('Pahn HP == 60', () => {
+    assert.strictEqual(snapshotsV1[0].party[Pahn.name], 60);
+  });
+  it('Golem HP == 154', () => {
+    assert.strictEqual(snapshotsV1[0].enemies[0], 154);
+  });
+
+  it('rng count after T2 == 187', () => {
+    assert.strictEqual(snapshotsV1[1].count, 187);
+  });
+  it('Golem HP == 0', () => {
+    assert.strictEqual(snapshotsV1[1].enemies[0], 0);
+  });
+
+  console.log(battle2.log.format());
+
+  describe('Alternate version to test special move', () => {
+    it('rng count after T1 == 172', () => {
+      assert.strictEqual(snapshotsV2[0].count, 172);
+    });
+    it('McDohl HP == 5', () => {
+      assert.strictEqual(snapshotsV2[0].party[McDohl.name], 5);
+    });
+    it('Gremio HP == 27', () => {
+      assert.strictEqual(snapshotsV2[0].party[Gremio.name], 27);
+    });
+    it('Pahn HP == 51', () => {
+      assert.strictEqual(snapshotsV2[0].party[Pahn.name], 51);
+    });
+    it('Ted HP == 45', () => {
+      assert.strictEqual(snapshotsV2[0].party[Ted.name], 45);
+    });
+    it('Cleo HP == 46', () => {
+      assert.strictEqual(snapshotsV2[0].party[Cleo.name], 46);
+    });
+    it('Golem HP == 134', () => {
+      assert.strictEqual(snapshotsV2[0].enemies[0], 134);
+    });
+
+    it('rng count after T1 == 198', () => {
+      assert.strictEqual(snapshotsV2[1].count, 198);
+    });
+    it('McDohl HP == 5', () => {
+      assert.strictEqual(snapshotsV2[1].party[McDohl.name], 5);
+    });
+    it('Golem HP == 0', () => {
+      assert.strictEqual(snapshotsV2[1].enemies[0], 0);
+    });
   });
 });

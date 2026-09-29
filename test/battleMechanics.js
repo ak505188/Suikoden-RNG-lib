@@ -2,7 +2,7 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import Character from '../lib/Game/Battle/Character.js';
 import Enemy from '../lib/Game/Battle/Enemy.js';
-import { CHARACTER_KEYS, ENEMY_KEYS, UNITE_KEYS } from '../lib/Game/Keys.js';
+import { CHARACTER_KEYS, ENEMY_KEYS, ITEM_KEYS, UNITE_KEYS } from '../lib/Game/Keys.js';
 import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
 import { ACTION_TYPES } from '../lib/Game/Battle/Actions.js';
 import { RUNES } from '../lib/Game/Magic/Runes.js';
@@ -234,7 +234,7 @@ describe('Unbalanced', () => {
     const battle = makeBattle([gremio], [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)], HIT_SEED);
     gremio.unbalance();
     assert.throws(() => battle.party.setActionPlan([{ type: ACTION_TYPES.ATTACK }]), /Unbalanced/);
-    battle.party.setActionPlan([{ type: ACTION_TYPES.ITEM, itemId: 'MEDICINE' }]);
+    battle.party.setActionPlan([{ type: ACTION_TYPES.ITEM, itemKey: ITEM_KEYS.MEDICINE }]);
     battle.party.setActionPlan([]); // unplanned members Defend
     assert.strictEqual(gremio.action.type, ACTION_TYPES.DEFEND);
   });

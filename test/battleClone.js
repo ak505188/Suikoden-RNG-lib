@@ -44,16 +44,16 @@ describe('Battle.clone', () => {
 
   it('branches from a later round without touching the original', () => {
     const battle = makeBattle();
-    battle.playTurnTickBased([ATTACK, ATTACK, ATTACK]);
+    battle.playTurn([ATTACK, ATTACK, ATTACK]);
     const before = snapshot(battle);
 
     const copy = battle.clone();
-    copy.playTurnTickBased([ATTACK, ATTACK, ATTACK]);
+    copy.playTurn([ATTACK, ATTACK, ATTACK]);
     assert.notDeepStrictEqual(snapshot(copy), before);
     assert.deepStrictEqual(snapshot(battle), before);
 
     // ...and the original still plays that round the same way the copy did
-    battle.playTurnTickBased([ATTACK, ATTACK, ATTACK]);
+    battle.playTurn([ATTACK, ATTACK, ATTACK]);
     assert.deepStrictEqual(snapshot(battle), snapshot(copy));
   });
 

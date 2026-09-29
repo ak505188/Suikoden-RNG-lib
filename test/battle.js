@@ -148,7 +148,7 @@ describe('5 Bandit best version battle tests', () => {
   const enemyParty = EnemyParty.fromFormation(AREAS.MT_SEIFU.scripted[1]);
   const battle = new Battle({ party, enemies: enemyParty, rng, turns: [actions] });
 
-  battle.playTurnTickBased(actions);
+  battle.playTurn(actions);
 
   it('rng == 0x66c25dd8', () => {
     assert.strictEqual(battle.rng.getRNG(), 0x66c25dd8);
@@ -383,7 +383,7 @@ describe('Dragon tests', () => {
   const battle = new Battle({ party, enemies: enemyParty, rng, turns: [] });
 
   const snapshots = actions.map(turn => {
-    battle.playTurnTickBased(turn);
+    battle.playTurn(turn);
     return snapshot(battle);
   });
 
@@ -528,12 +528,12 @@ describe('Golem 3 FurFur no force to test Medicine', () => {
   const actionsV2 = [actionsT1v2, actionsT2v2];
 
   const snapshotsV1 = actionsV1.map(turn => {
-    battle1.playTurnTickBased(turn);
+    battle1.playTurn(turn);
     return snapshot(battle1);
   });
 
   const snapshotsV2 = actionsV2.map(turn => {
-    battle2.playTurnTickBased(turn);
+    battle2.playTurn(turn);
     return snapshot(battle2);
   });
 

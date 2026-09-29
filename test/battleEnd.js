@@ -7,19 +7,29 @@ import Battle, { BATTLE_STATUS } from '../lib/Game/Battle/Battle.js';
 import { ACTION_TYPES } from '../lib/Game/Battle/Actions.js';
 import { CHARACTER_KEYS, ENEMY_KEYS } from '../lib/Game/Keys.js';
 import RNG from '../lib/rng.js';
+import { ITEMS } from '../lib/Game/Items.js';
 
 const ATTACK = { type: ACTION_TYPES.ATTACK, target: 0 };
 const DEFEND = { type: ACTION_TYPES.DEFEND };
 const MAX_ROUNDS = 30;
 
-/** A party strong enough to kill two FurFurs quickly. */
-const winningBattle = (turns = []) => new Battle({
+/**
+ * A party strong enough to kill two FurFurs in round 1. The drop seeds below were found by running
+ * this battle, so they check the sim against itself, not against the game.
+ * @param {import('../lib/Game/Battle/Actions.js').Action[][]} [turns]
+ * @param {number} [seed]
+ */
+const winningBattle = (turns = [], seed = 1) => new Battle({
   party: new PlayerParty([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO].map(key =>
     new Character(key).setLVL(40).setStats({ PWR: 150, SKL: 150, DEF: 150, SPD: 150, MGC: 60, LUK: 60, HP: 500 }).rest())),
   enemies: new EnemyParty([new Enemy(ENEMY_KEYS.FURFUR), new Enemy(ENEMY_KEYS.FURFUR)]),
-  rng: new RNG(1),
+  rng: new RNG(seed),
   turns,
 });
+
+const NO_DROP_SEED = 1;       // no drop (3 rolls)
+const FIRST_DROP_SEED = 4;    // Medicine from FurFur #1 (2 rolls)
+const SECOND_DROP_SEED = 45;  // Wooden shoes from FurFur #2 (4 rolls)
 
 /** One 1-HP McDohl defending against the Zombie Dragon. */
 const losingBattle = () => new Battle({
@@ -93,17 +103,20 @@ describe('Battle end', () => {
     assert.strictEqual(battle.status, BATTLE_STATUS.WON);
     assert.ok(battle.enemies.combatants.every(e => e.knockedOut));
 
-    // Nothing runs after the round yet, so the battle ends on the RNG the round ended on
+    // The battle ends on the RNG the round ended on
     const roundEnd = battle.log.ofType('roundEnd').at(-1);
-    assert.deepStrictEqual(battle.result.rng.battleEnd, { original: 1, current: battle.rng.getRNG(), count: battle.rng.getCount() });
-    assert.strictEqual(battle.result.rng.battleEnd.count, roundEnd.rng);
+    const battleEnd = battle.result.rng.battleEnd;
+    assert.strictEqual(battleEnd.count, roundEnd.rng);
+    assert.strictEqual(battleEnd.current, new RNG(1).next(roundEnd.rng).getRNG());
+    assert.strictEqual(battleEnd.original, 1);
 
-    // Logged after the round's last tick, so one tick past roundEnd
+    // Logged after the round's last tick, so one tick past roundEnd, then the drop
     const entries = battle.log.entries;
-    assert.deepStrictEqual(entries.at(-1), {
+    assert.deepStrictEqual(entries.at(-2), {
       type: 'battleEnd', round: battle.turn_count, tick: battle.turn.tick, rng: roundEnd.rng, detail: BATTLE_STATUS.WON,
     });
-    assert.strictEqual(entries.at(-2), roundEnd);
+    assert.strictEqual(entries.at(-3), roundEnd);
+    assert.strictEqual(entries.at(-1).type, 'drop');
   });
 
   it('is lost once every party member is out', () => {
@@ -112,6 +125,15 @@ describe('Battle end', () => {
     assert.strictEqual(battle.status, BATTLE_STATUS.LOST);
     assert.ok(battle.party.combatants[0].knockedOut);
     assert.strictEqual(battle.log.entries.at(-1).detail, BATTLE_STATUS.LOST);
+  });
+
+  it('rolls no drop when lost', () => {
+    const battle = losingBattle();
+    playUntilOver(battle, [DEFEND]);
+    assert.strictEqual(battle.result.drop, null);
+    assert.strictEqual(battle.result.rng.afterDrop, undefined);
+    assert.strictEqual(battle.rng.getCount(), battle.result.rng.battleEnd.count);
+    assert.strictEqual(battle.log.ofType('drop').length, 0);
   });
 
   it('refuses to play another round once over', () => {
@@ -141,6 +163,60 @@ describe('Battle end', () => {
     assert.strictEqual(copy.status, BATTLE_STATUS.WON);
     assert.deepStrictEqual(copy.result, battle.result);
     copy.result.rng.battleEnd.count = -1;
+    copy.result.rng.afterDrop.count = -1;
     assert.notStrictEqual(battle.result.rng.battleEnd.count, -1);
+    assert.notStrictEqual(battle.result.rng.afterDrop.count, -1);
+  });
+});
+
+describe('Battle end drop', () => {
+  /** @param {number} seed */
+  const won = seed => {
+    const battle = winningBattle([], seed);
+    playUntilOver(battle, [ATTACK, ATTACK]);
+    assert.strictEqual(battle.status, BATTLE_STATUS.WON);
+    return battle;
+  };
+
+  it('rolls on the live RNG, right where the battle ended', () => {
+    for (const seed of [NO_DROP_SEED, FIRST_DROP_SEED, SECOND_DROP_SEED]) {
+      const battle = won(seed);
+      const { battleEnd, afterDrop } = battle.result.rng;
+
+      // Same roll as calculateDrop from the battle-end RNG, on a fresh copy of the formation
+      const rng = new RNG(seed).next(battleEnd.count);
+      const drop = new EnemyParty([new Enemy(ENEMY_KEYS.FURFUR), new Enemy(ENEMY_KEYS.FURFUR)]).calculateDrop(rng);
+      assert.strictEqual(battle.result.drop, drop);
+      assert.deepStrictEqual(afterDrop, rng.snapshot());
+      assert.deepStrictEqual(battle.rng.snapshot(), afterDrop);
+    }
+  });
+
+  it('records no drop', () => {
+    const battle = won(NO_DROP_SEED);
+    const { battleEnd, afterDrop } = battle.result.rng;
+    assert.strictEqual(battle.result.drop, null);
+    assert.strictEqual(afterDrop.count - battleEnd.count, 3);
+    const entry = battle.log.entries.at(-1);
+    assert.deepStrictEqual(entry, { type: 'drop', round: 1, tick: battle.turn.tick, rng: afterDrop.count });
+    assert.match(battle.log.format(), /No drop$/);
+  });
+
+  it('records a drop from the first enemy', () => {
+    const battle = won(FIRST_DROP_SEED);
+    const { battleEnd, afterDrop } = battle.result.rng;
+    assert.strictEqual(battle.result.drop, ITEMS.MEDICINE);
+    assert.strictEqual(afterDrop.count - battleEnd.count, 2);
+    assert.deepStrictEqual(battle.log.entries.at(-1), {
+      type: 'drop', round: 1, tick: battle.turn.tick, rng: afterDrop.count, detail: 'Medicine',
+    });
+    assert.match(battle.log.format(), /Dropped Medicine$/);
+  });
+
+  it('records a drop from a later enemy', () => {
+    const battle = won(SECOND_DROP_SEED);
+    const { battleEnd, afterDrop } = battle.result.rng;
+    assert.strictEqual(battle.result.drop, ITEMS.WOODEN_SHOES);
+    assert.strictEqual(afterDrop.count - battleEnd.count, 4);
   });
 });

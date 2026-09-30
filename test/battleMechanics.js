@@ -372,6 +372,96 @@ describe('Falcon Rune', () => {
   });
 });
 
+describe('Boar Rune', () => {
+  const makePahn = () => new Character(CHARACTER_KEYS.PAHN)
+    .setLVL(20)
+    .setStats({ PWR: 90, SKL: 60, DEF: 70, SPD: 40, MGC: 20, LUK: 40, HP: 300 })
+    .rest();
+
+  /**
+   * Pahn (combatant 1) uses Boar; ticks the round driver until his turn ends.
+   * @param {{ target?: number, enemies?: Enemy[], busyUntil?: number }} [options] - busyUntil:
+   *   how long the first enemy stays busy, to hold up the cast
+   */
+  const runPahnTurn = ({ target = 0, enemies = [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)], busyUntil = 0 } = {}) => {
+    const pahn = makePahn();
+    const battle = makeBattle([pahn], enemies, HIT_SEED);
+    battle.enemies.combatants[0].busyUntil = busyUntil;
+    battle.party.setActionPlan([{ type: ACTION_TYPES.RUNE, slot: 0, target }]);
+    battle.turn.pending = 1;
+    battle.phase = PHASE_STATE.COPY_ACTOR;
+    while (/** @type {string} */ (battle.phase) !== PHASE_STATE.ADVANCE_TURN) battle.tick();
+    const [cast] = battle.log.ofType(LOG_TYPES.CAST);
+    return { battle, pahn, S: cast.tick + 1, end: battle.turn.tick - 1 };
+  };
+
+  /** Keeps ticking steps 2-3 and the animation pass past the end of the turn. */
+  const runOn = (/** @type {Battle} */ battle, /** @type {number} */ to) => runTicks(battle, battle.turn.tick, to);
+
+  it('waits, with no RNG, until no combatant is busy, then casts (S = the next tick)', () => {
+    // Busy clears in tick 50's animation pass, so the resolver sees everyone idle at 51
+    const { battle, S } = runPahnTurn({ busyUntil: 50 });
+    assert.strictEqual(S, 52);
+    assert.strictEqual(battle.log.ofType(LOG_TYPES.CAST)[0].rng, 0);
+  });
+
+  it('deals exactly 2x calc_damage at S + 322, with one rand() and no hit roll', () => {
+    const { battle, pahn, S } = runPahnTurn();
+    runOn(battle, S + 322);
+    const [damage] = battle.log.ofType(LOG_TYPES.DAMAGE);
+    const dragon = battle.enemies.combatants[0];
+    assert.strictEqual(damage.tick, S + 322);
+    assert.strictEqual(damage.actor, pahn.label);
+    assert.strictEqual(damage.rng, 1);
+    assert.strictEqual(damage.amount, 2 * pahn.calcAttackDamage(dragon, new RNG(HIT_SEED), false));
+  });
+
+  it('holds the turn until S + 292, leaving the gate unchanged', () => {
+    const { battle, pahn, S, end } = runPahnTurn();
+    assert.strictEqual(end, S + 292);
+    assert.strictEqual(battle.turn.rollGate, 0);
+    assert.strictEqual(pahn.busyUntil, S + 344);
+    assert.strictEqual(battle.enemies.combatants[0].busyUntil, S + 322);
+  });
+
+  it('rolls Unbalanced (one rand(), always lands) at S + 344, after the damage', () => {
+    const { battle, pahn, S } = runPahnTurn();
+    runOn(battle, S + 343);
+    assert.strictEqual(battle.rng.getCount(), 1);
+    assert.strictEqual(pahn.isUnbalanced, false);
+    runOn(battle, S + 344);
+    assert.strictEqual(battle.rng.getCount(), 2);
+    assert.strictEqual(pahn.isUnbalanced, true);
+  });
+
+  it('a kill keeps the target busy through its death (S + 415 for a Soldier Ant)', () => {
+    const ant = new Enemy(ENEMY_KEYS.SOLDIER_ANT);
+    ant.setHP(1);
+    const { battle, S } = runPahnTurn({ enemies: [ant] });
+    runOn(battle, S + 322);
+    assert.strictEqual(battle.log.ofType(LOG_TYPES.DEATH)[0].tick, S + 322);
+    assert.strictEqual(ant.busyUntil, S + 415);
+  });
+
+  it('retargets an invalid target to the first ready enemy', () => {
+    const dead = new Enemy(ENEMY_KEYS.SOLDIER_ANT), ant = new Enemy(ENEMY_KEYS.SOLDIER_ANT);
+    dead.setHP(0); // out of the fight from battle start
+    const { battle, S } = runPahnTurn({ enemies: [dead, ant] });
+    runOn(battle, S + 322);
+    assert.strictEqual(battle.log.ofType(LOG_TYPES.DAMAGE)[0].target, ant.label);
+  });
+
+  it('leaves Pahn Unbalanced for all of the next round, cleared at its end', () => {
+    const pahn = makePahn();
+    const battle = makeBattle([pahn], [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)], HIT_SEED);
+    battle.playTurn([{ type: ACTION_TYPES.RUNE, slot: 0, target: 0 }]);
+    assert.strictEqual(pahn.isUnbalanced, true);
+    assert.throws(() => battle.clone().playTurn([{ type: ACTION_TYPES.RUNE, slot: 0, target: 0 }]), /Unbalanced/);
+    battle.playTurn([{ type: ACTION_TYPES.DEFEND }]);
+    assert.strictEqual(pahn.isUnbalanced, false);
+  });
+});
+
 describe('Balloon', () => {
   it('at 3 or more removes a combatant at battle start, for the whole battle', () => {
     const floating = makeGremio(), almost = makeCleo(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);

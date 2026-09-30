@@ -678,3 +678,57 @@ describe('3 BonBon Celadon Urn fight', () => {
     });
   });
 });
+
+describe('3 BonBon: COPY_ACTOR hold after a party crit, and victory -> drop timing', () => {
+  // Live captures (round 2 ticks). Gremio crits at t85, so the next party actor (Pahn, rolled at
+  // t86) isn't copied in until Gremio's recover starts (t85 + 88 = t173): copied t174, attacks t175.
+  const D = { type: ACTION_TYPES.DEFEND };
+  /** @param {number} target */
+  const A = target => ({ type: ACTION_TYPES.ATTACK, target });
+  /** @param {Action[]} round2 */
+  const play = round2 => {
+    const party = new PlayerParty([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.PAHN, CHARACTER_KEYS.CLEO, CHARACTER_KEYS.TED]
+      .map(key => new Character(key)));
+    const battle = new Battle({
+      party,
+      enemies: EnemyParty.fromFormation(AREAS.GREGMINSTER_AREA_1.encounters[1]),
+      rng: new RNG(0x30a82220).next(5419),
+      escapable: true,
+      turns: [{ command: ROUND_COMMANDS.RUN }, round2],
+    });
+    battle.run({ finish: true });
+    const round2Entries = battle.log.entries.filter(e => e.round === 2);
+    /** @param {string} type @param {string} [actor] */
+    const tickOf = (type, actor) => round2Entries.find(e => e.type === type && (!actor || e.actor === actor)).tick;
+    return { battle, tickOf };
+  };
+
+  describe('Gremio -> #2, Pahn -> #3, Ted -> #1', () => {
+    const { battle, tickOf } = play([D, A(1), A(2), D, A(0)]);
+    it('Pahn attacks at t175 (held through Gremio\'s crit)', () => {
+      assert.strictEqual(tickOf(LOG_TYPES.ATTACK, 'Pahn'), 175);
+    });
+    it('McDohl\'s turn comes at t176', () => {
+      assert.strictEqual(battle.log.entries.find(e => e.round === 2 && e.type === LOG_TYPES.TURN && e.actor === 'McDohl').tick, 176);
+    });
+    it('Pahn\'s damage roll is at t231', () => {
+      assert.strictEqual(tickOf(LOG_TYPES.DAMAGE, 'Pahn'), 231);
+    });
+    it('drops at t407 (B + 34), on RNG 5501', () => {
+      const drop = battle.log.ofType(LOG_TYPES.DROP)[0];
+      assert.strictEqual(drop.tick, 407);
+      assert.strictEqual(battle.result.rng.battleEnd.count, 5501);
+    });
+  });
+
+  describe('Gremio -> #3, Pahn -> #1, Ted -> #1', () => {
+    const { battle, tickOf } = play([D, A(2), A(0), D, A(0)]);
+    it('Pahn is held to t175, retargets (#1 already dead), and attacks at t176', () => {
+      assert.strictEqual(tickOf(LOG_TYPES.RETARGET, 'Pahn'), 175);
+      assert.strictEqual(tickOf(LOG_TYPES.ATTACK, 'Pahn'), 176);
+    });
+    it('drops at t408, one tick after the other plan', () => {
+      assert.strictEqual(battle.log.ofType(LOG_TYPES.DROP)[0].tick, 408);
+    });
+  });
+});

@@ -4,7 +4,7 @@ import Character from '../lib/Game/Battle/Character.js';
 import Enemy from '../lib/Game/Battle/Enemy.js';
 import { CHARACTER_KEYS, ENEMY_KEYS, ITEM_KEYS, UNITE_KEYS } from '../lib/Game/Keys.js';
 import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
-import { ACTION_TYPES } from '../lib/Game/Battle/Actions.js';
+import { ACTION_TYPES, ATTACK_RESULT } from '../lib/Game/Battle/Actions.js';
 import { RUNES } from '../lib/Game/Magic/Runes.js';
 import { STATUS } from '../lib/Game/Constants.js';
 import Battle, { PHASE_STATE } from '../lib/Game/Battle/Battle.js';
@@ -182,18 +182,75 @@ describe('Counters', () => {
   });
 });
 
-describe('Waiting for the other side', () => {
-  it('an actor waits while an attack from the other side is in its continuation chain', () => {
-    const gremio = makeGremio(), cleo = makeCleo(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
-    const battle = makeBattle([gremio, cleo], [dragon], HIT_SEED);
-    gremio.setAction({ type: ACTION_TYPES.ATTACK });
-    battle.resolvePartyAttack(gremio); // t0 = 0; Gremio's recover starts at +88
-    assert.strictEqual(gremio.attackUntil, 88);
-    battle.turn.tick = 88;
-    assert.strictEqual(battle.isWaitingForOtherSide(dragon), true);
-    assert.strictEqual(battle.isWaitingForOtherSide(cleo), false); // same side: no wait
-    battle.turn.tick = 89;
-    assert.strictEqual(battle.isWaitingForOtherSide(dragon), false);
+describe('COPY_ACTOR hold', () => {
+  /**
+   * Gremio (combatant 1), already copied in as the current actor, attacks Zombie Dragon #1 at
+   * t0 = 0; his recover starts at +88. Cleo is combatant 2, Zombie Dragon #2 combatant 4.
+   * @param {number} seed
+   */
+  const gremioAttacks = seed => {
+    const gremio = makeGremio(), cleo = makeCleo();
+    const battle = makeBattle([gremio, cleo], [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON), new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)], seed);
+    battle.turn.current = 1;
+    battle.turn.release = false; // the copy that made Gremio current cleared it
+    gremio.setAction({ type: ACTION_TYPES.ATTACK, target: 0 });
+    battle.resolvePartyAttack(gremio);
+    const result = battle.log.ofType(LOG_TYPES.ATTACK)[0].detail;
+    return { battle, result };
+  };
+
+  /** Tries to copy `pending` in at `tick`: true if it was copied. */
+  const copyAt = (/** @type {Battle} */ battle, /** @type {number} */ pending, /** @type {number} */ tick) => {
+    battle.turn.pending = pending;
+    battle.turn.tick = tick;
+    battle.phase = PHASE_STATE.COPY_ACTOR;
+    battle.copyActor();
+    return /** @type {string} */ (battle.phase) === PHASE_STATE.DISPATCH;
+  };
+
+  const critSeed = () => {
+    for (let seed = 1; ; seed++) if (gremioAttacks(seed).result === ATTACK_RESULT.CRIT) return seed;
+  };
+
+  it('a side switch holds the copy until the current actor\'s recover starts', () => {
+    const { battle, result } = gremioAttacks(HIT_SEED);
+    assert.strictEqual(result, ATTACK_RESULT.HIT);
+    battle.turn.holdFlag = true; // what the roll sets on picking an enemy after a party actor
+    assert.strictEqual(copyAt(battle, 4, 88), false);
+    assert.strictEqual(copyAt(battle, 4, 89), true);
+    assert.strictEqual(battle.turn.current, 4);
+    assert.strictEqual(battle.turn.holdFlag, false);
+  });
+
+  it('the same side after a hit is never held', () => {
+    const { battle } = gremioAttacks(HIT_SEED);
+    assert.strictEqual(battle.turn.holdFlag, false);
+    assert.strictEqual(copyAt(battle, 2, 1), true);
+  });
+
+  it('a party crit holds even the same side, until the crit\'s recover starts', () => {
+    const { battle, result } = gremioAttacks(critSeed());
+    assert.strictEqual(result, ATTACK_RESULT.CRIT);
+    assert.strictEqual(battle.turn.holdFlag, true);
+    assert.strictEqual(copyAt(battle, 2, 88), false);
+    assert.strictEqual(copyAt(battle, 2, 89), true);
+  });
+
+  it('a Defend releases at once', () => {
+    const { battle } = gremioAttacks(critSeed());
+    battle.turn.releaseAt = -1; // as if Gremio had defended instead: DISPATCH releases
+    battle.turn.release = true;
+    assert.strictEqual(copyAt(battle, 2, 1), true);
+  });
+
+  it('rerolls when the pending actor is no longer ready', () => {
+    const { battle } = gremioAttacks(HIT_SEED);
+    battle.combatants[2].busyUntil = 10;
+    battle.turn.pending = 2;
+    battle.turn.tick = 5;
+    battle.phase = PHASE_STATE.COPY_ACTOR;
+    battle.copyActor();
+    assert.strictEqual(battle.phase, PHASE_STATE.ADVANCE_TURN);
   });
 });
 
@@ -218,7 +275,7 @@ describe('Unbalanced', () => {
       battle.resetTurn();
       battle.phase = PHASE_STATE.ROUND_END_WAIT;
       battle.turn.rollGate = 1;
-      battle.turnStep();
+      for (let i = 0; i < 3; i++) battle.turnStep(); // wait passes, round check, round-end status
       assert.strictEqual(battle.phase, PHASE_STATE.ROUND_OVER);
     };
     gremio.unbalance(); // lands in round 0

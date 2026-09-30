@@ -200,7 +200,7 @@ describe('bruteForce: 3 BonBon Celadon Urn fight', () => {
       { command: ROUND_COMMANDS.RUN },
       [DEFEND, { type: ACTION_TYPES.ATTACK, target: 2 }, { type: ACTION_TYPES.ATTACK, target: 0 }, DEFEND, { type: ACTION_TYPES.ATTACK, target: 0 }],
     ];
-    const found = results.find(r => JSON.stringify(r.rounds) === JSON.stringify(known));
+    const found = results.find(r => [...r.paths()].some(path => JSON.stringify(path) === JSON.stringify(known)));
     assert.ok(found);
     assert.deepStrictEqual(found.score, { drop: ITEMS[ITEM_KEYS.CELADON_URN].name, rng: 5538, frames: found.score.frames });
   });
@@ -224,8 +224,39 @@ describe('bruteForce: 3 BonBon Celadon Urn fight', () => {
     }
   });
 
+  /** @param {typeof results} list */
+  const plain = list => list.map(({ paths, ...rest }) => ({ ...rest, paths: [...paths()] }));
+
   it('is deterministic', () => {
-    assert.deepStrictEqual(search().results, results);
+    assert.deepStrictEqual(plain(search().results), plain(results));
+  });
+
+  it('merges plans that end the same: every path replays to it, and the main path is the cheapest', () => {
+    for (const result of results) {
+      const paths = [...result.paths()];
+      assert.strictEqual(paths.length, result.pathCount);
+      assert.deepStrictEqual(paths[0], result.rounds);
+      const replays = paths.map(path => {
+        const replay = bonbonBattle();
+        path.forEach(round => replay.playTurn(round));
+        return replay;
+      });
+      assert.strictEqual(new Set(replays.map(r => r.stateKey())).size, 1);
+      assert.strictEqual(Math.min(...replays.map(r => r.frames)), result.frames);
+    }
+  });
+
+  it('keeps every winning plan among the paths', () => {
+    const afterRun = bonbonBattle();
+    afterRun.playTurn({ command: ROUND_COMMANDS.RUN });
+    let wins = 0;
+    for (const plan of roundPlans(afterRun, { commands: [ROUND_COMMANDS.RUN, ROUND_COMMANDS.FIGHT], unites: false, filter: ({ candidates }) => candidates.filter(a => a.type !== ACTION_TYPES.ITEM) })) {
+      const b = afterRun.clone();
+      b.playTurn(plan);
+      if (b.status === BATTLE_STATUS.WON) wins++;
+    }
+    assert.strictEqual(results.reduce((sum, r) => sum + r.pathCount, 0), wins);
+    assert.ok(results.length < wins); // some really were merged
   });
 
   it('stops past maxRounds', () => {

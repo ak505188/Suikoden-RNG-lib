@@ -99,28 +99,32 @@ describe('Battle end', () => {
     assert.strictEqual(battle.log.ofType(LOG_TYPES.BATTLE_END).length, 0);
   });
 
-  it('is won once every enemy is out, at the end of that round', () => {
+  it('is won once every enemy is out, 34 ticks after the last busy combatant clears', () => {
     const battle = winningBattle();
     playUntilOver(battle, [ATTACK, ATTACK]);
     battle.finish();
     assert.strictEqual(battle.status, BATTLE_STATUS.WON);
     assert.ok(battle.enemies.combatants.every(e => e.knockedOut));
 
-    // The battle ends on the RNG the round ended on
-    const roundEnd = battle.log.ofType(LOG_TYPES.ROUND_END).at(-1);
-    const battleEnd = battle.result.rng.battleEnd;
-    assert.strictEqual(battleEnd.count, roundEnd.rng);
-    assert.strictEqual(battleEnd.current, new RNG(1).next(roundEnd.rng).getRNG());
-    assert.strictEqual(battleEnd.original, 1);
+    // A winning round skips the round-end status step, so it logs no roundEnd
+    assert.strictEqual(battle.log.ofType(LOG_TYPES.ROUND_END).filter(e => e.round === battle.turn_count).length, 0);
 
-    // Logged after the round's last tick, so one tick past roundEnd, then the drop
+    // Nothing rolls between the last event and the drop: the battle ends on that RNG
     const entries = battle.log.entries;
     const battleEndAt = entries.findIndex(e => e.type === LOG_TYPES.BATTLE_END);
+    const last = entries[battleEndAt - 1];
+    const battleEnd = battle.result.rng.battleEnd;
+    assert.strictEqual(battleEnd.count, last.rng);
+    assert.strictEqual(battleEnd.current, new RNG(1).next(last.rng).getRNG());
+    assert.strictEqual(battleEnd.original, 1);
+
+    // B = the last busyUntil: wait passes B + 1, victory check B + 2, countdown to B + 33, drop B + 34
+    const lastBusy = Math.max(...battle.combatants.slice(1).map(c => c.busyUntil));
     assert.deepStrictEqual(entries[battleEndAt], {
-      type: LOG_TYPES.BATTLE_END, round: battle.turn_count, tick: battle.turn.tick, rng: roundEnd.rng, detail: BATTLE_STATUS.WON,
+      type: LOG_TYPES.BATTLE_END, round: battle.turn_count, tick: lastBusy + 34, rng: last.rng, detail: BATTLE_STATUS.WON,
     });
-    assert.strictEqual(entries[battleEndAt - 1], roundEnd);
     assert.strictEqual(entries[battleEndAt + 1].type, 'drop');
+    assert.strictEqual(entries[battleEndAt + 1].tick, lastBusy + 34);
   });
 
   it('is lost once every party member is out', () => {
@@ -342,7 +346,7 @@ describe('Battle.finish', () => {
     playUntilOver(battle, [ATTACK, ATTACK]);
     assert.strictEqual(battle.status, BATTLE_STATUS.WON);
     assert.strictEqual(battle.result, null);
-    assert.strictEqual(battle.rng.getCount(), battle.log.ofType(LOG_TYPES.ROUND_END).at(-1).rng);
+    assert.strictEqual(battle.rng.getCount(), battle.log.ofType(LOG_TYPES.BATTLE_END)[0].rng);
     assert.deepStrictEqual(battle.log.entries.at(-1).type, 'battleEnd');
   });
 
@@ -385,7 +389,7 @@ describe('Battle.run finish option', () => {
   it("doesn't finish by default", () => {
     const battle = winningBattle(turns());
     assert.deepStrictEqual(battle.run(), { status: BATTLE_STATUS.WON, result: null });
-    assert.strictEqual(battle.rng.getCount(), battle.log.ofType(LOG_TYPES.ROUND_END).at(-1).rng);
+    assert.strictEqual(battle.rng.getCount(), battle.log.ofType(LOG_TYPES.BATTLE_END)[0].rng);
   });
 
   it('finishes with finish: true, the same as calling finish() after', () => {

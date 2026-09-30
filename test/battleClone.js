@@ -105,3 +105,33 @@ describe('Character stats', () => {
     assert.deepStrictEqual(CHARACTERS[CHARACTER_KEYS.MCDOHL].stats.initial, before);
   });
 });
+
+describe('Battle logging', () => {
+  const turns = () => [[ATTACK, ATTACK, ATTACK], [ATTACK, ATTACK, ATTACK]];
+
+  it('off: plays exactly the same, with nothing logged', () => {
+    const logged = makeBattle(turns());
+    const silent = makeBattle(turns()).setLogging(false);
+    logged.run();
+    silent.run();
+    assert.strictEqual(silent.stateKey(), logged.stateKey());
+    assert.strictEqual(silent.frames, logged.frames);
+    assert.strictEqual(silent.log.entries.length, 0);
+    assert.ok(logged.log.entries.length > 0);
+  });
+
+  it('off: clones share the (unchanging) log; turning it back on gives the clone its own', () => {
+    const battle = makeBattle();
+    battle.playTurn([ATTACK, ATTACK, ATTACK]);
+    const before = battle.log.entries.length;
+    battle.setLogging(false);
+    const copy = battle.clone();
+    assert.strictEqual(copy.log, battle.log);
+
+    copy.setLogging(true);
+    assert.notStrictEqual(copy.log, battle.log);
+    copy.playTurn([ATTACK, ATTACK, ATTACK]);
+    assert.ok(copy.log.entries.length > before);
+    assert.strictEqual(battle.log.entries.length, before);
+  });
+});

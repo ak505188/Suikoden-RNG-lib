@@ -1,20 +1,9 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import Character from '../lib/Game/Battle/Character.js';
-import Enemy from '../lib/Game/Battle/Enemy.js';
-import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
-import Battle, { BATTLE_STATUS } from '../lib/Game/Battle/Battle.js';
-import { ACTION_TYPES, ROUND_COMMANDS } from '../lib/Game/Battle/Actions.js';
-import { characterActions, fightPlans, fightStarts, roundPlans } from '../lib/Game/Battle/ActionPlans.js';
+import { ACTION_TYPES, AREAS, BATTLE_STATUS, Battle, CHARACTER_KEYS, Character, ENEMY_KEYS, Enemy, EnemyParty, ITEMS, ITEM_KEYS, PlayerParty, RNG, ROUND_COMMANDS, RUNES, STATUS, UNITE_KEYS, characterActions, fightPlans, fightStarts, roundPlans } from '../battle.js';
 import { bruteForce } from '../lib/Game/Battle/BruteForce.js';
-import { AREAS } from '../lib/Game/Bestiary/Areas.js';
-import { CHARACTER_KEYS, ENEMY_KEYS, ITEM_KEYS, UNITE_KEYS } from '../lib/Game/Keys.js';
-import { ITEMS } from '../lib/Game/Items.js';
-import { RUNES } from '../lib/Game/Magic/Runes.js';
-import { STATUS } from '../lib/Game/Constants.js';
-import RNG from '../lib/rng.js';
 
-/** @typedef {import('../lib/Game/Battle/Actions.js').Action} Action */
+/** @typedef {import('../battle.js').Action} Action */
 
 const DEFEND = { type: ACTION_TYPES.DEFEND };
 
@@ -302,7 +291,7 @@ describe('bruteForce: branching at each turn covers every plan', () => {
     enemies: new EnemyParty([new Enemy(ENEMY_KEYS.SOLDIER_ANT), new Enemy(ENEMY_KEYS.SOLDIER_ANT), new Enemy(ENEMY_KEYS.SOLDIER_ANT)]),
     rng: new RNG(0x1234),
   });
-  /** @type {import('../lib/Game/Battle/Battle.js').BattleStatus[]} */
+  /** @type {import('../battle.js').BattleStatus[]} */
   const record = [BATTLE_STATUS.WON, BATTLE_STATUS.LOST];
   const { results, stats } = bruteForce(ants(), { maxRounds: 2, record });
 

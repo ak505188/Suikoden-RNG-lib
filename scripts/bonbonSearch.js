@@ -8,16 +8,8 @@
 //   sqlite3 -header output/bonbon.db "SELECT fights, frames, plan_count, summary FROM endings
 //     WHERE run_id = (SELECT MAX(id) FROM runs) AND json_extract(score, '$.drop') = 'Celadon urn'
 //     ORDER BY fights, frames LIMIT 10"
-import Character from '../lib/Game/Battle/Character.js';
-import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
-import Battle from '../lib/Game/Battle/Battle.js';
-import { ACTION_TYPES, ROUND_COMMANDS } from '../lib/Game/Battle/Actions.js';
+import { ACTION_TYPES, AREAS, Battle, CHARACTER_KEYS, Character, EnemyParty, ITEMS, ITEM_KEYS, PlayerParty, RNG, ROUND_COMMANDS, RUNE_TYPES } from '../battle.js';
 import { bruteForce } from '../lib/Game/Battle/BruteForce.js';
-import { AREAS } from '../lib/Game/Bestiary/Areas.js';
-import { CHARACTER_KEYS, ITEM_KEYS } from '../lib/Game/Keys.js';
-import { ITEMS } from '../lib/Game/Items.js';
-import { RUNE_TYPES } from '../lib/Game/Magic/Runes.js';
-import RNG from '../lib/rng.js';
 import ResultsDB from '../lib/Search/ResultsDB.js';
 import { mkdirSync } from 'node:fs';
 import { dirname } from 'node:path';
@@ -41,7 +33,7 @@ const MAX_ROUNDS = 2;
 /**
  * Every action, items included, every round. Run is planned alongside the Fight plans (see
  * `commands`). Narrow the candidates here to shrink the search.
- * @type {import('../lib/Game/Battle/ActionPlans.js').ActionFilter}
+ * @type {import('../battle.js').ActionFilter}
  */
 const filter = ({ candidates }) => candidates;
 
@@ -70,7 +62,7 @@ const enemyNames = start.enemies.combatants.map(e => e.label);
 
 /**
  * A Rune action's name: a Command rune's own name (e.g. "Boar Rune"), or the spell cast.
- * @param {import('../lib/Game/Battle/Actions.js').Action} action
+ * @param {import('../battle.js').Action} action
  * @param {number} slot - whose action it is
  */
 const runeName = (action, slot) => {
@@ -79,7 +71,7 @@ const runeName = (action, slot) => {
   return rune.spells?.[action.slot ?? 0]?.name ?? `${rune.name} Rune slot ${action.slot ?? 0}`;
 };
 
-/** @param {import('../lib/Game/Battle/Actions.js').Action} action @param {number} slot */
+/** @param {import('../battle.js').Action} action @param {number} slot */
 const formatAction = (action, slot) => {
   switch (action.type) {
     case ACTION_TYPES.ATTACK: return `Attack ${enemyNames[action.target]}`;
@@ -90,17 +82,17 @@ const formatAction = (action, slot) => {
   }
 };
 
-/** @param {import('../lib/Game/Battle/Actions.js').Action} action @param {number} slot */
+/** @param {import('../battle.js').Action} action @param {number} slot */
 const formatSlot = (action, slot) => action.unused ? `(any: never acted, e.g. ${formatAction(action, slot)})` : formatAction(action, slot);
 
-/** @param {import('../lib/Game/Battle/Actions.js').Round} round */
+/** @param {import('../battle.js').Round} round */
 const formatRound = round => {
   if (!Array.isArray(round) && round.command !== ROUND_COMMANDS.FIGHT) return round.command;
   const actions = Array.isArray(round) ? round : round.actions;
   return actions.map((action, i) => `${names[i]}: ${formatSlot(action, i)}`).join(', ');
 };
 
-/** @param {import('../lib/Game/Battle/Actions.js').Round[]} path */
+/** @param {import('../battle.js').Round[]} path */
 const formatPath = path => path.map((round, r) => `R${r + 1} ${formatRound(round)}`).join('  |  ');
 
 const settings = {

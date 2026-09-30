@@ -6,14 +6,8 @@
 // Exits 1 if the hash differs from EXPECTED_HASH. Update EXPECTED_HASH only for an intended
 // change to how battles play out (and say so in the commit).
 import { createHash } from 'node:crypto';
-import Character from '../lib/Game/Battle/Character.js';
-import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
-import Battle from '../lib/Game/Battle/Battle.js';
-import { ACTION_TYPES, ROUND_COMMANDS } from '../lib/Game/Battle/Actions.js';
+import { ACTION_TYPES, AREAS, Battle, CHARACTER_KEYS, Character, EnemyParty, PlayerParty, RNG, ROUND_COMMANDS } from '../battle.js';
 import { bruteForce } from '../lib/Game/Battle/BruteForce.js';
-import { AREAS } from '../lib/Game/Bestiary/Areas.js';
-import { CHARACTER_KEYS } from '../lib/Game/Keys.js';
-import RNG from '../lib/rng.js';
 
 const EXPECTED_HASH = 'eadff5438b07a168'; // branch-at-each-turn search: same results, paths found in a new order
 

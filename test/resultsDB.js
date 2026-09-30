@@ -1,12 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import Character from '../lib/Game/Battle/Character.js';
-import Enemy from '../lib/Game/Battle/Enemy.js';
-import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
-import Battle, { BATTLE_STATUS } from '../lib/Game/Battle/Battle.js';
+import { BATTLE_STATUS, Battle, CHARACTER_KEYS, Character, ENEMY_KEYS, Enemy, EnemyParty, PlayerParty, RNG } from '../battle.js';
 import { bruteForce } from '../lib/Game/Battle/BruteForce.js';
-import { CHARACTER_KEYS, ENEMY_KEYS } from '../lib/Game/Keys.js';
-import RNG from '../lib/rng.js';
 import ResultsDB from '../lib/Search/ResultsDB.js';
 
 const ants = () => new Battle({

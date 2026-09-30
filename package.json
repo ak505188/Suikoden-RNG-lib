@@ -4,6 +4,12 @@
   "version": "0.1.0",
   "private": false,
   "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./battle": "./battle.js",
+    "./package.json": "./package.json"
+  },
   "imports": {
     "#lib/*": "./lib/*",
     "#game/*": "./lib/Game/*"

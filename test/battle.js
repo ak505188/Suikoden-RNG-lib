@@ -677,6 +677,120 @@ describe('3 BonBon Celadon Urn fight', () => {
       assert.deepStrictEqual(result.rewards[2].growths, pahnGrowths)
     });
   });
+
+  describe('3 Mosquito 1 Ant Holy fight afterwards', () => {
+    const previousBattle = battle.clone();
+    previousBattle.run();
+    previousBattle.finish();
+
+    const enemies = EnemyParty.fromFormation(AREAS.GREGMINSTER_AREA_1.encounters[7]);
+    const rng = new RNG(0x30a82220).next(5560);
+
+    const actionsT1 = [
+      { type: ACTION_TYPES.DEFEND },
+      { type: ACTION_TYPES.ATTACK, target: 0 },
+      { type: ACTION_TYPES.ATTACK, target: 1 },
+      { type: ACTION_TYPES.ATTACK, target: 3 },
+      { type: ACTION_TYPES.ATTACK, target: 3 },
+    ];
+
+    const actionsT2 = [
+      { type: ACTION_TYPES.DEFEND },
+      { type: ACTION_TYPES.DEFEND },
+      { type: ACTION_TYPES.ATTACK },
+      { type: ACTION_TYPES.ATTACK },
+      { type: ACTION_TYPES.DEFEND },
+    ];
+
+    const battle3m1a = new Battle({ party: previousBattle.party, enemies, rng });
+    battle3m1a.playTurn(actionsT1)
+
+    describe('Turn 1 results', () => {
+      it('rng count 1st round end == 5633', () => {
+        assert.strictEqual(battle3m1a.rng.count, 5633);
+      });
+      it('McDohl HP == 15', () => {
+        assert.strictEqual(battle3m1a.party.getCombatantByName(McDohl.name).HP, 15);
+      });
+      it('Gremio HP == 26', () => {
+        assert.strictEqual(battle3m1a.party.getCombatantByName(Gremio.name).HP, 26);
+      });
+      it('Pahn HP == 33', () => {
+        assert.strictEqual(battle3m1a.party.getCombatantByName(Pahn.name).HP, 33);
+      });
+      it('McDohl is poisoned', () => {
+        assert.strictEqual(battle3m1a.party.getCombatantByName(McDohl.name).status.Poison, true);
+      });
+      it('Gremio is not poisoned', () => {
+        assert.strictEqual(battle3m1a.party.getCombatantByName(Gremio.name).status.Poison, false);
+      });
+      it('Pahn is poisoned', () => {
+        assert.strictEqual(battle3m1a.party.getCombatantByName(Pahn.name).status.Poison, true);
+      });
+      it('Mosquito 1 is dead', () => {
+        assert.strictEqual(battle3m1a.enemies.combatants[0].isAlive, false);
+      });
+      it('Mosquito 2 is dead', () => {
+        assert.strictEqual(battle3m1a.enemies.combatants[1].isAlive, false);
+      });
+      it('Mosquito 3 is alive', () => {
+        assert.strictEqual(battle3m1a.enemies.combatants[2].isAlive, true);
+      });
+      it('Ant is dead', () => {
+        assert.strictEqual(battle3m1a.enemies.combatants[3].isAlive, false);
+      });
+    });
+    describe('Turn 2 results', () => {
+      const battleT2 = battle3m1a.clone();
+      battleT2.playTurn(actionsT2);
+
+      it('rng count 1st round end == 5663', () => {
+        assert.strictEqual(battleT2.rng.count, 5663);
+      });
+      it('McDohl HP == 14', () => {
+        assert.strictEqual(battleT2.party.getCombatantByName(McDohl.name).HP, 14);
+      });
+      it('Gremio HP == 25', () => {
+        assert.strictEqual(battleT2.party.getCombatantByName(Gremio.name).HP, 25);
+      });
+      it('Pahn HP == 32', () => {
+        assert.strictEqual(battleT2.party.getCombatantByName(Pahn.name).HP, 32);
+      });
+      it('McDohl is poisoned', () => {
+        assert.strictEqual(battleT2.party.getCombatantByName(McDohl.name).status.Poison, true);
+      });
+      it('Gremio is not poisoned', () => {
+        assert.strictEqual(battleT2.party.getCombatantByName(Gremio.name).status.Poison, false);
+      });
+      it('Pahn is poisoned', () => {
+        assert.strictEqual(battleT2.party.getCombatantByName(Pahn.name).status.Poison, true);
+      });
+      it('Mosquito 1 is dead', () => {
+        assert.strictEqual(battleT2.enemies.combatants[0].isAlive, false);
+      });
+      it('Mosquito 2 is dead', () => {
+        assert.strictEqual(battleT2.enemies.combatants[1].isAlive, false);
+      });
+      it('Mosquito 3 is dead', () => {
+        assert.strictEqual(battleT2.enemies.combatants[2].isAlive, false);
+      });
+      it('Ant is dead', () => {
+        assert.strictEqual(battleT2.enemies.combatants[3].isAlive, false);
+      });
+
+      describe('Post battle results', () => {
+        const battleWithResults = battleT2.clone();
+        battleWithResults.finish();
+        const result = battleWithResults.result;
+        it ('Dropped Holy Crystal', () => {
+          assert.strictEqual(result.drop.id, ITEMS.HOLY_CRYSTAL.id);
+        });
+        it ('RNG on drop == 5669', () => {
+          assert.strictEqual(result.rng.afterDrop.count, 5669);
+        });
+      });
+    });
+  });
 });
 
 describe('3 BonBon: COPY_ACTOR hold after a party crit, and victory -> drop timing', () => {

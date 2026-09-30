@@ -6,12 +6,14 @@ import { CHARACTER_KEYS, ENEMY_KEYS, ITEM_KEYS, UNITE_KEYS } from '../lib/Game/K
 import { AREAS } from '../lib/Game/Bestiary/Areas.js';
 import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
 import { RUNES } from '../lib/Game/Magic/Runes.js';
-import { ACTION_TYPES } from '../lib/Game/Battle/Actions.js';
+import { ACTION_TYPES, ROUND_COMMANDS } from '../lib/Game/Battle/Actions.js';
+import { ITEMS } from '../lib/Game/Items.js';
 import Battle from '../lib/Game/Battle/Battle.js';
 import RNG from '../lib/rng.js';
 import { LOG_TYPES } from '../lib/Game/Battle/ActionLog.js';
 
 /** @typedef {import('../lib/Game/Battle/Actions.js').Action} Action */
+/** @typedef {import('../lib/Game/Battle/Actions.js').Round} Round */
 
 /** @param {Battle} battle */
 const snapshot = (battle) => ({
@@ -603,6 +605,76 @@ describe('Golem 3 FurFur no force to test Medicine', () => {
     });
     it('Golem HP == 0', () => {
       assert.strictEqual(snapshotsV2[1].enemies[0], 0);
+    });
+  });
+});
+
+describe('3 BonBon Celadon Urn fight', () => {
+  const McDohl = new Character(CHARACTER_KEYS.MCDOHL);
+  const Gremio = new Character(CHARACTER_KEYS.GREMIO);
+  const Pahn = new Character(CHARACTER_KEYS.PAHN);
+  const Cleo = new Character(CHARACTER_KEYS.CLEO);
+  const Ted = new Character(CHARACTER_KEYS.TED);
+
+  const party = new PlayerParty([McDohl, Gremio, Pahn, Cleo, Ted]);
+  /** @param {Action[]} actions */
+  const actionsT2 = [
+    { type: ACTION_TYPES.DEFEND },
+    { type: ACTION_TYPES.ATTACK, target: 2 },
+    { type: ACTION_TYPES.ATTACK, target: 0 },
+    { type: ACTION_TYPES.DEFEND },
+    { type: ACTION_TYPES.ATTACK, target: 0 },
+  ];
+
+  /** @type {Round[]} */
+  const roundInputs = [
+    { command: ROUND_COMMANDS.RUN },
+    actionsT2
+  ]
+
+  const rng = new RNG(0x30a82220).next(5419);
+
+  const enemyParty = EnemyParty.fromFormation(AREAS.GREGMINSTER_AREA_1.encounters[1]);
+  const battle = new Battle({ party, enemies: enemyParty, rng, escapable: true, turns: roundInputs });
+
+  battle.run();
+
+  it('rng count 2nd round end == 5501', () => {
+    assert.strictEqual(battle.rng.count, 5501);
+  });
+  it('McDohl HP == 14', () => {
+    assert.strictEqual(battle.party.getCombatantByName(McDohl.name).HP, 14);
+  });
+  it('Gremio HP == 22', () => {
+    assert.strictEqual(battle.party.getCombatantByName(Gremio.name).HP, 22);
+  });
+  it('Pahn HP == 22', () => {
+    assert.strictEqual(battle.party.getCombatantByName(Pahn.name).HP, 22);
+  });
+
+
+  describe('Post battle results', () => {
+    const finishedBattle = battle.clone();
+    finishedBattle.run();
+    finishedBattle.finish();
+
+    const result = finishedBattle.result;
+    it('Dropped Celadon Urn', () => {
+      assert.strictEqual(result.drop.name, ITEMS[ITEM_KEYS.CELADON_URN].name);
+    });
+    it('RNG battleEnd count == 5501', () => {
+      assert.strictEqual(result.rng.battleEnd.count, 5501);
+    });
+    it('RNG drop count == 5503', () => {
+      assert.strictEqual(result.rng.afterDrop.count, 5503);
+    });
+    it('RNG expGain count == 5538', () => {
+      assert.strictEqual(result.rng.afterLevelUps.count, 5538);
+    });
+
+    it('Pahn growths match game', () => {
+      const pahnGrowths = { PWR: 3, SKL: 3, DEF: 3, SPD: 1, MGC: 1, LUK: 2, HP: 12 };
+      assert.deepStrictEqual(result.rewards[2].growths, pahnGrowths)
     });
   });
 });

@@ -15,7 +15,7 @@ import { AREAS } from '../lib/Game/Bestiary/Areas.js';
 import { CHARACTER_KEYS } from '../lib/Game/Keys.js';
 import RNG from '../lib/rng.js';
 
-const EXPECTED_HASH = '9f1cc710dcd13741';
+const EXPECTED_HASH = 'eadff5438b07a168'; // branch-at-each-turn search: same results, paths found in a new order
 
 const battle = new Battle({
   party: new PlayerParty([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.PAHN, CHARACTER_KEYS.CLEO, CHARACTER_KEYS.TED].map(k => new Character(k))),

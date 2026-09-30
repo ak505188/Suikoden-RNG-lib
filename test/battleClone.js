@@ -3,12 +3,14 @@ import assert from 'node:assert';
 import Character from '../lib/Game/Battle/Character.js';
 import Enemy from '../lib/Game/Battle/Enemy.js';
 import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
-import Battle from '../lib/Game/Battle/Battle.js';
-import { ACTION_TYPES } from '../lib/Game/Battle/Actions.js';
-import { CHARACTER_KEYS, ENEMY_KEYS, ITEM_KEYS } from '../lib/Game/Keys.js';
+import Battle, { PHASE_STATE } from '../lib/Game/Battle/Battle.js';
+import { ACTION_TYPES, ROUND_COMMANDS } from '../lib/Game/Battle/Actions.js';
+import { CHARACTER_KEYS, ENEMY_KEYS, ITEM_KEYS, UNITE_KEYS } from '../lib/Game/Keys.js';
 import { STATUS, WEAPON_ELEMENTS } from '../lib/Game/Constants.js';
 import CHARACTERS from '../lib/Game/Characters.js';
 import RNG from '../lib/rng.js';
+import { AREAS } from '../lib/Game/Bestiary/Areas.js';
+import { RUNES } from '../lib/Game/Magic/Runes.js';
 import { LOG_TYPES } from '../lib/Game/Battle/ActionLog.js';
 import { pushKeyInt } from '../lib/lib.js';
 
@@ -88,14 +90,6 @@ describe('Battle.clone', () => {
     assert.strictEqual(battle.enemies.combatants[0].HP, battle.enemies.combatants[0].stats.HP);
     assert.strictEqual(battle.rng.getCount(), 0);
     assert.strictEqual(battle.log.entries.length, 0);
-  });
-
-  it('refuses while an action is in flight', () => {
-    const battle = makeBattle();
-    battle.party.setActionPlan([ATTACK, ATTACK, ATTACK]);
-    battle.roundStart();
-    while (!battle.events.size) battle.tick(); // the first attack's damage roll is queued
-    assert.throws(() => battle.clone(), /in flight/);
   });
 });
 
@@ -178,4 +172,79 @@ describe('pushKeyInt', () => {
     assert.throws(() => pushKeyInt([], 2 ** 48));
     assert.throws(() => pushKeyInt([], NaN));
   });
+});
+
+describe('Battle.clone mid-round', () => {
+  const D = { type: ACTION_TYPES.DEFEND };
+  /** @param {number} target */
+  const A = target => ({ type: ACTION_TYPES.ATTACK, target });
+
+  const bonbon = () => new Battle({
+    party: new PlayerParty([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.PAHN, CHARACTER_KEYS.CLEO, CHARACTER_KEYS.TED]
+      .map(key => new Character(key))),
+    enemies: EnemyParty.fromFormation(AREAS.GREGMINSTER_AREA_1.encounters[1]),
+    rng: new RNG(0x30a82220).next(5419),
+    escapable: true,
+  });
+  const strong = (/** @type {import('../lib/Game/Keys.js').CharacterKey} */ key) =>
+    new Character(key).setLVL(20).setStats({ PWR: 90, SKL: 60, DEF: 70, SPD: 40, MGC: 60, LUK: 40, HP: 300 }).rest();
+
+  /** @type {Record<string, { make: () => Battle, rounds: import('../lib/Game/Battle/Actions.js').Round[] }>} */
+  const fights = {
+    'BonBon: a crit hold, a kill': { make: bonbon, rounds: [{ command: ROUND_COMMANDS.RUN }, [D, A(1), A(2), D, A(0)]] },
+    'BonBon: a crit hold, then a retarget': { make: bonbon, rounds: [{ command: ROUND_COMMANDS.RUN }, [D, A(2), A(0), D, A(0)]] },
+    'Talisman Unite': {
+      make: () => new Battle({
+        party: new PlayerParty([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.PAHN].map(strong)),
+        enemies: EnemyParty.fromFormation(AREAS.GREGMINSTER_AREA_1.encounters[1]),
+        rng: new RNG(7),
+      }),
+      rounds: [[A(0), { type: ACTION_TYPES.UNITE, uniteKey: UNITE_KEYS.TALISMAN, target: 1 }, { type: ACTION_TYPES.UNITE, uniteKey: UNITE_KEYS.TALISMAN, target: 1 }]],
+    },
+    'Boar Rune (idle wait, hold, animation roll)': {
+      make: () => new Battle({
+        party: new PlayerParty([strong(CHARACTER_KEYS.MCDOHL), strong(CHARACTER_KEYS.PAHN)]),
+        enemies: new EnemyParty([new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)]),
+        rng: new RNG(3),
+      }),
+      rounds: [[A(0), { type: ACTION_TYPES.RUNE, target: 0 }]],
+    },
+    'Zombie Dragon: Fire Breath cast, Flaming Arrows, Medicine': {
+      make: () => {
+        const battle = makeBattle();
+        const cleo = battle.party.combatants[2].setRune(RUNES.FIRE);
+        cleo.MP = [2, 0, 0, 0];
+        return battle;
+      },
+      rounds: [[{ type: ACTION_TYPES.ITEM, itemKey: ITEM_KEYS.MEDICINE, target: 1 }, ATTACK, { type: ACTION_TYPES.RUNE, slot: 0, target: 0 }]],
+    },
+  };
+
+  /** @param {Battle} battle */
+  const outcome = battle => ({ key: battle.stateKey(), status: battle.status, frames: battle.frames, log: battle.log.format() });
+
+  for (const [name, { make, rounds }] of Object.entries(fights)) {
+    it(`${name}: a clone at any tick finishes exactly like the uncloned battle`, () => {
+      const reference = make();
+      rounds.forEach(round => reference.playTurn(round));
+      const expected = outcome(reference);
+      assert.ok(reference.log.entries.length > 0);
+
+      // Step the last round one tick at a time, cloning at every tick
+      const battle = make();
+      rounds.slice(0, -1).forEach(round => battle.playTurn(round));
+      assert.ok(battle.beginRound(rounds.at(-1)));
+      let clones = 0;
+      while (battle.phase !== PHASE_STATE.ROUND_OVER) {
+        const copy = battle.clone();
+        copy.playRound();
+        assert.deepStrictEqual(outcome(copy), expected, `clone at tick ${battle.turn.tick}`);
+        clones++;
+        battle.tick();
+      }
+      battle.endRound();
+      assert.deepStrictEqual(outcome(battle), expected);
+      assert.ok(clones > 100);
+    });
+  }
 });

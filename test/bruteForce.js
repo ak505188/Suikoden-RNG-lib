@@ -1,13 +1,14 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import Character from '../lib/Game/Battle/Character.js';
+import Enemy from '../lib/Game/Battle/Enemy.js';
 import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
 import Battle, { BATTLE_STATUS } from '../lib/Game/Battle/Battle.js';
 import { ACTION_TYPES, ROUND_COMMANDS } from '../lib/Game/Battle/Actions.js';
-import { characterActions, fightPlans, roundPlans } from '../lib/Game/Battle/ActionPlans.js';
+import { characterActions, fightPlans, fightStarts, roundPlans } from '../lib/Game/Battle/ActionPlans.js';
 import { bruteForce } from '../lib/Game/Battle/BruteForce.js';
 import { AREAS } from '../lib/Game/Bestiary/Areas.js';
-import { CHARACTER_KEYS, ITEM_KEYS, UNITE_KEYS } from '../lib/Game/Keys.js';
+import { CHARACTER_KEYS, ENEMY_KEYS, ITEM_KEYS, UNITE_KEYS } from '../lib/Game/Keys.js';
 import { ITEMS } from '../lib/Game/Items.js';
 import { RUNES } from '../lib/Game/Magic/Runes.js';
 import { STATUS } from '../lib/Game/Constants.js';
@@ -265,5 +266,85 @@ describe('bruteForce: 3 BonBon Celadon Urn fight', () => {
       commands: [ROUND_COMMANDS.RUN],
     });
     assert.strictEqual(stats.roundsPlayed, 1);
+  });
+});
+
+describe('fightStarts', () => {
+  it('per member: Defend, or the other candidates deferred to their turn; Unites as whole choices', () => {
+    const battle = bonbonBattle();
+    const starts = [...fightStarts(battle)];
+    // No Unite: 2 options each (Defend or deferred). Talisman on 3 targets: 2^3 for the rest.
+    assert.strictEqual(starts.length, 2 ** 5 + 3 * 2 ** 3);
+    const all = starts.find(({ plan }) => plan.every(a => a.type === ACTION_TYPES.DEFERRED));
+    assert.ok(all);
+    // The deferred choices are exactly each member's non-Defend candidates, taken at round start
+    all.choices.forEach((choices, slot) => {
+      const expected = characterActions(battle.party.combatants[slot], battle).filter(a => a.type !== ACTION_TYPES.DEFEND);
+      assert.deepStrictEqual(choices, expected);
+    });
+  });
+
+  it('fixes a member\'s only non-Defend option instead of deferring it', () => {
+    const battle = bonbonBattle();
+    const starts = [...fightStarts(battle, {
+      unites: false,
+      filter: ({ slot, candidates }) => slot === 0 ? candidates.slice(0, 2) : [DEFEND], // McDohl: Defend or Attack #1
+    })];
+    assert.deepStrictEqual(starts.map(({ plan }) => plan[0]), [DEFEND, { type: ACTION_TYPES.ATTACK, target: 0 }]);
+    assert.ok(starts.every(({ choices }) => choices.every(c => c === undefined)));
+  });
+});
+
+describe('bruteForce: branching at each turn covers every plan', () => {
+  // Weak party: the ants kill McDohl and Gremio before they act, so their choices never matter
+  const ants = () => new Battle({
+    party: new PlayerParty([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.PAHN, CHARACTER_KEYS.GREMIO].map(key => new Character(key).setLVL(8).rest())),
+    enemies: new EnemyParty([new Enemy(ENEMY_KEYS.SOLDIER_ANT), new Enemy(ENEMY_KEYS.SOLDIER_ANT), new Enemy(ENEMY_KEYS.SOLDIER_ANT)]),
+    rng: new RNG(0x1234),
+  });
+  /** @type {import('../lib/Game/Battle/Battle.js').BattleStatus[]} */
+  const record = [BATTLE_STATUS.WON, BATTLE_STATUS.LOST];
+  const { results, stats } = bruteForce(ants(), { maxRounds: 2, record });
+
+  /** Every plan sequence, played one by one: ending state key -> how many sequences reach it */
+  const exhaustive = () => {
+    const counts = new Map();
+    const walk = (/** @type {Battle} */ battle, depth) => {
+      for (const plan of roundPlans(battle)) {
+        const next = battle.clone();
+        next.playTurn(plan);
+        if (record.includes(next.status)) counts.set(next.stateKey(), (counts.get(next.stateKey()) ?? 0) + 1);
+        else if (next.status === BATTLE_STATUS.IN_PROGRESS && depth + 1 < 2) walk(next, depth + 1);
+      }
+    };
+    walk(ants(), 0);
+    return counts;
+  };
+
+  it('plays fewer rounds than there are plans: members who never act aren\'t asked', () => {
+    const plans = results.reduce((sum, r) => sum + r.planCount, 0);
+    assert.ok(stats.roundsPlayed < plans / 5);
+    assert.ok(results.some(r => [...r.paths()].some(path => path.some(round => Array.isArray(round) && round.some(a => a.unused)))));
+  });
+
+  it('each ending stands for exactly the plans that reach it', () => {
+    const counts = exhaustive();
+    assert.strictEqual(results.length, counts.size);
+    for (const result of results) {
+      const replay = ants();
+      result.rounds.forEach(round => replay.playTurn(round));
+      assert.strictEqual(result.planCount, counts.get(replay.stateKey()));
+    }
+  });
+
+  it('every path, unused slots and all, replays to its ending', () => {
+    for (const result of results) {
+      const keys = new Set([...result.paths()].map(path => {
+        const replay = ants();
+        path.forEach(round => replay.playTurn(round));
+        return replay.stateKey();
+      }));
+      assert.strictEqual(keys.size, 1);
+    }
   });
 });

@@ -1,11 +1,12 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import Character from '../lib/Game/Battle/Character.js';
+import { PlayerParty } from '../lib/Game/Battle/Party.js';
 import { CHARACTER_ATTACK_TIMINGS } from '../lib/Game/Battle/CharacterAttackTimings.js';
 import { STATUS } from '../lib/Game/Constants.js';
 import { CHARACTER_KEYS, UNITE_KEYS } from '../lib/Game/Keys.js';
 import {
-  UNITES, UNITES_BY_CHARACTER, UNITES_BY_SLOT, availableUnites, disjointUniteSets,
+  UNITES, UNITES_BY_CHARACTER, UNITES_BY_SLOT, availableUnites, disjointUniteSets, isUniteAvailable, rosterUnites,
 } from '../lib/Game/Unites.js';
 import { UNITE_RETURN_FRAMES, UNITE_TIMINGS } from '../lib/Game/Battle/UniteTimings.js';
 
@@ -85,6 +86,24 @@ describe('availableUnites', () => {
   });
 });
 
+describe('isUniteAvailable', () => {
+  it('agrees with availableUnites for every Unite', () => {
+    const party = makeParty([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.PAHN, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.RONNIE]);
+    party[2].status[STATUS.POISON] = true; // Gremio: Talisman out, Beat 'em Up still in
+    const available = availableUnites(party);
+    for (const key of Object.values(UNITE_KEYS)) {
+      assert.strictEqual(isUniteAvailable(key, party), available.includes(key), key);
+    }
+    assert.strictEqual(isUniteAvailable(UNITE_KEYS.TALISMAN, party), false);
+    assert.strictEqual(isUniteAvailable(UNITE_KEYS.BEAT_EM_UP, party), true); // Pahn + Ronnie
+  });
+
+  it('needs every participant in the party', () => {
+    assert.strictEqual(isUniteAvailable(UNITE_KEYS.TALISMAN, makeParty([CHARACTER_KEYS.PAHN])), false);
+    assert.strictEqual(isUniteAvailable(UNITE_KEYS.TALISMAN, makeParty([CHARACTER_KEYS.PAHN, CHARACTER_KEYS.GREMIO])), true);
+  });
+});
+
 describe('disjointUniteSets', () => {
   it('never uses a character twice', () => {
     const sets = disjointUniteSets([UNITE_KEYS.TALISMAN, UNITE_KEYS.BEAT_EM_UP, UNITE_KEYS.KOBOLD]);
@@ -124,5 +143,23 @@ describe('UNITE_TIMINGS', () => {
     assert.strictEqual(Math.max(pahn.done, gremio.done) + 1, 136); // handler done
     assert.strictEqual(gremio.done + 1 + UNITE_RETURN_FRAMES[CHARACTER_KEYS.GREMIO], 176);
     assert.strictEqual(pahn.done + 1 + UNITE_RETURN_FRAMES[CHARACTER_KEYS.PAHN], 188);
+  });
+});
+
+describe('rosterUnites', () => {
+  it('lists the Unites whose participants are all in the party, whatever their state', () => {
+    const party = makeParty([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.PAHN, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.RONNIE]);
+    party[2].status[STATUS.POISON] = true;
+    assert.deepStrictEqual(rosterUnites(party), [UNITE_KEYS.TALISMAN, UNITE_KEYS.BEAT_EM_UP]);
+    assert.deepStrictEqual(availableUnites(party), [UNITE_KEYS.BEAT_EM_UP]);
+  });
+
+  it('is cached on the PlayerParty, shared by clones, and gives the same answer', () => {
+    const party = new PlayerParty(makeParty([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.PAHN, CHARACTER_KEYS.GREMIO]));
+    assert.deepStrictEqual(party.rosterUnites, [UNITE_KEYS.TALISMAN]);
+    assert.strictEqual(party.clone().rosterUnites, party.rosterUnites);
+    assert.deepStrictEqual(party.availableUnites(), availableUnites(party.combatants));
+    party.combatants[1].status[STATUS.SLEEP] = true; // state changes still count
+    assert.deepStrictEqual(party.availableUnites(), []);
   });
 });

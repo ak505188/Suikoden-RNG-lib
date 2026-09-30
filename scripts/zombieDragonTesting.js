@@ -11,7 +11,7 @@ const characters = [
   { mgc: 21 },
 ];
 const zombieDragonMgcAtk = 130;
-const damageRolls = mgcStats.map(mgc => {
+const damageRolls = characters.map(({ mgc }) => {
   rng.next();
   const roll = rng.calculateDamageRoll(zombieDragonMgcAtk, mgc)
   return zombieDragonMgcAtk - mgc + roll;

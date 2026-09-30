@@ -27,7 +27,7 @@ for (let i = START_INDEX; i < END_INDEX; i++) {
     usable_rolls_map.set(key, { roll, index, speed });
   });
 
-  usable_rolls_map.values().forEach(valid_roll => {
+  for (const valid_roll of usable_rolls_map.values()) {
     games.push({
       pci: result.index - 56,
       start: result.index,
@@ -35,7 +35,7 @@ for (let i = START_INDEX; i < END_INDEX; i++) {
       wait: result.wait,
       ...valid_roll
     });
-  });
+  }
 
   rng.next();
 }

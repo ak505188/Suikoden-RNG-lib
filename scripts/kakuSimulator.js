@@ -59,7 +59,12 @@ class NPC {
     return DIRECTIONS[this.direction];
   }
 
-  simulateMovement(rng) {
+  /**
+   * @param {RNG} rng
+   * @param {number} [_frame] - the frame being simulated (Mina uses it for debug output)
+   * @returns {object | null} the event this frame caused, or null
+   */
+  simulateMovement(rng, _frame) {
     if (!this.handleExistingMovement()) return null;
 
     const will_move = rng.next().getRNG2() < 0xcb;

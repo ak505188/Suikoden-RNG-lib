@@ -1,3 +1,3 @@
-import MAP from './KakuSimulator/Map.js';
+import MAP from '../lib/Kaku/Map.js';
 
 new MAP().drawAscii();

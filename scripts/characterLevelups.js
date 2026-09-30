@@ -227,7 +227,7 @@ const levelups_to_generate = [
 
 levelups_to_generate.forEach(levelup => generateLevelups(levelup));
 
-function generateLevelups({ label, party, rng_indexes, headers }) {
+function generateLevelups({ label, party, rng_indexes, headers = false }) {
   rng_indexes.forEach(rng_index => {
     const rng = new RNG(STARTING_RNG).next(rng_index);
     const levels_gained = Object.values(party).map(char => char.levels_gained);

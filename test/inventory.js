@@ -226,3 +226,58 @@ describe('Sacrificial Buddha', () => {
     assert.strictEqual(gremio.knockedOut, true);
   });
 });
+
+describe('Inventory.armorBonus', () => {
+  const worn = () => new Inventory([
+    { key: ITEM_KEYS.BANDANNA, slot: ARMOR_SLOT.HEAD },       // DEF 1
+    { key: ITEM_KEYS.LEATHER_COAT, slot: ARMOR_SLOT.BODY },   // DEF 4
+    { key: ITEM_KEYS.MEDICINE },
+  ]);
+
+  it('sums one stat over the worn pieces, and 0 for a stat none of them has', () => {
+    const inventory = worn();
+    assert.strictEqual(inventory.armorBonus('DEF'), 5);
+    assert.strictEqual(inventory.armorBonus('SPD'), 0);
+  });
+
+  it('follows the entries: removing a worn piece drops its bonus', () => {
+    const inventory = worn();
+    assert.strictEqual(inventory.armorBonus('DEF'), 5);
+    inventory.remove(ITEM_KEYS.LEATHER_COAT);
+    assert.strictEqual(inventory.armorBonus('DEF'), 1);
+    inventory.clear();
+    assert.strictEqual(inventory.armorBonus('DEF'), 0);
+  });
+
+  it('a clone keeps its own bonuses when either side changes', () => {
+    const inventory = worn();
+    assert.strictEqual(inventory.armorBonus('DEF'), 5); // cached, then shared with the clone
+    const copy = inventory.clone();
+    inventory.remove(ITEM_KEYS.BANDANNA);
+    assert.strictEqual(inventory.armorBonus('DEF'), 4);
+    assert.strictEqual(copy.armorBonus('DEF'), 5);
+    copy.remove(ITEM_KEYS.LEATHER_COAT);
+    assert.strictEqual(copy.armorBonus('DEF'), 1);
+    assert.strictEqual(inventory.armorBonus('DEF'), 4);
+  });
+
+  it('is left out of comparisons: a fresh copy deep-equals one with its cache filled', () => {
+    const inventory = worn();
+    inventory.armorBonus('DEF');
+    assert.deepStrictEqual(inventory.clone(), worn());
+  });
+});
+
+describe('Inventory.stateKeyInto', () => {
+  const key = (/** @type {Inventory} */ inventory) => { const out = []; inventory.stateKeyInto(out); return out.join(','); };
+
+  it('changes when a use changes a quantity, and a clone keeps its own', () => {
+    const inventory = new Inventory([{ key: ITEM_KEYS.MEDICINE }, { key: ITEM_KEYS.BANDANNA, slot: ARMOR_SLOT.HEAD }]);
+    const before = key(inventory);
+    const copy = inventory.clone();
+    inventory.use(ITEM_KEYS.MEDICINE);
+    assert.notStrictEqual(key(inventory), before);
+    assert.strictEqual(key(copy), before);
+    assert.strictEqual(key(copy.clone()), before);
+  });
+});

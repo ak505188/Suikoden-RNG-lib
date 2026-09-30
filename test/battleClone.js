@@ -10,6 +10,7 @@ import { STATUS, WEAPON_ELEMENTS } from '../lib/Game/Constants.js';
 import CHARACTERS from '../lib/Game/Characters.js';
 import RNG from '../lib/rng.js';
 import { LOG_TYPES } from '../lib/Game/Battle/ActionLog.js';
+import { pushKeyInt } from '../lib/lib.js';
 
 const ATTACK = { type: ACTION_TYPES.ATTACK, target: 0 };
 
@@ -133,5 +134,48 @@ describe('Battle logging', () => {
     copy.playTurn([ATTACK, ATTACK, ATTACK]);
     assert.ok(copy.log.entries.length > before);
     assert.strictEqual(battle.log.entries.length, before);
+  });
+});
+
+describe('Battle.stateKey', () => {
+  it('is equal for a battle and its clone', () => {
+    const battle = makeBattle();
+    battle.playTurn([ATTACK, ATTACK, ATTACK]);
+    assert.strictEqual(battle.clone().stateKey(), battle.stateKey());
+  });
+
+  it('tells apart battles differing only in HP, MP, a status or an item quantity', () => {
+    const battle = makeBattle();
+    battle.playTurn([ATTACK, ATTACK, ATTACK]);
+    const keys = new Set([battle.stateKey()]);
+    /** @param {(b: Battle) => void} change */
+    const differs = change => {
+      const copy = battle.clone();
+      change(copy);
+      keys.add(copy.stateKey());
+    };
+    differs(b => b.party.combatants[0].setHP(b.party.combatants[0].HP - 1));
+    differs(b => { b.party.combatants[0].MP[0] -= 1; });
+    differs(b => { b.party.combatants[0].status[STATUS.POISON] = true; });
+    differs(b => b.party.combatants[0].inventory.use(ITEM_KEYS.MEDICINE));
+    differs(b => b.enemies.combatants[0].setHP(1));
+    differs(b => b.rng.next());
+    assert.strictEqual(keys.size, 7);
+  });
+});
+
+describe('pushKeyInt', () => {
+  it('encodes every value differently, including the escaped ones', () => {
+    const values = [0, 1, 0xFFFD, 0xFFFE, 0xFFFF, 0x10000, 2 ** 32 - 1, 2 ** 32, -1, -0xFFFF, 2 ** 47];
+    const encoded = values.map(v => { const out = []; pushKeyInt(out, v); return String.fromCharCode(...out); });
+    assert.strictEqual(new Set(encoded).size, values.length);
+    assert.strictEqual(encoded[0].length, 1);
+    assert.strictEqual(encoded[3].length, 4);
+  });
+
+  it('refuses what it can\'t encode exactly', () => {
+    assert.throws(() => pushKeyInt([], 1.5));
+    assert.throws(() => pushKeyInt([], 2 ** 48));
+    assert.throws(() => pushKeyInt([], NaN));
   });
 });

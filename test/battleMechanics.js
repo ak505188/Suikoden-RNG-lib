@@ -84,7 +84,8 @@ describe('Party basic attack', () => {
     const battle = makeBattle([gremio], [dragon], HIT_SEED);
     gremio.setAction({ type: ACTION_TYPES.ATTACK });
     dragon.busyUntil = 50;
-    assert.deepStrictEqual(battle.resolvePartyAttack(gremio), { status: 'Pending' });
+    // Ready once its busy ends: nothing to do until tick 51
+    assert.deepStrictEqual(battle.resolvePartyAttack(gremio), { status: 'Pending', until: 51 });
     assert.strictEqual(battle.rng.getCount(), 0);
   });
 });

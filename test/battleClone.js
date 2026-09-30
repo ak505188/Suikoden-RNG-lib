@@ -12,7 +12,7 @@ import RNG from '../lib/rng.js';
 import { AREAS } from '../lib/Game/Bestiary/Areas.js';
 import { RUNES } from '../lib/Game/Magic/Runes.js';
 import { LOG_TYPES } from '../lib/Game/Battle/ActionLog.js';
-import { pushKeyInt } from '../lib/lib.js';
+import { KeyWriter, pushKeyInt, shallowCloneInstance } from '../lib/lib.js';
 
 const ATTACK = { type: ACTION_TYPES.ATTACK, target: 0 };
 
@@ -247,4 +247,32 @@ describe('Battle.clone mid-round', () => {
       assert.ok(clones > 100);
     });
   }
+});
+
+describe('shallowCloneInstance', () => {
+  it('copies every own property, keeping the prototype', () => {
+    class Point { constructor() { this.x = 1; this.y = 2; } }
+    const copy = shallowCloneInstance(new Point());
+    assert.ok(copy instanceof Point);
+    assert.deepStrictEqual({ ...copy }, { x: 1, y: 2 });
+  });
+
+  it('throws when a sampled copy finds properties the first instance didn\'t have', () => {
+    class Shape { constructor() { this.a = 1; } }
+    shallowCloneInstance(new Shape()); // copy 0 (checked): builds the copier from { a }
+    for (let i = 1; i < 1024; i++) shallowCloneInstance(new Shape());
+    const odd = new Shape();
+    /** @type {any} */ (odd).b = 2; // added after construction: the copier can't know it
+    assert.throws(() => shallowCloneInstance(odd), /extra: b/); // copy 1024 is checked
+  });
+});
+
+describe('KeyWriter', () => {
+  it('makes the same key as an array would, growing past its starting size', () => {
+    const values = Array.from({ length: 700 }, (_, i) => (i * 7919) % 0x20000); // some need escapes
+    const array = [], writer = new KeyWriter(8);
+    for (const v of values) { pushKeyInt(array, v); pushKeyInt(writer, v); }
+    assert.strictEqual(writer.toString(), String.fromCharCode(...array));
+    assert.strictEqual(writer.reset().toString(), '');
+  });
 });

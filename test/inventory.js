@@ -281,3 +281,42 @@ describe('Inventory.stateKeyInto', () => {
     assert.strictEqual(key(copy.clone()), before);
   });
 });
+
+describe('Inventory.clone (copy-on-write)', () => {
+  const medicine = (/** @type {Inventory} */ inventory) => inventory.get(ITEM_KEYS.MEDICINE)?.quantity;
+  const fresh = () => new Inventory([{ key: ITEM_KEYS.MEDICINE }, { key: ITEM_KEYS.ANTITOXIN }]);
+
+  it('shares nothing either side can see: every change on one leaves the other as it was', () => {
+    for (const change of [
+      (/** @type {Inventory} */ i) => i.use(ITEM_KEYS.MEDICINE),
+      (/** @type {Inventory} */ i) => i.remove(ITEM_KEYS.ANTITOXIN),
+      (/** @type {Inventory} */ i) => i.add(ITEM_KEYS.ESCAPE_TALISMAN),
+      (/** @type {Inventory} */ i) => i.clear(),
+    ]) {
+      const original = fresh(), copy = original.clone();
+      change(copy);
+      assert.deepStrictEqual(original.entries, fresh().entries, String(change));
+      const copy2 = original.clone();
+      change(original);
+      assert.deepStrictEqual(copy2.entries, fresh().entries, String(change));
+    }
+  });
+
+  it('keeps a chain of clones apart, each using its own items', () => {
+    const a = fresh(), b = a.clone(), c = b.clone();
+    b.use(ITEM_KEYS.MEDICINE);
+    c.use(ITEM_KEYS.MEDICINE);
+    c.use(ITEM_KEYS.MEDICINE);
+    assert.deepStrictEqual([medicine(a), medicine(b), medicine(c)], [6, 5, 4]);
+    for (let n = 0; n < 4; n++) c.use(ITEM_KEYS.MEDICINE);
+    assert.deepStrictEqual([medicine(a), medicine(b), medicine(c)], [6, 5, undefined]); // c's slot emptied
+  });
+
+  it('never changes the entries it was built from', () => {
+    const source = [{ key: ITEM_KEYS.MEDICINE, quantity: 2 }];
+    const inventory = new Inventory(source);
+    inventory.clone().use(ITEM_KEYS.MEDICINE);
+    inventory.use(ITEM_KEYS.MEDICINE);
+    assert.deepStrictEqual(source, [{ key: ITEM_KEYS.MEDICINE, quantity: 2 }]);
+  });
+});

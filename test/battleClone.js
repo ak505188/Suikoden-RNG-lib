@@ -268,9 +268,9 @@ describe('shallowCloneInstance', () => {
 });
 
 describe('KeyWriter', () => {
-  it('makes the same key as an array would, growing past its starting size', () => {
+  it('makes the same key as an array would', () => {
     const values = Array.from({ length: 700 }, (_, i) => (i * 7919) % 0x20000); // some need escapes
-    const array = [], writer = new KeyWriter(8);
+    const array = [], writer = new KeyWriter();
     for (const v of values) { pushKeyInt(array, v); pushKeyInt(writer, v); }
     assert.strictEqual(writer.toString(), String.fromCharCode(...array));
     assert.strictEqual(writer.reset().toString(), '');

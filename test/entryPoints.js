@@ -5,7 +5,7 @@ import Battle, { BATTLE_STATUS, PHASE_STATE } from '../lib/Game/Battle/Battle.js
 import Character from '../lib/Game/Battle/Character.js';
 import Enemy from '../lib/Game/Battle/Enemy.js';
 import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
-import ActionLog, { LOG_TYPES } from '../lib/Game/Battle/ActionLog.js';
+import ActionLog, { LOG_TYPES, formatRoll, rollMargin } from '../lib/Game/Battle/ActionLog.js';
 import * as Actions from '../lib/Game/Battle/Actions.js';
 import * as ActionPlans from '../lib/Game/Battle/ActionPlans.js';
 import { AREAS } from '../lib/Game/Bestiary/Areas.js';
@@ -14,17 +14,18 @@ import { ITEMS } from '../lib/Game/Items.js';
 import { RUNES, RUNE_TYPES } from '../lib/Game/Magic/Runes.js';
 import { STATUS } from '../lib/Game/Constants.js';
 import RNG from '../lib/rng.js';
+import { Areas } from '../lib/lib.js';
 
 describe('battle.js exports', () => {
   it('re-exports the library\'s own objects (not copies)', () => {
     const expected = {
-      Battle, BATTLE_STATUS, PHASE_STATE, Character, Enemy, EnemyParty, PlayerParty, ActionLog, LOG_TYPES,
+      Battle, BATTLE_STATUS, PHASE_STATE, Character, Enemy, EnemyParty, PlayerParty, ActionLog, LOG_TYPES, formatRoll, rollMargin,
       ACTION_TYPES: Actions.ACTION_TYPES, DEFAULT_ACTION: Actions.DEFAULT_ACTION, ROUND_COMMANDS: Actions.ROUND_COMMANDS,
-      UNBALANCED_ACTION_TYPES: Actions.UNBALANCED_ACTION_TYPES,
+      ROLL_KINDS: Actions.ROLL_KINDS, UNBALANCED_ACTION_TYPES: Actions.UNBALANCED_ACTION_TYPES,
       DEFAULT_COMMANDS: ActionPlans.DEFAULT_COMMANDS, characterActions: ActionPlans.characterActions,
       fightPlans: ActionPlans.fightPlans, fightStarts: ActionPlans.fightStarts,
       roundPlans: ActionPlans.roundPlans, roundStarts: ActionPlans.roundStarts,
-      AREAS, CHARACTER_KEYS: Keys.CHARACTER_KEYS, ENEMY_KEYS: Keys.ENEMY_KEYS, ITEM_KEYS: Keys.ITEM_KEYS,
+      AREAS, ENCOUNTER_AREAS: Areas, CHARACTER_KEYS: Keys.CHARACTER_KEYS, ENEMY_KEYS: Keys.ENEMY_KEYS, ITEM_KEYS: Keys.ITEM_KEYS,
       RUNE_KEYS: Keys.RUNE_KEYS, UNITE_KEYS: Keys.UNITE_KEYS, ITEMS, RUNES, RUNE_TYPES, STATUS, RNG,
     };
     assert.deepStrictEqual(Object.keys(entry).sort(), Object.keys(expected).sort());

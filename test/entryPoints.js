@@ -55,6 +55,8 @@ describe('Package entry points (exports)', () => {
       Characters: (await import('../stats/characters.js')).Characters,
       characterLevelUps: (await import('../stats/growths.js')).characterLevelUps,
       generateCharacterMultipleLevelup: (await import('../stats/growths.js')).generateCharacterMultipleLevelup,
+      Duel: (await import('../lib/Game/Duel.js')).default,
+      DUELS: (await import('../lib/Game/Duel.js')).DUELS,
     };
     for (const [name, value] of Object.entries(internal)) {
       assert.ok(value !== undefined, name);

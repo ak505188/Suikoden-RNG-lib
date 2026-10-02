@@ -33,3 +33,20 @@ export {
   calculateLevelupGrowth,
   generateCharacterMultipleLevelup,
 } from './stats/growths.js';
+
+// Duels (McDohl vs Kwanda, McDohl vs Teo, Pahn vs Teo)
+export {
+  default as Duel,
+  DUELS,
+  DUEL_KEYS,
+  DUEL_MOVES,
+  DUEL_MOVE_NAMES,
+  DUEL_SIDES,
+  DUEL_HITS,
+  DUEL_RESULTS,
+  DUEL_COUNTER,
+  DUEL_OUTCOME_HITS,
+  duelEnemyMove,
+  duelHitDamage,
+  duelistFromCharacter,
+} from './lib/Game/Duel.js';

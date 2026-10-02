@@ -6,7 +6,7 @@
 
 // The engine
 export { default as Battle, BATTLE_STATUS, PHASE_STATE } from './lib/Game/Battle/Battle.js';
-export { default as Character } from './lib/Game/Battle/Character.js';
+export { default as Character, exportCharacters, importCharacters } from './lib/Game/Battle/Character.js';
 export { default as Enemy } from './lib/Game/Battle/Enemy.js';
 export { EnemyParty, PlayerParty } from './lib/Game/Battle/Party.js';
 export { default as ActionLog, LOG_TYPES, formatRoll, rollMargin } from './lib/Game/Battle/ActionLog.js';
@@ -41,6 +41,7 @@ export { default as RNG } from './lib/rng.js';
 /** @typedef {import('./lib/Game/Battle/ActionLog.js').LogEntry} LogEntry */
 /** @typedef {import('./lib/Game/Battle/Actions.js').AttackRoll} AttackRoll */
 /** @typedef {import('./lib/Game/Battle/ActionLog.js').RollRecord} RollRecord */
+/** @typedef {import('./lib/Game/Battle/Character.js').CharacterJSON} CharacterJSON */
 /** @typedef {import('./lib/Game/Keys.js').CharacterKey} CharacterKey */
 /** @typedef {import('./lib/Game/Keys.js').EnemyKey} EnemyKey */
 /** @typedef {import('./lib/Game/Keys.js').ItemKey} ItemKey */

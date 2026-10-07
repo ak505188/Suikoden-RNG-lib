@@ -259,11 +259,11 @@ describe('Battle start', () => {
   it('clears statuses except Poison and Balloon', () => {
     const gremio = makeGremio();
     Object.assign(gremio.status, {
-      [STATUS.POISON]: true, [STATUS.BALLOON]: 2, [STATUS.BUCKET]: true, [STATUS.UNBALANCED]: 1, [STATUS.SLEEP]: true,
+      [STATUS.POISON]: true, [STATUS.BALLOON]: 2, [STATUS.BUCKET]: true, [STATUS.UNBALANCED]: 1, [STATUS.SLEEP]: true, [STATUS.HP_LOCKED]: 2,
     });
     makeBattle([gremio], [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)], HIT_SEED);
     assert.deepStrictEqual(gremio.status, {
-      [STATUS.POISON]: true, [STATUS.BALLOON]: 2, [STATUS.BUCKET]: false, [STATUS.UNBALANCED]: 0, [STATUS.SLEEP]: false,
+      [STATUS.POISON]: true, [STATUS.BALLOON]: 2, [STATUS.BUCKET]: false, [STATUS.UNBALANCED]: 0, [STATUS.SLEEP]: false, [STATUS.HP_LOCKED]: 0,
     });
   });
 });

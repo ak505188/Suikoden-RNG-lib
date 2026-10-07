@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import RNG from '../../lib/rng.js';
-import { dropsOfKindnessRand, waterOfKindnessRand, rainOfKindnessRand } from '../../lib/Game/Magic/SpellRNG/Water.js';
+import { dropsOfKindnessRand, waterOfKindnessOrMotherOceanRand, rainOfKindnessRand } from '../../lib/Game/Magic/SpellRNG/Water.js';
 
 describe("Drops of Kindness Rand tests", () => {
   it("Should always be 18", () => {
@@ -9,13 +9,13 @@ describe("Drops of Kindness Rand tests", () => {
   });
 });
 
-describe("Water of Kindness Rand tests", () => {
+describe("Water of Kindness / Mother Ocean Rand tests", () => {
   it("Should be 72 for a party of 6", () => {
-    assert.strictEqual(waterOfKindnessRand(new RNG(0x12345678), 6).calls, 72);
+    assert.strictEqual(waterOfKindnessOrMotherOceanRand(new RNG(0x12345678), 6).calls, 72);
   });
 
   it("Should be 60 for a party of 5", () => {
-    assert.strictEqual(waterOfKindnessRand(new RNG(0x12345678), 5).calls, 60);
+    assert.strictEqual(waterOfKindnessOrMotherOceanRand(new RNG(0x12345678), 5).calls, 60);
   });
 });
 

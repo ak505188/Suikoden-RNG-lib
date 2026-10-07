@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import RNG from '../../lib/rng.js';
-import { hellRand, blackShadowWindRand, blackShadowBatsRand } from '../../lib/Game/Magic/SpellRNG/SoulEater.js';
+import { hellRand, blackShadowWindRand, blackShadowBatsRand, judgementRand } from '../../lib/Game/Magic/SpellRNG/SoulEater.js';
 
 const hellCases = [
   { rng: 0x333db67a, calls: 10972 }, // TedHell.State
@@ -104,4 +104,43 @@ describe("Black Shadow Rand tests", () => {
       });
     };
   });
+});
+
+// McDohl's Judgement (Soul Eater Lv4) on SpellDuration.State. Start seeds are the RNG value on the frame the VFX
+// setup ran; counts are the real number of rand() calls through the end of the tick machine. The first
+// three are native-seed per-frame captures, then 20 injected seeds. Each seed's setup roll gives a different
+// spread, 152-176.
+const judgementCases = [
+  { rng: 0xfd5ecce9, calls: 167 },
+  { rng: 0x60d0e275, calls: 161 },
+  { rng: 0x72bc8dbc, calls: 167 },
+  { rng: 0x58dbd149, calls: 167 },
+  { rng: 0xb4a56396, calls: 173 },
+  { rng: 0xf0289ce7, calls: 158 },
+  { rng: 0x9cfbae39, calls: 152 },
+  { rng: 0x7d3feff7, calls: 170 },
+  { rng: 0x3101a6f1, calls: 167 },
+  { rng: 0x6ac77c90, calls: 158 },
+  { rng: 0xdd33e45d, calls: 164 },
+  { rng: 0x67651ec6, calls: 167 },
+  { rng: 0x3a8d3d5a, calls: 167 },
+  { rng: 0x70289ce7, calls: 158 },
+  { rng: 0x10de13c5, calls: 170 },
+  { rng: 0x0d1a95a6, calls: 173 },
+  { rng: 0x4c3e8ca5, calls: 170 },
+  { rng: 0xc47f8042, calls: 164 },
+  { rng: 0xa34f3f18, calls: 173 },
+  { rng: 0xa059d79a, calls: 155 },
+  { rng: 0x87d3da0d, calls: 176 },
+  { rng: 0x4289e502, calls: 167 },
+  { rng: 0x2d6210d6, calls: 164 },
+];
+
+describe("Judgement Rand tests", () => {
+  for (const { rng, calls } of judgementCases) {
+    const r = new RNG(rng);
+    it(`Should be ${calls} for ${rng.toString(16)}`, () => {
+      assert.strictEqual(judgementRand(r).calls, calls);
+    });
+  };
 });

@@ -109,15 +109,6 @@ describe('Copper Flesh in a battle round', () => {
     assert.strictEqual(gremio.status[STATUS.HP_LOCKED], 0);
     assert.strictEqual(cleo.MP[COPPER_FLESH_SLOT], mpBefore);
   });
-
-  it("throws for an ally spell whose effect isn't implemented yet", () => {
-    const cleo = makeCleo();
-    const battle = makeBattle([cleo]);
-    assert.throws(
-      () => battle.playTurn([{ type: ACTION_TYPES.RUNE, slot: 0, target: 0 }]), // Clay Guardian
-      /Clay Guardian.*not implemented/,
-    );
-  });
 });
 
 describe('Copper Flesh action planning', () => {

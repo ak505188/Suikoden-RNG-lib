@@ -58,15 +58,6 @@ describe('Copper Flesh effect', () => {
     assert.strictEqual(cleo.isHPLocked, false);
     assert.strictEqual(rng.count, 0);
   });
-
-  it('is not implemented for the other ally spells yet', () => {
-    const cleo = makeCleo();
-    for (const spell of [SPELLS.DROPS_OF_KINDNESS, SPELLS.WATER_OF_KINDNESS, SPELLS.CLAY_GUARDIAN]) {
-      assert.strictEqual(applySpell({
-        actor: cleo, spell, target: cleo, party: new PlayerParty([cleo]), enemies: new EnemyParty([]),
-      }), false, spell.name);
-    }
-  });
 });
 
 describe('Copper Flesh in a battle round', () => {

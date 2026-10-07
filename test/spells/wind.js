@@ -1,7 +1,8 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import RNG from '../../lib/rng.js';
-import { stormFangRand, shiningWindRand } from '../../lib/Game/Magic/SpellRNG/Wind.js';
+import { shiningWindRand } from '../../lib/Game/Magic/SpellRNG/Wind.js';
+import { stormFangRand } from '../../lib/Game/Magic/SpellRNG/Unites.js';
 
 describe("Storm Fang Rand tests", () => {
   it("Should always be 38", () => {

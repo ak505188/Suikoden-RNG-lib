@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import RNG from '../../lib/rng.js';
-import { earthquakeRand, clayGuardianRand } from '../../lib/Game/Magic/SpellRNG/Earth.js';
+import { earthquakeRand, clayGuardianRand, guardianEarthRand } from '../../lib/Game/Magic/SpellRNG/Earth.js';
 
 const cases = [
   { rng: 0xe15d6b34, calls: 1626 },
@@ -69,4 +69,57 @@ describe("Clay Guardian Rand tests", () => {
       assert.strictEqual(clayGuardianRand(r).calls, calls);
     });
   };
+});
+
+// McDohl's Mother Earth Rune (Guardian Earth, id 33, slot 4), whole party, on SpellDuration.State. Start seeds are
+// the RNG value at the VFX setup frame; counts are the real number of rand() calls through the end handler, from
+// 20 injected seeds. Each of the 40 sparkles rolls its start tick at setup, then respawns every 34 passes for 2
+// calls, so the total is 40 + 2 x (activations): 380-408, always even.
+const guardianEarthCases = [
+  { rng: 0x58dbd149, calls: 408 },
+  { rng: 0xb4a56396, calls: 404 },
+  { rng: 0xf0289ce7, calls: 396 },
+  { rng: 0x9cfbae39, calls: 400 },
+  { rng: 0x7d3feff7, calls: 402 },
+  { rng: 0x3101a6f1, calls: 408 },
+  { rng: 0x6ac77c90, calls: 396 },
+  { rng: 0xdd33e45d, calls: 380 },
+  { rng: 0x67651ec6, calls: 408 },
+  { rng: 0x3a8d3d5a, calls: 384 },
+  { rng: 0x70289ce7, calls: 396 },
+  { rng: 0x10de13c5, calls: 402 },
+  { rng: 0x0d1a95a6, calls: 392 },
+  { rng: 0x4c3e8ca5, calls: 380 },
+  { rng: 0xc47f8042, calls: 390 },
+  { rng: 0xa34f3f18, calls: 398 },
+  { rng: 0xa059d79a, calls: 384 },
+  { rng: 0x87d3da0d, calls: 400 },
+  { rng: 0x4289e502, calls: 398 },
+  { rng: 0x2d6210d6, calls: 394 },
+];
+
+describe("Guardian Earth Rand tests", () => {
+  for (const { rng, calls } of guardianEarthCases) {
+    it(`Should be ${calls} for ${rng.toString(16)}`, () => {
+      const r = new RNG(rng);
+      assert.strictEqual(guardianEarthRand(r).calls, calls);
+      assert.strictEqual(r.count, calls);
+    });
+  };
+});
+
+describe("Guardian Earth spellRand", () => {
+  it("burns the same calls as guardianEarthRand, memoized or not", async () => {
+    const { spellRand } = await import('../../lib/Game/Magic/Behavior.js');
+    const { SPELLS } = await import('../../lib/Game/Magic/Spells.js');
+    const { EnemyParty, PlayerParty } = await import('../../lib/Game/Battle/Party.js');
+    for (const { rng, calls } of guardianEarthCases.slice(0, 3)) {
+      for (let pass = 0; pass < 2; pass++) {
+        const r = new RNG(rng);
+        const burned = spellRand({ spell: SPELLS.GUARDIAN_EARTH, rng: r, party: new PlayerParty([]), enemies: new EnemyParty([]) });
+        assert.strictEqual(burned, calls);
+        assert.strictEqual(r.count, calls);
+      }
+    }
+  });
 });

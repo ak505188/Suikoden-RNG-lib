@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import RNG from '../../lib/rng.js';
-import { earthquakeRand } from '../../lib/Game/Magic/SpellRNG/Earth.js';
+import { earthquakeRand, clayGuardianRand } from '../../lib/Game/Magic/SpellRNG/Earth.js';
 
 const cases = [
   { rng: 0xe15d6b34, calls: 1626 },
@@ -32,6 +32,41 @@ describe("Earthquake Rand tests", () => {
     const r = new RNG(rng);
     it(`Should be ${calls} for ${rng.toString(16)}`, () => {
       assert.strictEqual(earthquakeRand(r).calls, calls);
+    });
+  };
+});
+
+// McDohl's Earth Lv1 (Clay Guardian) on SpellDuration.State, aimed at himself. Start seeds are the RNG value on
+// the frame the VFX setup ran; counts are the live LCG-step distance to the end handler. 90-132 over 20 seeds,
+// always a multiple of 3.
+const clayGuardianCases = [
+  { rng: 0x58dbd149, calls: 105 },
+  { rng: 0xb4a56396, calls: 117 },
+  { rng: 0xf0289ce7, calls: 129 },
+  { rng: 0x9cfbae39, calls: 120 },
+  { rng: 0x7d3feff7, calls: 111 },
+  { rng: 0x3101a6f1, calls: 105 },
+  { rng: 0x6ac77c90, calls: 132 },
+  { rng: 0xdd33e45d, calls: 114 },
+  { rng: 0x67651ec6, calls: 105 },
+  { rng: 0x3a8d3d5a, calls: 99 },
+  { rng: 0x70289ce7, calls: 129 },
+  { rng: 0x10de13c5, calls: 132 },
+  { rng: 0x0d1a95a6, calls: 117 },
+  { rng: 0x4c3e8ca5, calls: 117 },
+  { rng: 0xc47f8042, calls: 105 },
+  { rng: 0xa34f3f18, calls: 96 },
+  { rng: 0xa059d79a, calls: 105 },
+  { rng: 0x87d3da0d, calls: 102 },
+  { rng: 0x4289e502, calls: 114 },
+  { rng: 0x2d6210d6, calls: 90 },
+];
+
+describe("Clay Guardian Rand tests", () => {
+  for (const { rng, calls } of clayGuardianCases) {
+    const r = new RNG(rng);
+    it(`Should be ${calls} for ${rng.toString(16)}`, () => {
+      assert.strictEqual(clayGuardianRand(r).calls, calls);
     });
   };
 });

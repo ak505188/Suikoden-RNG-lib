@@ -15,14 +15,6 @@ import { LOG_TYPES } from '../lib/Game/Battle/ActionLog.js';
 /** @typedef {import('../lib/Game/Battle/Actions.js').Action} Action */
 /** @typedef {import('../lib/Game/Battle/Actions.js').Round} Round */
 
-/** @param {Battle} battle */
-const snapshot = (battle) => ({
-  rng: battle.rng.getRNG(),
-  count: battle.rng.count,
-  party: Object.fromEntries(battle.party.combatants.map(c => [c.name, c.HP])),
-  enemies: battle.enemies.combatants.map(c => c.HP),
-});
-
 describe('Zombie Dragon 1 turn tests', () => {
   const McDohl = new Character(CHARACTER_KEYS.MCDOHL)
     .setLVL(22)
@@ -396,7 +388,7 @@ describe('Dragon tests', () => {
 
   const snapshots = actions.map(turn => {
     battle.playTurn(turn);
-    return snapshot(battle);
+    return Battle.snapshot(battle);
   });
 
   it('T1 rng == 0x8ddcf2e4', () => {
@@ -406,10 +398,10 @@ describe('Dragon tests', () => {
     assert.strictEqual(snapshots[0].count, 8493);
   });
   it('McDohl HP == 246', () => {
-    assert.strictEqual(snapshots[0].party[McDohl.name], 246);
+    assert.strictEqual(snapshots[0].partyHPByName[McDohl.name], 246);
   });
   it('Dragon HP = 5457', () => {
-    assert.strictEqual(snapshots[0].enemies[0], 5457);
+    assert.strictEqual(snapshots[0].enemyHPBySlot[0], 5457);
   });
 
   it('T2 rng == 0x68ea8ddd', () => {
@@ -419,47 +411,47 @@ describe('Dragon tests', () => {
     assert.strictEqual(snapshots[1].count, 9246);
   });
   it('Viktor HP == 329', () => {
-    assert.strictEqual(snapshots[1].party[Viktor.name], 329);
+    assert.strictEqual(snapshots[1].partyHPByName[Viktor.name], 329);
   });
   it('Dragon HP = 4669', () => {
-    assert.strictEqual(snapshots[1].enemies[0], 4669);
+    assert.strictEqual(snapshots[1].enemyHPBySlot[0], 4669);
   });
 
   it('T3 rng count == 10007', () => {
     assert.strictEqual(snapshots[2].count, 10007);
   });
   it('McDohl HP == 214', () => {
-    assert.strictEqual(snapshots[2].party[McDohl.name], 214);
+    assert.strictEqual(snapshots[2].partyHPByName[McDohl.name], 214);
   });
   it('Dragon HP = 3815', () => {
-    assert.strictEqual(snapshots[2].enemies[0], 3815);
+    assert.strictEqual(snapshots[2].enemyHPBySlot[0], 3815);
   });
 
   it('T4 rng count == 10762', () => {
     assert.strictEqual(snapshots[3].count, 10762);
   });
   it('McDohl HP == 181', () => {
-    assert.strictEqual(snapshots[3].party[McDohl.name], 181);
+    assert.strictEqual(snapshots[3].partyHPByName[McDohl.name], 181);
   });
   it('Dragon HP = 3117', () => {
-    assert.strictEqual(snapshots[3].enemies[0], 3117);
+    assert.strictEqual(snapshots[3].enemyHPBySlot[0], 3117);
   });
 
   it('T4 rng count == 11522', () => {
     assert.strictEqual(snapshots[4].count, 11522);
   });
   it('Kuromimi HP == 181', () => {
-    assert.strictEqual(snapshots[4].party[Kuromimi.name], 124);
+    assert.strictEqual(snapshots[4].partyHPByName[Kuromimi.name], 124);
   });
   it('Dragon HP = 1139', () => {
-    assert.strictEqual(snapshots[4].enemies[0], 1139);
+    assert.strictEqual(snapshots[4].enemyHPBySlot[0], 1139);
   });
 
   it('T5 rng count == 11551', () => {
     assert.strictEqual(snapshots[5].count, 11551);
   });
   it('Dragon HP = 0', () => {
-    assert.strictEqual(snapshots[5].enemies[0], 0);
+    assert.strictEqual(snapshots[5].enemyHPBySlot[0], 0);
   });
 });
 
@@ -541,35 +533,35 @@ describe('Golem 3 FurFur no force to test Medicine', () => {
 
   const snapshotsV1 = actionsV1.map(turn => {
     battle1.playTurn(turn);
-    return snapshot(battle1);
+    return Battle.snapshot(battle1);
   });
 
   const snapshotsV2 = actionsV2.map(turn => {
     battle2.playTurn(turn);
-    return snapshot(battle2);
+    return Battle.snapshot(battle2);
   });
 
   it('rng count after T1 == 166', () => {
     assert.strictEqual(snapshotsV1[0].count, 166);
   });
   it('McDohl HP == 7', () => {
-    assert.strictEqual(snapshotsV1[0].party[McDohl.name], 7);
+    assert.strictEqual(snapshotsV1[0].partyHPByName[McDohl.name], 7);
   });
   it('Gremio HP == 32', () => {
-    assert.strictEqual(snapshotsV1[0].party[Gremio.name], 32);
+    assert.strictEqual(snapshotsV1[0].partyHPByName[Gremio.name], 32);
   });
   it('Pahn HP == 60', () => {
-    assert.strictEqual(snapshotsV1[0].party[Pahn.name], 60);
+    assert.strictEqual(snapshotsV1[0].partyHPByName[Pahn.name], 60);
   });
   it('Golem HP == 154', () => {
-    assert.strictEqual(snapshotsV1[0].enemies[0], 154);
+    assert.strictEqual(snapshotsV1[0].enemyHPBySlot[0], 154);
   });
 
   it('rng count after T2 == 187', () => {
     assert.strictEqual(snapshotsV1[1].count, 187);
   });
   it('Golem HP == 0', () => {
-    assert.strictEqual(snapshotsV1[1].enemies[0], 0);
+    assert.strictEqual(snapshotsV1[1].enemyHPBySlot[0], 0);
   });
 
   console.log(battle2.log.format());
@@ -579,32 +571,32 @@ describe('Golem 3 FurFur no force to test Medicine', () => {
       assert.strictEqual(snapshotsV2[0].count, 172);
     });
     it('McDohl HP == 5', () => {
-      assert.strictEqual(snapshotsV2[0].party[McDohl.name], 5);
+      assert.strictEqual(snapshotsV2[0].partyHPByName[McDohl.name], 5);
     });
     it('Gremio HP == 27', () => {
-      assert.strictEqual(snapshotsV2[0].party[Gremio.name], 27);
+      assert.strictEqual(snapshotsV2[0].partyHPByName[Gremio.name], 27);
     });
     it('Pahn HP == 51', () => {
-      assert.strictEqual(snapshotsV2[0].party[Pahn.name], 51);
+      assert.strictEqual(snapshotsV2[0].partyHPByName[Pahn.name], 51);
     });
     it('Ted HP == 45', () => {
-      assert.strictEqual(snapshotsV2[0].party[Ted.name], 45);
+      assert.strictEqual(snapshotsV2[0].partyHPByName[Ted.name], 45);
     });
     it('Cleo HP == 46', () => {
-      assert.strictEqual(snapshotsV2[0].party[Cleo.name], 46);
+      assert.strictEqual(snapshotsV2[0].partyHPByName[Cleo.name], 46);
     });
     it('Golem HP == 134', () => {
-      assert.strictEqual(snapshotsV2[0].enemies[0], 134);
+      assert.strictEqual(snapshotsV2[0].enemyHPBySlot[0], 134);
     });
 
     it('rng count after T1 == 198', () => {
       assert.strictEqual(snapshotsV2[1].count, 198);
     });
     it('McDohl HP == 5', () => {
-      assert.strictEqual(snapshotsV2[1].party[McDohl.name], 5);
+      assert.strictEqual(snapshotsV2[1].partyHPByName[McDohl.name], 5);
     });
     it('Golem HP == 0', () => {
-      assert.strictEqual(snapshotsV2[1].enemies[0], 0);
+      assert.strictEqual(snapshotsV2[1].enemyHPBySlot[0], 0);
     });
   });
 });

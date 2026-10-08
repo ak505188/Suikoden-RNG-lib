@@ -120,17 +120,39 @@ describe('Round commands: Free Will', () => {
     assert.strictEqual(b.freeWillGate, 10);
   });
 
-  it('spreads attacks across the enemies in slot order, wrapping', () => {
+  it('spreads attacks across the enemies in slot order from the second enemy, wrapping', () => {
+    // The shared cursor starts at 1 and moves on one per Attack (live: Queen Ant, picks 1, 2, 0, 0, 1)
     const p = party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.CLEO]);
+    assert.deepStrictEqual(p.freeWillActions(furfurs(3)).map(a => a.target), [1, 2, 0]);
+    assert.deepStrictEqual(p.freeWillActions(furfurs(2)).map(a => a.target), [1, 0, 1]);
+  });
+
+  it('takes members in formation order, not party order', () => {
+    // After McDohl and Gremio fall the back row moves up: [Cleo, Ted, Pahn] (Queen Ant, round 3)
+    const p = party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.CLEO]);
+    [p.combatants[0].position, p.combatants[1].position, p.combatants[2].position] = [3, 1, 2];
+    // Gremio (slot 1) first takes 1, Cleo 2, McDohl wraps to 0
     assert.deepStrictEqual(p.freeWillActions(furfurs(3)).map(a => a.target), [0, 1, 2]);
-    assert.deepStrictEqual(p.freeWillActions(furfurs(2)).map(a => a.target), [0, 1, 0]);
+  });
+
+  it('after a fallen member the back row moves up, and the cursor follows the new order', () => {
+    const p = party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.PAHN, CHARACTER_KEYS.CLEO, CHARACTER_KEYS.TED]);
+    p.combatants[0].die(0);
+    p.combatants[1].die(0);
+    p.backfill(0);
+    assert.deepStrictEqual(p.combatants.map(c => c.position), [4, 5, 3, 1, 2]);
+    // Cleo -> 1, Ted -> 2, then Pahn (Short) can't reach the back-row 4th enemy and wraps to 0. The
+    // fallen come last and still take targets (live, Queen Ant round 3: 6, 7, 6, 7, 8 = 0, 1, 0, 1, 2)
+    const enemies = furfurs(4);
+    enemies.combatants[3].position = 4;
+    assert.deepStrictEqual(p.freeWillActions(enemies).map(a => a.target), [0, 1, 0, 1, 2]);
   });
 
   it('skips enemies out of the fight', () => {
     const enemies = furfurs(3);
     enemies.combatants[1].knockedOut = true;
     const p = party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.CLEO]);
-    assert.deepStrictEqual(p.freeWillActions(enemies).map(a => a.target), [0, 2, 0]);
+    assert.deepStrictEqual(p.freeWillActions(enemies).map(a => a.target), [2, 2, 0]); // the dead #2 is skipped from the cursor at 1; the cursor then moves on by one, not past the pick
   });
 
   it('Short range in the back row Defends, without moving the cursor', () => {
@@ -138,14 +160,15 @@ describe('Round commands: Free Will', () => {
     const p = party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.CLEO, CHARACTER_KEYS.FLIK, CHARACTER_KEYS.EILEEN]);
     const actions = p.freeWillActions(furfurs(3));
     assert.deepStrictEqual(actions.map(a => a.type), [ACTION_TYPES.ATTACK, ACTION_TYPES.ATTACK, ACTION_TYPES.ATTACK, ACTION_TYPES.DEFEND, ACTION_TYPES.ATTACK]);
-    assert.strictEqual(actions[4].target, 0);
+    assert.strictEqual(actions[4].target, 1); // the cursor is at 4 (= 1 of 3): the Defend didn't move it
   });
 
   it('only Long range reaches the enemy back row', () => {
     const enemies = furfurs(2);
     enemies.combatants[0].position = 4;
     const p = party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.CLEO]);
-    // McDohl (Medium) skips the back-row FurFur; the cursor passes it, so Cleo (Long) wraps to it
+    // McDohl (Medium) can't reach the back-row FurFur and takes the other one; Cleo (Long) scans from
+    // the cursor, now at 2 (= 0 of 2), and takes it
     assert.deepStrictEqual(p.freeWillActions(enemies).map(a => a.target), [1, 0]);
   });
 
@@ -154,7 +177,7 @@ describe('Round commands: Free Will', () => {
     p.combatants[0].unbalance();
     const actions = p.freeWillActions(furfurs(2));
     assert.deepStrictEqual(actions.map(a => a.type), [ACTION_TYPES.DEFEND, ACTION_TYPES.ATTACK]);
-    assert.strictEqual(actions[1].target, 0);
+    assert.strictEqual(actions[1].target, 1); // the first Attack of the pass starts at the cursor's 1
   });
 
   it('picks targets from the state when the round is played', () => {

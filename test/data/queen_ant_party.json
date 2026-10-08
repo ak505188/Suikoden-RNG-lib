@@ -1,0 +1,263 @@
+[
+    {
+        "id": 8,
+        "key": "MCDOHL",
+        "HP": 36,
+        "LVL": 5,
+        "MP": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stats": {
+            "LUK": 27,
+            "HP": 59,
+            "PWR": 25,
+            "MGC": 25,
+            "SKL": 36,
+            "DEF": 30,
+            "SPD": 30
+        },
+        "inventory": [
+            {
+                "id": 1,
+                "slot": "HEAD"
+            },
+            {
+                "id": 10,
+                "slot": "BODY"
+            },
+            {
+                "id": 32,
+                "slot": "ACCESSORY_1"
+            },
+            {
+                "id": 28,
+                "slot": "ACCESSORY_2"
+            },
+            {
+                "id": 25,
+                "quantity": 6
+            },
+            {
+                "id": 120,
+                "appraised": false
+            },
+            {
+                "id": 62
+            }
+        ],
+        "status": {
+            "poison": false,
+            "balloon": 0
+        },
+        "EXP": 500,
+        "rune": {
+            "id": 0
+        },
+        "weapon": {
+            "lvl": 1,
+            "runePiece": {
+                "element": "NONE",
+                "amount": 0
+            }
+        }
+    },
+    {
+        "id": 2,
+        "key": "GREMIO",
+        "HP": 40,
+        "LVL": 5,
+        "MP": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stats": {
+            "LUK": 21,
+            "HP": 54,
+            "PWR": 27,
+            "MGC": 14,
+            "SKL": 23,
+            "DEF": 29,
+            "SPD": 18
+        },
+        "inventory": [
+            {
+                "id": 11,
+                "slot": "BODY"
+            },
+            {
+                "id": 38,
+                "slot": "ACCESSORY_1"
+            },
+            {
+                "id": 25,
+                "quantity": 6
+            }
+        ],
+        "status": {
+            "poison": false,
+            "balloon": 0
+        },
+        "EXP": 500,
+        "rune": {
+            "id": 21
+        },
+        "weapon": {
+            "lvl": 1,
+            "runePiece": {
+                "element": "NONE",
+                "amount": 0
+            }
+        }
+    },
+    {
+        "id": 6,
+        "key": "PAHN",
+        "HP": 71,
+        "LVL": 5,
+        "MP": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stats": {
+            "LUK": 26,
+            "HP": 71,
+            "PWR": 39,
+            "MGC": 7,
+            "SKL": 29,
+            "DEF": 31,
+            "SPD": 15
+        },
+        "inventory": [
+            {
+                "id": 10,
+                "slot": "BODY"
+            },
+            {
+                "id": 2,
+                "slot": "HEAD"
+            },
+            {
+                "id": 32,
+                "slot": "ACCESSORY_1"
+            }
+        ],
+        "status": {
+            "poison": false,
+            "balloon": 0
+        },
+        "EXP": 500,
+        "rune": {
+            "id": 8
+        },
+        "weapon": {
+            "lvl": 1,
+            "runePiece": {
+                "element": "NONE",
+                "amount": 0
+            }
+        }
+    },
+    {
+        "id": 1,
+        "key": "CLEO",
+        "HP": 56,
+        "LVL": 5,
+        "MP": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stats": {
+            "LUK": 27,
+            "HP": 56,
+            "PWR": 23,
+            "MGC": 36,
+            "SKL": 33,
+            "DEF": 27,
+            "SPD": 25
+        },
+        "inventory": [
+            {
+                "id": 10,
+                "slot": "BODY"
+            },
+            {
+                "id": 42,
+                "slot": "ACCESSORY_1"
+            },
+            {
+                "id": 25,
+                "quantity": 6
+            }
+        ],
+        "status": {
+            "poison": false,
+            "balloon": 0
+        },
+        "EXP": 500,
+        "rune": {
+            "id": 0
+        },
+        "weapon": {
+            "lvl": 1,
+            "runePiece": {
+                "element": "NONE",
+                "amount": 0
+            }
+        }
+    },
+    {
+        "id": 108,
+        "key": "TED",
+        "HP": 56,
+        "LVL": 5,
+        "MP": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "stats": {
+            "LUK": 25,
+            "HP": 56,
+            "PWR": 25,
+            "MGC": 27,
+            "SKL": 33,
+            "DEF": 19,
+            "SPD": 28
+        },
+        "inventory": [
+            {
+                "id": 9,
+                "slot": "BODY"
+            },
+            {
+                "id": 25,
+                "quantity": 5
+            }
+        ],
+        "status": {
+            "poison": false,
+            "balloon": 0
+        },
+        "EXP": 500,
+        "rune": {
+            "id": 32
+        },
+        "weapon": {
+            "lvl": 3,
+            "runePiece": {
+                "element": "NONE",
+                "amount": 0
+            }
+        }
+    }
+]

@@ -8,7 +8,7 @@ import { LOG_TYPES } from '../lib/Game/Battle/ActionLog.js';
 import { ENEMY_AI, ENEMY_MOVES } from '../lib/Game/Battle/EnemyAI.js';
 import { CHARACTER_KEYS, ENEMY_KEYS } from '../lib/Game/Keys.js';
 import { RUNES } from '../lib/Game/Magic/Runes.js';
-import { cDiv } from '../lib/lib.js';
+import { cDiv } from '../lib/util/math.js';
 import RNG from '../lib/rng.js';
 
 const member = (/** @type {number} */ MGC, rune = null) => {

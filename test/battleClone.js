@@ -12,7 +12,8 @@ import RNG from '../lib/rng.js';
 import { AREAS } from '../lib/Game/Bestiary/Areas.js';
 import { RUNES } from '../lib/Game/Magic/Runes.js';
 import { LOG_TYPES } from '../lib/Game/Battle/ActionLog.js';
-import { KeyWriter, pushKeyInt, shallowCloneInstance } from '../lib/lib.js';
+import { KeyWriter, pushKeyInt } from '../lib/util/stateKey.js';
+import { shallowCloneInstance } from '../lib/util/clone.js';
 
 const ATTACK = { type: ACTION_TYPES.ATTACK, target: 0 };
 

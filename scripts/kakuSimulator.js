@@ -1,5 +1,5 @@
 import RNG from '../lib/rng.js';
-import { div32ulo } from '../lib/lib.js';
+import { div32ulo } from '../lib/util/math.js';
 
 const DIRECTIONS = ['Down', 'Up', 'Left', 'Right'];
 

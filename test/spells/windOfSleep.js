@@ -12,7 +12,7 @@ import { STATUS } from '../../lib/Game/Constants.js';
 import { ACTION_TYPES } from '../../lib/Game/Battle/Actions.js';
 import { spellRand, spellEffect } from '../../lib/Game/Magic/Behavior.js';
 import { windOfSleepRand } from '../../lib/Game/Magic/SpellRNG/Wind.js';
-import { cDiv } from '../../lib/lib.js';
+import { cDiv } from '../../lib/util/math.js';
 import { AREAS } from '../../battle.js';
 
 // McDohl's Wind Lv1 (Wind of Sleep) on WindOfSleep.State (5 enemies, all eligible for the Sleep roll) and on

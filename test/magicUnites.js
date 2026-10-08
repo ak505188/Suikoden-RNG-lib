@@ -9,7 +9,7 @@ import { LOG_TYPES } from '../lib/Game/Battle/ActionLog.js';
 import { magicUnite } from '../lib/Game/Magic/MagicUnites.js';
 import { SPELLS } from '../lib/Game/Magic/Spells.js';
 import { RUNES } from '../lib/Game/Magic/Runes.js';
-import { calcMagicElementModifier } from '../lib/lib.js';
+import { calcMagicElementModifier } from '../lib/Game/Magic/Elements.js';
 import { CHARACTER_KEYS, ENEMY_KEYS } from '../lib/Game/Keys.js';
 import { ELEMENTAL_RESISTANCES, ELEMENTS } from '../lib/Game/Constants.js';
 import RNG from '../lib/rng.js';

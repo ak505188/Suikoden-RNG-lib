@@ -178,8 +178,8 @@ describe('3 round Queen Ant Free Wills match in-game values', () => {
   const baseBattle = new Battle({ party, enemies, rng });
 
   /* --- Battle start: 6 allies vs 1 enemies ---
-   * R1 t  30 rng   8  Hero's turn
    * R1 t   0 rng   1  --- Round 1 ---
+   * R1 t  30 rng   8  Hero's turn
    * R1 t  31 rng   8  Hero casts Judgment on Ain Gide
    * R1 t 552 rng 175  Hero deals 1577 to Ain Gide (HP 6423)
    * R1 t 555 rng 181  Flik's turn

@@ -18,16 +18,45 @@ import RNG from '../lib/rng.js';
 import { Areas } from '../lib/lib.js';
 
 describe('battle.js exports', () => {
-  it('re-exports the library\'s own objects (not copies)', () => {
+  it("re-exports the library's own objects (not copies)", () => {
     const expected = {
-      Battle, BATTLE_STATUS, PHASE_STATE, Character, exportCharacters, importCharacters, Enemy, QueenAntScript, EnemyParty, PlayerParty, ActionLog, LOG_TYPES, formatRoll, rollMargin,
-      ACTION_TYPES: Actions.ACTION_TYPES, DEFAULT_ACTION: Actions.DEFAULT_ACTION, ROUND_COMMANDS: Actions.ROUND_COMMANDS,
-      ROLL_KINDS: Actions.ROLL_KINDS, UNBALANCED_ACTION_TYPES: Actions.UNBALANCED_ACTION_TYPES,
-      DEFAULT_COMMANDS: ActionPlans.DEFAULT_COMMANDS, characterActions: ActionPlans.characterActions,
-      fightPlans: ActionPlans.fightPlans, fightStarts: ActionPlans.fightStarts,
-      roundPlans: ActionPlans.roundPlans, roundStarts: ActionPlans.roundStarts,
-      AREAS, ENCOUNTER_AREAS: Areas, CHARACTER_KEYS: Keys.CHARACTER_KEYS, ENEMY_KEYS: Keys.ENEMY_KEYS, ITEM_KEYS: Keys.ITEM_KEYS,
-      RUNE_KEYS: Keys.RUNE_KEYS, UNITE_KEYS: Keys.UNITE_KEYS, ITEMS, RUNES, RUNE_TYPES, STATUS, RNG,
+      Battle,
+      BATTLE_STATUS,
+      PHASE_STATE,
+      Character,
+      exportCharacters,
+      importCharacters,
+      Enemy,
+      QueenAntScript,
+      EnemyParty,
+      PlayerParty,
+      ActionLog,
+      LOG_TYPES,
+      formatRoll,
+      rollMargin,
+      ACTION_TYPES: Actions.ACTION_TYPES,
+      DEFAULT_ACTION: Actions.DEFAULT_ACTION,
+      ROUND_COMMANDS: Actions.ROUND_COMMANDS,
+      ROLL_KINDS: Actions.ROLL_KINDS,
+      UNBALANCED_ACTION_TYPES: Actions.UNBALANCED_ACTION_TYPES,
+      DEFAULT_COMMANDS: ActionPlans.DEFAULT_COMMANDS,
+      characterActions: ActionPlans.characterActions,
+      fightPlans: ActionPlans.fightPlans,
+      fightStarts: ActionPlans.fightStarts,
+      roundPlans: ActionPlans.roundPlans,
+      roundStarts: ActionPlans.roundStarts,
+      AREAS,
+      ENCOUNTER_AREAS: Areas,
+      CHARACTER_KEYS: Keys.CHARACTER_KEYS,
+      ENEMY_KEYS: Keys.ENEMY_KEYS,
+      ITEM_KEYS: Keys.ITEM_KEYS,
+      RUNE_KEYS: Keys.RUNE_KEYS,
+      UNITE_KEYS: Keys.UNITE_KEYS,
+      ITEMS,
+      RUNES,
+      RUNE_TYPES,
+      STATUS,
+      RNG,
     };
     assert.deepStrictEqual(Object.keys(entry).sort(), Object.keys(expected).sort());
     for (const [name, value] of Object.entries(expected)) {
@@ -55,7 +84,8 @@ describe('Package entry points (exports)', () => {
       simulateRoll: (await import('../lib/chinchironin.js')).simulateRoll,
       Characters: (await import('../stats/characters.js')).Characters,
       characterLevelUps: (await import('../stats/growths.js')).characterLevelUps,
-      generateCharacterMultipleLevelup: (await import('../stats/growths.js')).generateCharacterMultipleLevelup,
+      generateCharacterMultipleLevelup: (await import('../stats/growths.js'))
+        .generateCharacterMultipleLevelup,
       Duel: (await import('../lib/Game/Duel.js')).default,
       DUELS: (await import('../lib/Game/Duel.js')).DUELS,
     };

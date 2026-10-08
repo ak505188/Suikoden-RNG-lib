@@ -22,31 +22,46 @@ import { LOG_TYPES } from '../lib/Game/Battle/ActionLog.js';
  * Dragon.State's party, in slot order (the same stats as test/battle.js's Dragon tests): MGC read
  * live (scripts/CheckDragonStats.lua), runes from the capture's DUMP. Slots 1-3 are the front row, so the target scan has 3 candidates.
  */
-const makeParty = () => new PlayerParty([
-  new Character(CHARACTER_KEYS.MCDOHL)
-    .setStats({ PWR: 82, SKL: 102, DEF: 80, SPD: 93, MGC: 86, LUK: 85, HP: 278 })
-    .setRune(RUNES.SOUL_EATER),
-  new Character(CHARACTER_KEYS.VIKTOR)
-    .setStats({ PWR: 119, SKL: 48, DEF: 94, SPD: 68, MGC: 51, LUK: 65, HP: 432 })
-    .setRune(RUNES.HOLY),
-  new Character(CHARACTER_KEYS.KUROMIMI)
-    .setStats({ PWR: 77, SKL: 65, DEF: 74, SPD: 70, MGC: 40, LUK: 76, HP: 241 }),
-  new Character(CHARACTER_KEYS.KIRKIS)
-    .setStats({ PWR: 64, SKL: 99, DEF: 65, SPD: 76, MGC: 67, LUK: 50, HP: 196 })
-    .setRune(RUNES.WIND),
-  new Character(CHARACTER_KEYS.VALERIA)
-    .setStats({ PWR: 94, SKL: 74, DEF: 90, SPD: 68, MGC: 65, LUK: 75, HP: 320 }),
-  new Character(CHARACTER_KEYS.GREMIO)
-    .setStats({ PWR: 65, SKL: 73, DEF: 90, SPD: 53, MGC: 42, LUK: 72, HP: 228 })
-    .setRune(RUNES.WIND),
-]);
+const makeParty = () =>
+  new PlayerParty([
+    new Character(CHARACTER_KEYS.MCDOHL)
+      .setStats({ PWR: 82, SKL: 102, DEF: 80, SPD: 93, MGC: 86, LUK: 85, HP: 278 })
+      .setRune(RUNES.SOUL_EATER),
+    new Character(CHARACTER_KEYS.VIKTOR)
+      .setStats({ PWR: 119, SKL: 48, DEF: 94, SPD: 68, MGC: 51, LUK: 65, HP: 432 })
+      .setRune(RUNES.HOLY),
+    new Character(CHARACTER_KEYS.KUROMIMI).setStats({
+      PWR: 77,
+      SKL: 65,
+      DEF: 74,
+      SPD: 70,
+      MGC: 40,
+      LUK: 76,
+      HP: 241,
+    }),
+    new Character(CHARACTER_KEYS.KIRKIS)
+      .setStats({ PWR: 64, SKL: 99, DEF: 65, SPD: 76, MGC: 67, LUK: 50, HP: 196 })
+      .setRune(RUNES.WIND),
+    new Character(CHARACTER_KEYS.VALERIA).setStats({
+      PWR: 94,
+      SKL: 74,
+      DEF: 90,
+      SPD: 68,
+      MGC: 65,
+      LUK: 75,
+      HP: 320,
+    }),
+    new Character(CHARACTER_KEYS.GREMIO)
+      .setStats({ PWR: 65, SKL: 73, DEF: 90, SPD: 53, MGC: 42, LUK: 72, HP: 228 })
+      .setRune(RUNES.WIND),
+  ]);
 
 /**
  * Runs the Dragon's AI tick by tick (the target scan retries with fresh rolls until someone
  * accepts) until it picks a move.
  * @param {number} seed
  */
-const selectMove = seed => {
+const selectMove = (seed) => {
   const dragon = new Enemy(ENEMY_KEYS.DRAGON);
   const party = makeParty();
   const rng = new RNG(seed);
@@ -55,7 +70,11 @@ const selectMove = seed => {
   do {
     choice = dragon.selectAction({ party, enemies: null, rng, turn_count: 1, tick: 0 });
   } while (choice.action === ACTION_TYPES.UNDETERMINED);
-  assert.strictEqual(choice.action, ACTION_TYPES.ABILITY, `seed 0x${seed.toString(16)}: not a move`);
+  assert.strictEqual(
+    choice.action,
+    ACTION_TYPES.ABILITY,
+    `seed 0x${seed.toString(16)}: not a move`,
+  );
   return { dragon, party, rng, move: choice.move, target: choice.target };
 };
 
@@ -66,7 +85,7 @@ const selectMove = seed => {
  */
 const applyMove = (move, { dragon, party, rng, target }) => {
   move.apply(dragon, { party, rng, target });
-  return party.combatants.map(c => c.pendingDamage);
+  return party.combatants.map((c) => c.pendingDamage);
 };
 
 const hex = (/** @type {number} */ seed) => `0x${seed.toString(16).padStart(8, '0')}`;
@@ -126,13 +145,17 @@ describe('Dragon move selection', () => {
     { seed: 0x56eaa301, move: 'FireBreath' },
     { seed: 0x06e0f458, move: 'FireBreath' },
   ];
-  const MOVES = { Lightning: ENEMY_MOVES.DRAGON_LIGHTNING, FireBreath: ENEMY_MOVES.DRAGON_FIRE_BREATH };
+  const MOVES = {
+    Lightning: ENEMY_MOVES.DRAGON_LIGHTNING,
+    FireBreath: ENEMY_MOVES.DRAGON_FIRE_BREATH,
+  };
 
   for (const { seed, move, slot } of cases) {
     it(`${hex(seed)}: ${move}${slot === undefined ? '' : ` on slot ${slot}`}`, () => {
       const selection = selectMove(seed);
       assert.strictEqual(selection.move, MOVES[move]);
-      if (slot !== undefined) assert.strictEqual(selection.target, selection.party.combatants[slot]);
+      if (slot !== undefined)
+        assert.strictEqual(selection.target, selection.party.combatants[slot]);
     });
   }
 });
@@ -141,17 +164,33 @@ describe('Dragon Lightning RNG', () => {
   // 16 live seeds (scripts/SettleLightningRNG.lua): the seed is the RNG state right after move
   // selection, and calls is every rand() the move makes, the final damage roll included.
   const cases = [
-    [0x9e68560c, 681], [0x2781e494, 716], [0xa078995f, 686], [0x8ff0f2ca, 711],
-    [0x0a2a285f, 651], [0x8af157af, 656], [0x843603c9, 701], [0x0c815ed7, 711],
-    [0x08087bfc, 706], [0x133b08b9, 666], [0x3f3b291f, 736], [0xa53cf772, 736],
-    [0x1ddcd542, 736], [0x19b260fd, 686], [0x8312ec9f, 756], [0x926f56d7, 711],
+    [0x9e68560c, 681],
+    [0x2781e494, 716],
+    [0xa078995f, 686],
+    [0x8ff0f2ca, 711],
+    [0x0a2a285f, 651],
+    [0x8af157af, 656],
+    [0x843603c9, 701],
+    [0x0c815ed7, 711],
+    [0x08087bfc, 706],
+    [0x133b08b9, 666],
+    [0x3f3b291f, 736],
+    [0xa53cf772, 736],
+    [0x1ddcd542, 736],
+    [0x19b260fd, 686],
+    [0x8312ec9f, 756],
+    [0x926f56d7, 711],
   ];
 
   for (const [seed, calls] of cases) {
     it(`${hex(seed)}: ${calls} rand() calls`, () => {
       const party = makeParty();
       const rng = new RNG(seed);
-      ENEMY_MOVES.DRAGON_LIGHTNING.apply(new Enemy(ENEMY_KEYS.DRAGON), { party, rng, target: party.combatants[1] });
+      ENEMY_MOVES.DRAGON_LIGHTNING.apply(new Enemy(ENEMY_KEYS.DRAGON), {
+        party,
+        rng,
+        target: party.combatants[1],
+      });
       assert.strictEqual(rng.getCount(), calls);
     });
   }
@@ -196,9 +235,14 @@ describe('Dragon move timing', () => {
   // the sim uses the middle: Fire Breath D = M+266, Lightning P = M+17 and D = P+251. Her turn
   // ends at B (D+21 / D+22), the gate is set to 30 at B+1, and the next turn roll is at B+31.
   /** @param {number} seed */
-  const runDragonTurn = seed => {
+  const runDragonTurn = (seed) => {
     const party = makeParty();
-    const battle = new Battle({ party, enemies: new EnemyParty([new Enemy(ENEMY_KEYS.DRAGON)]), rng: new RNG(seed), turns: [] });
+    const battle = new Battle({
+      party,
+      enemies: new EnemyParty([new Enemy(ENEMY_KEYS.DRAGON)]),
+      rng: new RNG(seed),
+      turns: [],
+    });
     battle.turn.pending = party.combatants.length + 1;
     battle.phase = PHASE_STATE.COPY_ACTOR; // T0 = tick 0
     while (/** @type {string} */ (battle.phase) !== PHASE_STATE.ADVANCE_TURN) battle.tick();
@@ -211,7 +255,7 @@ describe('Dragon move timing', () => {
     const { battle, doneTick, nextRoll } = runDragonTurn(0x6aa79987);
     const damage = battle.log.ofType(LOG_TYPES.DAMAGE);
     assert.strictEqual(damage.length, 6);
-    assert.ok(damage.every(d => d.tick === 303));
+    assert.ok(damage.every((d) => d.tick === 303));
     assert.strictEqual(battle.enemies.combatants[0].busyUntil, 324);
     assert.strictEqual(doneTick, 324 + 1); // DONE with gate 30 the tick after B
     assert.strictEqual(nextRoll, 324 + 31);

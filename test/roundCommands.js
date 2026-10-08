@@ -17,33 +17,45 @@ const RUN = { command: ROUND_COMMANDS.RUN };
 const FREE_WILL = { command: ROUND_COMMANDS.FREE_WILL };
 
 /** @param {CharacterKey[]} keys @param {number} [lvl] */
-const party = (keys, lvl = 1) => new PlayerParty(keys.map(key =>
-  new Character(key).setLVL(lvl).setStats({ PWR: 150, SKL: 150, DEF: 150, SPD: 150, MGC: 60, LUK: 60, HP: 500 }).rest()));
+const party = (keys, lvl = 1) =>
+  new PlayerParty(
+    keys.map((key) =>
+      new Character(key)
+        .setLVL(lvl)
+        .setStats({ PWR: 150, SKL: 150, DEF: 150, SPD: 150, MGC: 60, LUK: 60, HP: 500 })
+        .rest(),
+    ),
+  );
 
 /** @param {number} [count] */
-const furfurs = (count = 2) => new EnemyParty(Array.from({ length: count }, () => new Enemy(ENEMY_KEYS.FURFUR)));
+const furfurs = (count = 2) =>
+  new EnemyParty(Array.from({ length: count }, () => new Enemy(ENEMY_KEYS.FURFUR)));
 
 /**
  * Two LVL 1 members vs LVL 4 FurFurs: Run needs the roll.
  * @param {{ seed?: number, turns?: Round[], lvl?: number, escapable?: boolean }} [options]
  */
-const battle = ({ seed = 1, turns = [], lvl = 1, escapable = true } = {}) => new Battle({
-  party: party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO], lvl),
-  enemies: furfurs(),
-  rng: new RNG(seed),
-  turns,
-  escapable,
-});
+const battle = ({ seed = 1, turns = [], lvl = 1, escapable = true } = {}) =>
+  new Battle({
+    party: party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO], lvl),
+    enemies: furfurs(),
+    rng: new RNG(seed),
+    turns,
+    escapable,
+  });
 
 /** The first seed whose escape roll (the next RNG call) gives `escapes`. */
 const seedWhere = (escapes) => {
-  for (let seed = 1; ; seed++) if (RNG.isRun(new RNG(seed).next().getRNG2()) === escapes) return seed;
+  for (let seed = 1; ; seed++)
+    if (RNG.isRun(new RNG(seed).next().getRNG2()) === escapes) return seed;
 };
 
 describe('Round commands: Fight', () => {
   it('a Fight command plays the same as its bare Action[]', () => {
     const bare = battle({ turns: [[ATTACK, ATTACK]] });
-    const command = battle({ turns: [{ command: ROUND_COMMANDS.FIGHT, actions: [ATTACK, ATTACK] }] });
+    const command = battle({
+      turns: [{ command: ROUND_COMMANDS.FIGHT, actions: [ATTACK, ATTACK] }],
+    });
     bare.run();
     command.run();
     assert.deepStrictEqual(command.log.entries, bare.log.entries);
@@ -72,7 +84,12 @@ describe('Round commands: Run', () => {
     p.combatants[0].setLVL(10);
     p.combatants[1].setLVL(1); // average 5.5, not floored
     assert.strictEqual(p.averageLVL, 5.5);
-    const b = new Battle({ party: p, enemies: furfurs(), rng: new RNG(seedWhere(false)), turns: [RUN] });
+    const b = new Battle({
+      party: p,
+      enemies: furfurs(),
+      rng: new RNG(seedWhere(false)),
+      turns: [RUN],
+    });
     b.party.combatants[0].knockedOut = true;
     b.run();
     assert.strictEqual(b.status, BATTLE_STATUS.ESCAPED);
@@ -95,9 +112,18 @@ describe('Round commands: Run', () => {
     assert.strictEqual(b.status, BATTLE_STATUS.IN_PROGRESS);
     assert.strictEqual(b.turn_count, 1);
     const [command, roundStart] = b.log.entries;
-    assert.deepStrictEqual([command.type, command.detail, command.rng], [LOG_TYPES.ROUND_COMMAND, 'Run: failed', 1]);
+    assert.deepStrictEqual(
+      [command.type, command.detail, command.rng],
+      [LOG_TYPES.ROUND_COMMAND, 'Run: failed', 1],
+    );
     assert.strictEqual(roundStart.type, LOG_TYPES.ROUND_START);
-    assert.deepStrictEqual(b.log.ofType(LOG_TYPES.DEFEND).map(e => e.actor).sort(), b.party.combatants.map(c => c.label).sort());
+    assert.deepStrictEqual(
+      b.log
+        .ofType(LOG_TYPES.DEFEND)
+        .map((e) => e.actor)
+        .sort(),
+      b.party.combatants.map((c) => c.label).sort(),
+    );
   });
 
   it("in a battle that can't be escaped, everyone Defends with no roll", () => {
@@ -113,7 +139,7 @@ describe('Round commands: Run', () => {
 describe('Round commands: Free Will', () => {
   it('sets the Free Will gate to 10, and it stays set', () => {
     const b = battle();
-    b.enemies.combatants.forEach(enemy => enemy.HP = enemy.stats.HP = 100000); // survives two rounds
+    b.enemies.combatants.forEach((enemy) => (enemy.HP = enemy.stats.HP = 100000)); // survives two rounds
     b.playTurn(FREE_WILL);
     assert.strictEqual(b.freeWillGate, 10);
     b.playTurn([ATTACK, ATTACK]);
@@ -123,8 +149,14 @@ describe('Round commands: Free Will', () => {
   it('spreads attacks across the enemies in slot order from the second enemy, wrapping', () => {
     // The shared cursor starts at 1 and moves on one per Attack (live: Queen Ant, picks 1, 2, 0, 0, 1)
     const p = party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.CLEO]);
-    assert.deepStrictEqual(p.freeWillActions(furfurs(3)).map(a => a.target), [1, 2, 0]);
-    assert.deepStrictEqual(p.freeWillActions(furfurs(2)).map(a => a.target), [1, 0, 1]);
+    assert.deepStrictEqual(
+      p.freeWillActions(furfurs(3)).map((a) => a.target),
+      [1, 2, 0],
+    );
+    assert.deepStrictEqual(
+      p.freeWillActions(furfurs(2)).map((a) => a.target),
+      [1, 0, 1],
+    );
   });
 
   it('takes members in formation order, not party order', () => {
@@ -132,34 +164,67 @@ describe('Round commands: Free Will', () => {
     const p = party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.CLEO]);
     [p.combatants[0].position, p.combatants[1].position, p.combatants[2].position] = [3, 1, 2];
     // Gremio (slot 1) first takes 1, Cleo 2, McDohl wraps to 0
-    assert.deepStrictEqual(p.freeWillActions(furfurs(3)).map(a => a.target), [0, 1, 2]);
+    assert.deepStrictEqual(
+      p.freeWillActions(furfurs(3)).map((a) => a.target),
+      [0, 1, 2],
+    );
   });
 
   it('after a fallen member the back row moves up, and the cursor follows the new order', () => {
-    const p = party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.PAHN, CHARACTER_KEYS.CLEO, CHARACTER_KEYS.TED]);
+    const p = party([
+      CHARACTER_KEYS.MCDOHL,
+      CHARACTER_KEYS.GREMIO,
+      CHARACTER_KEYS.PAHN,
+      CHARACTER_KEYS.CLEO,
+      CHARACTER_KEYS.TED,
+    ]);
     p.combatants[0].die(0);
     p.combatants[1].die(0);
     p.backfill(0);
-    assert.deepStrictEqual(p.combatants.map(c => c.position), [4, 5, 3, 1, 2]);
+    assert.deepStrictEqual(
+      p.combatants.map((c) => c.position),
+      [4, 5, 3, 1, 2],
+    );
     // Cleo -> 1, Ted -> 2, then Pahn (Short) can't reach the back-row 4th enemy and wraps to 0. The
     // fallen come last and still take targets (live, Queen Ant round 3: 6, 7, 6, 7, 8 = 0, 1, 0, 1, 2)
     const enemies = furfurs(4);
     enemies.combatants[3].position = 4;
-    assert.deepStrictEqual(p.freeWillActions(enemies).map(a => a.target), [0, 1, 0, 1, 2]);
+    assert.deepStrictEqual(
+      p.freeWillActions(enemies).map((a) => a.target),
+      [0, 1, 0, 1, 2],
+    );
   });
 
   it('skips enemies out of the fight', () => {
     const enemies = furfurs(3);
     enemies.combatants[1].knockedOut = true;
     const p = party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.CLEO]);
-    assert.deepStrictEqual(p.freeWillActions(enemies).map(a => a.target), [2, 2, 0]); // the dead #2 is skipped from the cursor at 1; the cursor then moves on by one, not past the pick
+    assert.deepStrictEqual(
+      p.freeWillActions(enemies).map((a) => a.target),
+      [2, 2, 0],
+    ); // the dead #2 is skipped from the cursor at 1; the cursor then moves on by one, not past the pick
   });
 
   it('Short range in the back row Defends, without moving the cursor', () => {
     // Slots 1-3 front, 4 back: Flik (Short) is in the back row
-    const p = party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.CLEO, CHARACTER_KEYS.FLIK, CHARACTER_KEYS.EILEEN]);
+    const p = party([
+      CHARACTER_KEYS.MCDOHL,
+      CHARACTER_KEYS.GREMIO,
+      CHARACTER_KEYS.CLEO,
+      CHARACTER_KEYS.FLIK,
+      CHARACTER_KEYS.EILEEN,
+    ]);
     const actions = p.freeWillActions(furfurs(3));
-    assert.deepStrictEqual(actions.map(a => a.type), [ACTION_TYPES.ATTACK, ACTION_TYPES.ATTACK, ACTION_TYPES.ATTACK, ACTION_TYPES.DEFEND, ACTION_TYPES.ATTACK]);
+    assert.deepStrictEqual(
+      actions.map((a) => a.type),
+      [
+        ACTION_TYPES.ATTACK,
+        ACTION_TYPES.ATTACK,
+        ACTION_TYPES.ATTACK,
+        ACTION_TYPES.DEFEND,
+        ACTION_TYPES.ATTACK,
+      ],
+    );
     assert.strictEqual(actions[4].target, 1); // the cursor is at 4 (= 1 of 3): the Defend didn't move it
   });
 
@@ -169,14 +234,20 @@ describe('Round commands: Free Will', () => {
     const p = party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.CLEO]);
     // McDohl (Medium) can't reach the back-row FurFur and takes the other one; Cleo (Long) scans from
     // the cursor, now at 2 (= 0 of 2), and takes it
-    assert.deepStrictEqual(p.freeWillActions(enemies).map(a => a.target), [1, 0]);
+    assert.deepStrictEqual(
+      p.freeWillActions(enemies).map((a) => a.target),
+      [1, 0],
+    );
   });
 
   it('Unbalanced members Defend', () => {
     const p = party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO]);
     p.combatants[0].unbalance();
     const actions = p.freeWillActions(furfurs(2));
-    assert.deepStrictEqual(actions.map(a => a.type), [ACTION_TYPES.DEFEND, ACTION_TYPES.ATTACK]);
+    assert.deepStrictEqual(
+      actions.map((a) => a.type),
+      [ACTION_TYPES.DEFEND, ACTION_TYPES.ATTACK],
+    );
     assert.strictEqual(actions[1].target, 1); // the first Attack of the pass starts at the cursor's 1
   });
 
@@ -184,13 +255,18 @@ describe('Round commands: Free Will', () => {
     const b = battle({ lvl: 40 });
     b.enemies.combatants[0].knockedOut = true;
     b.playTurn(FREE_WILL);
-    assert.deepStrictEqual(b.party.combatants.map(c => c.action.target), [1, 1]);
+    assert.deepStrictEqual(
+      b.party.combatants.map((c) => c.action.target),
+      [1, 1],
+    );
   });
 });
 
 describe('Battle.clone with round commands', () => {
   it('copies Fight commands, so editing one plan leaves the other alone', () => {
-    const original = battle({ turns: [RUN, { command: ROUND_COMMANDS.FIGHT, actions: [ATTACK] }, [ATTACK]] });
+    const original = battle({
+      turns: [RUN, { command: ROUND_COMMANDS.FIGHT, actions: [ATTACK] }, [ATTACK]],
+    });
     const copy = original.clone();
     /** @type {any} */ (copy.turns[1]).actions[0].target = 1;
     assert.strictEqual(/** @type {any} */ (original.turns[1]).actions[0].target, 0);

@@ -14,13 +14,19 @@ describe('calculateLevelupGrowth', () => {
 
   it('masks non-HP rolls to 0xff before adding the growth value', () => {
     // 0x1ff would overflow into the next bucket if it weren't masked to 0xff.
-    assert.strictEqual(calculateLevelupGrowth(0x1ff, 242, STATS.PWR), calculateLevelupGrowth(0xff, 242, STATS.PWR));
+    assert.strictEqual(
+      calculateLevelupGrowth(0x1ff, 242, STATS.PWR),
+      calculateLevelupGrowth(0xff, 242, STATS.PWR),
+    );
     assert.strictEqual(calculateLevelupGrowth(0xff, 242, STATS.PWR), 1);
   });
 
   it('masks HP rolls to 0x1ff instead of 0xff', () => {
     assert.strictEqual(calculateLevelupGrowth(0x1ff, 835, STATS.HP), 5);
-    assert.strictEqual(calculateLevelupGrowth(0x3ff, 835, STATS.HP), calculateLevelupGrowth(0x1ff, 835, STATS.HP));
+    assert.strictEqual(
+      calculateLevelupGrowth(0x3ff, 835, STATS.HP),
+      calculateLevelupGrowth(0x1ff, 835, STATS.HP),
+    );
   });
 });
 

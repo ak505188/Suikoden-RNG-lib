@@ -6,7 +6,8 @@ import RNG from '../lib/rng.js';
 /** The first RNG count after `start` whose value starts a battle in `area` */
 const nextBattleAt = (/** @type {any} */ area, /** @type {number} */ start) => {
   const probe = new RNG(0x43).next(start);
-  do probe.next(); while (!area.isBattle(probe));
+  do probe.next();
+  while (!area.isBattle(probe));
   return probe.getCount();
 };
 
@@ -16,13 +17,17 @@ describe('Area.battleFreeSteps', () => {
       const area = Areas[name];
       for (let start = 7000; start < 7400; start += 37) {
         const rng = new RNG(0x43).next(start);
-        assert.strictEqual(area.battleFreeSteps(rng, 2000), nextBattleAt(area, start) - start - 1, `${name} from ${start}`);
+        assert.strictEqual(
+          area.battleFreeSteps(rng, 2000),
+          nextBattleAt(area, start) - start - 1,
+          `${name} from ${start}`,
+        );
         assert.strictEqual(rng.getCount(), start); // not moved
       }
     }
   });
 
-  it('ignores a battle on the current value: ending on it doesn\'t start it', () => {
+  it("ignores a battle on the current value: ending on it doesn't start it", () => {
     const area = Areas['Pannu Yakuta'];
     const battleAt = nextBattleAt(area, 7750);
     const onIt = /** @type {number} */ (area.battleFreeSteps(new RNG(0x43).next(battleAt), 2000));
@@ -36,7 +41,7 @@ describe('Area.battleFreeSteps', () => {
     const free = /** @type {number} */ (area.battleFreeSteps(rng, 2000));
     assert.strictEqual(area.battleFreeSteps(rng, free), free);
     assert.strictEqual(area.battleFreeSteps(rng, free - 1), null);
-    const town = Object.values(Areas).find(a => a.areaType === 'Town');
+    const town = Object.values(Areas).find((a) => a.areaType === 'Town');
     assert.strictEqual(town.battleFreeSteps(rng, 2000), null);
   });
 });

@@ -20,16 +20,27 @@ import AinGideParty from './data/ain_gide_proper_full_hp_party.json' with { type
 /** @typedef {import('../lib/Game/Battle/Actions.js').Round} Round */
 /** @typedef {import('../lib/Game/Battle/Character.js').CharacterJSON[]} CharacterJSON */
 
-const KEYS = [CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.VIKTOR, CHARACTER_KEYS.KUROMIMI,
-  CHARACTER_KEYS.KIRKIS, CHARACTER_KEYS.VALERIA, CHARACTER_KEYS.GREMIO];
+const KEYS = [
+  CHARACTER_KEYS.MCDOHL,
+  CHARACTER_KEYS.VIKTOR,
+  CHARACTER_KEYS.KUROMIMI,
+  CHARACTER_KEYS.KIRKIS,
+  CHARACTER_KEYS.VALERIA,
+  CHARACTER_KEYS.GREMIO,
+];
 
 /** AinGide.State's party: MGC read live, `runes` by slot (undefined: none) */
 const MGC = [154, 79, 132, 201, 138, 190];
 const makeParty = (/** @type {(typeof RUNES[keyof typeof RUNES] | undefined)[]} */ runes = []) =>
-  new PlayerParty(KEYS.map((key, i) => {
-    const c = new Character(key).setLVL(40).setStats({ PWR: 90, SKL: 80, DEF: 80, SPD: 60 - i, MGC: MGC[i], LUK: 60, HP: 9000 }).rest();
-    return runes[i] ? c.setRune(runes[i]) : c;
-  }));
+  new PlayerParty(
+    KEYS.map((key, i) => {
+      const c = new Character(key)
+        .setLVL(40)
+        .setStats({ PWR: 90, SKL: 80, DEF: 80, SPD: 60 - i, MGC: MGC[i], LUK: 60, HP: 9000 })
+        .rest();
+      return runes[i] ? c.setRune(runes[i]) : c;
+    }),
+  );
 
 /** Runs his AI tick by tick until it commits. */
 const select = (/** @type {number} */ seed, /** @type {PlayerParty} */ party) => {
@@ -37,7 +48,13 @@ const select = (/** @type {number} */ seed, /** @type {PlayerParty} */ party) =>
   const rng = new RNG(seed);
   let choice;
   do {
-    choice = ENEMY_AI[ENEMY_KEYS.AIN_GIDE](gide, { party, enemies: new EnemyParty([gide]), rng, tick: 0, turn_count: 1 });
+    choice = ENEMY_AI[ENEMY_KEYS.AIN_GIDE](gide, {
+      party,
+      enemies: new EnemyParty([gide]),
+      rng,
+      tick: 0,
+      turn_count: 1,
+    });
   } while (choice.action === ACTION_TYPES.UNDETERMINED);
   return { gide, rng, choice: /** @type {any} */ (choice) };
 };
@@ -93,13 +110,17 @@ describe('Ain Gide Special damage', () => {
     const party = makeParty(runes);
     const gide = new Enemy(ENEMY_KEYS.AIN_GIDE);
     const rng = new RNG(0x0627a76d);
-    rng.next(); rng.next();
+    rng.next();
+    rng.next();
     ENEMY_MOVES.AIN_GIDE_SPECIAL.apply(gide, { party, rng });
-    return party.combatants.map(c => c.pendingDamage);
+    return party.combatants.map((c) => c.pendingDamage);
   };
 
   it('halves only slot 1 when the rune is unlisted (the $s1 bug)', () => {
-    assert.deepStrictEqual(damages([RUNES.BOAR, RUNES.BOAR, RUNES.BOAR, RUNES.BOAR, RUNES.BOAR, RUNES.BOAR]), [137, 332, 259, 192, 291, 203]);
+    assert.deepStrictEqual(
+      damages([RUNES.BOAR, RUNES.BOAR, RUNES.BOAR, RUNES.BOAR, RUNES.BOAR, RUNES.BOAR]),
+      [137, 332, 259, 192, 291, 203],
+    );
     assert.deepStrictEqual(damages([]), [137, 332, 259, 192, 291, 203]);
   });
   it('halves everyone for Fire runes', () => {
@@ -107,15 +128,24 @@ describe('Ain Gide Special damage', () => {
   });
   it('a listed rune in slot 1 masks the bug', () => {
     assert.strictEqual(damages(Array(6).fill(RUNES.WATER))[0], 275);
-    assert.strictEqual(damages([RUNES.WATER, RUNES.BOAR, RUNES.BOAR, RUNES.BOAR, RUNES.BOAR, RUNES.BOAR])[0], 275);
-    assert.strictEqual(damages([RUNES.BOAR, RUNES.WATER, RUNES.WATER, RUNES.WATER, RUNES.WATER, RUNES.WATER])[0], 137);
+    assert.strictEqual(
+      damages([RUNES.WATER, RUNES.BOAR, RUNES.BOAR, RUNES.BOAR, RUNES.BOAR, RUNES.BOAR])[0],
+      275,
+    );
+    assert.strictEqual(
+      damages([RUNES.BOAR, RUNES.WATER, RUNES.WATER, RUNES.WATER, RUNES.WATER, RUNES.WATER])[0],
+      137,
+    );
   });
 });
 
 describe('Ain Gide in a battle', () => {
   const begin = (/** @type {number} */ seed) => {
     const battle = new Battle({
-      party: front3(), enemies: new EnemyParty([new Enemy(ENEMY_KEYS.AIN_GIDE)]), rng: new RNG(seed), escapable: false,
+      party: front3(),
+      enemies: new EnemyParty([new Enemy(ENEMY_KEYS.AIN_GIDE)]),
+      rng: new RNG(seed),
+      escapable: false,
     });
     battle.beginRound(Array(6).fill({ type: ACTION_TYPES.DEFEND }));
     return battle;
@@ -151,7 +181,7 @@ describe('Ain Gide in a battle', () => {
   // rolls at t0 + 219 (S + 190, S = T0 + 30), and the next turn-order roll at t0 + 264 (S + 235)
   it('rolls the Special 219 ticks after its AI tick and the next turn-order roll 45 later', () => {
     const list = rolls(begin(0x12df7e47));
-    const ai = list.findIndex(r => r.rolls === 2);
+    const ai = list.findIndex((r) => r.rolls === 2);
     const t0 = list[ai].tick;
     assert.deepStrictEqual(list[ai + 1], { tick: t0 + 219, rolls: 54 });
     assert.deepStrictEqual(list[ai + 2], { tick: t0 + 264, rolls: 6 });
@@ -159,13 +189,18 @@ describe('Ain Gide in a battle', () => {
 
   it('delays the whole Special while a party member is busy', () => {
     const base = rolls(begin(0x12df7e47));
-    const t0 = base.find(r => r.rolls === 2).tick;
+    const t0 = base.find((r) => r.rolls === 2).tick;
     const battle = begin(0x12df7e47);
     const busyUntil = t0 + 10;
-    const list = rolls(battle, b => { if (b.turn.tick === t0) b.party.combatants[4].busyUntil = busyUntil; });
+    const list = rolls(battle, (b) => {
+      if (b.turn.tick === t0) b.party.combatants[4].busyUntil = busyUntil;
+    });
     // t0 is the tick after his AI tick, the Special's normal start: it starts the tick after the busy clears
     const delay = busyUntil + 1 - t0;
-    assert.deepStrictEqual(list.find(r => r.rolls === 54), { tick: t0 + 219 + delay, rolls: 54 });
+    assert.deepStrictEqual(
+      list.find((r) => r.rolls === 54),
+      { tick: t0 + 219 + delay, rolls: 54 },
+    );
   });
 });
 
@@ -227,7 +262,7 @@ describe('3 round Queen Ant Free Wills match in-game values', () => {
         { type: ACTION_TYPES.RUNE, slot: 3 },
         { type: ACTION_TYPES.RUNE, slot: 2 },
         { type: ACTION_TYPES.RUNE, slot: 3 },
-      ]
+      ],
     ];
 
     const snapshots = ROUNDS.map((_round, index) => {
@@ -281,7 +316,7 @@ describe('3 round Queen Ant Free Wills match in-game values', () => {
         { type: ACTION_TYPES.RUNE, slot: 3 },
         { type: ACTION_TYPES.RUNE, slot: 2 },
         { type: ACTION_TYPES.RUNE, slot: 3 },
-      ]
+      ],
     ];
 
     const snapshots = ROUNDS.map((_round, index) => {

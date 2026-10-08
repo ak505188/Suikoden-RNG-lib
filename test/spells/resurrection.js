@@ -27,11 +27,11 @@ const cases = [
   { rng: 0xfffffffe, calls: 24457 },
 ];
 
-describe("Charm Arrow Rand tests", () => {
+describe('Charm Arrow Rand tests', () => {
   for (const { rng, calls } of cases) {
     const r = new RNG(rng);
     it(`Should be ${calls} for ${rng.toString(16)}`, () => {
       assert.strictEqual(charmArrowRand(r).calls, calls);
     });
-  };
+  }
 });

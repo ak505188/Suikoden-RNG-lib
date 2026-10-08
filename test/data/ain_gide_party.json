@@ -1,1 +1,111 @@
-[{"key":"MCDOHL","id":8,"HP":485,"EXP":873,"inventory":[{"id":81},{"quantity":255,"id":73},{"id":17},{"id":144},{"quantity":2,"id":72}],"rune":{"id":4},"LVL":43,"weapon":{"runePiece":{"element":"NONE","amount":0},"lvl":8},"stats":{"SKL":145,"LUK":125,"PWR":122,"DEF":115,"HP":485,"SPD":139,"MGC":130},"MP":[7,5,3,0],"status":{"balloon":0,"poison":false}},{"key":"HIX","id":63,"HP":451,"EXP":400,"inventory":[{"slot":"HEAD","id":4},{"slot":"BODY","id":15},{"slot":"SHIELD","id":67},{"slot":"ACCESSORY_1","id":28},{"quantity":6,"id":25}],"rune":{"id":0},"LVL":43,"weapon":{"runePiece":{"element":"NONE","amount":0},"lvl":10},"stats":{"SKL":111,"LUK":149,"PWR":118,"DEF":101,"HP":451,"SPD":115,"MGC":77},"MP":[5,2,1,0],"status":{"balloon":0,"poison":false}},{"key":"FLIK","id":17,"HP":500,"EXP":0,"inventory":[{"slot":"HEAD","id":1},{"slot":"BODY","id":12},{"slot":"SHIELD","id":67},{"slot":"ACCESSORY_1","id":38},{"id":66},{"id":65},{"id":66},{"appraised":false,"id":114}],"rune":{"id":24},"LVL":44,"weapon":{"runePiece":{"element":"NONE","amount":0},"lvl":9},"stats":{"SKL":128,"LUK":102,"PWR":133,"DEF":103,"HP":500,"SPD":135,"MGC":118},"MP":[6,4,3,0],"status":{"balloon":0,"poison":false}},{"key":"LUC","id":26,"HP":235,"EXP":400,"inventory":[{"slot":"BODY","id":13,"locked":true},{"slot":"ACCESSORY_1","id":52,"locked":true},{"id":62}],"rune":{"id":7},"LVL":43,"weapon":{"runePiece":{"element":"NONE","amount":0},"lvl":3},"stats":{"SKL":106,"LUK":52,"PWR":36,"DEF":45,"HP":235,"SPD":115,"MGC":171},"MP":[9,7,6,4],"status":{"balloon":0,"poison":false}},{"key":"CLEO","id":1,"HP":456,"EXP":534,"inventory":[{"slot":"BODY","id":10},{"slot":"ACCESSORY_1","id":42}],"rune":{"id":5},"LVL":44,"weapon":{"runePiece":{"element":"NONE","amount":0},"lvl":1},"stats":{"SKL":130,"LUK":80,"PWR":111,"DEF":119,"HP":456,"SPD":123,"MGC":141},"MP":[8,5,4,1],"status":{"balloon":0,"poison":false}},{"key":"VIKTOR","id":35,"HP":535,"EXP":641,"inventory":[{"slot":"BODY","id":11},{"slot":"ACCESSORY_1","id":28}],"rune":{"id":21},"LVL":44,"weapon":{"runePiece":{"element":"NONE","amount":0},"lvl":3},"stats":{"SKL":68,"LUK":98,"PWR":145,"DEF":141,"HP":535,"SPD":106,"MGC":74},"MP":[5,2,0,0],"status":{"balloon":0,"poison":false}}]
+[
+  {
+    "key": "MCDOHL",
+    "id": 8,
+    "HP": 485,
+    "EXP": 873,
+    "inventory": [
+      { "id": 81 },
+      { "quantity": 255, "id": 73 },
+      { "id": 17 },
+      { "id": 144 },
+      { "quantity": 2, "id": 72 }
+    ],
+    "rune": { "id": 4 },
+    "LVL": 43,
+    "weapon": { "runePiece": { "element": "NONE", "amount": 0 }, "lvl": 8 },
+    "stats": { "SKL": 145, "LUK": 125, "PWR": 122, "DEF": 115, "HP": 485, "SPD": 139, "MGC": 130 },
+    "MP": [7, 5, 3, 0],
+    "status": { "balloon": 0, "poison": false }
+  },
+  {
+    "key": "HIX",
+    "id": 63,
+    "HP": 451,
+    "EXP": 400,
+    "inventory": [
+      { "slot": "HEAD", "id": 4 },
+      { "slot": "BODY", "id": 15 },
+      { "slot": "SHIELD", "id": 67 },
+      { "slot": "ACCESSORY_1", "id": 28 },
+      { "quantity": 6, "id": 25 }
+    ],
+    "rune": { "id": 0 },
+    "LVL": 43,
+    "weapon": { "runePiece": { "element": "NONE", "amount": 0 }, "lvl": 10 },
+    "stats": { "SKL": 111, "LUK": 149, "PWR": 118, "DEF": 101, "HP": 451, "SPD": 115, "MGC": 77 },
+    "MP": [5, 2, 1, 0],
+    "status": { "balloon": 0, "poison": false }
+  },
+  {
+    "key": "FLIK",
+    "id": 17,
+    "HP": 500,
+    "EXP": 0,
+    "inventory": [
+      { "slot": "HEAD", "id": 1 },
+      { "slot": "BODY", "id": 12 },
+      { "slot": "SHIELD", "id": 67 },
+      { "slot": "ACCESSORY_1", "id": 38 },
+      { "id": 66 },
+      { "id": 65 },
+      { "id": 66 },
+      { "appraised": false, "id": 114 }
+    ],
+    "rune": { "id": 24 },
+    "LVL": 44,
+    "weapon": { "runePiece": { "element": "NONE", "amount": 0 }, "lvl": 9 },
+    "stats": { "SKL": 128, "LUK": 102, "PWR": 133, "DEF": 103, "HP": 500, "SPD": 135, "MGC": 118 },
+    "MP": [6, 4, 3, 0],
+    "status": { "balloon": 0, "poison": false }
+  },
+  {
+    "key": "LUC",
+    "id": 26,
+    "HP": 235,
+    "EXP": 400,
+    "inventory": [
+      { "slot": "BODY", "id": 13, "locked": true },
+      { "slot": "ACCESSORY_1", "id": 52, "locked": true },
+      { "id": 62 }
+    ],
+    "rune": { "id": 7 },
+    "LVL": 43,
+    "weapon": { "runePiece": { "element": "NONE", "amount": 0 }, "lvl": 3 },
+    "stats": { "SKL": 106, "LUK": 52, "PWR": 36, "DEF": 45, "HP": 235, "SPD": 115, "MGC": 171 },
+    "MP": [9, 7, 6, 4],
+    "status": { "balloon": 0, "poison": false }
+  },
+  {
+    "key": "CLEO",
+    "id": 1,
+    "HP": 456,
+    "EXP": 534,
+    "inventory": [
+      { "slot": "BODY", "id": 10 },
+      { "slot": "ACCESSORY_1", "id": 42 }
+    ],
+    "rune": { "id": 5 },
+    "LVL": 44,
+    "weapon": { "runePiece": { "element": "NONE", "amount": 0 }, "lvl": 1 },
+    "stats": { "SKL": 130, "LUK": 80, "PWR": 111, "DEF": 119, "HP": 456, "SPD": 123, "MGC": 141 },
+    "MP": [8, 5, 4, 1],
+    "status": { "balloon": 0, "poison": false }
+  },
+  {
+    "key": "VIKTOR",
+    "id": 35,
+    "HP": 535,
+    "EXP": 641,
+    "inventory": [
+      { "slot": "BODY", "id": 11 },
+      { "slot": "ACCESSORY_1", "id": 28 }
+    ],
+    "rune": { "id": 21 },
+    "LVL": 44,
+    "weapon": { "runePiece": { "element": "NONE", "amount": 0 }, "lvl": 3 },
+    "stats": { "SKL": 68, "LUK": 98, "PWR": 145, "DEF": 141, "HP": 535, "SPD": 106, "MGC": 74 },
+    "MP": [5, 2, 0, 0],
+    "status": { "balloon": 0, "poison": false }
+  }
+]

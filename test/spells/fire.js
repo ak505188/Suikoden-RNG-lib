@@ -1,7 +1,12 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import RNG from '../../lib/rng.js';
-import { flamingArrowRand, dancingFlamesRand, explosionRand, finalFlameRand } from '../../lib/Game/Magic/SpellRNG/Fire.js';
+import {
+  flamingArrowRand,
+  dancingFlamesRand,
+  explosionRand,
+  finalFlameRand,
+} from '../../lib/Game/Magic/SpellRNG/Fire.js';
 
 const flamingArrowCases = [
   { rng: 0x1b65fc6a, calls: 512 },
@@ -27,17 +32,17 @@ const flamingArrowCases = [
   { rng: 0xfffffffe, calls: 472 },
 ];
 
-describe("Flaming Arrow Rand tests", () => {
+describe('Flaming Arrow Rand tests', () => {
   for (const { rng, calls } of flamingArrowCases) {
     const r = new RNG(rng);
     it(`Should be ${calls} for ${rng.toString(16)}`, () => {
       assert.strictEqual(flamingArrowRand(r).calls, calls);
     });
-  };
+  }
 });
 
-describe("Dancing Flames Rand tests", () => {
-  it("Should always be 150", () => {
+describe('Dancing Flames Rand tests', () => {
+  it('Should always be 150', () => {
     const r = new RNG(0x11111111);
     assert.strictEqual(dancingFlamesRand(r).calls, 150);
   });
@@ -67,13 +72,13 @@ const explosionCases = [
   { rng: 0xfffffffe, calls: 1252 },
 ];
 
-describe("Explosion Rand tests", () => {
+describe('Explosion Rand tests', () => {
   for (const { rng, calls } of explosionCases) {
     const r = new RNG(rng);
     it(`Should be ${calls} for ${rng.toString(16)}`, () => {
       assert.strictEqual(explosionRand(r).calls, calls);
     });
-  };
+  }
 });
 
 // Cleo (Rage Rune) casting Final Flame on Zombie Dragon, seeds read the frame before the VFX setup ran
@@ -101,11 +106,11 @@ const finalFlameCases = [
   { rng: 0x14c6668b, calls: 530 },
 ];
 
-describe("Final Flame Rand tests", () => {
+describe('Final Flame Rand tests', () => {
   for (const { rng, calls } of finalFlameCases) {
     const r = new RNG(rng);
     it(`Should be ${calls} for ${rng.toString(16)}`, () => {
       assert.strictEqual(finalFlameRand(r).calls, calls);
     });
-  };
+  }
 });

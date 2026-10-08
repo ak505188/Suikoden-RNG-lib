@@ -1,8 +1,8 @@
-import { getGrowthValue, LevelupStatOrder  } from './characters.js';
+import { getGrowthValue, LevelupStatOrder } from './characters.js';
 
 export function characterLevelUps(name, startingLevel, levelsGained, rng) {
   let level = startingLevel;
-  const statGrowths = { 'PWR': 0, 'SKL': 0, 'DEF': 0, 'SPD': 0, 'MGC': 0, 'LUK': 0, 'HP': 0 };
+  const statGrowths = { PWR: 0, SKL: 0, DEF: 0, SPD: 0, MGC: 0, LUK: 0, HP: 0 };
   while (level++ < startingLevel + levelsGained) {
     const levelGrowths = characterLevelUp(name, level, rng);
     for (const [stat, growth] of Object.entries(levelGrowths)) {
@@ -14,7 +14,7 @@ export function characterLevelUps(name, startingLevel, levelsGained, rng) {
 
 export function characterLevelUp(name, level, rng) {
   const levelupGrowths = {};
-  LevelupStatOrder.forEach(stat => {
+  LevelupStatOrder.forEach((stat) => {
     rng.next();
     const growthValue = getGrowthValue(name, stat, level);
     levelupGrowths[stat] = calculateLevelupGrowth(rng.getRNG2(), growthValue, stat === 'HP');
@@ -27,10 +27,16 @@ export function calculateLevelupGrowth(rngNormalized, growthValue, isHP = false)
   return Math.floor((growthValue + maxRNG) / 256);
 }
 
-export function generateCharacterMultipleLevelup(rng, name, startingLevel, iterations, stringify = false) {
+export function generateCharacterMultipleLevelup(
+  rng,
+  name,
+  startingLevel,
+  iterations,
+  stringify = false,
+) {
   const levelups = [];
   for (let i = 1; i <= iterations; i++) {
-    const levelup = characterLevelUp(name, startingLevel + i, rng)
+    const levelup = characterLevelUp(name, startingLevel + i, rng);
     levelups.push(stringify ? Object.values(levelup).toString() : levelup);
   }
   return levelups;

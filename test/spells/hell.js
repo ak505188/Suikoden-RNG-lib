@@ -23,7 +23,7 @@ import AinGideParty from '../data/ain_gide_party.json' with { type: 'json' };
  * The hero (McDohl) casts Hell, so give them the Soul Eater Rune
  * @param {unknown} json
  */
-const makeParty = json => {
+const makeParty = (json) => {
   /** @type {import('../../lib/Game/Battle/Character.js').CharacterJSON[]} */
   const members = structuredClone(/** @type {any} */ (json));
   members[0].rune = { id: RUNES.SOUL_EATER.id };
@@ -38,27 +38,27 @@ describe('Hell kills a whole formation', () => {
   const battle = new Battle({ party, enemies, rng });
   battle.playTurn([{ type: ACTION_TYPES.RUNE, slot: 2 }]);
   it('casts at tick 31', () => {
-    const cast = battle.log.entries.find(e => e.type === LOG_TYPES.CAST);
+    const cast = battle.log.entries.find((e) => e.type === LOG_TYPES.CAST);
     assert.strictEqual(cast?.tick, 31);
   });
 
   it('kills every enemy', () => {
-    assert.ok(enemies.combatants.every(e => e.knockedOut));
+    assert.ok(enemies.combatants.every((e) => e.knockedOut));
   });
 
   it('RNG ends on 10986', () => {
-    assert.strictEqual(rng.count, 10986)
+    assert.strictEqual(rng.count, 10986);
   });
 });
 
-describe('Hell doesn\'t kill Ain Gide', () => {
+describe("Hell doesn't kill Ain Gide", () => {
   const party = makeParty(AinGideParty);
   const enemies = EnemyParty.fromFormation(AREAS.OTHER.scripted[3]);
   const battle = new Battle({ party, enemies, rng: new RNG(0x323ab8b1).next(9069) });
   battle.playTurn([{ type: ACTION_TYPES.RUNE, slot: 2 }]);
 
   it('casts at tick 31', () => {
-    const cast = battle.log.entries.find(e => e.type === LOG_TYPES.CAST);
+    const cast = battle.log.entries.find((e) => e.type === LOG_TYPES.CAST);
     assert.strictEqual(cast?.tick, 31);
   });
 
@@ -72,7 +72,11 @@ describe('Hell doesn\'t kill Ain Gide', () => {
 // Hell on a lone Larvae (6 allies vs 1 enemy)
 describe('Hell kills one Larvae', () => {
   const enemies = new EnemyParty([new Enemy(ENEMY_KEYS.LARVAE)]);
-  const battle = new Battle({ party: makeParty(NeclordParty), enemies, rng: new RNG(0xdc0e0008).next(35) });
+  const battle = new Battle({
+    party: makeParty(NeclordParty),
+    enemies,
+    rng: new RNG(0xdc0e0008).next(35),
+  });
   battle.playTurn([{ type: ACTION_TYPES.RUNE, slot: 2, target: 0 }]);
 
   it('kills it', () => {

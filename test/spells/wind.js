@@ -4,8 +4,8 @@ import RNG from '../../lib/rng.js';
 import { shiningWindRand } from '../../lib/Game/Magic/SpellRNG/Wind.js';
 import { stormFangRand } from '../../lib/Game/Magic/SpellRNG/Unites.js';
 
-describe("Storm Fang Rand tests", () => {
-  it("Should always be 38", () => {
+describe('Storm Fang Rand tests', () => {
+  it('Should always be 38', () => {
     const r = new RNG(0x11111111);
     assert.strictEqual(stormFangRand(r).calls, 38);
   });
@@ -35,11 +35,11 @@ const shiningWindCases = [
   { rng: 0xfffffffe, calls: 1314 },
 ];
 
-describe("Shining Wind Rand tests", () => {
+describe('Shining Wind Rand tests', () => {
   for (const { rng, calls } of shiningWindCases) {
     const r = new RNG(rng);
     it(`Should be ${calls} for ${rng.toString(16)}`, () => {
       assert.strictEqual(shiningWindRand(r).calls, calls);
     });
-  };
+  }
 });

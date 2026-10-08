@@ -1,99 +1,99 @@
 export const Characters = {
-  'McDohl': {
+  McDohl: {
     PWR: 6,
     SKL: 7,
     DEF: 5,
     SPD: 7,
     MGC: 6,
-    LUK: 6
+    LUK: 6,
   },
-  'Alen': {
+  Alen: {
     PWR: 6,
     SKL: 3,
     DEF: 5,
     SPD: 4,
     MGC: 5,
-    LUK: 4
+    LUK: 4,
   },
-  'Anji': {
+  Anji: {
     PWR: 6,
     SKL: 5,
     DEF: 3,
     SPD: 5,
     MGC: 2,
-    LUK: 2
+    LUK: 2,
   },
-  'Antonio': {
+  Antonio: {
     PWR: 3,
     SKL: 3,
     DEF: 3,
     SPD: 4,
     MGC: 1,
-    LUK: 3
+    LUK: 3,
   },
-  'Blackman': {
+  Blackman: {
     PWR: 5,
     SKL: 3,
     DEF: 6,
     SPD: 3,
     MGC: 1,
-    LUK: 3
+    LUK: 3,
   },
-  'Camille': {
+  Camille: {
     PWR: 5,
     SKL: 8,
     DEF: 4,
     SPD: 5,
     MGC: 5,
-    LUK: 3
+    LUK: 3,
   },
-  'Cleo': {
+  Cleo: {
     PWR: 5,
     SKL: 6,
     DEF: 5,
     SPD: 6,
     MGC: 6,
-    LUK: 2
+    LUK: 2,
   },
-  'Clive': {
+  Clive: {
     PWR: 6,
     SKL: 8,
     DEF: 3,
     SPD: 6,
     MGC: 2,
-    LUK: 1
+    LUK: 1,
   },
-  'Crowley': {
+  Crowley: {
     PWR: 2,
     SKL: 3,
     DEF: 1,
     SPD: 5,
     MGC: 8,
-    LUK: 3
+    LUK: 3,
   },
-  'Eikei': {
+  Eikei: {
     PWR: 5,
     SKL: 4,
     DEF: 5,
     SPD: 2,
     MGC: 0,
-    LUK: 3
+    LUK: 3,
   },
-  'Eileen': {
+  Eileen: {
     PWR: 2,
     SKL: 4,
     DEF: 2,
     SPD: 6,
     MGC: 7,
-    LUK: 5
+    LUK: 5,
   },
-  'Flik': {
+  Flik: {
     PWR: 6,
     SKL: 6,
     DEF: 4,
     SPD: 6,
     MGC: 5,
-    LUK: 4
+    LUK: 4,
   },
   'Fu Su Lu': {
     PWR: 8,
@@ -101,463 +101,463 @@ export const Characters = {
     DEF: 6,
     SPD: 1,
     MGC: 0,
-    LUK: 1
+    LUK: 1,
   },
-  'Fukien': {
+  Fukien: {
     PWR: 2,
     SKL: 3,
     DEF: 4,
     SPD: 4,
     MGC: 6,
-    LUK: 5
+    LUK: 5,
   },
-  'Fuma': {
+  Fuma: {
     PWR: 5,
     SKL: 5,
     DEF: 5,
     SPD: 6,
     MGC: 1,
-    LUK: 3
+    LUK: 3,
   },
-  'Futch': {
+  Futch: {
     PWR: 5,
     SKL: 4,
     DEF: 5,
     SPD: 6,
     MGC: 2,
-    LUK: 6
+    LUK: 6,
   },
-  'Gen': {
+  Gen: {
     PWR: 6,
     SKL: 5,
     DEF: 4,
     SPD: 4,
     MGC: 2,
-    LUK: 4
+    LUK: 4,
   },
-  'Gon': {
+  Gon: {
     PWR: 4,
     SKL: 4,
     DEF: 5,
     SPD: 3,
     MGC: 2,
-    LUK: 8
+    LUK: 8,
   },
-  'Gremio': {
+  Gremio: {
     PWR: 13,
     SKL: 5,
     DEF: 6,
     SPD: 3,
     MGC: 2,
-    LUK: 5
+    LUK: 5,
   },
-  'Grenseal': {
+  Grenseal: {
     PWR: 5,
     SKL: 4,
     DEF: 5,
     SPD: 5,
     MGC: 6,
-    LUK: 3
+    LUK: 3,
   },
-  'Griffith': {
+  Griffith: {
     PWR: 5,
     SKL: 3,
     DEF: 4,
     SPD: 3,
     MGC: 2,
-    LUK: 3
+    LUK: 3,
   },
-  'Hellion': {
+  Hellion: {
     PWR: 1,
     SKL: 1,
     DEF: 3,
     SPD: 3,
     MGC: 7,
-    LUK: 4
+    LUK: 4,
   },
-  'Hix': {
+  Hix: {
     PWR: 5,
     SKL: 5,
     DEF: 4,
     SPD: 5,
     MGC: 3,
-    LUK: 7
+    LUK: 7,
   },
-  'Humphrey': {
+  Humphrey: {
     PWR: 6,
     SKL: 3,
     DEF: 7,
     SPD: 2,
     MGC: 1,
-    LUK: 3
+    LUK: 3,
   },
-  'Juppo': {
+  Juppo: {
     PWR: 3,
     SKL: 7,
     DEF: 4,
     SPD: 4,
     MGC: 4,
-    LUK: 6
+    LUK: 6,
   },
-  'Kage': {
+  Kage: {
     PWR: 4,
     SKL: 6,
     DEF: 5,
     SPD: 7,
     MGC: 3,
-    LUK: 3
+    LUK: 3,
   },
-  'Kai': {
+  Kai: {
     PWR: 6,
     SKL: 3,
     DEF: 4,
     SPD: 2,
     MGC: 1,
-    LUK: 3
+    LUK: 3,
   },
-  'Kamandol': {
+  Kamandol: {
     PWR: 4,
     SKL: 7,
     DEF: 2,
     SPD: 3,
     MGC: 3,
-    LUK: 2
+    LUK: 2,
   },
-  'Kanak': {
+  Kanak: {
     PWR: 5,
     SKL: 5,
     DEF: 4,
     SPD: 6,
     MGC: 0,
-    LUK: 2
+    LUK: 2,
   },
-  'Kasim': {
+  Kasim: {
     PWR: 7,
     SKL: 4,
     DEF: 6,
     SPD: 3,
     MGC: 1,
-    LUK: 2
+    LUK: 2,
   },
-  'Kasumi': {
+  Kasumi: {
     PWR: 5,
     SKL: 6,
     DEF: 4,
     SPD: 8,
     MGC: 4,
-    LUK: 3
+    LUK: 3,
   },
-  'Kessler': {
+  Kessler: {
     PWR: 5,
     SKL: 5,
     DEF: 4,
     SPD: 3,
     MGC: 2,
-    LUK: 3
+    LUK: 3,
   },
-  'Kimberly': {
+  Kimberly: {
     PWR: 4,
     SKL: 6,
     DEF: 4,
     SPD: 5,
     MGC: 2,
-    LUK: 5
+    LUK: 5,
   },
-  'Kirke': {
+  Kirke: {
     PWR: 5,
     SKL: 4,
     DEF: 4,
     SPD: 3,
     MGC: 2,
-    LUK: 0
+    LUK: 0,
   },
-  'Kirkis': {
+  Kirkis: {
     PWR: 5,
     SKL: 8,
     DEF: 5,
     SPD: 6,
     MGC: 5,
-    LUK: 3
+    LUK: 3,
   },
-  'Kreutz': {
+  Kreutz: {
     PWR: 6,
     SKL: 3,
     DEF: 6,
     SPD: 1,
     MGC: 1,
-    LUK: 1
+    LUK: 1,
   },
-  'Krin': {
+  Krin: {
     PWR: 3,
     SKL: 6,
     DEF: 2,
     SPD: 8,
     MGC: 1,
-    LUK: 1
+    LUK: 1,
   },
-  'Kuromimi': {
+  Kuromimi: {
     PWR: 5,
     SKL: 4,
     DEF: 5,
     SPD: 5,
     MGC: 2,
-    LUK: 5
+    LUK: 5,
   },
-  'Kwanda': {
+  Kwanda: {
     PWR: 6,
     SKL: 3,
     DEF: 8,
     SPD: 2,
     MGC: 1,
-    LUK: 3
+    LUK: 3,
   },
-  'Leonardo': {
+  Leonardo: {
     PWR: 6,
     SKL: 3,
     DEF: 4,
     SPD: 4,
     MGC: 1,
-    LUK: 1
+    LUK: 1,
   },
-  'Lepant': {
+  Lepant: {
     PWR: 5,
     SKL: 5,
     DEF: 4,
     SPD: 4,
     MGC: 3,
-    LUK: 4
+    LUK: 4,
   },
-  'Lester': {
+  Lester: {
     PWR: 4,
     SKL: 4,
     DEF: 3,
     SPD: 5,
     MGC: 1,
-    LUK: 5
+    LUK: 5,
   },
-  'Liukan': {
+  Liukan: {
     PWR: 3,
     SKL: 7,
     DEF: 3,
     SPD: 4,
     MGC: 3,
-    LUK: 5
+    LUK: 5,
   },
-  'Lorelai': {
+  Lorelai: {
     PWR: 5,
     SKL: 7,
     DEF: 4,
     SPD: 3,
     MGC: 2,
-    LUK: 2
+    LUK: 2,
   },
-  'Lotte': {
+  Lotte: {
     PWR: 3,
     SKL: 4,
     DEF: 3,
     SPD: 5,
     MGC: 6,
-    LUK: 4
+    LUK: 4,
   },
-  'Luc': {
+  Luc: {
     PWR: 0,
     SKL: 5,
     DEF: 1,
     SPD: 5,
     MGC: 8,
-    LUK: 1
+    LUK: 1,
   },
-  'Maas': {
+  Maas: {
     PWR: 4,
     SKL: 5,
     DEF: 4,
     SPD: 4,
     MGC: 2,
-    LUK: 4
+    LUK: 4,
   },
-  'Mace': {
+  Mace: {
     PWR: 6,
     SKL: 6,
     DEF: 6,
     SPD: 5,
     MGC: 3,
-    LUK: 5
+    LUK: 5,
   },
-  'Meese': {
+  Meese: {
     PWR: 4,
     SKL: 5,
     DEF: 4,
     SPD: 4,
     MGC: 2,
-    LUK: 4
+    LUK: 4,
   },
-  'Meg': {
+  Meg: {
     PWR: 4,
     SKL: 5,
     DEF: 4,
     SPD: 4,
     MGC: 3,
-    LUK: 8
+    LUK: 8,
   },
-  'Milia': {
+  Milia: {
     PWR: 6,
     SKL: 3,
     DEF: 6,
     SPD: 3,
     MGC: 1,
-    LUK: 4
+    LUK: 4,
   },
-  'Milich': {
+  Milich: {
     PWR: 5,
     SKL: 4,
     DEF: 5,
     SPD: 4,
     MGC: 6,
-    LUK: 1
+    LUK: 1,
   },
-  'Mina': {
+  Mina: {
     PWR: 2,
     SKL: 4,
     DEF: 4,
     SPD: 4,
     MGC: 6,
-    LUK: 6
+    LUK: 6,
   },
-  'Moose': {
+  Moose: {
     PWR: 4,
     SKL: 6,
     DEF: 4,
     SPD: 4,
     MGC: 2,
-    LUK: 4
+    LUK: 4,
   },
-  'Morgan': {
+  Morgan: {
     PWR: 6,
     SKL: 3,
     DEF: 5,
     SPD: 2,
     MGC: 0,
-    LUK: 1
+    LUK: 1,
   },
-  'Mose': {
+  Mose: {
     PWR: 5,
     SKL: 5,
     DEF: 5,
     SPD: 4,
     MGC: 1,
-    LUK: 3
+    LUK: 3,
   },
-  'Odessa': {
+  Odessa: {
     PWR: 5,
     SKL: 8,
     DEF: 5,
     SPD: 8,
     MGC: 7,
-    LUK: 6
+    LUK: 6,
   },
-  'Pahn': {
+  Pahn: {
     PWR: 7,
     SKL: 5,
     DEF: 6,
     SPD: 2,
     MGC: 0,
-    LUK: 4
+    LUK: 4,
   },
-  'Pesmerga': {
+  Pesmerga: {
     PWR: 8,
     SKL: 2,
     DEF: 6,
     SPD: 3,
     MGC: 1,
-    LUK: 0
+    LUK: 0,
   },
-  'Quincy': {
+  Quincy: {
     PWR: 4,
     SKL: 8,
     DEF: 5,
     SPD: 5,
     MGC: 1,
-    LUK: 5
+    LUK: 5,
   },
-  'Ronnie': {
+  Ronnie: {
     PWR: 6,
     SKL: 4,
     DEF: 6,
     SPD: 4,
     MGC: 0,
-    LUK: 3
+    LUK: 3,
   },
-  'Rubi': {
+  Rubi: {
     PWR: 5,
     SKL: 6,
     DEF: 4,
     SPD: 6,
     MGC: 6,
-    LUK: 0
+    LUK: 0,
   },
-  'Sansuke': {
+  Sansuke: {
     PWR: 3,
     SKL: 5,
     DEF: 5,
     SPD: 4,
     MGC: 1,
-    LUK: 4
+    LUK: 4,
   },
-  'Sarah': {
+  Sarah: {
     PWR: 5,
     SKL: 3,
     DEF: 5,
     SPD: 3,
     MGC: 4,
-    LUK: 2
+    LUK: 2,
   },
-  'Sergei': {
+  Sergei: {
     PWR: 2,
     SKL: 6,
     DEF: 6,
     SPD: 3,
     MGC: 2,
-    LUK: 2
+    LUK: 2,
   },
-  'Sheena': {
+  Sheena: {
     PWR: 5,
     SKL: 4,
     DEF: 5,
     SPD: 6,
     MGC: 6,
-    LUK: 6
+    LUK: 6,
   },
-  'Sonya': {
+  Sonya: {
     PWR: 6,
     SKL: 5,
     DEF: 4,
     SPD: 7,
     MGC: 5,
-    LUK: 3
+    LUK: 3,
   },
-  'Stallion': {
+  Stallion: {
     PWR: 3,
     SKL: 6,
     DEF: 5,
     SPD: 8,
     MGC: 4,
-    LUK: 4
+    LUK: 4,
   },
-  'Sydonia': {
+  Sydonia: {
     PWR: 4,
     SKL: 6,
     DEF: 3,
     SPD: 6,
     MGC: 3,
-    LUK: 2
+    LUK: 2,
   },
-  'Sylvina': {
+  Sylvina: {
     PWR: 3,
     SKL: 5,
     DEF: 4,
     SPD: 6,
     MGC: 5,
-    LUK: 6
+    LUK: 6,
   },
   'Tai Ho': {
     PWR: 6,
@@ -565,55 +565,55 @@ export const Characters = {
     DEF: 3,
     SPD: 5,
     MGC: 1,
-    LUK: 4
+    LUK: 4,
   },
-  'Tengaar': {
+  Tengaar: {
     PWR: 3,
     SKL: 6,
     DEF: 4,
     SPD: 5,
     MGC: 7,
-    LUK: 2
+    LUK: 2,
   },
-  'Ted': {
+  Ted: {
     PWR: 5,
     SKL: 7,
     DEF: 4,
     SPD: 6,
     MGC: 7,
-    LUK: 4
+    LUK: 4,
   },
-  'Valeria': {
+  Valeria: {
     PWR: 6,
     SKL: 4,
     DEF: 6,
     SPD: 3,
     MGC: 3,
-    LUK: 4
+    LUK: 4,
   },
-  'Varkas': {
+  Varkas: {
     PWR: 6,
     SKL: 3,
     DEF: 5,
     SPD: 3,
     MGC: 1,
-    LUK: 2
+    LUK: 2,
   },
-  'Viktor': {
+  Viktor: {
     PWR: 9,
     SKL: 2,
     DEF: 7,
     SPD: 5,
     MGC: 3,
-    LUK: 4
+    LUK: 4,
   },
-  'Warren': {
+  Warren: {
     PWR: 5,
     SKL: 4,
     DEF: 5,
     SPD: 3,
     MGC: 2,
-    LUK: 3
+    LUK: 3,
   },
   'Yam Koo': {
     PWR: 5,
@@ -621,57 +621,49 @@ export const Characters = {
     DEF: 3,
     SPD: 6,
     MGC: 2,
-    LUK: 4
-  }
-}
+    LUK: 4,
+  },
+};
 
 export const StatGrowths = [
-  [ 242, 172, 98],
-  [ 336, 224, 124],
-  [ 431, 288, 144],
-  [ 525, 364, 144],
-  [ 646, 435, 144],
-  [ 741, 499, 157],
-  [ 835, 563, 177],
-  [ 970, 614, 216],
-  [ 1118, 672, 249],
-  [ 1682, 420, 196],
-  [ 1050, 352, 164],
-  [ 714, 608, 492],
-  [ 538, 480, 459],
-  [ 646, 128, 689],
-  [ 94, 140, 2560],
-  [ 714, 608, 492]
+  [242, 172, 98],
+  [336, 224, 124],
+  [431, 288, 144],
+  [525, 364, 144],
+  [646, 435, 144],
+  [741, 499, 157],
+  [835, 563, 177],
+  [970, 614, 216],
+  [1118, 672, 249],
+  [1682, 420, 196],
+  [1050, 352, 164],
+  [714, 608, 492],
+  [538, 480, 459],
+  [646, 128, 689],
+  [94, 140, 2560],
+  [714, 608, 492],
 ];
 
 export const HPGrowths = [
-  [ 835, 1472, 984],
-  [ 1145, 1632, 984],
-  [ 1441, 1856, 1115],
-  [ 1805, 2048, 1181],
-  [ 2021, 2304, 1115],
-  [ 2236, 2624, 1115],
-  [ 2613, 2816, 1115],
-  [ 2991, 3008, 1181],
-  [ 3368, 3328, 1247],
-  [ 5052, 1280, 1312],
-  [ 2667, 1152, 984],
-  [ 1913, 2496, 2297],
-  [ 1077, 1984, 2100],
-  [ 2021, 2304, 1115],
-  [ 889, 1491, 4365],
-  [ 714, 608, 492]
+  [835, 1472, 984],
+  [1145, 1632, 984],
+  [1441, 1856, 1115],
+  [1805, 2048, 1181],
+  [2021, 2304, 1115],
+  [2236, 2624, 1115],
+  [2613, 2816, 1115],
+  [2991, 3008, 1181],
+  [3368, 3328, 1247],
+  [5052, 1280, 1312],
+  [2667, 1152, 984],
+  [1913, 2496, 2297],
+  [1077, 1984, 2100],
+  [2021, 2304, 1115],
+  [889, 1491, 4365],
+  [714, 608, 492],
 ];
 
-export const LevelupStatOrder = [
-  'PWR',
-  'SKL',
-  'DEF',
-  'SPD',
-  'MGC',
-  'LUK',
-  'HP'
-]
+export const LevelupStatOrder = ['PWR', 'SKL', 'DEF', 'SPD', 'MGC', 'LUK', 'HP'];
 
 export function getCharacterStatGrowths(name) {
   return Characters[name];
@@ -693,7 +685,7 @@ export function getGrowthValue(name, stat, level) {
   }
 
   let levelModifier = 0;
-  levelCutoffs.forEach(cutoff => {
+  levelCutoffs.forEach((cutoff) => {
     if (level >= cutoff) {
       levelModifier++;
     }

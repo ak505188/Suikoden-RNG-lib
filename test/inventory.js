@@ -14,7 +14,11 @@ import { LOG_TYPES } from '../lib/Game/Battle/ActionLog.js';
 
 describe('Inventory', () => {
   it("fills in each item's default quantity", () => {
-    const inventory = new Inventory([{ key: ITEM_KEYS.MEDICINE }, { key: ITEM_KEYS.ANTITOXIN, quantity: 2 }, { key: ITEM_KEYS.ESCAPE_TALISMAN }]);
+    const inventory = new Inventory([
+      { key: ITEM_KEYS.MEDICINE },
+      { key: ITEM_KEYS.ANTITOXIN, quantity: 2 },
+      { key: ITEM_KEYS.ESCAPE_TALISMAN },
+    ]);
     assert.strictEqual(inventory.get(ITEM_KEYS.MEDICINE).quantity, 6);
     assert.strictEqual(inventory.get(ITEM_KEYS.ANTITOXIN).quantity, 2);
     assert.strictEqual(inventory.get(ITEM_KEYS.ESCAPE_TALISMAN).quantity, 1);
@@ -22,7 +26,10 @@ describe('Inventory', () => {
 
   it('holds at most 9 slots, equipped armor included', () => {
     const nine = Array.from({ length: 9 }, () => ({ key: ITEM_KEYS.MEDICINE }));
-    assert.throws(() => new Inventory([...nine, { key: ITEM_KEYS.BANDANNA, slot: ARMOR_SLOT.HEAD }]), /at most 9/);
+    assert.throws(
+      () => new Inventory([...nine, { key: ITEM_KEYS.BANDANNA, slot: ARMOR_SLOT.HEAD }]),
+      /at most 9/,
+    );
     const inventory = new Inventory(nine);
     assert.strictEqual(inventory.isFull, true);
     assert.strictEqual(inventory.add(ITEM_KEYS.NEEDLE), false);
@@ -52,14 +59,20 @@ describe('Inventory', () => {
   });
 
   it('only allows battle-usable items in battle', () => {
-    const inventory = new Inventory([{ key: ITEM_KEYS.MEDICINE }, { key: ITEM_KEYS.ESCAPE_TALISMAN }]);
+    const inventory = new Inventory([
+      { key: ITEM_KEYS.MEDICINE },
+      { key: ITEM_KEYS.ESCAPE_TALISMAN },
+    ]);
     assert.strictEqual(inventory.canUseInBattle(ITEM_KEYS.MEDICINE), true);
     assert.strictEqual(inventory.canUseInBattle(ITEM_KEYS.ESCAPE_TALISMAN), false);
     assert.strictEqual(inventory.canUseInBattle(ITEM_KEYS.NEEDLE), false);
   });
 
   it('gives the armor worn in each slot', () => {
-    const inventory = new Inventory([{ key: ITEM_KEYS.BANDANNA, slot: ARMOR_SLOT.HEAD, locked: true }, { key: ITEM_KEYS.TUNIC }]);
+    const inventory = new Inventory([
+      { key: ITEM_KEYS.BANDANNA, slot: ARMOR_SLOT.HEAD, locked: true },
+      { key: ITEM_KEYS.TUNIC },
+    ]);
     assert.strictEqual(inventory.armorIn(ARMOR_SLOT.HEAD), ARMOR.BANDANNA);
     assert.strictEqual(inventory.armorIn(ARMOR_SLOT.BODY), null);
     assert.strictEqual(inventory.equippedIn(ARMOR_SLOT.HEAD).locked, true);
@@ -74,18 +87,20 @@ describe('Inventory', () => {
   });
 });
 
-const makeFighter = (/** @type {import('../lib/Game/Keys.js').CharacterKey} */ key) => new Character(key)
-  .setLVL(22)
-  .setStats({ PWR: 64, SKL: 68, DEF: 84, SPD: 49, MGC: 39, LUK: 66, HP: 201 })
-  .rest();
+const makeFighter = (/** @type {import('../lib/Game/Keys.js').CharacterKey} */ key) =>
+  new Character(key)
+    .setLVL(22)
+    .setStats({ PWR: 64, SKL: 68, DEF: 84, SPD: 49, MGC: 39, LUK: 66, HP: 201 })
+    .rest();
 
 /** @param {Character[]} party */
-const makeBattle = party => new Battle({
-  party: new PlayerParty(party),
-  enemies: new EnemyParty([new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)]),
-  rng: new RNG(1),
-  turns: [],
-});
+const makeBattle = (party) =>
+  new Battle({
+    party: new PlayerParty(party),
+    enemies: new EnemyParty([new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)]),
+    rng: new RNG(1),
+    turns: [],
+  });
 
 /**
  * Puts `character` in DISPATCH with `action` at the current tick and ticks the round driver
@@ -115,8 +130,14 @@ describe('Party item use', () => {
     assert.strictEqual(gremio.inventory.get(ITEM_KEYS.MEDICINE).quantity, 5);
     assert.strictEqual(gremio.busyUntil, 83); // self-targeted
     assert.strictEqual(battle.rng.getCount(), rngBefore);
-    assert.deepStrictEqual(battle.log.ofType(LOG_TYPES.ITEM).map(e => e.tick), [0]);
-    assert.deepStrictEqual(battle.log.ofType(LOG_TYPES.DAMAGE).map(e => [e.tick, e.amount]), [[19, -100]]);
+    assert.deepStrictEqual(
+      battle.log.ofType(LOG_TYPES.ITEM).map((e) => e.tick),
+      [0],
+    );
+    assert.deepStrictEqual(
+      battle.log.ofType(LOG_TYPES.DAMAGE).map((e) => [e.tick, e.amount]),
+      [[19, -100]],
+    );
   });
 
   it('caps the heal at HPMax (Mega medicine)', () => {
@@ -127,7 +148,8 @@ describe('Party item use', () => {
   });
 
   it('on another ally: user free at R+88, target busy R+19 to R+83', () => {
-    const mcdohl = makeFighter(CHARACTER_KEYS.MCDOHL), gremio = makeFighter(CHARACTER_KEYS.GREMIO).setHP(1);
+    const mcdohl = makeFighter(CHARACTER_KEYS.MCDOHL),
+      gremio = makeFighter(CHARACTER_KEYS.GREMIO).setHP(1);
     const battle = makeBattle([mcdohl, gremio]);
     playItemTurn(battle, mcdohl, { itemKey: ITEM_KEYS.MEDICINE, target: 1 });
     assert.strictEqual(mcdohl.busyUntil, 88);
@@ -136,7 +158,8 @@ describe('Party item use', () => {
   });
 
   it('waits, with no RNG, until nobody is busy', () => {
-    const mcdohl = makeFighter(CHARACTER_KEYS.MCDOHL), gremio = makeFighter(CHARACTER_KEYS.GREMIO);
+    const mcdohl = makeFighter(CHARACTER_KEYS.MCDOHL),
+      gremio = makeFighter(CHARACTER_KEYS.GREMIO);
     const battle = makeBattle([mcdohl, gremio]);
     gremio.busyUntil = 40;
     const end = playItemTurn(battle, mcdohl, { itemKey: ITEM_KEYS.MEDICINE });
@@ -159,7 +182,8 @@ describe('Party item use', () => {
   });
 
   it('Dragon seal incense heals every living party member 50 and is never used up', () => {
-    const mcdohl = makeFighter(CHARACTER_KEYS.MCDOHL).setHP(10), gremio = makeFighter(CHARACTER_KEYS.GREMIO).setHP(20);
+    const mcdohl = makeFighter(CHARACTER_KEYS.MCDOHL).setHP(10),
+      gremio = makeFighter(CHARACTER_KEYS.GREMIO).setHP(20);
     mcdohl.inventory.add(ITEM_KEYS.DRAGON_SEAL_INCENSE);
     const battle = makeBattle([mcdohl, gremio]);
     playItemTurn(battle, mcdohl, { itemKey: ITEM_KEYS.DRAGON_SEAL_INCENSE });
@@ -169,7 +193,8 @@ describe('Party item use', () => {
   });
 
   it('Defends on a dead target, using nothing up', () => {
-    const mcdohl = makeFighter(CHARACTER_KEYS.MCDOHL), gremio = makeFighter(CHARACTER_KEYS.GREMIO);
+    const mcdohl = makeFighter(CHARACTER_KEYS.MCDOHL),
+      gremio = makeFighter(CHARACTER_KEYS.GREMIO);
     const battle = makeBattle([mcdohl, gremio]);
     gremio.setHP(0).die(0);
     const end = playItemTurn(battle, mcdohl, { itemKey: ITEM_KEYS.MEDICINE, target: 1 });
@@ -181,7 +206,10 @@ describe('Party item use', () => {
   it("rejects an item the character doesn't hold", () => {
     const gremio = makeFighter(CHARACTER_KEYS.GREMIO);
     const battle = makeBattle([gremio]);
-    assert.throws(() => playItemTurn(battle, gremio, { itemKey: ITEM_KEYS.MEGA_MEDICINE }), /can't use MEGA_MEDICINE/);
+    assert.throws(
+      () => playItemTurn(battle, gremio, { itemKey: ITEM_KEYS.MEGA_MEDICINE }),
+      /can't use MEGA_MEDICINE/,
+    );
   });
 });
 
@@ -208,13 +236,18 @@ describe('Sacrificial Buddha', () => {
     gremio.setHP(0);
     /** @type {number[]} */
     const hp = [];
-    runTicks(battle, 0, 130, tick => { hp[tick] = gremio.HP; });
+    runTicks(battle, 0, 130, (tick) => {
+      hp[tick] = gremio.HP;
+    });
     assert.strictEqual(gremio.knockedOut, false);
     assert.strictEqual(gremio.acted, false); // ActionTag kept: still acts this round
     assert.strictEqual(gremio.inventory.has(ITEM_KEYS.SACRIFICIAL_BUDDHA), false);
     assert.strictEqual(gremio.busyUntil, 123);
     assert.deepStrictEqual([hp[112], hp[113]], [0, 100]);
-    assert.deepStrictEqual(battle.log.ofType(LOG_TYPES.REVIVE).map(e => e.tick), [0]);
+    assert.deepStrictEqual(
+      battle.log.ofType(LOG_TYPES.REVIVE).map((e) => e.tick),
+      [0],
+    );
     assert.strictEqual(battle.log.ofType(LOG_TYPES.DEATH).length, 0);
   });
 
@@ -228,11 +261,12 @@ describe('Sacrificial Buddha', () => {
 });
 
 describe('Inventory.armorBonus', () => {
-  const worn = () => new Inventory([
-    { key: ITEM_KEYS.BANDANNA, slot: ARMOR_SLOT.HEAD },       // DEF 1
-    { key: ITEM_KEYS.LEATHER_COAT, slot: ARMOR_SLOT.BODY },   // DEF 4
-    { key: ITEM_KEYS.MEDICINE },
-  ]);
+  const worn = () =>
+    new Inventory([
+      { key: ITEM_KEYS.BANDANNA, slot: ARMOR_SLOT.HEAD }, // DEF 1
+      { key: ITEM_KEYS.LEATHER_COAT, slot: ARMOR_SLOT.BODY }, // DEF 4
+      { key: ITEM_KEYS.MEDICINE },
+    ]);
 
   it('sums one stat over the worn pieces, and 0 for a stat none of them has', () => {
     const inventory = worn();
@@ -269,10 +303,17 @@ describe('Inventory.armorBonus', () => {
 });
 
 describe('Inventory.stateKeyInto', () => {
-  const key = (/** @type {Inventory} */ inventory) => { const out = []; inventory.stateKeyInto(out); return out.join(','); };
+  const key = (/** @type {Inventory} */ inventory) => {
+    const out = [];
+    inventory.stateKeyInto(out);
+    return out.join(',');
+  };
 
   it('changes when a use changes a quantity, and a clone keeps its own', () => {
-    const inventory = new Inventory([{ key: ITEM_KEYS.MEDICINE }, { key: ITEM_KEYS.BANDANNA, slot: ARMOR_SLOT.HEAD }]);
+    const inventory = new Inventory([
+      { key: ITEM_KEYS.MEDICINE },
+      { key: ITEM_KEYS.BANDANNA, slot: ARMOR_SLOT.HEAD },
+    ]);
     const before = key(inventory);
     const copy = inventory.clone();
     inventory.use(ITEM_KEYS.MEDICINE);
@@ -283,7 +324,8 @@ describe('Inventory.stateKeyInto', () => {
 });
 
 describe('Inventory.clone (copy-on-write)', () => {
-  const medicine = (/** @type {Inventory} */ inventory) => inventory.get(ITEM_KEYS.MEDICINE)?.quantity;
+  const medicine = (/** @type {Inventory} */ inventory) =>
+    inventory.get(ITEM_KEYS.MEDICINE)?.quantity;
   const fresh = () => new Inventory([{ key: ITEM_KEYS.MEDICINE }, { key: ITEM_KEYS.ANTITOXIN }]);
 
   it('shares nothing either side can see: every change on one leaves the other as it was', () => {
@@ -293,7 +335,8 @@ describe('Inventory.clone (copy-on-write)', () => {
       (/** @type {Inventory} */ i) => i.add(ITEM_KEYS.ESCAPE_TALISMAN),
       (/** @type {Inventory} */ i) => i.clear(),
     ]) {
-      const original = fresh(), copy = original.clone();
+      const original = fresh(),
+        copy = original.clone();
       change(copy);
       assert.deepStrictEqual(original.entries, fresh().entries, String(change));
       const copy2 = original.clone();
@@ -303,7 +346,9 @@ describe('Inventory.clone (copy-on-write)', () => {
   });
 
   it('keeps a chain of clones apart, each using its own items', () => {
-    const a = fresh(), b = a.clone(), c = b.clone();
+    const a = fresh(),
+      b = a.clone(),
+      c = b.clone();
     b.use(ITEM_KEYS.MEDICINE);
     c.use(ITEM_KEYS.MEDICINE);
     c.use(ITEM_KEYS.MEDICINE);

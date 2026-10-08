@@ -10,10 +10,36 @@ import { calculateBattleEXP, getEnemyEXP } from '../lib/Game/Experience.js';
 
 // The EXP table by level difference (enemy LVL - character LVL).
 const TABLE = {
-  15: 10000, 14: 9700, 13: 9300, 12: 9000, 11: 8500, 10: 8000, 9: 7500, 8: 6900, 7: 6000,
-  6: 5100, 5: 3900, 4: 2600, 3: 1600, 2: 900, 1: 400, 0: 200, [-1]: 160, [-2]: 120, [-3]: 90,
-  [-4]: 70, [-5]: 50, [-6]: 30, [-7]: 20, [-8]: 15, [-9]: 10, [-10]: 7, [-11]: 5, [-12]: 3,
-  [-13]: 2, [-14]: 1,
+  15: 10000,
+  14: 9700,
+  13: 9300,
+  12: 9000,
+  11: 8500,
+  10: 8000,
+  9: 7500,
+  8: 6900,
+  7: 6000,
+  6: 5100,
+  5: 3900,
+  4: 2600,
+  3: 1600,
+  2: 900,
+  1: 400,
+  0: 200,
+  [-1]: 160,
+  [-2]: 120,
+  [-3]: 90,
+  [-4]: 70,
+  [-5]: 50,
+  [-6]: 30,
+  [-7]: 20,
+  [-8]: 15,
+  [-9]: 10,
+  [-10]: 7,
+  [-11]: 5,
+  [-12]: 3,
+  [-13]: 2,
+  [-14]: 1,
 };
 
 describe('getEnemyEXP', () => {
@@ -89,23 +115,28 @@ describe('Character.gainEXP', () => {
 });
 
 describe('PlayerParty.awardEXP', () => {
-  const makeParty = () => new PlayerParty([
-    new Character(CHARACTER_KEYS.MCDOHL).setLVL(20),
-    new Character(CHARACTER_KEYS.VIKTOR).setLVL(22),
-    new Character(CHARACTER_KEYS.GREMIO).setLVL(18).setRune(RUNES.FORTUNE),
-  ]);
-  const enemies = () => new EnemyParty([new Enemy(ENEMY_KEYS.FURFUR), new Enemy(ENEMY_KEYS.FURFUR)]);
+  const makeParty = () =>
+    new PlayerParty([
+      new Character(CHARACTER_KEYS.MCDOHL).setLVL(20),
+      new Character(CHARACTER_KEYS.VIKTOR).setLVL(22),
+      new Character(CHARACTER_KEYS.GREMIO).setLVL(18).setRune(RUNES.FORTUNE),
+    ]);
+  const enemies = () =>
+    new EnemyParty([new Enemy(ENEMY_KEYS.FURFUR), new Enemy(ENEMY_KEYS.FURFUR)]);
 
   it('gives each living member their own EXP, split between the living', () => {
     const party = makeParty();
     const enemyParty = enemies();
     const lvl = enemyParty.combatants[0].LVL;
     const results = party.awardEXP(enemyParty, new RNG(0x12));
-    assert.deepStrictEqual(results.map(r => r.exp), [
-      calculateBattleEXP(20, [lvl, lvl], 3),
-      calculateBattleEXP(22, [lvl, lvl], 3),
-      calculateBattleEXP(18, [lvl, lvl], 3, true),
-    ]);
+    assert.deepStrictEqual(
+      results.map((r) => r.exp),
+      [
+        calculateBattleEXP(20, [lvl, lvl], 3),
+        calculateBattleEXP(22, [lvl, lvl], 3),
+        calculateBattleEXP(18, [lvl, lvl], 3, true),
+      ],
+    );
   });
 
   it('skips fallen members and splits between the rest', () => {
@@ -114,26 +145,35 @@ describe('PlayerParty.awardEXP', () => {
     const enemyParty = enemies();
     const lvl = enemyParty.combatants[0].LVL;
     const results = party.awardEXP(enemyParty, new RNG(0x12));
-    assert.deepStrictEqual(results.map(r => r.character.name), [party.combatants[0].name, party.combatants[2].name]);
-    assert.deepStrictEqual(results.map(r => r.exp), [
-      calculateBattleEXP(20, [lvl, lvl], 2),
-      calculateBattleEXP(18, [lvl, lvl], 2, true),
-    ]);
+    assert.deepStrictEqual(
+      results.map((r) => r.character.name),
+      [party.combatants[0].name, party.combatants[2].name],
+    );
+    assert.deepStrictEqual(
+      results.map((r) => r.exp),
+      [calculateBattleEXP(20, [lvl, lvl], 2), calculateBattleEXP(18, [lvl, lvl], 2, true)],
+    );
     assert.strictEqual(party.combatants[1].EXP, 0);
   });
 
   it('rolls level-ups in slot order from the same RNG', () => {
     const party = makeParty();
-    party.combatants.forEach(c => c.setEXP(999));
+    party.combatants.forEach((c) => c.setEXP(999));
     const rng = new RNG(0x12);
     const results = party.awardEXP(enemies(), rng);
-    assert.deepStrictEqual(results.map(r => r.levels), [1, 1, 1]);
+    assert.deepStrictEqual(
+      results.map((r) => r.levels),
+      [1, 1, 1],
+    );
     assert.strictEqual(rng.getCount(), 3 * 7);
 
     const expected = makeParty();
     const expectedRNG = new RNG(0x12);
-    expected.combatants.forEach(c => c.levelUp(1, c.LVL, expectedRNG));
-    assert.deepStrictEqual(party.combatants.map(c => c.stats), expected.combatants.map(c => c.stats));
+    expected.combatants.forEach((c) => c.levelUp(1, c.LVL, expectedRNG));
+    assert.deepStrictEqual(
+      party.combatants.map((c) => c.stats),
+      expected.combatants.map((c) => c.stats),
+    );
   });
 });
 
@@ -143,8 +183,12 @@ describe('Character.gainEXP growths', () => {
     const before = { ...c.stats };
     const { levels, growths } = c.gainEXP(2000, new RNG(0x12));
     assert.strictEqual(levels, 2);
-    assert.deepStrictEqual(growths, new Character(CHARACTER_KEYS.MCDOHL).calculateLevelups(2, 10, new RNG(0x12)));
-    for (const [stat, gain] of Object.entries(growths)) assert.strictEqual(c.stats[stat], before[stat] + gain);
+    assert.deepStrictEqual(
+      growths,
+      new Character(CHARACTER_KEYS.MCDOHL).calculateLevelups(2, 10, new RNG(0x12)),
+    );
+    for (const [stat, gain] of Object.entries(growths))
+      assert.strictEqual(c.stats[stat], before[stat] + gain);
   });
 
   it('returns null growths without a level-up', () => {
@@ -163,7 +207,10 @@ describe('PlayerParty.awardEXP removed members', () => {
     const enemyParty = new EnemyParty([new Enemy(ENEMY_KEYS.FURFUR), new Enemy(ENEMY_KEYS.FURFUR)]);
     const lvl = enemyParty.combatants[0].LVL;
     const results = party.awardEXP(enemyParty, new RNG(0x12));
-    assert.deepStrictEqual(results.map(r => r.character.name), [party.combatants[0].name]);
+    assert.deepStrictEqual(
+      results.map((r) => r.character.name),
+      [party.combatants[0].name],
+    );
     assert.strictEqual(results[0].exp, calculateBattleEXP(20, [lvl, lvl], 2));
     assert.strictEqual(party.combatants[1].EXP, 0);
   });

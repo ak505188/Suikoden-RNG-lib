@@ -26,7 +26,7 @@ describe('Confirmed Working Sim Test', () => {
   for (let i = 100; i <= 10000; i = i + 100) {
     if (i % 100 === 0) {
       it(`RNG Index at frame ${i} should match sim RNG Index`, () => {
-        assert.strictEqual(tracker[i-1].rng_index, KakuSim_0xbff1cc1a[i-1].rng_index)
+        assert.strictEqual(tracker[i - 1].rng_index, KakuSim_0xbff1cc1a[i - 1].rng_index);
       });
     }
   }
@@ -44,7 +44,7 @@ describe('0x12 Sim Test', () => {
   for (let i = 100; i <= 10000; i = i + 100) {
     if (i % 100 === 0) {
       it(`RNG Index at frame ${i} should match sim RNG Index`, () => {
-        assert.strictEqual(tracker[i-1].rng_index, KakuSim_0x12[i-1].rng_index)
+        assert.strictEqual(tracker[i - 1].rng_index, KakuSim_0x12[i - 1].rng_index);
       });
     }
   }
@@ -63,7 +63,7 @@ describe('0x1e79af9f Sim Test', () => {
   for (let i = 100; i <= sim_length; i = i + 100) {
     if (i % 100 === 0) {
       it(`RNG Index at frame ${i} should match sim RNG Index`, () => {
-        assert.strictEqual(tracker[i-1].rng_index, KakuSim_0x1e79af9f[i-1].rng_index)
+        assert.strictEqual(tracker[i - 1].rng_index, KakuSim_0x1e79af9f[i - 1].rng_index);
       });
     }
   }
@@ -82,7 +82,7 @@ describe('0x1e79af9f Sim Test', () => {
   for (let i = 100; i <= sim_length; i = i + 100) {
     if (i % 100 === 0) {
       it(`RNG Index at frame ${i} should match sim RNG Index`, () => {
-        assert.strictEqual(tracker[i-1].rng_index, KakuSim_0x1e79af9f[i-1].rng_index)
+        assert.strictEqual(tracker[i - 1].rng_index, KakuSim_0x1e79af9f[i - 1].rng_index);
       });
     }
   }
@@ -101,7 +101,7 @@ describe('0x3fb703c0 Sim Test', () => {
   for (let i = 100; i <= sim_length; i = i + 100) {
     if (i % 100 === 0) {
       it(`RNG Index at frame ${i} should match sim RNG Index`, () => {
-        assert.strictEqual(tracker[i-1].rng_index, KakuSim_0x3fb703c0[i-1].rng_index)
+        assert.strictEqual(tracker[i - 1].rng_index, KakuSim_0x3fb703c0[i - 1].rng_index);
       });
     }
   }
@@ -120,7 +120,7 @@ describe('0x26a4f8d4 Sim Test', () => {
   for (let i = 100; i <= sim_length; i = i + 100) {
     if (i % 100 === 0) {
       it(`RNG Index at frame ${i} should match sim RNG Index`, () => {
-        assert.strictEqual(tracker[i-1].rng_index, KakuSim_0x26a4f8d4[i-1].rng_index)
+        assert.strictEqual(tracker[i - 1].rng_index, KakuSim_0x26a4f8d4[i - 1].rng_index);
       });
     }
   }
@@ -139,7 +139,7 @@ describe('0x56c35961 Sim Test', () => {
   for (let i = 100; i <= sim_length; i = i + 100) {
     if (i % 100 === 0) {
       it(`RNG Index at frame ${i} should match sim RNG Index`, () => {
-        assert.strictEqual(tracker[i-1].rng_index, KakuSim_0x56c35961[i-1].rng_index)
+        assert.strictEqual(tracker[i - 1].rng_index, KakuSim_0x56c35961[i - 1].rng_index);
       });
     }
   }
@@ -163,7 +163,7 @@ describe('0x76a2e768 Sim Test', () => {
   for (let i = 100; i <= sim_length; i = i + 100) {
     if (i % 100 === 0) {
       it(`RNG Index at frame ${i} should match sim RNG Index`, () => {
-        assert.strictEqual(tracker[i-1].rng_index, KakuSim_0x76a2e768[i-1].rng_index)
+        assert.strictEqual(tracker[i - 1].rng_index, KakuSim_0x76a2e768[i - 1].rng_index);
       });
     }
   }
@@ -187,7 +187,7 @@ describe('0x163ed46a Sim Test', () => {
   for (let i = 100; i <= sim_length; i = i + 100) {
     if (i % 100 === 0) {
       it(`RNG Index at frame ${i} should match sim RNG Index`, () => {
-        assert.strictEqual(tracker[i-1].rng_index, KakuSim_0x163ed46a[i-1].rng_index)
+        assert.strictEqual(tracker[i - 1].rng_index, KakuSim_0x163ed46a[i - 1].rng_index);
       });
     }
   }
@@ -211,7 +211,7 @@ describe('0x176df5de Sim Test', () => {
   for (let i = 100; i <= sim_length; i = i + 100) {
     if (i % 100 === 0) {
       it(`RNG Index at frame ${i} should match sim RNG Index`, () => {
-        assert.strictEqual(tracker[i-1].rng_index, KakuSim_0x176df5de[i-1].rng_index)
+        assert.strictEqual(tracker[i - 1].rng_index, KakuSim_0x176df5de[i - 1].rng_index);
       });
     }
   }
@@ -230,7 +230,7 @@ describe('0x874c7841 Sim Test', () => {
   for (let i = 100; i <= sim_length; i = i + 100) {
     if (i % 100 === 0) {
       it(`RNG Index at frame ${i} should match sim RNG Index`, () => {
-        assert.strictEqual(tracker[i-1].rng_index, KakuSim_0x874c7841[i-1].rng_index)
+        assert.strictEqual(tracker[i - 1].rng_index, KakuSim_0x874c7841[i - 1].rng_index);
       });
     }
   }
@@ -249,7 +249,7 @@ describe('0x27959cc0 Sim Test', () => {
   for (let i = 100; i <= sim_length; i = i + 100) {
     if (i % 100 === 0) {
       it(`RNG Index at frame ${i} should match sim RNG Index`, () => {
-        assert.strictEqual(tracker[i-1].rng_index, KakuSim_0x27959cc0[i-1].rng_index)
+        assert.strictEqual(tracker[i - 1].rng_index, KakuSim_0x27959cc0[i - 1].rng_index);
       });
     }
   }

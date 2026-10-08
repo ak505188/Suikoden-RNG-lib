@@ -30,13 +30,17 @@ const SPEC_EXAMPLE = [
 ];
 
 /** The export, less the readability-only rune and item keys the spec example leaves out */
-const withoutOptionalKeys = (/** @type {any[]} */ characters) => characters.map(c => ({
-  ...c,
-  rune: { id: c.rune.id },
-  inventory: c.inventory.map(({ key: _key, ...item }) => item),
-}));
+const withoutOptionalKeys = (/** @type {any[]} */ characters) =>
+  characters.map((c) => ({
+    ...c,
+    rune: { id: c.rune.id },
+    inventory: c.inventory.map(({ key: _key, ...item }) => item),
+  }));
 
-const cleoJSON = (/** @type {any} */ overrides = {}) => ({ ...structuredClone(SPEC_EXAMPLE[0]), ...overrides });
+const cleoJSON = (/** @type {any} */ overrides = {}) => ({
+  ...structuredClone(SPEC_EXAMPLE[0]),
+  ...overrides,
+});
 
 describe('Character JSON', () => {
   it("round-trips the spec's example", () => {
@@ -47,7 +51,10 @@ describe('Character JSON', () => {
   it('adds rune and item keys on export', () => {
     const [json] = exportCharacters(importCharacters(structuredClone(SPEC_EXAMPLE)));
     assert.strictEqual(json.rune.key, RUNE_KEYS.EARTH);
-    assert.deepStrictEqual(json.inventory.map(item => item.key), [ITEM_KEYS.BRASS_ARMOR, ITEM_KEYS.CLONE_CRYSTAL, ITEM_KEYS.JUNK]);
+    assert.deepStrictEqual(
+      json.inventory.map((item) => item.key),
+      [ITEM_KEYS.BRASS_ARMOR, ITEM_KEYS.CLONE_CRYSTAL, ITEM_KEYS.JUNK],
+    );
   });
 
   it('imports every field', () => {
@@ -80,7 +87,10 @@ describe('Character JSON', () => {
   });
 
   it('throws on a key that disagrees with the id', () => {
-    assert.throws(() => Character.fromCharacterJSON(cleoJSON({ key: 'MCDOHL' })), /doesn't match id 1/);
+    assert.throws(
+      () => Character.fromCharacterJSON(cleoJSON({ key: 'MCDOHL' })),
+      /doesn't match id 1/,
+    );
   });
 
   it('throws on an unknown rune piece element', () => {
@@ -89,9 +99,18 @@ describe('Character JSON', () => {
   });
 
   it('throws on unknown ids', () => {
-    assert.throws(() => Character.fromCharacterJSON(cleoJSON({ id: 9999 })), /unknown character id/);
-    assert.throws(() => Character.fromCharacterJSON(cleoJSON({ rune: { id: 9999 } })), /unknown rune id/);
-    assert.throws(() => Character.fromCharacterJSON(cleoJSON({ inventory: [{ id: 9999 }] })), /unknown item id/);
+    assert.throws(
+      () => Character.fromCharacterJSON(cleoJSON({ id: 9999 })),
+      /unknown character id/,
+    );
+    assert.throws(
+      () => Character.fromCharacterJSON(cleoJSON({ rune: { id: 9999 } })),
+      /unknown rune id/,
+    );
+    assert.throws(
+      () => Character.fromCharacterJSON(cleoJSON({ inventory: [{ id: 9999 }] })),
+      /unknown item id/,
+    );
   });
 });
 
@@ -100,12 +119,21 @@ describe('PlayerParty JSON', () => {
 
   it('imports members in the file order, in slots from 1', () => {
     const party = PlayerParty.fromCharacterJSON(doc());
-    assert.deepStrictEqual(party.combatants.map(c => [c.key, c.slot]), [[CHARACTER_KEYS.CLEO, 1], [CHARACTER_KEYS.MCDOHL, 2]]);
+    assert.deepStrictEqual(
+      party.combatants.map((c) => [c.key, c.slot]),
+      [
+        [CHARACTER_KEYS.CLEO, 1],
+        [CHARACTER_KEYS.MCDOHL, 2],
+      ],
+    );
   });
 
   it('round-trips', () => {
     const exported = PlayerParty.fromCharacterJSON(doc()).toCharacterJSON();
-    assert.deepStrictEqual(PlayerParty.fromCharacterJSON(structuredClone(exported)).toCharacterJSON(), exported);
+    assert.deepStrictEqual(
+      PlayerParty.fromCharacterJSON(structuredClone(exported)).toCharacterJSON(),
+      exported,
+    );
     assert.deepStrictEqual(withoutOptionalKeys(exported)[0], SPEC_EXAMPLE[0]);
   });
 

@@ -21,31 +21,46 @@ const MAX_ROUNDS = 30;
  * @param {import('../lib/Game/Battle/Actions.js').Action[][]} [turns]
  * @param {number} [seed]
  */
-const winningBattle = (turns = [], seed = 1) => new Battle({
-  party: new PlayerParty([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO].map(key =>
-    new Character(key).setLVL(40).setStats({ PWR: 150, SKL: 150, DEF: 150, SPD: 150, MGC: 60, LUK: 60, HP: 500 }).rest())),
-  enemies: new EnemyParty([new Enemy(ENEMY_KEYS.FURFUR), new Enemy(ENEMY_KEYS.FURFUR)]),
-  rng: new RNG(seed),
-  turns,
-});
+const winningBattle = (turns = [], seed = 1) =>
+  new Battle({
+    party: new PlayerParty(
+      [CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO].map((key) =>
+        new Character(key)
+          .setLVL(40)
+          .setStats({ PWR: 150, SKL: 150, DEF: 150, SPD: 150, MGC: 60, LUK: 60, HP: 500 })
+          .rest(),
+      ),
+    ),
+    enemies: new EnemyParty([new Enemy(ENEMY_KEYS.FURFUR), new Enemy(ENEMY_KEYS.FURFUR)]),
+    rng: new RNG(seed),
+    turns,
+  });
 
-const NO_DROP_SEED = 1;       // no drop (3 rolls)
-const FIRST_DROP_SEED = 4;    // Medicine from FurFur #1 (2 rolls)
-const SECOND_DROP_SEED = 45;  // Wooden shoes from FurFur #2 (4 rolls)
+const NO_DROP_SEED = 1; // no drop (3 rolls)
+const FIRST_DROP_SEED = 4; // Medicine from FurFur #1 (2 rolls)
+const SECOND_DROP_SEED = 45; // Wooden shoes from FurFur #2 (4 rolls)
 
 /** One 1-HP McDohl defending against the Zombie Dragon. */
-const losingBattle = () => new Battle({
-  party: new PlayerParty([
-    new Character(CHARACTER_KEYS.MCDOHL).setStats({ PWR: 10, SKL: 10, DEF: 1, SPD: 10, MGC: 10, LUK: 10, HP: 1 }).rest(),
-  ]),
-  enemies: new EnemyParty([new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)]),
-  rng: new RNG(1),
-});
+const losingBattle = () =>
+  new Battle({
+    party: new PlayerParty([
+      new Character(CHARACTER_KEYS.MCDOHL)
+        .setStats({ PWR: 10, SKL: 10, DEF: 1, SPD: 10, MGC: 10, LUK: 10, HP: 1 })
+        .rest(),
+    ]),
+    enemies: new EnemyParty([new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)]),
+    rng: new RNG(1),
+  });
 
 /** @param {Battle} battle @param {import('../lib/Game/Battle/Actions.js').Action[]} turn */
 const playUntilOver = (battle, turn) => {
-  for (let i = 0; i < MAX_ROUNDS && battle.status === BATTLE_STATUS.IN_PROGRESS; i++) battle.playTurn(turn);
-  assert.notStrictEqual(battle.status, BATTLE_STATUS.IN_PROGRESS, `battle not over after ${MAX_ROUNDS} rounds`);
+  for (let i = 0; i < MAX_ROUNDS && battle.status === BATTLE_STATUS.IN_PROGRESS; i++)
+    battle.playTurn(turn);
+  assert.notStrictEqual(
+    battle.status,
+    BATTLE_STATUS.IN_PROGRESS,
+    `battle not over after ${MAX_ROUNDS} rounds`,
+  );
 };
 
 describe('Party.isDefeated', () => {
@@ -59,7 +74,7 @@ describe('Party.isDefeated', () => {
 
   it('is true once everyone is dead', () => {
     const p = party();
-    p.combatants.forEach(c => c.knockedOut = true);
+    p.combatants.forEach((c) => (c.knockedOut = true));
     assert.strictEqual(p.isDefeated, true);
   });
 
@@ -71,9 +86,9 @@ describe('Party.isDefeated', () => {
     assert.strictEqual(p.isDefeated, true);
   });
 
-  it('is false for a combatant at 0 HP whose death routine hasn\'t run', () => {
+  it("is false for a combatant at 0 HP whose death routine hasn't run", () => {
     const p = party();
-    p.combatants.forEach(c => c.setHP(0));
+    p.combatants.forEach((c) => c.setHP(0));
     assert.strictEqual(p.isDefeated, false);
   });
 });
@@ -87,8 +102,12 @@ describe('Battle end', () => {
 
   it('stays in progress with no result while both sides are still fighting', () => {
     const battle = new Battle({
-      party: new PlayerParty([new Character(CHARACTER_KEYS.MCDOHL).setLVL(22)
-        .setStats({ PWR: 70, SKL: 70, DEF: 80, SPD: 50, MGC: 60, LUK: 60, HP: 220 }).rest()]),
+      party: new PlayerParty([
+        new Character(CHARACTER_KEYS.MCDOHL)
+          .setLVL(22)
+          .setStats({ PWR: 70, SKL: 70, DEF: 80, SPD: 50, MGC: 60, LUK: 60, HP: 220 })
+          .rest(),
+      ]),
       enemies: new EnemyParty([new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)]),
       rng: new RNG(1),
     });
@@ -104,14 +123,17 @@ describe('Battle end', () => {
     playUntilOver(battle, [ATTACK, ATTACK]);
     battle.finish();
     assert.strictEqual(battle.status, BATTLE_STATUS.WON);
-    assert.ok(battle.enemies.combatants.every(e => e.knockedOut));
+    assert.ok(battle.enemies.combatants.every((e) => e.knockedOut));
 
     // A winning round skips the round-end status step, so it logs no roundEnd
-    assert.strictEqual(battle.log.ofType(LOG_TYPES.ROUND_END).filter(e => e.round === battle.turn_count).length, 0);
+    assert.strictEqual(
+      battle.log.ofType(LOG_TYPES.ROUND_END).filter((e) => e.round === battle.turn_count).length,
+      0,
+    );
 
     // Nothing rolls between the last event and the drop: the battle ends on that RNG
     const entries = battle.log.entries;
-    const battleEndAt = entries.findIndex(e => e.type === LOG_TYPES.BATTLE_END);
+    const battleEndAt = entries.findIndex((e) => e.type === LOG_TYPES.BATTLE_END);
     const last = entries[battleEndAt - 1];
     const battleEnd = battle.result.rng.battleEnd;
     assert.strictEqual(battleEnd.count, last.rng);
@@ -119,9 +141,13 @@ describe('Battle end', () => {
     assert.strictEqual(battleEnd.original, 1);
 
     // B = the last busyUntil: wait passes B + 1, victory check B + 2, countdown to B + 33, drop B + 34
-    const lastBusy = Math.max(...battle.combatants.slice(1).map(c => c.busyUntil));
+    const lastBusy = Math.max(...battle.combatants.slice(1).map((c) => c.busyUntil));
     assert.deepStrictEqual(entries[battleEndAt], {
-      type: LOG_TYPES.BATTLE_END, round: battle.turn_count, tick: lastBusy + 34, rng: last.rng, detail: BATTLE_STATUS.WON,
+      type: LOG_TYPES.BATTLE_END,
+      round: battle.turn_count,
+      tick: lastBusy + 34,
+      rng: last.rng,
+      detail: BATTLE_STATUS.WON,
     });
     assert.strictEqual(entries[battleEndAt + 1].type, 'drop');
     assert.strictEqual(entries[battleEndAt + 1].tick, lastBusy + 34);
@@ -181,7 +207,7 @@ describe('Battle end', () => {
 
 describe('Battle end drop', () => {
   /** @param {number} seed */
-  const won = seed => {
+  const won = (seed) => {
     const battle = winningBattle([], seed);
     playUntilOver(battle, [ATTACK, ATTACK]);
     battle.finish();
@@ -196,7 +222,10 @@ describe('Battle end drop', () => {
 
       // Same roll as calculateDrop from the battle-end RNG, on a fresh copy of the formation
       const rng = new RNG(seed).next(battleEnd.count);
-      const drop = new EnemyParty([new Enemy(ENEMY_KEYS.FURFUR), new Enemy(ENEMY_KEYS.FURFUR)]).calculateDrop(rng);
+      const drop = new EnemyParty([
+        new Enemy(ENEMY_KEYS.FURFUR),
+        new Enemy(ENEMY_KEYS.FURFUR),
+      ]).calculateDrop(rng);
       assert.strictEqual(battle.result.drop, drop);
       assert.deepStrictEqual(afterDrop, rng.snapshot());
       assert.deepStrictEqual(battle.rng.snapshot(), afterDrop);
@@ -209,7 +238,12 @@ describe('Battle end drop', () => {
     assert.strictEqual(battle.result.drop, null);
     assert.strictEqual(afterDrop.count - battleEnd.count, 3);
     const [entry] = battle.log.ofType(LOG_TYPES.DROP);
-    assert.deepStrictEqual(entry, { type: LOG_TYPES.DROP, round: 1, tick: battle.turn.tick, rng: afterDrop.count });
+    assert.deepStrictEqual(entry, {
+      type: LOG_TYPES.DROP,
+      round: 1,
+      tick: battle.turn.tick,
+      rng: afterDrop.count,
+    });
     assert.match(battle.log.format(), /No drop$/m);
   });
 
@@ -218,9 +252,15 @@ describe('Battle end drop', () => {
     const { battleEnd, afterDrop } = battle.result.rng;
     assert.strictEqual(battle.result.drop, ITEMS.MEDICINE);
     assert.strictEqual(afterDrop.count - battleEnd.count, 2);
-    assert.deepStrictEqual(battle.log.ofType(LOG_TYPES.DROP), [{
-      type: LOG_TYPES.DROP, round: 1, tick: battle.turn.tick, rng: afterDrop.count, detail: 'Medicine',
-    }]);
+    assert.deepStrictEqual(battle.log.ofType(LOG_TYPES.DROP), [
+      {
+        type: LOG_TYPES.DROP,
+        round: 1,
+        tick: battle.turn.tick,
+        rng: afterDrop.count,
+        detail: 'Medicine',
+      },
+    ]);
     assert.match(battle.log.format(), /Dropped Medicine$/m);
   });
 
@@ -238,7 +278,7 @@ describe('Battle end EXP', () => {
    */
   const won = ({ seed = NO_DROP_SEED, exp = 0 } = {}) => {
     const battle = winningBattle([], seed);
-    battle.party.combatants.forEach(c => c.setEXP(exp));
+    battle.party.combatants.forEach((c) => c.setEXP(exp));
     playUntilOver(battle, [ATTACK, ATTACK]);
     battle.finish();
     assert.strictEqual(battle.status, BATTLE_STATUS.WON);
@@ -249,26 +289,47 @@ describe('Battle end EXP', () => {
     const battle = won();
     const { rewards, rng } = battle.result;
     const furfurLVL = battle.enemies.combatants[0].LVL;
-    assert.deepStrictEqual(rewards.map(r => r.character), battle.party.combatants);
-    assert.deepStrictEqual(rewards.map(r => r.exp), [
-      calculateBattleEXP(40, [furfurLVL, furfurLVL], 2),
-      calculateBattleEXP(40, [furfurLVL, furfurLVL], 2),
-    ]);
-    assert.deepStrictEqual(battle.party.combatants.map(c => c.EXP), rewards.map(r => r.exp));
+    assert.deepStrictEqual(
+      rewards.map((r) => r.character),
+      battle.party.combatants,
+    );
+    assert.deepStrictEqual(
+      rewards.map((r) => r.exp),
+      [
+        calculateBattleEXP(40, [furfurLVL, furfurLVL], 2),
+        calculateBattleEXP(40, [furfurLVL, furfurLVL], 2),
+      ],
+    );
+    assert.deepStrictEqual(
+      battle.party.combatants.map((c) => c.EXP),
+      rewards.map((r) => r.exp),
+    );
 
     // No level-ups, so no rolls after the drop
-    assert.ok(rewards.every(r => r.levels === 0 && r.growths === null && r.fromLVL === 40));
+    assert.ok(rewards.every((r) => r.levels === 0 && r.growths === null && r.fromLVL === 40));
     assert.deepStrictEqual(rng.afterLevelUps, rng.afterDrop);
-    assert.deepStrictEqual(rewards.map(r => r.rng), [rng.afterDrop, rng.afterDrop]);
+    assert.deepStrictEqual(
+      rewards.map((r) => r.rng),
+      [rng.afterDrop, rng.afterDrop],
+    );
   });
 
   it('rolls level-ups in slot order on the live RNG, 7 rolls per level', () => {
     const battle = won({ exp: 999 });
     const { rewards, rng } = battle.result;
-    assert.deepStrictEqual(rewards.map(r => r.levels), [1, 1]);
-    assert.deepStrictEqual(battle.party.combatants.map(c => c.LVL), [41, 41]);
+    assert.deepStrictEqual(
+      rewards.map((r) => r.levels),
+      [1, 1],
+    );
+    assert.deepStrictEqual(
+      battle.party.combatants.map((c) => c.LVL),
+      [41, 41],
+    );
     assert.strictEqual(rng.afterLevelUps.count - rng.afterDrop.count, 14);
-    assert.deepStrictEqual(rewards.map(r => r.rng.count), [rng.afterDrop.count + 7, rng.afterDrop.count + 14]);
+    assert.deepStrictEqual(
+      rewards.map((r) => r.rng.count),
+      [rng.afterDrop.count + 7, rng.afterDrop.count + 14],
+    );
     assert.deepStrictEqual(battle.rng.snapshot(), rng.afterLevelUps);
 
     // Same rolls as levelling fresh copies from the post-drop RNG
@@ -279,15 +340,29 @@ describe('Battle end EXP', () => {
     });
   });
 
-  it('logs each member\'s EXP before their level-up rolls, and the level-up after', () => {
+  it("logs each member's EXP before their level-up rolls, and the level-up after", () => {
     const battle = won({ exp: 999 });
     const start = battle.result.rng.afterDrop.count;
-    const entries = battle.log.entries.slice(-4).map(({ type, actor, rng, amount, detail }) => ({ type, actor, rng, amount, detail }));
+    const entries = battle.log.entries
+      .slice(-4)
+      .map(({ type, actor, rng, amount, detail }) => ({ type, actor, rng, amount, detail }));
     assert.deepStrictEqual(entries, [
       { type: LOG_TYPES.EXP, actor: 'McDohl', rng: start, amount: 5, detail: undefined },
-      { type: LOG_TYPES.LEVEL_UP, actor: 'McDohl', rng: start + 7, amount: undefined, detail: 'LVL 40 -> 41' },
+      {
+        type: LOG_TYPES.LEVEL_UP,
+        actor: 'McDohl',
+        rng: start + 7,
+        amount: undefined,
+        detail: 'LVL 40 -> 41',
+      },
       { type: LOG_TYPES.EXP, actor: 'Gremio', rng: start + 7, amount: 5, detail: undefined },
-      { type: LOG_TYPES.LEVEL_UP, actor: 'Gremio', rng: start + 14, amount: undefined, detail: 'LVL 40 -> 41' },
+      {
+        type: LOG_TYPES.LEVEL_UP,
+        actor: 'Gremio',
+        rng: start + 14,
+        amount: undefined,
+        detail: 'LVL 40 -> 41',
+      },
     ]);
     assert.match(battle.log.format(), /McDohl gains 5 EXP\n.*McDohl levels up: LVL 40 -> 41\n/);
   });
@@ -300,8 +375,14 @@ describe('Battle end EXP', () => {
     battle.finish();
     assert.strictEqual(battle.status, BATTLE_STATUS.WON);
     const furfurLVL = battle.enemies.combatants[0].LVL;
-    assert.deepStrictEqual(battle.result.rewards.map(r => r.character.name), ['McDohl']);
-    assert.strictEqual(battle.result.rewards[0].exp, calculateBattleEXP(40, [furfurLVL, furfurLVL], 1));
+    assert.deepStrictEqual(
+      battle.result.rewards.map((r) => r.character.name),
+      ['McDohl'],
+    );
+    assert.strictEqual(
+      battle.result.rewards[0].exp,
+      calculateBattleEXP(40, [furfurLVL, furfurLVL], 1),
+    );
     assert.strictEqual(battle.party.combatants[1].EXP, 0);
   });
 
@@ -318,7 +399,10 @@ describe('Battle end EXP', () => {
   it('clone points the rewards at its own party', () => {
     const battle = won({ exp: 999 });
     const copy = battle.clone();
-    assert.deepStrictEqual(copy.result.rewards.map(r => r.exp), battle.result.rewards.map(r => r.exp));
+    assert.deepStrictEqual(
+      copy.result.rewards.map((r) => r.exp),
+      battle.result.rewards.map((r) => r.exp),
+    );
     copy.result.rewards.forEach((reward, i) => {
       assert.strictEqual(reward.character, copy.party.combatants[i]);
       assert.notStrictEqual(reward.character, battle.party.combatants[i]);
@@ -378,7 +462,11 @@ describe('Battle.finish', () => {
     const count = battle.rng.getCount();
     const { status, result } = battle.finish();
     assert.strictEqual(status, BATTLE_STATUS.LOST);
-    assert.deepStrictEqual(result, { drop: null, rewards: [], rng: { battleEnd: battle.rng.snapshot() } });
+    assert.deepStrictEqual(result, {
+      drop: null,
+      rewards: [],
+      rng: { battleEnd: battle.rng.snapshot() },
+    });
     assert.strictEqual(battle.rng.getCount(), count);
   });
 });
@@ -409,7 +497,10 @@ describe('Battle.run finish option', () => {
 
   it('returns in progress with no result when the planned rounds run out first', () => {
     const battle = winningBattle([[DEFEND, DEFEND]]);
-    assert.deepStrictEqual(battle.run({ finish: true }), { status: BATTLE_STATUS.IN_PROGRESS, result: null });
+    assert.deepStrictEqual(battle.run({ finish: true }), {
+      status: BATTLE_STATUS.IN_PROGRESS,
+      result: null,
+    });
     assert.strictEqual(battle.turn_count, 1);
   });
 });

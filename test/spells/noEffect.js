@@ -15,24 +15,28 @@ import { applySpell } from '../../lib/Game/Magic/Behavior.js';
 // out (MP spent, RNG burned for the animation) but no stat, status or HP changes, on either side.
 // (Their decompiled effects are x1.5 on rec+0x42 for the two Guardians, x0.8 on rec+0x36 for Fog.)
 
-const makeCleo = () => new Character(CHARACTER_KEYS.CLEO)
-  .setLVL(22)
-  .setRune(RUNES.EARTH)
-  .setStats({ PWR: 67, SKL: 82, DEF: 75, SPD: 74, MGC: 93, LUK: 53, HP: 217 })
-  .rest();
+const makeCleo = () =>
+  new Character(CHARACTER_KEYS.CLEO)
+    .setLVL(22)
+    .setRune(RUNES.EARTH)
+    .setStats({ PWR: 67, SKL: 82, DEF: 75, SPD: 74, MGC: 93, LUK: 53, HP: 217 })
+    .rest();
 
-const makeGremio = () => new Character(CHARACTER_KEYS.GREMIO)
-  .setLVL(22)
-  .setStats({ PWR: 64, SKL: 68, DEF: 84, SPD: 49, MGC: 39, LUK: 66, HP: 201 })
-  .rest();
+const makeGremio = () =>
+  new Character(CHARACTER_KEYS.GREMIO)
+    .setLVL(22)
+    .setStats({ PWR: 64, SKL: 68, DEF: 84, SPD: 49, MGC: 39, LUK: 66, HP: 201 })
+    .rest();
 
 /** @param {Character | Enemy} c */
-const snapshot = c => JSON.stringify({ stats: c.stats, status: c.status, HP: c.HP, pending: c.pendingDamage });
+const snapshot = (c) =>
+  JSON.stringify({ stats: c.stats, status: c.status, HP: c.HP, pending: c.pendingDamage });
 
 describe('Spells that do nothing', () => {
   for (const spell of [SPELLS.CLAY_GUARDIAN, SPELLS.GUARDIAN_EARTH, SPELLS.FOG_OF_DECEPTION]) {
     it(`${spell.name} applies and changes nothing`, () => {
-      const cleo = makeCleo(), gremio = makeGremio();
+      const cleo = makeCleo(),
+        gremio = makeGremio();
       const kobold = new Enemy(ENEMY_KEYS.KOBOLD_SWORD);
       const party = new PlayerParty([cleo, gremio]);
       const enemies = new EnemyParty([kobold]);
@@ -46,7 +50,8 @@ describe('Spells that do nothing', () => {
   }
 
   it('Clay Guardian in a battle round spends MP and leaves the stats alone', () => {
-    const cleo = makeCleo(), gremio = makeGremio();
+    const cleo = makeCleo(),
+      gremio = makeGremio();
     const mpBefore = cleo.MP[0];
     const defBefore = gremio.stats.DEF;
     const battle = new Battle({

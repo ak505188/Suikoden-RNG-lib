@@ -30,50 +30,61 @@ const makeCleo = () => {
   return cleo;
 };
 
-const makeGremio = () => new Character(CHARACTER_KEYS.GREMIO)
-  .setLVL(22)
-  .setStats({ PWR: 64, SKL: 68, DEF: 84, SPD: 49, MGC: 39, LUK: 66, HP: 201 })
-  .rest();
+const makeGremio = () =>
+  new Character(CHARACTER_KEYS.GREMIO)
+    .setLVL(22)
+    .setStats({ PWR: 64, SKL: 68, DEF: 84, SPD: 49, MGC: 39, LUK: 66, HP: 201 })
+    .rest();
 
 /** @param {Character} c */
-const knockOut = c => {
+const knockOut = (c) => {
   c.setHP(0);
   c.die(0);
   return c;
 };
 
 /** @param {Character[]} members @returns {boolean} */
-const cast = members => {
+const cast = (members) => {
   const party = new PlayerParty(members);
-  const applied = applySpell({ actor: members[0], spell: SPELLS.MOTHER_OCEAN, party, enemies: new EnemyParty([]), rng: new RNG(1) });
-  members.forEach(c => c.commitPendingDamage());
+  const applied = applySpell({
+    actor: members[0],
+    spell: SPELLS.MOTHER_OCEAN,
+    party,
+    enemies: new EnemyParty([]),
+    rng: new RNG(1),
+  });
+  members.forEach((c) => c.commitPendingDamage());
   return applied;
 };
 
 describe('Mother Ocean effect', () => {
   it('fully heals every member, whatever their HP', () => {
-    const cleo = makeCleo().setHP(10), gremio = makeGremio().setHP(150);
+    const cleo = makeCleo().setHP(10),
+      gremio = makeGremio().setHP(150);
     assert.strictEqual(cast([cleo, gremio]), true);
     assert.strictEqual(cleo.HP, 217);
     assert.strictEqual(gremio.HP, 201);
   });
 
   it('revives a downed member at full HP', () => {
-    const cleo = makeCleo(), gremio = knockOut(makeGremio());
+    const cleo = makeCleo(),
+      gremio = knockOut(makeGremio());
     cast([cleo, gremio]);
     assert.strictEqual(gremio.knockedOut, false);
     assert.strictEqual(gremio.HP, 201);
   });
 
   it("doesn't reach a member who floated away", () => {
-    const cleo = makeCleo(), gremio = makeGremio().setHP(20);
+    const cleo = makeCleo(),
+      gremio = makeGremio().setHP(20);
     gremio.removedFromFight = true;
     cast([cleo, gremio]);
     assert.strictEqual(gremio.HP, 20);
   });
 
   it("can't change an HP Locked member's HP", () => {
-    const cleo = makeCleo(), gremio = makeGremio().setHP(20);
+    const cleo = makeCleo(),
+      gremio = makeGremio().setHP(20);
     gremio.lockHP();
     cast([cleo, gremio]);
     assert.strictEqual(gremio.HP, 20);
@@ -89,29 +100,33 @@ describe('Mother Ocean effect', () => {
 
 describe('Mother Ocean in a battle round', () => {
   /** @param {Character[]} party */
-  const makeBattle = party => new Battle({
-    party: new PlayerParty(party),
-    enemies: new EnemyParty([new Enemy(ENEMY_KEYS.KOBOLD_SWORD)]),
-    rng: new RNG(0x12345678),
-    turns: [],
-  });
+  const makeBattle = (party) =>
+    new Battle({
+      party: new PlayerParty(party),
+      enemies: new EnemyParty([new Enemy(ENEMY_KEYS.KOBOLD_SWORD)]),
+      rng: new RNG(0x12345678),
+      turns: [],
+    });
 
   it('spends MP, revives the downed member and logs it', () => {
-    const cleo = makeCleo(), gremio = knockOut(makeGremio());
+    const cleo = makeCleo(),
+      gremio = knockOut(makeGremio());
     const mpBefore = cleo.MP[MOTHER_OCEAN_SLOT];
     const battle = makeBattle([cleo, gremio]);
     battle.playTurn([{ type: ACTION_TYPES.RUNE, slot: MOTHER_OCEAN_SLOT }]);
     assert.strictEqual(cleo.MP[MOTHER_OCEAN_SLOT], mpBefore - 1);
-    const revive = battle.log.entries.find(e => e.type === LOG_TYPES.REVIVE);
+    const revive = battle.log.entries.find((e) => e.type === LOG_TYPES.REVIVE);
     assert.strictEqual(revive?.target, gremio.label);
     assert.strictEqual(revive?.detail, 'Mother Ocean');
   });
 
   it('is planned once, with no target', () => {
-    const cleo = makeCleo(), gremio = makeGremio();
+    const cleo = makeCleo(),
+      gremio = makeGremio();
     const battle = makeBattle([cleo, gremio]);
-    const actions = characterActions(cleo, battle)
-      .filter(a => a.type === ACTION_TYPES.RUNE && a.slot === MOTHER_OCEAN_SLOT);
+    const actions = characterActions(cleo, battle).filter(
+      (a) => a.type === ACTION_TYPES.RUNE && a.slot === MOTHER_OCEAN_SLOT,
+    );
     assert.strictEqual(actions.length, 1);
     assert.strictEqual(actions[0].target, undefined);
   });

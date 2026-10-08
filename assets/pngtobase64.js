@@ -1,11 +1,10 @@
 import fs from 'fs';
 
-
 fs.readdir('./png', function (err, files) {
   const enemies = {};
 
   if (err) {
-    console.error("Could not list the directory.", err);
+    console.error('Could not list the directory.', err);
     process.exit(1);
   }
 
@@ -19,4 +18,3 @@ fs.readdir('./png', function (err, files) {
 
   console.log(JSON.stringify(enemies, null, 2));
 });
-

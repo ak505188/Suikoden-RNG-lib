@@ -43,9 +43,7 @@ describe('Zombie Dragon 1 turn tests', () => {
     .setStats({ PWR: 67, SKL: 82, DEF: 75, SPD: 74, MGC: 93, LUK: 53, HP: 217 })
     .rest();
 
-  const Tai_Ho = new Character(CHARACTER_KEYS.TAI_HO)
-    .levelUp(9);
-
+  const Tai_Ho = new Character(CHARACTER_KEYS.TAI_HO).levelUp(9);
 
   const Camille = new Character(CHARACTER_KEYS.CAMILLE)
     .setLVL(9)
@@ -107,7 +105,7 @@ describe('5 Bandit best version battle tests', () => {
   const Pahn = new Character(CHARACTER_KEYS.PAHN)
     .setLVL(5)
     .setEXP(500)
-    .setStats({ PWR: 39, SKL: 29, DEF: 31, SPD: 15, MGC: 7, LUK: 26, HP: 71 })
+    .setStats({ PWR: 39, SKL: 29, DEF: 31, SPD: 15, MGC: 7, LUK: 26, HP: 71 });
 
   const Cleo = new Character(CHARACTER_KEYS.CLEO)
     .setLVL(5)
@@ -118,7 +116,7 @@ describe('5 Bandit best version battle tests', () => {
   const Ted = new Character(CHARACTER_KEYS.TED)
     .setLVL(5)
     .setEXP(500)
-    .setStats({ PWR: 25, SKL: 33, DEF: 19, SPD: 28, MGC: 27, LUK: 25, HP: 56 })
+    .setStats({ PWR: 25, SKL: 33, DEF: 19, SPD: 28, MGC: 27, LUK: 25, HP: 56 });
 
   const party = new PlayerParty([McDohl, Gremio, Pahn, Cleo, Ted]);
   /** @param {Action[]} actions */
@@ -133,10 +131,10 @@ describe('5 Bandit best version battle tests', () => {
   const rng = new RNG(0x19).next(18159);
   const rngCloneForTest = rng.cloneKeepIndex();
 
-  it ('rng at start == 0x26aeb330', () => {
+  it('rng at start == 0x26aeb330', () => {
     assert.strictEqual(rngCloneForTest.getRNG(), 0x26aeb330);
   });
-  it ('rng count at start 18159', () => {
+  it('rng count at start 18159', () => {
     assert.strictEqual(rngCloneForTest.count, 18159);
   });
 
@@ -154,10 +152,10 @@ describe('5 Bandit best version battle tests', () => {
   // Not captured here: the next capture (Varkas & Sydonia, below) starts on this RNG, so it only
   // holds while nothing else rolls in between. Finished on a copy, so the checks here still see
   // the battle as it ended.
-  it('rng after drop == 0xf8b88416 (next battle\'s start)', () => {
+  it("rng after drop == 0xf8b88416 (next battle's start)", () => {
     assert.strictEqual(battle.clone().finish().result.rng.afterDrop.current, 0xf8b88416);
   });
-  it('rng count after drop 18217 (next battle\'s start)', () => {
+  it("rng count after drop 18217 (next battle's start)", () => {
     assert.strictEqual(battle.clone().finish().result.rng.afterDrop.count, 18217);
   });
   it('McDohl HP == 26', () => {
@@ -176,7 +174,9 @@ describe('5 Bandit best version battle tests', () => {
     assert.strictEqual(battle.party.getCombatantByName(Ted.name).HP, 56);
   });
   it('damage rolls match the capture', () => {
-    const damage = battle.log.ofType(LOG_TYPES.DAMAGE).map(({ tick, actor, target, amount }) => ({ tick, actor, target, amount }));
+    const damage = battle.log
+      .ofType(LOG_TYPES.DAMAGE)
+      .map(({ tick, actor, target, amount }) => ({ tick, actor, target, amount }));
     assert.deepStrictEqual(damage, [
       { tick: 77, actor: 'Cleo', target: 'Bandit (yellow) #1', amount: 63 }, // crit
       { tick: 82, actor: 'Ted', target: 'Bandit (green) #5', amount: 32 },
@@ -204,7 +204,7 @@ describe('Varkas & Sydonia after 5 bandit above', () => {
   const Pahn = new Character(CHARACTER_KEYS.PAHN)
     .setLVL(5)
     .setEXP(840)
-    .setStats({ PWR: 39, SKL: 29, DEF: 31, SPD: 15, MGC: 7, LUK: 26, HP: 71 })
+    .setStats({ PWR: 39, SKL: 29, DEF: 31, SPD: 15, MGC: 7, LUK: 26, HP: 71 });
 
   const Cleo = new Character(CHARACTER_KEYS.CLEO)
     .setLVL(5)
@@ -215,7 +215,7 @@ describe('Varkas & Sydonia after 5 bandit above', () => {
   const Ted = new Character(CHARACTER_KEYS.TED)
     .setLVL(5)
     .setEXP(840)
-    .setStats({ PWR: 25, SKL: 33, DEF: 19, SPD: 28, MGC: 27, LUK: 25, HP: 56 })
+    .setStats({ PWR: 25, SKL: 33, DEF: 19, SPD: 28, MGC: 27, LUK: 25, HP: 56 });
 
   const party = new PlayerParty([McDohl, Gremio, Pahn, Cleo, Ted]);
 
@@ -240,10 +240,10 @@ describe('Varkas & Sydonia after 5 bandit above', () => {
   const rng = new RNG(0x19).next(18217);
   const rngCloneForTest = rng.cloneKeepIndex();
 
-  it ('rng at start == 0xf8b88416', () => {
+  it('rng at start == 0xf8b88416', () => {
     assert.strictEqual(rngCloneForTest.getRNG(), 0xf8b88416);
   });
-  it ('rng count at start 18217', () => {
+  it('rng count at start 18217', () => {
     assert.strictEqual(rngCloneForTest.count, 18217);
   });
 
@@ -304,7 +304,7 @@ describe('Dragon tests', () => {
   const Valeria = new Character(CHARACTER_KEYS.VALERIA)
     .setLVL(28)
     .setEXP(150)
-    .setStats({ PWR: 94, SKL: 74, DEF: 90, SPD: 68, MGC: 65, LUK: 75, HP: 320 })
+    .setStats({ PWR: 94, SKL: 74, DEF: 90, SPD: 68, MGC: 65, LUK: 75, HP: 320 });
 
   const Gremio = new Character(CHARACTER_KEYS.GREMIO)
     .setLVL(25)
@@ -379,14 +379,14 @@ describe('Dragon tests', () => {
   const rng = new RNG(0x43).next(7750);
   const rngCloneForTest = rng.cloneKeepIndex();
 
-  it ('rng at start == 0x980a9e75', () => {
+  it('rng at start == 0x980a9e75', () => {
     assert.strictEqual(rngCloneForTest.getRNG(), 0x980a9e75);
   });
 
   const enemyParty = EnemyParty.fromFormation(AREAS.PANNU_YAKUTA.scripted[0]);
   const battle = new Battle({ party, enemies: enemyParty, rng, turns: [] });
 
-  const snapshots = actions.map(turn => {
+  const snapshots = actions.map((turn) => {
     battle.playTurn(turn);
     return Battle.snapshot(battle);
   });
@@ -478,12 +478,12 @@ describe('Golem 3 FurFur no force to test Medicine', () => {
   const Ted = new Character(CHARACTER_KEYS.TED)
     .setLVL(4)
     .setEXP(120)
-    .setStats({ PWR: 22, SKL: 30, DEF: 17, SPD: 24, MGC: 24, LUK: 23, HP: 46 })
+    .setStats({ PWR: 22, SKL: 30, DEF: 17, SPD: 24, MGC: 24, LUK: 23, HP: 46 });
 
   const Cleo = new Character(CHARACTER_KEYS.CLEO)
     .setLVL(4)
     .setEXP(120)
-    .setStats({ PWR: 20, SKL: 30, DEF: 24, SPD: 22, MGC: 32, LUK: 25, HP: 47 })
+    .setStats({ PWR: 20, SKL: 30, DEF: 24, SPD: 22, MGC: 32, LUK: 25, HP: 47 });
 
   const party = new PlayerParty([McDohl, Gremio, Pahn, Ted, Cleo]);
   const enemyParty = EnemyParty.fromFormation(AREAS.MAGICIANS_ISLAND.scripted[0]);
@@ -499,14 +499,14 @@ describe('Golem 3 FurFur no force to test Medicine', () => {
     { type: ACTION_TYPES.UNITE, uniteKey: UNITE_KEYS.TALISMAN },
     { type: ACTION_TYPES.UNITE, uniteKey: UNITE_KEYS.TALISMAN },
     { type: ACTION_TYPES.ITEM, itemKey: ITEM_KEYS.MEDICINE, target: 2 },
-    { type: ACTION_TYPES.DEFEND }
+    { type: ACTION_TYPES.DEFEND },
   ];
 
   /** @param {Action[]} actions */
   const actionsT2v1 = [
     { type: ACTION_TYPES.ATTACK },
-    { type: ACTION_TYPES.UNITE,  uniteKey: UNITE_KEYS.TALISMAN },
-    { type: ACTION_TYPES.UNITE,  uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.UNITE, uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.UNITE, uniteKey: UNITE_KEYS.TALISMAN },
     { type: ACTION_TYPES.DEFEND },
     { type: ACTION_TYPES.DEFEND },
   ];
@@ -517,13 +517,13 @@ describe('Golem 3 FurFur no force to test Medicine', () => {
     { type: ACTION_TYPES.UNITE, uniteKey: UNITE_KEYS.TALISMAN },
     { type: ACTION_TYPES.UNITE, uniteKey: UNITE_KEYS.TALISMAN },
     { type: ACTION_TYPES.ITEM, itemKey: ITEM_KEYS.MEDICINE, target: 2 },
-    { type: ACTION_TYPES.ATTACK }
+    { type: ACTION_TYPES.ATTACK },
   ];
 
   const actionsT2v2 = [
     { type: ACTION_TYPES.DEFEND },
-    { type: ACTION_TYPES.UNITE,  uniteKey: UNITE_KEYS.TALISMAN },
-    { type: ACTION_TYPES.UNITE,  uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.UNITE, uniteKey: UNITE_KEYS.TALISMAN },
+    { type: ACTION_TYPES.UNITE, uniteKey: UNITE_KEYS.TALISMAN },
     { type: ACTION_TYPES.DEFEND },
     { type: ACTION_TYPES.DEFEND },
   ];
@@ -531,12 +531,12 @@ describe('Golem 3 FurFur no force to test Medicine', () => {
   const actionsV1 = [actionsT1v1, actionsT2v1];
   const actionsV2 = [actionsT1v2, actionsT2v2];
 
-  const snapshotsV1 = actionsV1.map(turn => {
+  const snapshotsV1 = actionsV1.map((turn) => {
     battle1.playTurn(turn);
     return Battle.snapshot(battle1);
   });
 
-  const snapshotsV2 = actionsV2.map(turn => {
+  const snapshotsV2 = actionsV2.map((turn) => {
     battle2.playTurn(turn);
     return Battle.snapshot(battle2);
   });
@@ -619,15 +619,18 @@ describe('3 BonBon Celadon Urn fight', () => {
   ];
 
   /** @type {Round[]} */
-  const roundInputs = [
-    { command: ROUND_COMMANDS.RUN },
-    actionsT2
-  ]
+  const roundInputs = [{ command: ROUND_COMMANDS.RUN }, actionsT2];
 
   const rng = new RNG(0x30a82220).next(5419);
 
   const enemyParty = EnemyParty.fromFormation(AREAS.GREGMINSTER_AREA_1.encounters[1]);
-  const battle = new Battle({ party, enemies: enemyParty, rng, escapable: true, turns: roundInputs });
+  const battle = new Battle({
+    party,
+    enemies: enemyParty,
+    rng,
+    escapable: true,
+    turns: roundInputs,
+  });
 
   battle.run();
 
@@ -643,7 +646,6 @@ describe('3 BonBon Celadon Urn fight', () => {
   it('Pahn HP == 22', () => {
     assert.strictEqual(battle.party.getCombatantByName(Pahn.name).HP, 22);
   });
-
 
   describe('Post battle results', () => {
     const finishedBattle = battle.clone();
@@ -666,7 +668,7 @@ describe('3 BonBon Celadon Urn fight', () => {
 
     it('Pahn growths match game', () => {
       const pahnGrowths = { PWR: 3, SKL: 3, DEF: 3, SPD: 1, MGC: 1, LUK: 2, HP: 12 };
-      assert.deepStrictEqual(result.rewards[2].growths, pahnGrowths)
+      assert.deepStrictEqual(result.rewards[2].growths, pahnGrowths);
     });
   });
 
@@ -695,7 +697,7 @@ describe('3 BonBon Celadon Urn fight', () => {
     ];
 
     const battle3m1a = new Battle({ party: previousBattle.party, enemies, rng });
-    battle3m1a.playTurn(actionsT1)
+    battle3m1a.playTurn(actionsT1);
 
     describe('Turn 1 results', () => {
       it('rng count 1st round end == 5633', () => {
@@ -774,10 +776,10 @@ describe('3 BonBon Celadon Urn fight', () => {
         const battleWithResults = battleT2.clone();
         battleWithResults.finish();
         const result = battleWithResults.result;
-        it ('Dropped Holy Crystal', () => {
+        it('Dropped Holy Crystal', () => {
           assert.strictEqual(result.drop.id, ITEMS.HOLY_CRYSTAL.id);
         });
-        it ('RNG on drop == 5669', () => {
+        it('RNG on drop == 5669', () => {
           assert.strictEqual(result.rng.afterDrop.count, 5669);
         });
       });
@@ -790,11 +792,18 @@ describe('3 BonBon: COPY_ACTOR hold after a party crit, and victory -> drop timi
   // t86) isn't copied in until Gremio's recover starts (t85 + 88 = t173): copied t174, attacks t175.
   const D = { type: ACTION_TYPES.DEFEND };
   /** @param {number} target */
-  const A = target => ({ type: ACTION_TYPES.ATTACK, target });
+  const A = (target) => ({ type: ACTION_TYPES.ATTACK, target });
   /** @param {Action[]} round2 */
-  const play = round2 => {
-    const party = new PlayerParty([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.PAHN, CHARACTER_KEYS.CLEO, CHARACTER_KEYS.TED]
-      .map(key => new Character(key)));
+  const play = (round2) => {
+    const party = new PlayerParty(
+      [
+        CHARACTER_KEYS.MCDOHL,
+        CHARACTER_KEYS.GREMIO,
+        CHARACTER_KEYS.PAHN,
+        CHARACTER_KEYS.CLEO,
+        CHARACTER_KEYS.TED,
+      ].map((key) => new Character(key)),
+    );
     const battle = new Battle({
       party,
       enemies: EnemyParty.fromFormation(AREAS.GREGMINSTER_AREA_1.encounters[1]),
@@ -803,21 +812,27 @@ describe('3 BonBon: COPY_ACTOR hold after a party crit, and victory -> drop timi
       turns: [{ command: ROUND_COMMANDS.RUN }, round2],
     });
     battle.run({ finish: true });
-    const round2Entries = battle.log.entries.filter(e => e.round === 2);
+    const round2Entries = battle.log.entries.filter((e) => e.round === 2);
     /** @param {string} type @param {string} [actor] */
-    const tickOf = (type, actor) => round2Entries.find(e => e.type === type && (!actor || e.actor === actor)).tick;
+    const tickOf = (type, actor) =>
+      round2Entries.find((e) => e.type === type && (!actor || e.actor === actor)).tick;
     return { battle, tickOf };
   };
 
   describe('Gremio -> #2, Pahn -> #3, Ted -> #1', () => {
     const { battle, tickOf } = play([D, A(1), A(2), D, A(0)]);
-    it('Pahn attacks at t175 (held through Gremio\'s crit)', () => {
+    it("Pahn attacks at t175 (held through Gremio's crit)", () => {
       assert.strictEqual(tickOf(LOG_TYPES.ATTACK, 'Pahn'), 175);
     });
-    it('McDohl\'s turn comes at t176', () => {
-      assert.strictEqual(battle.log.entries.find(e => e.round === 2 && e.type === LOG_TYPES.TURN && e.actor === 'McDohl').tick, 176);
+    it("McDohl's turn comes at t176", () => {
+      assert.strictEqual(
+        battle.log.entries.find(
+          (e) => e.round === 2 && e.type === LOG_TYPES.TURN && e.actor === 'McDohl',
+        ).tick,
+        176,
+      );
     });
-    it('Pahn\'s damage roll is at t231', () => {
+    it("Pahn's damage roll is at t231", () => {
       assert.strictEqual(tickOf(LOG_TYPES.DAMAGE, 'Pahn'), 231);
     });
     it('drops at t407 (B + 34), on RNG 5501', () => {

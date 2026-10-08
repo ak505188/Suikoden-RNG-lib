@@ -1,7 +1,13 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import RNG from '../../lib/rng.js';
-import { hellRand, blackShadowWindRand, blackShadowBatsRand, judgementRand, deadlyFingertipsRand } from '../../lib/Game/Magic/SpellRNG/SoulEater.js';
+import {
+  hellRand,
+  blackShadowWindRand,
+  blackShadowBatsRand,
+  judgementRand,
+  deadlyFingertipsRand,
+} from '../../lib/Game/Magic/SpellRNG/SoulEater.js';
 
 const hellCases = [
   { rng: 0x333db67a, calls: 10972 }, // TedHell.State
@@ -29,13 +35,13 @@ const hellCases = [
   { rng: 0xabcdef01, calls: 11192 },
 ];
 
-describe("Hell Rand tests", () => {
+describe('Hell Rand tests', () => {
   for (const { rng, calls } of hellCases) {
     const r = new RNG(rng);
     it(`Should be ${calls} for ${rng.toString(16)}`, () => {
       assert.strictEqual(hellRand(r).calls, calls);
     });
-  };
+  }
 });
 
 const blackShadowWindCases = [
@@ -86,23 +92,23 @@ const blackShadowBatsCases = [
   { rng: 0xabcdef01, calls: 9876 },
 ];
 
-describe("Black Shadow Rand tests", () => {
-  describe("Wind savestate", () => {
+describe('Black Shadow Rand tests', () => {
+  describe('Wind savestate', () => {
     for (const { rng, calls } of blackShadowWindCases) {
       const r = new RNG(rng);
       it(`Should be ${calls} for ${rng.toString(16)}`, () => {
         assert.strictEqual(blackShadowWindRand(r).calls, calls);
       });
-    };
+    }
   });
 
-  describe("Bats savestate", () => {
+  describe('Bats savestate', () => {
     for (const { rng, calls } of blackShadowBatsCases) {
       const r = new RNG(rng);
       it(`Should be ${calls} for ${rng.toString(16)}`, () => {
         assert.strictEqual(blackShadowBatsRand(r).calls, calls);
       });
-    };
+    }
   });
 });
 
@@ -136,13 +142,13 @@ const judgementCases = [
   { rng: 0x2d6210d6, calls: 164 },
 ];
 
-describe("Judgement Rand tests", () => {
+describe('Judgement Rand tests', () => {
   for (const { rng, calls } of judgementCases) {
     const r = new RNG(rng);
     it(`Should be ${calls} for ${rng.toString(16)}`, () => {
       assert.strictEqual(judgementRand(r).calls, calls);
     });
-  };
+  }
 });
 
 // McDohl's own Soul Eater Rune slot 1 (Deadly Fingertips) on SpellDuration.State. Start seeds are the RNG value
@@ -172,25 +178,30 @@ const deadlyFingertipsCases = [
   { rng: 0x2d6210d6, calls: 1105 },
 ];
 
-describe("Deadly Fingertips Rand tests", () => {
+describe('Deadly Fingertips Rand tests', () => {
   for (const { rng, calls } of deadlyFingertipsCases) {
     it(`Should be ${calls} for ${rng.toString(16)}`, () => {
       const r = new RNG(rng);
       assert.strictEqual(deadlyFingertipsRand(r).calls, calls);
       assert.strictEqual(r.count, calls);
     });
-  };
+  }
 });
 
-describe("Deadly Fingertips spellRand", () => {
-  it("burns the same calls as deadlyFingertipsRand, memoized or not", async () => {
+describe('Deadly Fingertips spellRand', () => {
+  it('burns the same calls as deadlyFingertipsRand, memoized or not', async () => {
     const { spellRand } = await import('../../lib/Game/Magic/Behavior.js');
     const { SPELLS } = await import('../../lib/Game/Magic/Spells.js');
     const { EnemyParty, PlayerParty } = await import('../../lib/Game/Battle/Party.js');
     for (const { rng, calls } of deadlyFingertipsCases.slice(0, 3)) {
       for (let pass = 0; pass < 2; pass++) {
         const r = new RNG(rng);
-        const burned = spellRand({ spell: SPELLS.DEADLY_FINGERTIPS, rng: r, party: new PlayerParty([]), enemies: new EnemyParty([]) });
+        const burned = spellRand({
+          spell: SPELLS.DEADLY_FINGERTIPS,
+          rng: r,
+          party: new PlayerParty([]),
+          enemies: new EnemyParty([]),
+        });
         assert.strictEqual(burned, calls);
         assert.strictEqual(r.count, calls);
       }

@@ -12,8 +12,10 @@ import { cDiv } from '../lib/lib.js';
 import RNG from '../lib/rng.js';
 
 const member = (/** @type {number} */ MGC, rune = null) => {
-  const c = new Character(CHARACTER_KEYS.GREMIO).setLVL(10)
-    .setStats({ PWR: 40, SKL: 30, DEF: 20, SPD: 20, MGC, LUK: 20, HP: 400 }).rest();
+  const c = new Character(CHARACTER_KEYS.GREMIO)
+    .setLVL(10)
+    .setStats({ PWR: 40, SKL: 30, DEF: 20, SPD: 20, MGC, LUK: 20, HP: 400 })
+    .rest();
   if (rune) c.rune = rune;
   return c;
 };
@@ -24,30 +26,49 @@ const variance = (/** @type {number} */ base, /** @type {number} */ roll) =>
 
 describe('Queen Ant (Mt. Seifu) AI', () => {
   const queen = new Enemy(ENEMY_KEYS.QUEEN_ANT_BOSS);
-  const params = (/** @type {PlayerParty} */ party, /** @type {RNG} */ rng) =>
-    ({ party, enemies: new EnemyParty([queen]), rng, tick: 0, turn_count: 1 });
+  const params = (/** @type {PlayerParty} */ party, /** @type {RNG} */ rng) => ({
+    party,
+    enemies: new EnemyParty([queen]),
+    rng,
+    tick: 0,
+    turn_count: 1,
+  });
 
   it('costs one roll and picks AoE Earth below 0x33', () => {
     const party = new PlayerParty([member(10)]);
     for (let seed = 1; seed < 200; seed++) {
       const rng = new RNG(seed);
       const roll = new RNG(seed).next().rand;
-      const choice = /** @type {{ move: unknown }} */ (ENEMY_AI[ENEMY_KEYS.QUEEN_ANT_BOSS](queen, params(party, rng)));
+      const choice = /** @type {{ move: unknown }} */ (
+        ENEMY_AI[ENEMY_KEYS.QUEEN_ANT_BOSS](queen, params(party, rng))
+      );
       assert.strictEqual(rng.getCount(), 1);
-      if (cDiv(roll * 100, 32767) < 0x33) assert.strictEqual(choice.move, ENEMY_MOVES.QUEEN_ANT_AOE_EARTH);
+      if (cDiv(roll * 100, 32767) < 0x33)
+        assert.strictEqual(choice.move, ENEMY_MOVES.QUEEN_ANT_AOE_EARTH);
       else assert.strictEqual(choice.move, ENEMY_MOVES.QUEEN_ANT_COMMAND_ANTS);
     }
   });
 
   it('AoE Earth: one roll per living member, MGC 55 minus theirs, halved for Earth / Soul Eater only', () => {
-    const members = [member(10), member(20, RUNES.EARTH), member(36), member(7, RUNES.SOUL_EATER), member(0)];
+    const members = [
+      member(10),
+      member(20, RUNES.EARTH),
+      member(36),
+      member(7, RUNES.SOUL_EATER),
+      member(0),
+    ];
     members[2].die(0); // dead: costs nothing
     const party = new PlayerParty(members);
     const rng = new RNG(0x1234);
     const expected = new RNG(0x1234);
     ENEMY_MOVES.QUEEN_ANT_AOE_EARTH.apply(queen, { party, rng });
     assert.strictEqual(rng.getCount(), 4);
-    for (const [i, halved] of /** @type {[number, boolean][]} */ ([[0, false], [1, true], [3, true], [4, false]])) {
+    for (const [i, halved] of /** @type {[number, boolean][]} */ ([
+      [0, false],
+      [1, true],
+      [3, true],
+      [4, false],
+    ])) {
       const full = variance(55 - members[i].MGC, expected.next().rand);
       assert.strictEqual(members[i].pendingDamage, halved ? cDiv(full, 2) : full, `slot ${i + 1}`);
     }
@@ -72,7 +93,11 @@ describe('Queen Ant (Mt. Seifu) turn timing', () => {
   /** A round of one defending member against the Queen alone; her AI roll tick and the log */
   const round = (/** @type {number} */ seed) => {
     const party = [member(10), member(10)];
-    const battle = new Battle({ party: new PlayerParty(party), enemies: new EnemyParty([new Enemy(ENEMY_KEYS.QUEEN_ANT_BOSS)]), rng: new RNG(seed) });
+    const battle = new Battle({
+      party: new PlayerParty(party),
+      enemies: new EnemyParty([new Enemy(ENEMY_KEYS.QUEEN_ANT_BOSS)]),
+      rng: new RNG(seed),
+    });
     battle.playTurn([{ type: 'Defend' }, { type: 'Defend' }]);
     return battle;
   };

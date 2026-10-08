@@ -20,19 +20,21 @@ import { applySpell } from '../../lib/Game/Magic/Behavior.js';
 // ActionTag from dying, so they don't act again that round. UNVERIFIED: that statuses are left alone.
 const YELL_SLOT = 1;
 
-const makeCleo = () => new Character(CHARACTER_KEYS.CLEO)
-  .setLVL(22)
-  .setRune(RUNES.RESURRECTION)
-  .setStats({ PWR: 67, SKL: 82, DEF: 75, SPD: 74, MGC: 93, LUK: 53, HP: 217 })
-  .rest();
+const makeCleo = () =>
+  new Character(CHARACTER_KEYS.CLEO)
+    .setLVL(22)
+    .setRune(RUNES.RESURRECTION)
+    .setStats({ PWR: 67, SKL: 82, DEF: 75, SPD: 74, MGC: 93, LUK: 53, HP: 217 })
+    .rest();
 
-const makeGremio = () => new Character(CHARACTER_KEYS.GREMIO)
-  .setLVL(22)
-  .setStats({ PWR: 64, SKL: 68, DEF: 84, SPD: 49, MGC: 39, LUK: 66, HP: 201 })
-  .rest();
+const makeGremio = () =>
+  new Character(CHARACTER_KEYS.GREMIO)
+    .setLVL(22)
+    .setStats({ PWR: 64, SKL: 68, DEF: 84, SPD: 49, MGC: 39, LUK: 66, HP: 201 })
+    .rest();
 
 /** @param {Character} c */
-const knockOut = c => {
+const knockOut = (c) => {
   c.setHP(0);
   c.die(0);
   return c;
@@ -40,9 +42,17 @@ const knockOut = c => {
 
 describe('Yell effect', () => {
   it('revives a downed ally at a third of their max HP, rounded down', () => {
-    const cleo = makeCleo(), gremio = knockOut(makeGremio());
+    const cleo = makeCleo(),
+      gremio = knockOut(makeGremio());
     const party = new PlayerParty([cleo, gremio]);
-    const applied = applySpell({ actor: cleo, spell: SPELLS.YELL, target: gremio, party, enemies: new EnemyParty([]), rng: new RNG(1) });
+    const applied = applySpell({
+      actor: cleo,
+      spell: SPELLS.YELL,
+      target: gremio,
+      party,
+      enemies: new EnemyParty([]),
+      rng: new RNG(1),
+    });
     gremio.commitPendingDamage();
     assert.strictEqual(applied, true);
     assert.strictEqual(gremio.knockedOut, false);
@@ -50,63 +60,96 @@ describe('Yell effect', () => {
   });
 
   it('keeps the revived member from acting again that round', () => {
-    const cleo = makeCleo(), gremio = knockOut(makeGremio());
-    applySpell({ actor: cleo, spell: SPELLS.YELL, target: gremio, party: new PlayerParty([cleo, gremio]), enemies: new EnemyParty([]), rng: new RNG(1) });
+    const cleo = makeCleo(),
+      gremio = knockOut(makeGremio());
+    applySpell({
+      actor: cleo,
+      spell: SPELLS.YELL,
+      target: gremio,
+      party: new PlayerParty([cleo, gremio]),
+      enemies: new EnemyParty([]),
+      rng: new RNG(1),
+    });
     assert.strictEqual(gremio.acted, true);
   });
 
   it('does nothing to a standing ally', () => {
-    const cleo = makeCleo(), gremio = makeGremio().setHP(50);
-    const applied = applySpell({ actor: cleo, spell: SPELLS.YELL, target: gremio, party: new PlayerParty([cleo, gremio]), enemies: new EnemyParty([]), rng: new RNG(1) });
+    const cleo = makeCleo(),
+      gremio = makeGremio().setHP(50);
+    const applied = applySpell({
+      actor: cleo,
+      spell: SPELLS.YELL,
+      target: gremio,
+      party: new PlayerParty([cleo, gremio]),
+      enemies: new EnemyParty([]),
+      rng: new RNG(1),
+    });
     gremio.commitPendingDamage();
     assert.strictEqual(applied, true);
     assert.strictEqual(gremio.HP, 50);
   });
 
   it('burns no RNG of its own beyond the animation', () => {
-    const cleo = makeCleo(), gremio = knockOut(makeGremio());
+    const cleo = makeCleo(),
+      gremio = knockOut(makeGremio());
     const rng = new RNG(1);
-    applySpell({ actor: cleo, spell: SPELLS.YELL, target: gremio, party: new PlayerParty([cleo, gremio]), enemies: new EnemyParty([]), rng });
+    applySpell({
+      actor: cleo,
+      spell: SPELLS.YELL,
+      target: gremio,
+      party: new PlayerParty([cleo, gremio]),
+      enemies: new EnemyParty([]),
+      rng,
+    });
     assert.strictEqual(rng.count, 0);
   });
 });
 
 describe('Yell in a battle round', () => {
   /** @param {Character[]} party */
-  const makeBattle = party => new Battle({
-    party: new PlayerParty(party),
-    enemies: new EnemyParty([new Enemy(ENEMY_KEYS.KOBOLD_SWORD)]),
-    rng: new RNG(0x12345678),
-    turns: [],
-  });
+  const makeBattle = (party) =>
+    new Battle({
+      party: new PlayerParty(party),
+      enemies: new EnemyParty([new Enemy(ENEMY_KEYS.KOBOLD_SWORD)]),
+      rng: new RNG(0x12345678),
+      turns: [],
+    });
 
   it('revives the downed member, spends MP and logs the revive', () => {
-    const cleo = makeCleo(), gremio = knockOut(makeGremio());
+    const cleo = makeCleo(),
+      gremio = knockOut(makeGremio());
     const mpBefore = cleo.MP[YELL_SLOT];
     const battle = makeBattle([cleo, gremio]);
     battle.playTurn([{ type: ACTION_TYPES.RUNE, slot: YELL_SLOT, target: 1 }]);
     assert.strictEqual(cleo.MP[YELL_SLOT], mpBefore - 1);
-    const revive = battle.log.entries.find(e => e.type === LOG_TYPES.REVIVE);
+    const revive = battle.log.entries.find((e) => e.type === LOG_TYPES.REVIVE);
     assert.strictEqual(revive?.target, gremio.label);
     assert.strictEqual(revive?.detail, 'Yell');
   });
 
   it('goes through on a standing target: MP spent, the animation burned, nothing revived or healed', () => {
-    const cleo = makeCleo(), gremio = makeGremio();
+    const cleo = makeCleo(),
+      gremio = makeGremio();
     const mpBefore = cleo.MP[YELL_SLOT];
     const battle = makeBattle([cleo, gremio]);
     const rngBefore = battle.rng.count;
     battle.playTurn([{ type: ACTION_TYPES.RUNE, slot: YELL_SLOT, target: 1 }]);
     assert.strictEqual(cleo.MP[YELL_SLOT], mpBefore - 1);
     assert.ok(battle.rng.count - rngBefore >= 33, 'Yell burns its 33 sparkle calls');
-    assert.strictEqual(battle.log.entries.some(e => e.type === LOG_TYPES.REVIVE), false);
-    assert.strictEqual(battle.log.entries.some(e => e.type === LOG_TYPES.CAST), true);
+    assert.strictEqual(
+      battle.log.entries.some((e) => e.type === LOG_TYPES.REVIVE),
+      false,
+    );
+    assert.strictEqual(
+      battle.log.entries.some((e) => e.type === LOG_TYPES.CAST),
+      true,
+    );
   });
 });
 
 describe('Yell action planning', () => {
   /** @param {Character[]} party */
-  const yellTargets = party => {
+  const yellTargets = (party) => {
     const battle = new Battle({
       party: new PlayerParty(party),
       enemies: new EnemyParty([new Enemy(ENEMY_KEYS.KOBOLD_SWORD)]),
@@ -114,8 +157,8 @@ describe('Yell action planning', () => {
       turns: [],
     });
     return characterActions(party[0], battle)
-      .filter(a => a.type === ACTION_TYPES.RUNE && a.slot === YELL_SLOT)
-      .map(a => a.target);
+      .filter((a) => a.type === ACTION_TYPES.RUNE && a.slot === YELL_SLOT)
+      .map((a) => a.target);
   };
 
   it('plans every member in reach, standing or downed', () => {

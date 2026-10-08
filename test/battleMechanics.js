@@ -17,29 +17,37 @@ const HIT_SEED = 1;
 const MISS_SEED = 7;
 
 /** @param {number} [SKL] */
-const makeGremio = (SKL = 68) => new Character(CHARACTER_KEYS.GREMIO)
-  .setLVL(22)
-  .setStats({ PWR: 64, SKL, DEF: 84, SPD: 49, MGC: 39, LUK: 66, HP: 201 })
-  .rest();
+const makeGremio = (SKL = 68) =>
+  new Character(CHARACTER_KEYS.GREMIO)
+    .setLVL(22)
+    .setStats({ PWR: 64, SKL, DEF: 84, SPD: 49, MGC: 39, LUK: 66, HP: 201 })
+    .rest();
 
 /** @param {number} SKL */
-const makeMcDohl = SKL => new Character(CHARACTER_KEYS.MCDOHL)
-  .setLVL(22)
-  .setStats({ PWR: 76, SKL, DEF: 74, SPD: 86, MGC: 80, LUK: 79, HP: 244 })
-  .rest();
+const makeMcDohl = (SKL) =>
+  new Character(CHARACTER_KEYS.MCDOHL)
+    .setLVL(22)
+    .setStats({ PWR: 76, SKL, DEF: 74, SPD: 86, MGC: 80, LUK: 79, HP: 244 })
+    .rest();
 
-const makeCleo = () => new Character(CHARACTER_KEYS.CLEO)
-  .setLVL(22)
-  .setRune(RUNES.FIRE)
-  .setStats({ PWR: 67, SKL: 82, DEF: 75, SPD: 74, MGC: 93, LUK: 53, HP: 217 })
-  .rest();
+const makeCleo = () =>
+  new Character(CHARACTER_KEYS.CLEO)
+    .setLVL(22)
+    .setRune(RUNES.FIRE)
+    .setStats({ PWR: 67, SKL: 82, DEF: 75, SPD: 74, MGC: 93, LUK: 53, HP: 217 })
+    .rest();
 
 /**
  * A battle at tick 0 with no rounds, for calling resolvers directly.
  * @param {Character[]} party @param {Enemy[]} enemies @param {number} seed
  */
 const makeBattle = (party, enemies, seed) =>
-  new Battle({ party: new PlayerParty(party), enemies: new EnemyParty(enemies), rng: new RNG(seed), turns: [] });
+  new Battle({
+    party: new PlayerParty(party),
+    enemies: new EnemyParty(enemies),
+    rng: new RNG(seed),
+    turns: [],
+  });
 
 /**
  * Runs the round driver's steps 2-3 and the death check for ticks from..to, like Battle.tick.
@@ -58,7 +66,8 @@ const runTicks = (battle, from, to, onTick = () => {}) => {
 
 describe('Party basic attack', () => {
   it('hit: damage roll at +64, target free at +100, attacker free at +120 (Gremio -> Zombie Dragon)', () => {
-    const gremio = makeGremio(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
+    const gremio = makeGremio(),
+      dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     const battle = makeBattle([gremio], [dragon], HIT_SEED);
     gremio.setAction({ type: ACTION_TYPES.ATTACK });
     const result = battle.resolvePartyAttack(gremio);
@@ -69,7 +78,8 @@ describe('Party basic attack', () => {
   });
 
   it('miss: no damage roll, target plays its own dodge (Gremio -> Soldier Ant)', () => {
-    const gremio = makeGremio(1), ant = new Enemy(ENEMY_KEYS.SOLDIER_ANT);
+    const gremio = makeGremio(1),
+      ant = new Enemy(ENEMY_KEYS.SOLDIER_ANT);
     const battle = makeBattle([gremio], [ant], MISS_SEED);
     gremio.setAction({ type: ACTION_TYPES.ATTACK });
     battle.resolvePartyAttack(gremio);
@@ -80,7 +90,8 @@ describe('Party basic attack', () => {
   });
 
   it('waits on a busy target without using RNG', () => {
-    const gremio = makeGremio(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
+    const gremio = makeGremio(),
+      dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     const battle = makeBattle([gremio], [dragon], HIT_SEED);
     gremio.setAction({ type: ACTION_TYPES.ATTACK });
     dragon.busyUntil = 50;
@@ -92,7 +103,8 @@ describe('Party basic attack', () => {
 
 describe('Enemy basic attack', () => {
   it('hit: damage roll at +57, target free at +102, attacker free at +108 (Zombie Dragon -> Gremio)', () => {
-    const gremio = makeGremio(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
+    const gremio = makeGremio(),
+      dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     const battle = makeBattle([gremio], [dragon], HIT_SEED);
     battle.resolveEnemyAttack(dragon, gremio);
     assert.deepStrictEqual([...battle.events.keys()], [57]);
@@ -101,7 +113,8 @@ describe('Enemy basic attack', () => {
   });
 
   it('miss: target free at +101, attacker free at +108', () => {
-    const gremio = makeGremio(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
+    const gremio = makeGremio(),
+      dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     const battle = makeBattle([gremio], [dragon], MISS_SEED);
     battle.resolveEnemyAttack(dragon, gremio);
     assert.strictEqual(battle.events.size, 0);
@@ -113,7 +126,8 @@ describe('Enemy basic attack', () => {
 describe('Counters', () => {
   /** McDohl (Medium range) misses an Elite Soldier (species bit 1), which counters. */
   const partyCountered = (primed = false) => {
-    const mcdohl = makeMcDohl(1), soldier = new Enemy(ENEMY_KEYS.ELITE_SOLDIER_1);
+    const mcdohl = makeMcDohl(1),
+      soldier = new Enemy(ENEMY_KEYS.ELITE_SOLDIER_1);
     const battle = makeBattle([mcdohl], [soldier], MISS_SEED);
     mcdohl.setAction({ type: ACTION_TYPES.ATTACK });
     mcdohl.fx = 0x2;
@@ -132,7 +146,9 @@ describe('Counters', () => {
   it('the counter damages the attacker on the roll tick', () => {
     const { battle, mcdohl } = partyCountered();
     let hpBefore = null;
-    runTicks(battle, 0, 110, tick => { if (tick === 109) hpBefore = mcdohl.HP; });
+    runTicks(battle, 0, 110, (tick) => {
+      if (tick === 109) hpBefore = mcdohl.HP;
+    });
     assert.strictEqual(hpBefore, 244);
     assert.ok(mcdohl.HP < 244);
   });
@@ -144,15 +160,17 @@ describe('Counters', () => {
     assert.strictEqual(soldier.busyUntil, 144);
   });
 
-  it('effect flags: the attacker\'s are cleared, the counter steps clear the retaliator\'s', () => {
+  it("effect flags: the attacker's are cleared, the counter steps clear the retaliator's", () => {
     const { mcdohl, soldier } = partyCountered(true);
     assert.strictEqual(mcdohl.fx, 0);
     assert.strictEqual(soldier.fx, 0);
   });
 
   /** An Elite Soldier (species bit 0, not the first enemy) misses McDohl, who counters. */
-  const enemyCountered = defending => {
-    const mcdohl = makeMcDohl(150), ant = new Enemy(ENEMY_KEYS.SOLDIER_ANT), soldier = new Enemy(ENEMY_KEYS.ELITE_SOLDIER_1);
+  const enemyCountered = (defending) => {
+    const mcdohl = makeMcDohl(150),
+      ant = new Enemy(ENEMY_KEYS.SOLDIER_ANT),
+      soldier = new Enemy(ENEMY_KEYS.ELITE_SOLDIER_1);
     const battle = makeBattle([mcdohl], [ant, soldier], MISS_SEED);
     mcdohl.defending = defending;
     const result = battle.resolveEnemyAttack(soldier, mcdohl);
@@ -175,7 +193,8 @@ describe('Counters', () => {
   });
 
   it('the first enemy can never be countered', () => {
-    const mcdohl = makeMcDohl(150), soldier = new Enemy(ENEMY_KEYS.ELITE_SOLDIER_1);
+    const mcdohl = makeMcDohl(150),
+      soldier = new Enemy(ENEMY_KEYS.ELITE_SOLDIER_1);
     const battle = makeBattle([mcdohl], [soldier], MISS_SEED);
     mcdohl.defending = true;
     battle.resolveEnemyAttack(soldier, mcdohl);
@@ -189,9 +208,14 @@ describe('COPY_ACTOR hold', () => {
    * t0 = 0; his recover starts at +88. Cleo is combatant 2, Zombie Dragon #2 combatant 4.
    * @param {number} seed
    */
-  const gremioAttacks = seed => {
-    const gremio = makeGremio(), cleo = makeCleo();
-    const battle = makeBattle([gremio, cleo], [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON), new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)], seed);
+  const gremioAttacks = (seed) => {
+    const gremio = makeGremio(),
+      cleo = makeCleo();
+    const battle = makeBattle(
+      [gremio, cleo],
+      [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON), new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)],
+      seed,
+    );
     battle.turn.current = 1;
     battle.turn.release = false; // the copy that made Gremio current cleared it
     gremio.setAction({ type: ACTION_TYPES.ATTACK, target: 0 });
@@ -201,7 +225,11 @@ describe('COPY_ACTOR hold', () => {
   };
 
   /** Tries to copy `pending` in at `tick`: true if it was copied. */
-  const copyAt = (/** @type {Battle} */ battle, /** @type {number} */ pending, /** @type {number} */ tick) => {
+  const copyAt = (
+    /** @type {Battle} */ battle,
+    /** @type {number} */ pending,
+    /** @type {number} */ tick,
+  ) => {
     battle.turn.pending = pending;
     battle.turn.tick = tick;
     battle.phase = PHASE_STATE.COPY_ACTOR;
@@ -213,7 +241,7 @@ describe('COPY_ACTOR hold', () => {
     for (let seed = 1; ; seed++) if (gremioAttacks(seed).result === ATTACK_RESULT.CRIT) return seed;
   };
 
-  it('a side switch holds the copy until the current actor\'s recover starts', () => {
+  it("a side switch holds the copy until the current actor's recover starts", () => {
     const { battle, result } = gremioAttacks(HIT_SEED);
     assert.strictEqual(result, ATTACK_RESULT.HIT);
     battle.turn.holdFlag = true; // what the roll sets on picking an enemy after a party actor
@@ -229,7 +257,7 @@ describe('COPY_ACTOR hold', () => {
     assert.strictEqual(copyAt(battle, 2, 1), true);
   });
 
-  it('a party crit holds even the same side, until the crit\'s recover starts', () => {
+  it("a party crit holds even the same side, until the crit's recover starts", () => {
     const { battle, result } = gremioAttacks(critSeed());
     assert.strictEqual(result, ATTACK_RESULT.CRIT);
     assert.strictEqual(battle.turn.holdFlag, true);
@@ -259,18 +287,29 @@ describe('Battle start', () => {
   it('clears statuses except Poison and Balloon', () => {
     const gremio = makeGremio();
     Object.assign(gremio.status, {
-      [STATUS.POISON]: true, [STATUS.BALLOON]: 2, [STATUS.BUCKET]: true, [STATUS.UNBALANCED]: 1, [STATUS.SLEEP]: true, [STATUS.HP_LOCKED]: 2,
+      [STATUS.POISON]: true,
+      [STATUS.BALLOON]: 2,
+      [STATUS.BUCKET]: true,
+      [STATUS.UNBALANCED]: 1,
+      [STATUS.SLEEP]: true,
+      [STATUS.HP_LOCKED]: 2,
     });
     makeBattle([gremio], [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)], HIT_SEED);
     assert.deepStrictEqual(gremio.status, {
-      [STATUS.POISON]: true, [STATUS.BALLOON]: 2, [STATUS.BUCKET]: false, [STATUS.UNBALANCED]: 0, [STATUS.SLEEP]: false, [STATUS.HP_LOCKED]: 0,
+      [STATUS.POISON]: true,
+      [STATUS.BALLOON]: 2,
+      [STATUS.BUCKET]: false,
+      [STATUS.UNBALANCED]: 0,
+      [STATUS.SLEEP]: false,
+      [STATUS.HP_LOCKED]: 0,
     });
   });
 });
 
 describe('Unbalanced', () => {
   it('lasts through the next round, clearing at its end', () => {
-    const gremio = makeGremio(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
+    const gremio = makeGremio(),
+      dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     const battle = makeBattle([gremio], [dragon], HIT_SEED);
     const endRound = () => {
       battle.resetTurn();
@@ -307,10 +346,11 @@ describe('Unbalanced', () => {
   });
 });
 
-const makePahn = () => new Character(CHARACTER_KEYS.PAHN)
-  .setLVL(22)
-  .setStats({ PWR: 80, SKL: 60, DEF: 80, SPD: 40, MGC: 20, LUK: 50, HP: 300 })
-  .rest();
+const makePahn = () =>
+  new Character(CHARACTER_KEYS.PAHN)
+    .setLVL(22)
+    .setStats({ PWR: 80, SKL: 60, DEF: 80, SPD: 40, MGC: 20, LUK: 50, HP: 300 })
+    .rest();
 
 describe('Talisman Unite', () => {
   const TALISMAN = { type: ACTION_TYPES.UNITE, target: 0, uniteKey: UNITE_KEYS.TALISMAN };
@@ -319,8 +359,10 @@ describe('Talisman Unite', () => {
    * Gremio (combatant 1) won the turn roll with the Unite; ticks the round driver until his
    * turn ends. @param {(pahn: Character) => void} [setup] - after the plan, i.e. mid-round
    */
-  const runGremioTurn = setup => {
-    const gremio = makeGremio(), pahn = makePahn(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
+  const runGremioTurn = (setup) => {
+    const gremio = makeGremio(),
+      pahn = makePahn(),
+      dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     const battle = makeBattle([gremio, pahn], [dragon], HIT_SEED);
     battle.party.setActionPlan([TALISMAN, TALISMAN]);
     setup?.(pahn);
@@ -350,18 +392,23 @@ describe('Talisman Unite', () => {
   it('deals (Pahn roll + Gremio roll) x 2, Pahn rolling first', () => {
     const { battle, gremio, pahn, dragon } = runGremioTurn();
     const rng = new RNG(HIT_SEED);
-    const expected = (pahn.calcAttackDamage(dragon, rng, false) + gremio.calcAttackDamage(dragon, rng, false)) * 2;
+    const expected =
+      (pahn.calcAttackDamage(dragon, rng, false) + gremio.calcAttackDamage(dragon, rng, false)) * 2;
     assert.strictEqual(battle.log.ofType(LOG_TYPES.DAMAGE)[0].amount, expected);
   });
 
   it('waits, with no RNG, while anyone is busy', () => {
-    const { battle } = runGremioTurn(pahn => { pahn.busyUntil = 40; });
+    const { battle } = runGremioTurn((pahn) => {
+      pahn.busyUntil = 40;
+    });
     assert.strictEqual(battle.log.ofType(LOG_TYPES.UNITE)[0].tick, 41);
     assert.strictEqual(battle.log.ofType(LOG_TYPES.DAMAGE)[0].rng, 2);
   });
 
   it('a dead partner fails it: Defend fallback, gate 0, no RNG, and no Defend halving', () => {
-    const { battle, gremio, end } = runGremioTurn(pahn => { pahn.knockedOut = true; });
+    const { battle, gremio, end } = runGremioTurn((pahn) => {
+      pahn.knockedOut = true;
+    });
     assert.strictEqual(end, 1);
     assert.strictEqual(battle.rng.getCount(), 0);
     assert.strictEqual(battle.log.ofType(LOG_TYPES.DEFEND)[0].detail, 'Talisman Attack failed');
@@ -374,7 +421,11 @@ describe('Unite plans', () => {
     const party = new PlayerParty([makeGremio(), makePahn()]);
     const unite = { type: ACTION_TYPES.UNITE, target: 0, uniteKey: UNITE_KEYS.TALISMAN };
     party.setActionPlan([unite, unite]);
-    for (const partner of [{ type: ACTION_TYPES.ATTACK }, { type: ACTION_TYPES.NOTHING }, { ...unite, target: 1 }])
+    for (const partner of [
+      { type: ACTION_TYPES.ATTACK },
+      { type: ACTION_TYPES.NOTHING },
+      { ...unite, target: 1 },
+    ])
       assert.throws(() => party.setActionPlan([unite, partner]), /plan the same Unite action/);
   });
 
@@ -387,13 +438,17 @@ describe('Unite plans', () => {
 });
 
 describe('Falcon Rune', () => {
-  const makeValeria = () => new Character(CHARACTER_KEYS.VALERIA)
-    .setLVL(30)
-    .setStats({ PWR: 100, SKL: 80, DEF: 80, SPD: 80, MGC: 50, LUK: 50, HP: 320 })
-    .rest();
+  const makeValeria = () =>
+    new Character(CHARACTER_KEYS.VALERIA)
+      .setLVL(30)
+      .setStats({ PWR: 100, SKL: 80, DEF: 80, SPD: 80, MGC: 50, LUK: 50, HP: 320 })
+      .rest();
 
   /** Valeria (combatant 1) uses Falcon; ticks the round driver until her turn ends. */
-  const runValeriaTurn = (/** @type {number} */ target = 0, enemies = [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)]) => {
+  const runValeriaTurn = (
+    /** @type {number} */ target = 0,
+    enemies = [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)],
+  ) => {
     const valeria = makeValeria();
     const battle = makeBattle([valeria], enemies, HIT_SEED);
     battle.party.setActionPlan([{ type: ACTION_TYPES.RUNE, slot: 0, target }]);
@@ -411,7 +466,10 @@ describe('Falcon Rune', () => {
     assert.strictEqual(damage.tick, 1 + 159);
     assert.strictEqual(damage.actor, valeria.label);
     assert.strictEqual(damage.rng, 1);
-    assert.strictEqual(damage.amount, 3 * valeria.calcAttackDamage(dragon, new RNG(HIT_SEED), false));
+    assert.strictEqual(
+      damage.amount,
+      3 * valeria.calcAttackDamage(dragon, new RNG(HIT_SEED), false),
+    );
   });
 
   it('holds the turn until t0 + 199, leaving the gate unchanged', () => {
@@ -423,7 +481,8 @@ describe('Falcon Rune', () => {
   });
 
   it('retargets an invalid target to the first ready enemy', () => {
-    const dead = new Enemy(ENEMY_KEYS.SOLDIER_ANT), ant = new Enemy(ENEMY_KEYS.SOLDIER_ANT);
+    const dead = new Enemy(ENEMY_KEYS.SOLDIER_ANT),
+      ant = new Enemy(ENEMY_KEYS.SOLDIER_ANT);
     dead.setHP(0); // out of the fight from battle start
     const { battle } = runValeriaTurn(0, [dead, ant]);
     assert.strictEqual(battle.log.ofType(LOG_TYPES.DAMAGE)[0].target, ant.label);
@@ -431,17 +490,22 @@ describe('Falcon Rune', () => {
 });
 
 describe('Boar Rune', () => {
-  const makePahn = () => new Character(CHARACTER_KEYS.PAHN)
-    .setLVL(20)
-    .setStats({ PWR: 90, SKL: 60, DEF: 70, SPD: 40, MGC: 20, LUK: 40, HP: 300 })
-    .rest();
+  const makePahn = () =>
+    new Character(CHARACTER_KEYS.PAHN)
+      .setLVL(20)
+      .setStats({ PWR: 90, SKL: 60, DEF: 70, SPD: 40, MGC: 20, LUK: 40, HP: 300 })
+      .rest();
 
   /**
    * Pahn (combatant 1) uses Boar; ticks the round driver until his turn ends.
    * @param {{ target?: number, enemies?: Enemy[], busyUntil?: number }} [options] - busyUntil:
    *   how long the first enemy stays busy, to hold up the cast
    */
-  const runPahnTurn = ({ target = 0, enemies = [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)], busyUntil = 0 } = {}) => {
+  const runPahnTurn = ({
+    target = 0,
+    enemies = [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)],
+    busyUntil = 0,
+  } = {}) => {
     const pahn = makePahn();
     const battle = makeBattle([pahn], enemies, HIT_SEED);
     battle.enemies.combatants[0].busyUntil = busyUntil;
@@ -454,7 +518,8 @@ describe('Boar Rune', () => {
   };
 
   /** Keeps ticking steps 2-3 and the animation pass past the end of the turn. */
-  const runOn = (/** @type {Battle} */ battle, /** @type {number} */ to) => runTicks(battle, battle.turn.tick, to);
+  const runOn = (/** @type {Battle} */ battle, /** @type {number} */ to) =>
+    runTicks(battle, battle.turn.tick, to);
 
   it('waits, with no RNG, until no combatant is busy, then casts (S = the next tick)', () => {
     // Busy clears in tick 50's animation pass, so the resolver sees everyone idle at 51
@@ -502,7 +567,8 @@ describe('Boar Rune', () => {
   });
 
   it('retargets an invalid target to the first ready enemy', () => {
-    const dead = new Enemy(ENEMY_KEYS.SOLDIER_ANT), ant = new Enemy(ENEMY_KEYS.SOLDIER_ANT);
+    const dead = new Enemy(ENEMY_KEYS.SOLDIER_ANT),
+      ant = new Enemy(ENEMY_KEYS.SOLDIER_ANT);
     dead.setHP(0); // out of the fight from battle start
     const { battle, S } = runPahnTurn({ enemies: [dead, ant] });
     runOn(battle, S + 322);
@@ -514,7 +580,10 @@ describe('Boar Rune', () => {
     const battle = makeBattle([pahn], [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)], HIT_SEED);
     battle.playTurn([{ type: ACTION_TYPES.RUNE, slot: 0, target: 0 }]);
     assert.strictEqual(pahn.isUnbalanced, true);
-    assert.throws(() => battle.clone().playTurn([{ type: ACTION_TYPES.RUNE, slot: 0, target: 0 }]), /Unbalanced/);
+    assert.throws(
+      () => battle.clone().playTurn([{ type: ACTION_TYPES.RUNE, slot: 0, target: 0 }]),
+      /Unbalanced/,
+    );
     battle.playTurn([{ type: ACTION_TYPES.DEFEND }]);
     assert.strictEqual(pahn.isUnbalanced, false);
   });
@@ -522,7 +591,9 @@ describe('Boar Rune', () => {
 
 describe('Balloon', () => {
   it('at 3 or more removes a combatant at battle start, for the whole battle', () => {
-    const floating = makeGremio(), almost = makeCleo(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
+    const floating = makeGremio(),
+      almost = makeCleo(),
+      dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     floating.status[STATUS.BALLOON] = 3;
     almost.status[STATUS.BALLOON] = 2;
     const battle = makeBattle([floating, almost], [dragon], HIT_SEED);
@@ -546,14 +617,17 @@ describe('Balloon', () => {
 });
 
 describe('Death', () => {
-  const gremio = makeGremio(), ant = new Enemy(ENEMY_KEYS.SOLDIER_ANT);
+  const gremio = makeGremio(),
+    ant = new Enemy(ENEMY_KEYS.SOLDIER_ANT);
   ant.HP = 1;
   const battle = makeBattle([gremio], [ant], HIT_SEED);
   gremio.setAction({ type: ACTION_TYPES.ATTACK });
   battle.resolvePartyAttack(gremio);
 
-  let hpZeroAt = null, outAt = null, validWhileDying = true;
-  runTicks(battle, 0, 250, tick => {
+  let hpZeroAt = null,
+    outAt = null,
+    validWhileDying = true;
+  runTicks(battle, 0, 250, (tick) => {
     if (ant.HP === 0 && hpZeroAt === null) hpZeroAt = tick;
     if (ant.knockedOut && outAt === null) outAt = tick;
     if (ant.HP === 0 && !ant.knockedOut && !ant.isValidCombatant) validWhileDying = false;
@@ -561,14 +635,17 @@ describe('Death', () => {
 
   it('HP reaches 0 on the damage roll (+64)', () => assert.strictEqual(hpZeroAt, 64));
   it('dies when its hit reaction ends (+100), not at 0 HP', () => assert.strictEqual(outAt, 100));
-  it('stays a valid combatant while dying at 0 HP', () => assert.strictEqual(validWhileDying, true));
+  it('stays a valid combatant while dying at 0 HP', () =>
+    assert.strictEqual(validWhileDying, true));
   it('death script keeps it busy until +193', () => assert.strictEqual(ant.busyUntil, 193));
   it('death sets ActionTag, so it never gets a turn', () => assert.strictEqual(ant.acted, true));
 });
 
 describe('Event ordering', () => {
-  it('runs a tick\'s events in owner index order, queue order within an owner', () => {
-    const viktor = new Character(CHARACTER_KEYS.VIKTOR), gremio = makeGremio(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
+  it("runs a tick's events in owner index order, queue order within an owner", () => {
+    const viktor = new Character(CHARACTER_KEYS.VIKTOR),
+      gremio = makeGremio(),
+      dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     const battle = makeBattle([viktor, gremio], [dragon], HIT_SEED);
     const log = [];
     battle.queueEvent(5, dragon, () => log.push('dragon'));
@@ -588,13 +665,21 @@ describe('Event ordering', () => {
 
 describe('Spell cast', () => {
   it('waits until nobody is busy, winds up for its frames, resolves, then finishes next tick', () => {
-    const cleo = makeCleo(), dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
+    const cleo = makeCleo(),
+      dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     const battle = makeBattle([cleo], [dragon], HIT_SEED);
     dragon.busyUntil = 50; // free from tick 51
-    let resolvedAt = null, doneAt = null;
+    let resolvedAt = null,
+      doneAt = null;
     const rngAtCast = battle.rng.getCount();
 
-    let result = battle.castMagic(cleo, () => { resolvedAt = battle.turn.tick; }, 100);
+    let result = battle.castMagic(
+      cleo,
+      () => {
+        resolvedAt = battle.turn.tick;
+      },
+      100,
+    );
     for (let tick = 0; tick <= 200 && doneAt === null; tick++) {
       battle.turn.tick = tick;
       if (tick > 0) result = battle.continueMagic();
@@ -608,7 +693,7 @@ describe('Spell cast', () => {
     assert.strictEqual(battle.rng.getCount(), rngAtCast); // the resolve callback here rolls nothing
   });
 
-  it('spends MP of the spell\'s level and refuses when that level is empty', () => {
+  it("spends MP of the spell's level and refuses when that level is empty", () => {
     const cleo = makeCleo(); // MGC 93: MP 5/3/2/0
     assert.deepStrictEqual(cleo.MP, [5, 3, 2, 0]);
     cleo.spendMP(2);

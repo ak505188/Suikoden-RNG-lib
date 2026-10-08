@@ -15,14 +15,16 @@ function bench(label, fn) {
   }
   times.sort((a, b) => a - b);
   const median = times[RUNS >> 1];
-  console.log(`${label.padEnd(20)} ${median.toFixed(1)} ms  ${(median * 1e6 / N).toFixed(2)} ns/op  (sink ${sink})`);
+  console.log(
+    `${label.padEnd(20)} ${median.toFixed(1)} ms  ${((median * 1e6) / N).toFixed(2)} ns/op  (sink ${sink})`,
+  );
 }
 
-bench('next() x1', n => {
+bench('next() x1', (n) => {
   const rng = new RNG(0x12);
   let acc = 0;
   for (let i = 0; i < n; i++) acc ^= rng.next().getRNG2();
   return acc;
 });
 
-bench('next(n) batched', n => new RNG(0x12).next(n).getRNG2());
+bench('next(n) batched', (n) => new RNG(0x12).next(n).getRNG2());

@@ -19,11 +19,12 @@ import { applySpell } from '../../lib/Game/Magic/Behavior.js';
 const DEADLY_FINGERTIPS_SLOT = 0;
 const HELL_SLOT = 2;
 
-const makeCleo = () => new Character(CHARACTER_KEYS.CLEO)
-  .setLVL(22)
-  .setRune(RUNES.SOUL_EATER)
-  .setStats({ PWR: 67, SKL: 82, DEF: 75, SPD: 74, MGC: 93, LUK: 53, HP: 217 })
-  .rest();
+const makeCleo = () =>
+  new Character(CHARACTER_KEYS.CLEO)
+    .setLVL(22)
+    .setRune(RUNES.SOUL_EATER)
+    .setStats({ PWR: 67, SKL: 82, DEF: 75, SPD: 74, MGC: 93, LUK: 53, HP: 217 })
+    .rest();
 
 /**
  * @param {import('../../lib/Game/Magic/Spells.js').Spell} spell
@@ -33,8 +34,15 @@ const makeCleo = () => new Character(CHARACTER_KEYS.CLEO)
  */
 const resolve = (spell, actor, enemies, target) => {
   const party = new PlayerParty([actor]);
-  const applied = applySpell({ actor, spell, target, party, enemies: new EnemyParty(enemies), rng: new RNG(1) });
-  enemies.forEach(e => e.commitPendingDamage());
+  const applied = applySpell({
+    actor,
+    spell,
+    target,
+    party,
+    enemies: new EnemyParty(enemies),
+    rng: new RNG(1),
+  });
+  enemies.forEach((e) => e.commitPendingDamage());
   return applied;
 };
 
@@ -78,12 +86,13 @@ describe('Hell effect', () => {
 
 describe('Instant death in a battle round', () => {
   /** @param {Character} cleo @param {Enemy[]} enemies */
-  const makeBattle = (cleo, enemies) => new Battle({
-    party: new PlayerParty([cleo]),
-    enemies: new EnemyParty(enemies),
-    rng: new RNG(0x12345678),
-    turns: [],
-  });
+  const makeBattle = (cleo, enemies) =>
+    new Battle({
+      party: new PlayerParty([cleo]),
+      enemies: new EnemyParty(enemies),
+      rng: new RNG(0x12345678),
+      turns: [],
+    });
 
   it('Deadly Fingertips kills the chosen enemy and logs its death', () => {
     const cleo = makeCleo();
@@ -94,7 +103,7 @@ describe('Instant death in a battle round', () => {
     assert.strictEqual(cleo.MP[DEADLY_FINGERTIPS_SLOT], mpBefore - 1);
     assert.strictEqual(b.knockedOut, true);
     assert.strictEqual(a.knockedOut, false);
-    assert.ok(battle.log.entries.some(e => e.type === LOG_TYPES.DEATH && e.target === b.label));
+    assert.ok(battle.log.entries.some((e) => e.type === LOG_TYPES.DEATH && e.target === b.label));
   });
 
   it('Hell kills every enemy', () => {
@@ -102,6 +111,6 @@ describe('Instant death in a battle round', () => {
     const enemies = [kobold(), kobold(), kobold()];
     const battle = makeBattle(cleo, enemies);
     battle.playTurn([{ type: ACTION_TYPES.RUNE, slot: HELL_SLOT }]);
-    assert.ok(enemies.every(e => e.knockedOut));
+    assert.ok(enemies.every((e) => e.knockedOut));
   });
 });

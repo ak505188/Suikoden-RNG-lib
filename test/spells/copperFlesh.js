@@ -19,39 +19,50 @@ import { applySpell, spellRand } from '../../lib/Game/Magic/Behavior.js';
 // (omitted means the caster), like an item's.
 const COPPER_FLESH_SLOT = 2;
 
-const makeCleo = () => new Character(CHARACTER_KEYS.CLEO)
-  .setLVL(22)
-  .setRune(RUNES.EARTH)
-  .setStats({ PWR: 67, SKL: 82, DEF: 75, SPD: 74, MGC: 93, LUK: 53, HP: 217 })
-  .rest();
+const makeCleo = () =>
+  new Character(CHARACTER_KEYS.CLEO)
+    .setLVL(22)
+    .setRune(RUNES.EARTH)
+    .setStats({ PWR: 67, SKL: 82, DEF: 75, SPD: 74, MGC: 93, LUK: 53, HP: 217 })
+    .rest();
 
-const makeGremio = () => new Character(CHARACTER_KEYS.GREMIO)
-  .setLVL(22)
-  .setStats({ PWR: 64, SKL: 68, DEF: 84, SPD: 49, MGC: 39, LUK: 66, HP: 201 })
-  .rest();
+const makeGremio = () =>
+  new Character(CHARACTER_KEYS.GREMIO)
+    .setLVL(22)
+    .setStats({ PWR: 64, SKL: 68, DEF: 84, SPD: 49, MGC: 39, LUK: 66, HP: 201 })
+    .rest();
 
 /** @param {Character[]} party */
-const makeBattle = party => new Battle({
-  party: new PlayerParty(party),
-  enemies: new EnemyParty([new Enemy(ENEMY_KEYS.KOBOLD_SWORD)]),
-  rng: new RNG(0x12345678),
-  turns: [],
-});
+const makeBattle = (party) =>
+  new Battle({
+    party: new PlayerParty(party),
+    enemies: new EnemyParty([new Enemy(ENEMY_KEYS.KOBOLD_SWORD)]),
+    rng: new RNG(0x12345678),
+    turns: [],
+  });
 
 describe('Copper Flesh effect', () => {
   it('rolls no RNG', () => {
     const rng = new RNG(0x12345678);
     const party = new PlayerParty([makeCleo()]);
-    assert.strictEqual(spellRand({ spell: SPELLS.COPPER_FLESH, rng, party, enemies: new EnemyParty([]) }), 0);
+    assert.strictEqual(
+      spellRand({ spell: SPELLS.COPPER_FLESH, rng, party, enemies: new EnemyParty([]) }),
+      0,
+    );
     assert.strictEqual(rng.count, 0);
   });
 
   it('locks the one chosen ally, and nothing else', () => {
-    const cleo = makeCleo(), gremio = makeGremio();
+    const cleo = makeCleo(),
+      gremio = makeGremio();
     const rng = new RNG(0x12345678);
     const applied = applySpell({
-      actor: cleo, spell: SPELLS.COPPER_FLESH, target: gremio,
-      party: new PlayerParty([cleo, gremio]), enemies: new EnemyParty([]), rng,
+      actor: cleo,
+      spell: SPELLS.COPPER_FLESH,
+      target: gremio,
+      party: new PlayerParty([cleo, gremio]),
+      enemies: new EnemyParty([]),
+      rng,
     });
     assert.strictEqual(applied, true);
     assert.strictEqual(gremio.isHPLocked, true);
@@ -62,7 +73,8 @@ describe('Copper Flesh effect', () => {
 
 describe('Copper Flesh in a battle round', () => {
   it('locks the targeted party member for the rest of the round and two more', () => {
-    const cleo = makeCleo(), gremio = makeGremio();
+    const cleo = makeCleo(),
+      gremio = makeGremio();
     const mpBefore = cleo.MP[COPPER_FLESH_SLOT];
     const battle = makeBattle([cleo, gremio]);
     battle.playTurn([{ type: ACTION_TYPES.RUNE, slot: COPPER_FLESH_SLOT, target: 1 }]);
@@ -77,7 +89,8 @@ describe('Copper Flesh in a battle round', () => {
   });
 
   it('can target the first party member', () => {
-    const cleo = makeCleo(), gremio = makeGremio();
+    const cleo = makeCleo(),
+      gremio = makeGremio();
     const battle = makeBattle([cleo, gremio]);
     battle.playTurn([{ type: ACTION_TYPES.RUNE, slot: COPPER_FLESH_SLOT, target: 0 }]);
     assert.strictEqual(cleo.status[STATUS.HP_LOCKED], 2);
@@ -85,7 +98,8 @@ describe('Copper Flesh in a battle round', () => {
   });
 
   it('targets the caster when no target is given', () => {
-    const cleo = makeCleo(), gremio = makeGremio();
+    const cleo = makeCleo(),
+      gremio = makeGremio();
     const battle = makeBattle([cleo, gremio]);
     battle.playTurn([{ type: ACTION_TYPES.RUNE, slot: COPPER_FLESH_SLOT }]);
     assert.strictEqual(cleo.status[STATUS.HP_LOCKED], 2);
@@ -93,16 +107,18 @@ describe('Copper Flesh in a battle round', () => {
   });
 
   it('logs the cast against the ally', () => {
-    const cleo = makeCleo(), gremio = makeGremio();
+    const cleo = makeCleo(),
+      gremio = makeGremio();
     const battle = makeBattle([cleo, gremio]);
     battle.playTurn([{ type: ACTION_TYPES.RUNE, slot: COPPER_FLESH_SLOT, target: 1 }]);
-    const cast = battle.log.entries.find(e => e.type === LOG_TYPES.CAST);
+    const cast = battle.log.entries.find((e) => e.type === LOG_TYPES.CAST);
     assert.strictEqual(cast?.target, gremio.label);
     assert.strictEqual(cast?.detail, 'Copper Flesh');
   });
 
   it("Defends with no MP spent when the ally isn't a valid target (UNVERIFIED in the game)", () => {
-    const cleo = makeCleo(), gremio = makeGremio().setHP(0);
+    const cleo = makeCleo(),
+      gremio = makeGremio().setHP(0);
     const mpBefore = cleo.MP[COPPER_FLESH_SLOT];
     const battle = makeBattle([cleo, gremio]);
     battle.playTurn([{ type: ACTION_TYPES.RUNE, slot: COPPER_FLESH_SLOT, target: 1 }]);
@@ -113,18 +129,28 @@ describe('Copper Flesh in a battle round', () => {
 
 describe('Copper Flesh action planning', () => {
   it('plans one action per valid party member, by party index', () => {
-    const cleo = makeCleo(), gremio = makeGremio();
+    const cleo = makeCleo(),
+      gremio = makeGremio();
     const battle = makeBattle([cleo, gremio]);
-    const actions = characterActions(cleo, battle)
-      .filter(a => a.type === ACTION_TYPES.RUNE && a.slot === COPPER_FLESH_SLOT);
-    assert.deepStrictEqual(actions.map(a => a.target), [0, 1]);
+    const actions = characterActions(cleo, battle).filter(
+      (a) => a.type === ACTION_TYPES.RUNE && a.slot === COPPER_FLESH_SLOT,
+    );
+    assert.deepStrictEqual(
+      actions.map((a) => a.target),
+      [0, 1],
+    );
   });
 
   it('leaves out a party member who is out of the fight', () => {
-    const cleo = makeCleo(), gremio = makeGremio().setHP(0);
+    const cleo = makeCleo(),
+      gremio = makeGremio().setHP(0);
     const battle = makeBattle([cleo, gremio]);
-    const actions = characterActions(cleo, battle)
-      .filter(a => a.type === ACTION_TYPES.RUNE && a.slot === COPPER_FLESH_SLOT);
-    assert.deepStrictEqual(actions.map(a => a.target), [0]);
+    const actions = characterActions(cleo, battle).filter(
+      (a) => a.type === ACTION_TYPES.RUNE && a.slot === COPPER_FLESH_SLOT,
+    );
+    assert.deepStrictEqual(
+      actions.map((a) => a.target),
+      [0],
+    );
   });
 });

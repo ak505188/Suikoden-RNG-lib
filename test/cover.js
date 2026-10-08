@@ -18,10 +18,13 @@ import RNG from '../lib/rng.js';
 /** @typedef {import('../lib/Game/Keys.js').CharacterKey} CharacterKey */
 
 /** @param {CharacterKey} key @param {number} [hpMax] */
-const member = (key, hpMax = 28) => new Character(key).setStats({ PWR: 20, SKL: 20, DEF: 10, SPD: 20, MGC: 10, LUK: 10, HP: hpMax }).rest();
+const member = (key, hpMax = 28) =>
+  new Character(key)
+    .setStats({ PWR: 20, SKL: 20, DEF: 10, SPD: 20, MGC: 10, LUK: 10, HP: hpMax })
+    .rest();
 
 /** A party in slot order (index 1 = the first). @param {CharacterKey[]} keys */
-const party = keys => new PlayerParty(keys.map(key => member(key))).combatants;
+const party = (keys) => new PlayerParty(keys.map((key) => member(key))).combatants;
 
 describe('Gender and roster data', () => {
   it('every character has a roster Id and a gender byte', () => {
@@ -29,8 +32,11 @@ describe('Gender and roster data', () => {
       assert.ok(Number.isInteger(data.id), key);
       assert.ok(Object.values(GENDER).includes(data.gender), key);
     }
-    const count = g => Object.values(CHARACTERS).filter(c => c.gender === g).length;
-    assert.deepStrictEqual([count(GENDER.MALE), count(GENDER.FEMALE), count(GENDER.MILICH), count(GENDER.KOBOLD)], [57, 18, 1, 2]);
+    const count = (g) => Object.values(CHARACTERS).filter((c) => c.gender === g).length;
+    assert.deepStrictEqual(
+      [count(GENDER.MALE), count(GENDER.FEMALE), count(GENDER.MILICH), count(GENDER.KOBOLD)],
+      [57, 18, 1, 2],
+    );
   });
 });
 
@@ -43,15 +49,21 @@ describe('findCoverTarget', () => {
     assert.strictEqual(findCoverTarget([hero, gremio], hero, 0), gremio);
   });
 
-  it('uses committed HP: pending damage doesn\'t trigger it', () => {
+  it("uses committed HP: pending damage doesn't trigger it", () => {
     const [hero, gremio] = party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO]);
     hero.setHP(20);
     hero.takeDamage(19);
     assert.strictEqual(findCoverTarget([hero, gremio], hero, 0), null);
   });
 
-  it('walks the Hero\'s chain: Gremio busy -> Pahn; Gremio and Pahn busy -> back-row Cleo', () => {
-    const members = party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.PAHN, CHARACTER_KEYS.TED, CHARACTER_KEYS.CLEO]);
+  it("walks the Hero's chain: Gremio busy -> Pahn; Gremio and Pahn busy -> back-row Cleo", () => {
+    const members = party([
+      CHARACTER_KEYS.MCDOHL,
+      CHARACTER_KEYS.GREMIO,
+      CHARACTER_KEYS.PAHN,
+      CHARACTER_KEYS.TED,
+      CHARACTER_KEYS.CLEO,
+    ]);
     const [hero, gremio, pahn, , cleo] = members;
     hero.setHP(6);
     cleo.position = 5; // back row: no row check
@@ -63,7 +75,12 @@ describe('findCoverTarget', () => {
   });
 
   it('skips a knocked-out partner, and one whose HP - pending damage is 0', () => {
-    const members = party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.PAHN, CHARACTER_KEYS.CLEO]);
+    const members = party([
+      CHARACTER_KEYS.MCDOHL,
+      CHARACTER_KEYS.GREMIO,
+      CHARACTER_KEYS.PAHN,
+      CHARACTER_KEYS.CLEO,
+    ]);
     const [hero, gremio, pahn, cleo] = members;
     hero.setHP(6);
     gremio.knockedOut = true;
@@ -95,7 +112,11 @@ describe('findCoverTarget', () => {
 });
 
 describe('A covered attack', () => {
-  const runTicks = (/** @type {Battle} */ battle, /** @type {number} */ from, /** @type {number} */ to) => {
+  const runTicks = (
+    /** @type {Battle} */ battle,
+    /** @type {number} */ from,
+    /** @type {number} */ to,
+  ) => {
     for (let tick = from; tick <= to; tick++) {
       battle.turn.tick = tick;
       battle.runDueEvents();
@@ -109,7 +130,11 @@ describe('A covered attack', () => {
     const hero = member(CHARACTER_KEYS.MCDOHL).setHP(6);
     const gremio = member(CHARACTER_KEYS.GREMIO, 120);
     const mosquitoes = [new Enemy(ENEMY_KEYS.MOSQUITO), new Enemy(ENEMY_KEYS.MOSQUITO)];
-    const battle = new Battle({ party: new PlayerParty([hero, gremio]), enemies: new EnemyParty(mosquitoes), rng: new RNG(seed) });
+    const battle = new Battle({
+      party: new PlayerParty([hero, gremio]),
+      enemies: new EnemyParty(mosquitoes),
+      rng: new RNG(seed),
+    });
     return { battle, hero, gremio, mosquitoes };
   };
 
@@ -149,7 +174,7 @@ describe('A covered attack', () => {
     assert.strictEqual(hero.busyUntil, 223);
   });
 
-  it('a Mosquito\'s Poison roll lands on the covering ally, not the target', () => {
+  it("a Mosquito's Poison roll lands on the covering ally, not the target", () => {
     let checked = 0;
     for (let seed = 1; checked < 2 && seed < 2000; seed++) {
       const { battle, hero, gremio, mosquitoes } = setup(seed);
@@ -167,17 +192,21 @@ describe('A covered attack', () => {
     assert.strictEqual(checked, 2);
   });
 
-  it('isn\'t checked for a Red Solider Ant\'s Double Strike', () => {
+  it("isn't checked for a Red Solider Ant's Double Strike", () => {
     const { battle, hero } = setup();
     const ant = new Enemy(ENEMY_KEYS.RED_SOLDIER_ANT);
-    const withAnt = new Battle({ party: battle.party, enemies: new EnemyParty([ant]), rng: new RNG(1) });
+    const withAnt = new Battle({
+      party: battle.party,
+      enemies: new EnemyParty([ant]),
+      rng: new RNG(1),
+    });
     withAnt.resolveEnemyStrike(ant, ENEMY_MOVES.RED_SOLDIER_ANT_DOUBLE_STRIKE, hero);
     runTicks(withAnt, 0, 29);
     assert.strictEqual(withAnt.log.ofType(LOG_TYPES.COVER).length, 0);
     assert.ok(hero.HP < 6);
   });
 
-  it('isn\'t checked on a miss', () => {
+  it("isn't checked on a miss", () => {
     const { battle, hero, mosquitoes } = setup();
     battle.applyAttackResult(mosquitoes[0], hero, ATTACK_RESULT.MISSED);
     assert.strictEqual(battle.log.ofType(LOG_TYPES.COVER).length, 0);
@@ -190,7 +219,10 @@ describe('A covered attack', () => {
     const copy = battle.clone();
     runTicks(battle, 61, 150);
     runTicks(copy, 61, 150);
-    const state = (/** @type {Battle} */ b) => [b.stateKey(), b.combatants.slice(1).map(c => c.busyUntil)];
+    const state = (/** @type {Battle} */ b) => [
+      b.stateKey(),
+      b.combatants.slice(1).map((c) => c.busyUntil),
+    ];
     assert.deepStrictEqual(state(copy), state(battle));
   });
 });

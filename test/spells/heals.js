@@ -19,26 +19,36 @@ import { STATUS } from '../../lib/Game/Constants.js';
 // A heal never takes HP over the max, and an HP Locked ally gets nothing (see test/hpLocked.js).
 // Spell power for all of them is 0, so the caster's MGC doesn't matter.
 
-const makeCleo = () => new Character(CHARACTER_KEYS.CLEO)
-  .setLVL(22)
-  .setRune(RUNES.WATER)
-  .setStats({ PWR: 67, SKL: 82, DEF: 75, SPD: 74, MGC: 93, LUK: 53, HP: 217 })
-  .rest();
+const makeCleo = () =>
+  new Character(CHARACTER_KEYS.CLEO)
+    .setLVL(22)
+    .setRune(RUNES.WATER)
+    .setStats({ PWR: 67, SKL: 82, DEF: 75, SPD: 74, MGC: 93, LUK: 53, HP: 217 })
+    .rest();
 
-const makeGremio = () => new Character(CHARACTER_KEYS.GREMIO)
-  .setLVL(22)
-  .setStats({ PWR: 64, SKL: 68, DEF: 84, SPD: 49, MGC: 39, LUK: 66, HP: 201 })
-  .rest();
+const makeGremio = () =>
+  new Character(CHARACTER_KEYS.GREMIO)
+    .setLVL(22)
+    .setStats({ PWR: 64, SKL: 68, DEF: 84, SPD: 49, MGC: 39, LUK: 66, HP: 201 })
+    .rest();
 
 const makeParty = () => {
-  const cleo = makeCleo(), gremio = makeGremio();
+  const cleo = makeCleo(),
+    gremio = makeGremio();
   return { cleo, gremio, party: new PlayerParty([cleo, gremio]) };
 };
 
 /** @param {Character} actor @param {import('../../lib/Game/Magic/Spells.js').Spell} spell @param {PlayerParty} party @param {Character} [target] */
 const cast = (actor, spell, party, target) => {
-  const applied = applySpell({ actor, spell, target, party, enemies: new EnemyParty([]), rng: new RNG(1) });
-  party.combatants.forEach(c => c.commitPendingDamage());
+  const applied = applySpell({
+    actor,
+    spell,
+    target,
+    party,
+    enemies: new EnemyParty([]),
+    rng: new RNG(1),
+  });
+  party.combatants.forEach((c) => c.commitPendingDamage());
   return applied;
 };
 
@@ -85,7 +95,9 @@ describe('Party-wide +300 heals', () => {
     });
 
     it(`${spell.name} heals exactly 300 when that fits`, () => {
-      const cleo = makeCleo().setStats({ ...makeCleo().stats, HP: 999 }).setHP(100);
+      const cleo = makeCleo()
+        .setStats({ ...makeCleo().stats, HP: 999 })
+        .setHP(100);
       const party = new PlayerParty([cleo]);
       cast(cleo, spell, party);
       assert.strictEqual(cleo.HP, 400);
@@ -112,7 +124,7 @@ describe('Party-wide +300 heals', () => {
 });
 
 /** @param {Character} c */
-const afflict = c => {
+const afflict = (c) => {
   c.status[STATUS.POISON] = true;
   c.status[STATUS.BALLOON] = 2;
   c.status[STATUS.BUCKET] = true;
@@ -121,7 +133,8 @@ const afflict = c => {
 };
 
 /** @param {Character} c */
-const ailments = c => [STATUS.POISON, STATUS.BALLOON, STATUS.BUCKET, STATUS.SLEEP].map(k => c.status[k]);
+const ailments = (c) =>
+  [STATUS.POISON, STATUS.BALLOON, STATUS.BUCKET, STATUS.SLEEP].map((k) => c.status[k]);
 
 describe('Heals cure negative statuses', () => {
   const singles = [SPELLS.DROPS_OF_KINDNESS, SPELLS.HEALING_WIND];
@@ -171,7 +184,7 @@ describe('Heals cure negative statuses', () => {
 
 describe('Heals skip a member who is out of the fight', () => {
   /** @param {Character} c */
-  const floatAway = c => {
+  const floatAway = (c) => {
     c.status[STATUS.BALLOON] = 3;
     c.status[STATUS.POISON] = true;
     c.removedFromFight = true;
@@ -203,15 +216,17 @@ describe('Heals skip a member who is out of the fight', () => {
 
 describe('Heals in a battle round', () => {
   /** @param {Character[]} party */
-  const makeBattle = party => new Battle({
-    party: new PlayerParty(party),
-    enemies: new EnemyParty([new Enemy(ENEMY_KEYS.KOBOLD_SWORD)]),
-    rng: new RNG(0x12345678),
-    turns: [],
-  });
+  const makeBattle = (party) =>
+    new Battle({
+      party: new PlayerParty(party),
+      enemies: new EnemyParty([new Enemy(ENEMY_KEYS.KOBOLD_SWORD)]),
+      rng: new RNG(0x12345678),
+      turns: [],
+    });
 
   it('Drops of Kindness spends 1 MP and fills the targeted member', () => {
-    const cleo = makeCleo(), gremio = makeGremio();
+    const cleo = makeCleo(),
+      gremio = makeGremio();
     gremio.setHP(20);
     const mpBefore = cleo.MP[0];
     const battle = makeBattle([cleo, gremio]);
@@ -222,7 +237,8 @@ describe('Heals in a battle round', () => {
   });
 
   it('Water of Kindness heals the whole party in one cast', () => {
-    const cleo = makeCleo(), gremio = makeGremio();
+    const cleo = makeCleo(),
+      gremio = makeGremio();
     cleo.setHP(10);
     gremio.setHP(10);
     const battle = makeBattle([cleo, gremio]);

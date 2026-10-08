@@ -13,15 +13,26 @@ import { LOG_TYPES } from '../lib/Game/Battle/ActionLog.js';
 import { cDiv } from '../lib/lib.js';
 import RNG from '../lib/rng.js';
 
-const gremio = () => new Character(CHARACTER_KEYS.GREMIO).setLVL(10)
-  .setStats({ PWR: 40, SKL: 30, DEF: 20, SPD: 20, MGC: 10, LUK: 20, HP: 120 }).rest();
+const gremio = () =>
+  new Character(CHARACTER_KEYS.GREMIO)
+    .setLVL(10)
+    .setStats({ PWR: 40, SKL: 30, DEF: 20, SPD: 20, MGC: 10, LUK: 20, HP: 120 })
+    .rest();
 
 /** @param {Character[]} party @param {Enemy[]} enemies @param {number} seed */
 const makeBattle = (party, enemies, seed) =>
-  new Battle({ party: new PlayerParty(party), enemies: new EnemyParty(enemies), rng: new RNG(seed) });
+  new Battle({
+    party: new PlayerParty(party),
+    enemies: new EnemyParty(enemies),
+    rng: new RNG(seed),
+  });
 
 /** Steps 2-4 of the round driver (events, commit, animation pass) for ticks from..to, like Battle.tick. */
-const runTicks = (/** @type {Battle} */ battle, /** @type {number} */ from, /** @type {number} */ to) => {
+const runTicks = (
+  /** @type {Battle} */ battle,
+  /** @type {number} */ from,
+  /** @type {number} */ to,
+) => {
   for (let tick = from; tick <= to; tick++) {
     battle.turn.tick = tick;
     battle.runDueEvents();
@@ -56,7 +67,8 @@ describe('Mosquito: Poison from its hit reaction', () => {
 
   /** The first seeds whose Mosquito attack hits, sorted by whether the Poison roll lands. */
   const hitSeeds = () => {
-    const poisons = [], misses = [];
+    const poisons = [],
+      misses = [];
     for (let seed = 1; poisons.length < 3 || misses.length < 3; seed++) {
       if (seed > SEARCH_LIMIT) throw new Error('not enough hitting seeds');
       const { result, afterRolls } = attack(seed);
@@ -69,18 +81,22 @@ describe('Mosquito: Poison from its hit reaction', () => {
 
   it('a hit makes 2 rand() on the damage tick: calc_damage, then the status roll', () => {
     const { poisons, misses } = hitSeeds();
-    for (const seed of [...poisons, ...misses]) assert.strictEqual(attack(seed).calls, 2, `seed ${seed}`);
+    for (const seed of [...poisons, ...misses])
+      assert.strictEqual(attack(seed).calls, 2, `seed ${seed}`);
   });
 
   it('poisons the target on roll < 20', () => {
     const { poisons, misses } = hitSeeds();
-    for (const seed of poisons) assert.strictEqual(attack(seed).target.status[STATUS.POISON], true, `seed ${seed}`);
-    for (const seed of misses) assert.strictEqual(attack(seed).target.status[STATUS.POISON], false, `seed ${seed}`);
+    for (const seed of poisons)
+      assert.strictEqual(attack(seed).target.status[STATUS.POISON], true, `seed ${seed}`);
+    for (const seed of misses)
+      assert.strictEqual(attack(seed).target.status[STATUS.POISON], false, `seed ${seed}`);
   });
 
-  it('rolls on the damage tick\'s animation pass, not before', () => {
+  it("rolls on the damage tick's animation pass, not before", () => {
     const [seed] = hitSeeds().poisons;
-    const target = gremio(), mosquito = new Enemy(ENEMY_KEYS.MOSQUITO);
+    const target = gremio(),
+      mosquito = new Enemy(ENEMY_KEYS.MOSQUITO);
     const battle = makeBattle([target], [mosquito], seed);
     battle.resolveEnemyAttack(mosquito, target);
     runTicks(battle, 0, 52);
@@ -91,14 +107,16 @@ describe('Mosquito: Poison from its hit reaction', () => {
 
   it('a Turtle Rune wearer gets no roll and no Poison', () => {
     const [seed] = hitSeeds().poisons;
-    const { calls, target } = attack(seed, c => c.setRune(RUNES.TURTLE));
+    const { calls, target } = attack(seed, (c) => c.setRune(RUNES.TURTLE));
     assert.strictEqual(calls, 1); // calc_damage only
     assert.strictEqual(target.status[STATUS.POISON], false);
   });
 
   it('an already poisoned target still rolls, and stays poisoned', () => {
     const { misses } = hitSeeds();
-    const { calls, target } = attack(misses[0], c => { c.status[STATUS.POISON] = true; });
+    const { calls, target } = attack(misses[0], (c) => {
+      c.status[STATUS.POISON] = true;
+    });
     assert.strictEqual(calls, 2);
     assert.strictEqual(target.status[STATUS.POISON], true);
   });
@@ -106,7 +124,8 @@ describe('Mosquito: Poison from its hit reaction', () => {
   it('only a hit or crit rolls: a miss plays the dodge, with no status roll', () => {
     // A Mosquito never misses in play (alwaysHitIfNotCounter, and it can't be countered), so the
     // miss path is driven directly
-    const target = gremio(), mosquito = new Enemy(ENEMY_KEYS.MOSQUITO);
+    const target = gremio(),
+      mosquito = new Enemy(ENEMY_KEYS.MOSQUITO);
     const battle = makeBattle([target], [mosquito], 1);
     battle.applyAttackResult(mosquito, target, ATTACK_RESULT.MISSED);
     assert.strictEqual(battle.animationEvents.size, 0);
@@ -116,10 +135,11 @@ describe('Mosquito: Poison from its hit reaction', () => {
     assert.strictEqual(target.status[STATUS.POISON], false);
   });
 
-  it('Red Solider Ant\'s reaction has no status roll', () => {
+  it("Red Solider Ant's reaction has no status roll", () => {
     for (let seed = 1, checked = 0; checked < 3; seed++) {
       if (seed > SEARCH_LIMIT) throw new Error('no hitting seed');
-      const target = gremio(), ant = new Enemy(ENEMY_KEYS.RED_SOLDIER_ANT);
+      const target = gremio(),
+        ant = new Enemy(ENEMY_KEYS.RED_SOLDIER_ANT);
       const battle = makeBattle([target], [ant], seed);
       battle.resolveEnemyAttack(ant, target);
       if (battle.log.ofType(LOG_TYPES.ATTACK)[0].detail !== ATTACK_RESULT.HIT) continue;
@@ -145,7 +165,8 @@ describe('Poison tick', () => {
   };
 
   it('takes floor(HPMax / 20) at round start, committed on the first tick, with no RNG', () => {
-    const poisoned = round(true), healthy = round(false);
+    const poisoned = round(true),
+      healthy = round(false);
     assert.strictEqual(poisoned.lost, Math.floor(120 / 20));
     assert.strictEqual(healthy.lost, 0);
     assert.strictEqual(poisoned.rngAfterStart, healthy.rngAfterStart);
@@ -155,11 +176,18 @@ describe('Poison tick', () => {
 describe('Red Solider Ant AI', () => {
   const party = () => new PlayerParty([gremio()]);
   /** @param {number} seed */
-  const params = seed => ({ party: party(), enemies: null, rng: new RNG(seed), turn_count: 1, tick: 0 });
+  const params = (seed) => ({
+    party: party(),
+    enemies: null,
+    rng: new RNG(seed),
+    turn_count: 1,
+    tick: 0,
+  });
 
   it('after the target pass: ((r * 100) / 0x7fff) % 100 < 0x4d -> Attack, else Double Strike', () => {
     const ant = new Enemy(ENEMY_KEYS.RED_SOLDIER_ANT);
-    let attacks = 0, strikes = 0;
+    let attacks = 0,
+      strikes = 0;
     for (let seed = 1; seed <= 400; seed++) {
       const p = params(seed);
       const choice = ENEMY_AI[ENEMY_KEYS.RED_SOLDIER_ANT](ant, p);
@@ -176,7 +204,10 @@ describe('Red Solider Ant AI', () => {
         attacks++;
       } else {
         assert.strictEqual(choice.action, ACTION_TYPES.ABILITY);
-        assert.strictEqual(/** @type {any} */ (choice).move, ENEMY_MOVES.RED_SOLDIER_ANT_DOUBLE_STRIKE);
+        assert.strictEqual(
+          /** @type {any} */ (choice).move,
+          ENEMY_MOVES.RED_SOLDIER_ANT_DOUBLE_STRIKE,
+        );
         assert.strictEqual(/** @type {any} */ (choice).target, p.party.combatants[0]);
         strikes++;
       }
@@ -194,11 +225,16 @@ describe('Red Solider Ant Double Strike', () => {
   /** The first seed whose ant AI picks Double Strike at tick 0, dispatched on the battle. */
   const doubleStrike = () => {
     for (let seed = 1; seed <= SEARCH_LIMIT; seed++) {
-      const target = gremio(), ant = new Enemy(ENEMY_KEYS.RED_SOLDIER_ANT);
+      const target = gremio(),
+        ant = new Enemy(ENEMY_KEYS.RED_SOLDIER_ANT);
       const battle = makeBattle([target], [ant], seed);
       battle.turn.current = 2;
       const result = battle.dispatchEnemy(ant);
-      if (battle.log.ofType(LOG_TYPES.CAST)[0]?.detail !== ENEMY_MOVES.RED_SOLDIER_ANT_DOUBLE_STRIKE.name) continue;
+      if (
+        battle.log.ofType(LOG_TYPES.CAST)[0]?.detail !==
+        ENEMY_MOVES.RED_SOLDIER_ANT_DOUBLE_STRIKE.name
+      )
+        continue;
       return { seed, battle, target, ant, result };
     }
     throw new Error('no Double Strike seed');
@@ -219,7 +255,9 @@ describe('Red Solider Ant Double Strike', () => {
     const hpBefore = target.HP;
     runTicks(battle, 0, 29);
     assert.strictEqual(battle.rng.getCount(), aiRolls + 1); // calc_damage
-    const expected = new Enemy(ENEMY_KEYS.RED_SOLDIER_ANT).calcAttackDamage(target, new RNG(seed).next(aiRolls)) * 2;
+    const expected =
+      new Enemy(ENEMY_KEYS.RED_SOLDIER_ANT).calcAttackDamage(target, new RNG(seed).next(aiRolls)) *
+      2;
     assert.strictEqual(hpBefore - target.HP, expected);
     assert.strictEqual(expected % 2, 0);
   });

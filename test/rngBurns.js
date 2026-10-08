@@ -16,7 +16,26 @@ const stepped = (/** @type {number} */ seed, /** @type {number} */ n) => {
 describe('RNG.next jump-ahead', () => {
   it('lands where stepping one call at a time does, with the same count', () => {
     for (const seed of [0x43, 0, 1, 0x30a82220, 0xffffffff, 0x80000000]) {
-      for (const n of [0, 1, 2, 31, 32, 33, 63, 64, 65, 150, 717, 1231, 4095, 4096, 5560, 7750, 65537, 1e6 + 3]) {
+      for (const n of [
+        0,
+        1,
+        2,
+        31,
+        32,
+        33,
+        63,
+        64,
+        65,
+        150,
+        717,
+        1231,
+        4095,
+        4096,
+        5560,
+        7750,
+        65537,
+        1e6 + 3,
+      ]) {
         const rng = new RNG(seed).next(n);
         assert.strictEqual(rng.rng, stepped(seed, n), `seed ${seed}, ${n} calls`);
         assert.strictEqual(rng.count, n);
@@ -58,16 +77,20 @@ describe('memoizeBurn', () => {
 
   it('runs the burn once per start state, then jumps', () => {
     let runs = 0;
-    const burn = memoizeBurn(rng => { runs++; rng.next(100 + (rng.rand % 7)); });
+    const burn = memoizeBurn((rng) => {
+      runs++;
+      rng.next(100 + (rng.rand % 7));
+    });
     for (let i = 0; i < 3; i++) for (const start of [10, 20, 30]) burn(new RNG(5).next(start));
     assert.strictEqual(runs, 3);
     assert.deepStrictEqual(burn.stats, { hits: 6, misses: 3 });
   });
 
   it('empties the cache when it fills, and stays exact', () => {
-    const burn = memoizeBurn(rng => rng.next(1 + (rng.rand % 50)), 4);
+    const burn = memoizeBurn((rng) => rng.next(1 + (rng.rand % 50)), 4);
     for (let start = 0; start < 20; start++) {
-      const rng = new RNG(9).next(start), expected = new RNG(9).next(start);
+      const rng = new RNG(9).next(start),
+        expected = new RNG(9).next(start);
       expected.next(1 + (expected.rand % 50));
       burn(rng);
       assert.strictEqual(rng.rng, expected.rng);

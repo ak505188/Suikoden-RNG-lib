@@ -50,7 +50,10 @@ describe('Water Dragon spellRand', () => {
     for (const { rng, calls } of waterDragonCases.slice(0, 3)) {
       for (let pass = 0; pass < 2; pass++) {
         const r = new RNG(rng);
-        assert.strictEqual(spellRand({ spell: SPELLS.WATER_DRAGON, rng: r, party, enemies }), calls);
+        assert.strictEqual(
+          spellRand({ spell: SPELLS.WATER_DRAGON, rng: r, party, enemies }),
+          calls,
+        );
         assert.strictEqual(r.count, calls);
       }
     }

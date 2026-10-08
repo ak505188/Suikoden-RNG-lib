@@ -35,11 +35,14 @@ const expectedRNGs = (seed, iterations) => {
  * @param {string | null} none - what an iteration without a drop returns
  */
 const expectedDrops = (drops, iterations, column, none) => {
-  const byIteration = new Map(drops.map(d => [d[0], d[column]]));
+  const byIteration = new Map(drops.map((d) => [d[0], d[column]]));
   return Array.from({ length: iterations }, (_, i) => byIteration.get(i) ?? none);
 };
 
-for (const [label, { seed, iterations, groups }] of Object.entries({ AllGroups, LorimarWhipWolf })) {
+for (const [label, { seed, iterations, groups }] of Object.entries({
+  AllGroups,
+  LorimarWhipWolf,
+})) {
   const rngs = expectedRNGs(seed, iterations);
 
   describe(`EnemyParty.calculateDrops (${label})`, () => {
@@ -49,8 +52,14 @@ for (const [label, { seed, iterations, groups }] of Object.entries({ AllGroups, 
         const party = EnemyParty.fromFormation(area.encounters[group.encounter]);
         const rng = new RNG(seed);
         const results = party.calculateDrops(rng, iterations);
-        assert.deepStrictEqual(results.map(r => r.rng), rngs);
-        assert.deepStrictEqual(results.map(r => r.drop?.name ?? null), expectedDrops(group.drops, iterations, 1, null));
+        assert.deepStrictEqual(
+          results.map((r) => r.rng),
+          rngs,
+        );
+        assert.deepStrictEqual(
+          results.map((r) => r.drop?.name ?? null),
+          expectedDrops(group.drops, iterations, 1, null),
+        );
         assert.strictEqual(rng.getCount(), iterations);
       });
     }
@@ -63,8 +72,14 @@ for (const [label, { seed, iterations, groups }] of Object.entries({ AllGroups, 
         const enemyGroup = oldAreas[group.oldArea].getEnemyGroupByIndex(group.oldGroup);
         const rng = new RNG(seed);
         const results = enemyGroup.calculateDrops(rng, iterations);
-        assert.deepStrictEqual(results.map(r => r.rng), rngs);
-        assert.deepStrictEqual(results.map(r => r.drop), expectedDrops(group.drops, iterations, 2, ''));
+        assert.deepStrictEqual(
+          results.map((r) => r.rng),
+          rngs,
+        );
+        assert.deepStrictEqual(
+          results.map((r) => r.drop),
+          expectedDrops(group.drops, iterations, 2, ''),
+        );
         assert.strictEqual(rng.getCount(), iterations);
       });
     }

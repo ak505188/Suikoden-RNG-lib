@@ -1,7 +1,11 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import RNG from '../../lib/rng.js';
-import { earthquakeRand, clayGuardianRand, guardianEarthRand } from '../../lib/Game/Magic/SpellRNG/Earth.js';
+import {
+  earthquakeRand,
+  clayGuardianRand,
+  guardianEarthRand,
+} from '../../lib/Game/Magic/SpellRNG/Earth.js';
 
 const cases = [
   { rng: 0xe15d6b34, calls: 1626 },
@@ -27,13 +31,13 @@ const cases = [
   { rng: 0xfffffffe, calls: 1639 },
 ];
 
-describe("Earthquake Rand tests", () => {
+describe('Earthquake Rand tests', () => {
   for (const { rng, calls } of cases) {
     const r = new RNG(rng);
     it(`Should be ${calls} for ${rng.toString(16)}`, () => {
       assert.strictEqual(earthquakeRand(r).calls, calls);
     });
-  };
+  }
 });
 
 // McDohl's Earth Lv1 (Clay Guardian) on SpellDuration.State, aimed at himself. Start seeds are the RNG value on
@@ -62,13 +66,13 @@ const clayGuardianCases = [
   { rng: 0x2d6210d6, calls: 90 },
 ];
 
-describe("Clay Guardian Rand tests", () => {
+describe('Clay Guardian Rand tests', () => {
   for (const { rng, calls } of clayGuardianCases) {
     const r = new RNG(rng);
     it(`Should be ${calls} for ${rng.toString(16)}`, () => {
       assert.strictEqual(clayGuardianRand(r).calls, calls);
     });
-  };
+  }
 });
 
 // McDohl's Mother Earth Rune (Guardian Earth, id 33, slot 4), whole party, on SpellDuration.State. Start seeds are
@@ -98,25 +102,30 @@ const guardianEarthCases = [
   { rng: 0x2d6210d6, calls: 394 },
 ];
 
-describe("Guardian Earth Rand tests", () => {
+describe('Guardian Earth Rand tests', () => {
   for (const { rng, calls } of guardianEarthCases) {
     it(`Should be ${calls} for ${rng.toString(16)}`, () => {
       const r = new RNG(rng);
       assert.strictEqual(guardianEarthRand(r).calls, calls);
       assert.strictEqual(r.count, calls);
     });
-  };
+  }
 });
 
-describe("Guardian Earth spellRand", () => {
-  it("burns the same calls as guardianEarthRand, memoized or not", async () => {
+describe('Guardian Earth spellRand', () => {
+  it('burns the same calls as guardianEarthRand, memoized or not', async () => {
     const { spellRand } = await import('../../lib/Game/Magic/Behavior.js');
     const { SPELLS } = await import('../../lib/Game/Magic/Spells.js');
     const { EnemyParty, PlayerParty } = await import('../../lib/Game/Battle/Party.js');
     for (const { rng, calls } of guardianEarthCases.slice(0, 3)) {
       for (let pass = 0; pass < 2; pass++) {
         const r = new RNG(rng);
-        const burned = spellRand({ spell: SPELLS.GUARDIAN_EARTH, rng: r, party: new PlayerParty([]), enemies: new EnemyParty([]) });
+        const burned = spellRand({
+          spell: SPELLS.GUARDIAN_EARTH,
+          rng: r,
+          party: new PlayerParty([]),
+          enemies: new EnemyParty([]),
+        });
         assert.strictEqual(burned, calls);
         assert.strictEqual(r.count, calls);
       }

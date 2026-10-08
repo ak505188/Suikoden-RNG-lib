@@ -27,23 +27,31 @@ const makeCleo = () => {
   return cleo;
 };
 
-const makeGremio = () => new Character(CHARACTER_KEYS.GREMIO)
-  .setLVL(22)
-  .setStats({ PWR: 64, SKL: 68, DEF: 84, SPD: 49, MGC: 39, LUK: 66, HP: 201 })
-  .rest();
+const makeGremio = () =>
+  new Character(CHARACTER_KEYS.GREMIO)
+    .setLVL(22)
+    .setStats({ PWR: 64, SKL: 68, DEF: 84, SPD: 49, MGC: 39, LUK: 66, HP: 201 })
+    .rest();
 
 /** @param {Character[]} members @param {Enemy[]} enemyList */
 const cast = (members, enemyList = []) => {
   const party = new PlayerParty(members);
   const enemies = new EnemyParty(enemyList);
-  const applied = applySpell({ actor: members[0], spell: SPELLS.SHINING_WIND, party, enemies, rng: new RNG(1) });
-  [...members, ...enemyList].forEach(c => c.commitPendingDamage());
+  const applied = applySpell({
+    actor: members[0],
+    spell: SPELLS.SHINING_WIND,
+    party,
+    enemies,
+    rng: new RNG(1),
+  });
+  [...members, ...enemyList].forEach((c) => c.commitPendingDamage());
   return applied;
 };
 
 describe('Shining Wind heals the party', () => {
   it('heals every member 500, capped at their max', () => {
-    const cleo = makeCleo().setHP(100), gremio = makeGremio().setHP(10);
+    const cleo = makeCleo().setHP(100),
+      gremio = makeGremio().setHP(10);
     assert.strictEqual(cast([cleo, gremio]), true);
     assert.strictEqual(cleo.HP, 600);
     assert.strictEqual(gremio.HP, 201);
@@ -58,14 +66,15 @@ describe('Shining Wind heals the party', () => {
     cleo.status[STATUS.UNBALANCED] = 2;
     cast([cleo]);
     assert.deepStrictEqual(
-      [STATUS.POISON, STATUS.BALLOON, STATUS.BUCKET, STATUS.SLEEP].map(k => cleo.status[k]),
+      [STATUS.POISON, STATUS.BALLOON, STATUS.BUCKET, STATUS.SLEEP].map((k) => cleo.status[k]),
       [false, 0, false, false],
     );
     assert.strictEqual(cleo.status[STATUS.UNBALANCED], 2);
   });
 
   it('does not revive a downed member', () => {
-    const cleo = makeCleo(), gremio = makeGremio();
+    const cleo = makeCleo(),
+      gremio = makeGremio();
     gremio.setHP(0);
     gremio.die(0);
     cast([cleo, gremio]);
@@ -74,7 +83,8 @@ describe('Shining Wind heals the party', () => {
   });
 
   it("can't change an HP Locked member's HP", () => {
-    const cleo = makeCleo(), gremio = makeGremio().setHP(20);
+    const cleo = makeCleo(),
+      gremio = makeGremio().setHP(20);
     gremio.lockHP();
     cast([cleo, gremio]);
     assert.strictEqual(gremio.HP, 20);
@@ -88,16 +98,20 @@ describe('Shining Wind damages the enemies', () => {
     const party = new PlayerParty([cleo]);
     const enemies = new EnemyParty(enemyList);
     const expected = spellEffect({ actor: cleo, spell: SPELLS.SHINING_WIND, party, enemies });
-    assert.ok(expected.length === 2 && expected.every(h => h.damage > 0));
-    const hpBefore = enemyList.map(e => e.HP);
+    assert.ok(expected.length === 2 && expected.every((h) => h.damage > 0));
+    const hpBefore = enemyList.map((e) => e.HP);
     cast([cleo], enemyList);
-    assert.deepStrictEqual(enemyList.map(e => hpBefore[0] - e.HP), expected.map(h => Math.min(h.damage, hpBefore[0])));
+    assert.deepStrictEqual(
+      enemyList.map((e) => hpBefore[0] - e.HP),
+      expected.map((h) => Math.min(h.damage, hpBefore[0])),
+    );
   });
 });
 
 describe('Shining Wind in a battle round', () => {
   it('spends MP and heals the party', () => {
-    const cleo = makeCleo(), gremio = makeGremio().setHP(10);
+    const cleo = makeCleo(),
+      gremio = makeGremio().setHP(10);
     const mpBefore = cleo.MP[SHINING_WIND_SLOT];
     const battle = new Battle({
       party: new PlayerParty([cleo, gremio]),

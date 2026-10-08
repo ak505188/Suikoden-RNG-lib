@@ -16,13 +16,19 @@ describe('calculateLevelupGrowth', () => {
 
   it('masks non-HP rolls to 0xff before adding the growth value', () => {
     // 0x1ff would overflow into the next bucket if it weren't masked to 0xff.
-    assert.strictEqual(calculateLevelupGrowth(0x1ff, 242, false), calculateLevelupGrowth(0xff, 242, false));
+    assert.strictEqual(
+      calculateLevelupGrowth(0x1ff, 242, false),
+      calculateLevelupGrowth(0xff, 242, false),
+    );
     assert.strictEqual(calculateLevelupGrowth(0xff, 242, false), 1);
   });
 
   it('masks HP rolls to 0x1ff instead of 0xff', () => {
     assert.strictEqual(calculateLevelupGrowth(0x1ff, 835, true), 5);
-    assert.strictEqual(calculateLevelupGrowth(0x3ff, 835, true), calculateLevelupGrowth(0x1ff, 835, true));
+    assert.strictEqual(
+      calculateLevelupGrowth(0x3ff, 835, true),
+      calculateLevelupGrowth(0x1ff, 835, true),
+    );
   });
 });
 
@@ -125,7 +131,7 @@ describe('Party levelups (regression baseline, 0x12 @ 30000)', () => {
       rng,
       character.name,
       character.level,
-      character.levels_gained
+      character.levels_gained,
     ).reduce((total, stats) => {
       Object.entries(stats).forEach(([stat, value]) => {
         total[stat] = (total[stat] ?? 0) + value;

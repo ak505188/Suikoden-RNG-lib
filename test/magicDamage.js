@@ -14,21 +14,35 @@ import RNG from '../lib/rng.js';
 // "apply_elemental_multiplier". The Dragon resists Fire and is weak to Wind.
 
 // Flaming Arrows (power 100) with MGC 51: base_total = 100 + 25 = 125, odd
-const makeCaster = () => new Character(CHARACTER_KEYS.VIKTOR)
-  .setStats({ PWR: 119, SKL: 48, DEF: 94, SPD: 68, MGC: 51, LUK: 65, HP: 432 })
-  .setRune(RUNES.FIRE);
+const makeCaster = () =>
+  new Character(CHARACTER_KEYS.VIKTOR)
+    .setStats({ PWR: 119, SKL: 48, DEF: 94, SPD: 68, MGC: 51, LUK: 65, HP: 432 })
+    .setRune(RUNES.FIRE);
 
 describe('Party spell elemental modifier', () => {
   it('resist floors an odd base: 125 -> 62', () => {
-    assert.strictEqual(makeCaster().calcMagicDamage(SPELLS.FLAMING_ARROWS, new Enemy(ENEMY_KEYS.DRAGON)), 62);
+    assert.strictEqual(
+      makeCaster().calcMagicDamage(SPELLS.FLAMING_ARROWS, new Enemy(ENEMY_KEYS.DRAGON)),
+      62,
+    );
   });
   it('weak doubles: 400 + 25 -> 850', () => {
-    assert.strictEqual(makeCaster().calcMagicDamage(SPELLS.THE_SHREDDING, new Enemy(ENEMY_KEYS.DRAGON)), 850);
+    assert.strictEqual(
+      makeCaster().calcMagicDamage(SPELLS.THE_SHREDDING, new Enemy(ENEMY_KEYS.DRAGON)),
+      850,
+    );
   });
 
   // Neclord lists Dark as Invulnerable, but Dark skips the affinity table: base_total = power + 43
-  const soulEater = new Character(CHARACTER_KEYS.MCDOHL)
-    .setStats({ PWR: 82, SKL: 102, DEF: 80, SPD: 93, MGC: 86, LUK: 85, HP: 278 });
+  const soulEater = new Character(CHARACTER_KEYS.MCDOHL).setStats({
+    PWR: 82,
+    SKL: 102,
+    DEF: 80,
+    SPD: 93,
+    MGC: 86,
+    LUK: 85,
+    HP: 278,
+  });
   for (const key of [ENEMY_KEYS.NECLORD, ENEMY_KEYS.NECLORD_L]) {
     it(`Dark ignores ${key}'s Dark invulnerability: Black Shadow 343, Judgement 1543`, () => {
       assert.strictEqual(soulEater.calcMagicDamage(SPELLS.BLACK_SHADOW, new Enemy(key)), 343);

@@ -14,14 +14,20 @@ import RNG from '../lib/rng.js';
 // R+1 and all of R+2 - three rounds counting the casting one. Modelled as the rounds left, 3 on cast.
 // See Battle_Damage_Formula.md's "Copper Flesh" section in the HUD repo.
 
-const makeGremio = () => new Character(CHARACTER_KEYS.GREMIO)
-  .setLVL(22)
-  .setStats({ PWR: 64, SKL: 68, DEF: 84, SPD: 49, MGC: 39, LUK: 66, HP: 201 })
-  .rest();
+const makeGremio = () =>
+  new Character(CHARACTER_KEYS.GREMIO)
+    .setLVL(22)
+    .setStats({ PWR: 64, SKL: 68, DEF: 84, SPD: 49, MGC: 39, LUK: 66, HP: 201 })
+    .rest();
 
 /** @param {Character[]} party @param {Enemy[]} enemies */
 const makeBattle = (party, enemies) =>
-  new Battle({ party: new PlayerParty(party), enemies: new EnemyParty(enemies), rng: new RNG(1), turns: [] });
+  new Battle({
+    party: new PlayerParty(party),
+    enemies: new EnemyParty(enemies),
+    rng: new RNG(1),
+    turns: [],
+  });
 
 /** Runs a round's end: the wait, the round check and the round-end status step (see test/battleMechanics.js) */
 const endRound = (/** @type {Battle} */ battle) => {

@@ -1,16 +1,11 @@
 import RNG from '../lib/rng.js';
 import { div32ulo } from '../lib/lib.js';
 
-const DIRECTIONS = [
-  'Down',
-  'Up',
-  'Left',
-  'Right',
-]
+const DIRECTIONS = ['Down', 'Up', 'Left', 'Right'];
 
 class NPC {
   constructor({ x, y, name }) {
-    this.name = name
+    this.name = name;
     this.x = x;
     this.y = y;
     this.direction = 0;
@@ -39,7 +34,7 @@ class NPC {
     this.move_timer = this.move_duration;
     this.direction = direction_int;
 
-    switch(this.direction) {
+    switch (this.direction) {
       case 0:
         this.y = this.y + 2;
         break;
@@ -98,17 +93,17 @@ class Mina extends NPC {
     super({ x, y, name: 'Mina' });
     this.move_duration = 16;
     this.timer = 0;
-    this.sitting = false // Need to check how Mina starts
+    this.sitting = false; // Need to check how Mina starts
   }
 
   simulateMovement(rng, frame) {
     const debug_frame = 194;
 
-    const debug_msg = msg => {
-      if (frame == debug_frame) console.log(msg)
+    const debug_msg = (msg) => {
+      if (frame == debug_frame) console.log(msg);
     };
 
-    debug_msg('Is this working?')
+    debug_msg('Is this working?');
 
     if (!this.handleExistingMovement()) return null;
 
@@ -132,7 +127,7 @@ class Mina extends NPC {
       if (Math.floor(rng.next().getRNG2() / 255) % 2 === 1) {
         debug_msg('start mina timer');
         this.timer = 120;
-        const event = { name: this.name, index: rng.count, event: 'Start Mina Timer' }
+        const event = { name: this.name, index: rng.count, event: 'Start Mina Timer' };
         this.events.push(event);
         return event;
       } else {
@@ -180,7 +175,7 @@ const MovingNPCs = [
   new NPC({ x: 36, y: 20, name: 'Orange' }),
   new NPC({ x: 25, y: 35, name: 'Old Man' }),
   new NPC({ x: 17, y: 56, name: 'Stan' }),
-  new Mina({ x: 63, y: 17 })
+  new Mina({ x: 63, y: 17 }),
 ];
 
 const frames_to_sim = 300;
@@ -188,13 +183,12 @@ const rng = new RNG(0xbff1cc1a);
 const events = [];
 
 for (let i = 1; i <= frames_to_sim; i++) {
-  MovingNPCs.forEach(npc => {
+  MovingNPCs.forEach((npc) => {
     const result = npc.simulateMovement(rng, i);
     if (result) events.push({ frame: i, ...result });
   });
-  const npc_str = MovingNPCs
-    .map(npc => npc.is_moving)
-    .map(is_moving => is_moving ? 'T' : 'F')
+  const npc_str = MovingNPCs.map((npc) => npc.is_moving)
+    .map((is_moving) => (is_moving ? 'T' : 'F'))
     .join(' ');
   console.log(`frame: ${i}, index: ${rng.count}, npcs: ${npc_str}`);
 }

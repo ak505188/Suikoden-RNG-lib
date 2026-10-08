@@ -174,9 +174,10 @@ describe('Queen Ant script: fight end', () => {
       DEFEND,
       { type: ACTION_TYPES.ITEM, itemKey: ITEM_KEYS.MEDICINE, target: 0 },
     ]);
+    const { warnings } = /** @type {QueenAntScript} */ (battle.script);
     assert.ok(
-      battle.script.warnings.some((w) => /Poll latency.*Item/.test(w.text)),
-      JSON.stringify(battle.script.warnings),
+      warnings.some((w) => /Poll latency.*Item/.test(w.text)),
+      JSON.stringify(warnings),
     );
   });
 });

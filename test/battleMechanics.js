@@ -393,7 +393,7 @@ describe('Talisman Unite', () => {
     const { battle, gremio, pahn, dragon } = runGremioTurn();
     const rng = new RNG(HIT_SEED);
     const expected =
-      (pahn.calcAttackDamage(dragon, rng, false) + gremio.calcAttackDamage(dragon, rng, false)) * 2;
+      (pahn.calcAttackDamage(dragon, rng) + gremio.calcAttackDamage(dragon, rng)) * 2;
     assert.strictEqual(battle.log.ofType(LOG_TYPES.DAMAGE)[0].amount, expected);
   });
 
@@ -466,10 +466,7 @@ describe('Falcon Rune', () => {
     assert.strictEqual(damage.tick, 1 + 159);
     assert.strictEqual(damage.actor, valeria.label);
     assert.strictEqual(damage.rng, 1);
-    assert.strictEqual(
-      damage.amount,
-      3 * valeria.calcAttackDamage(dragon, new RNG(HIT_SEED), false),
-    );
+    assert.strictEqual(damage.amount, 3 * valeria.calcAttackDamage(dragon, new RNG(HIT_SEED)));
   });
 
   it('holds the turn until t0 + 199, leaving the gate unchanged', () => {
@@ -536,7 +533,7 @@ describe('Boar Rune', () => {
     assert.strictEqual(damage.tick, S + 322);
     assert.strictEqual(damage.actor, pahn.label);
     assert.strictEqual(damage.rng, 1);
-    assert.strictEqual(damage.amount, 2 * pahn.calcAttackDamage(dragon, new RNG(HIT_SEED), false));
+    assert.strictEqual(damage.amount, 2 * pahn.calcAttackDamage(dragon, new RNG(HIT_SEED)));
   });
 
   it('holds the turn until S + 292, leaving the gate unchanged', () => {

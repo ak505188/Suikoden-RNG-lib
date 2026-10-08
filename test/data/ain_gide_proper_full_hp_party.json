@@ -1,0 +1,302 @@
+[
+    {
+        "weapon": {
+            "lvl": 8,
+            "runePiece": {
+                "element": "NONE",
+                "amount": 0
+            }
+        },
+        "key": "MCDOHL",
+        "stats": {
+            "MGC": 154,
+            "PWR": 143,
+            "SKL": 169,
+            "HP": 599,
+            "DEF": 135,
+            "LUK": 149,
+            "SPD": 163
+        },
+        "EXP": 505,
+        "rune": {
+            "id": 1
+        },
+        "LVL": 53,
+        "inventory": [
+            {
+                "id": 81
+            },
+            {
+                "id": 73,
+                "quantity": 254
+            },
+            {
+                "id": 17
+            },
+            {
+                "id": 144
+            },
+            {
+                "id": 72,
+                "quantity": 1
+            }
+        ],
+        "HP": 599,
+        "status": {
+            "balloon": 0,
+            "poison": false
+        },
+        "id": 8,
+        "MP": [
+            8,
+            6,
+            5,
+            2
+        ]
+    },
+    {
+        "weapon": {
+            "lvl": 3,
+            "runePiece": {
+                "element": "NONE",
+                "amount": 0
+            }
+        },
+        "key": "VIKTOR",
+        "stats": {
+            "MGC": 79,
+            "PWR": 152,
+            "SKL": 70,
+            "HP": 550,
+            "DEF": 148,
+            "LUK": 106,
+            "SPD": 112
+        },
+        "EXP": 807,
+        "rune": {
+            "id": 21
+        },
+        "LVL": 47,
+        "inventory": [
+            {
+                "id": 11,
+                "slot": "BODY"
+            },
+            {
+                "id": 28,
+                "slot": "ACCESSORY_1"
+            }
+        ],
+        "HP": 550,
+        "status": {
+            "balloon": 0,
+            "poison": false
+        },
+        "id": 35,
+        "MP": [
+            5,
+            2,
+            1,
+            0
+        ]
+    },
+    {
+        "weapon": {
+            "lvl": 9,
+            "runePiece": {
+                "element": "NONE",
+                "amount": 0
+            }
+        },
+        "key": "FLIK",
+        "stats": {
+            "MGC": 132,
+            "PWR": 148,
+            "SKL": 144,
+            "HP": 581,
+            "DEF": 114,
+            "LUK": 114,
+            "SPD": 149
+        },
+        "EXP": 32,
+        "rune": {
+            "id": 29
+        },
+        "LVL": 51,
+        "inventory": [
+            {
+                "id": 1,
+                "slot": "HEAD"
+            },
+            {
+                "id": 12,
+                "slot": "BODY"
+            },
+            {
+                "id": 67,
+                "slot": "SHIELD"
+            },
+            {
+                "id": 38,
+                "slot": "ACCESSORY_1"
+            },
+            {
+                "id": 65
+            }
+        ],
+        "HP": 581,
+        "status": {
+            "balloon": 0,
+            "poison": false
+        },
+        "id": 17,
+        "MP": [
+            7,
+            5,
+            4,
+            1
+        ]
+    },
+    {
+        "weapon": {
+            "lvl": 3,
+            "runePiece": {
+                "element": "NONE",
+                "amount": 0
+            }
+        },
+        "key": "LUC",
+        "stats": {
+            "MGC": 186,
+            "PWR": 42,
+            "SKL": 118,
+            "HP": 271,
+            "DEF": 51,
+            "LUK": 58,
+            "SPD": 126
+        },
+        "EXP": 565,
+        "rune": {
+            "id": 6
+        },
+        "LVL": 49,
+        "inventory": [
+            {
+                "locked": true,
+                "slot": "BODY",
+                "id": 13
+            },
+            {
+                "locked": true,
+                "slot": "ACCESSORY_1",
+                "id": 52
+            },
+            {
+                "id": 62
+            },
+            {
+                "id": 164
+            }
+        ],
+        "HP": 271,
+        "status": {
+            "balloon": 0,
+            "poison": false
+        },
+        "id": 26,
+        "MP": [
+            9,
+            8,
+            6,
+            5
+        ]
+    },
+    {
+        "weapon": {
+            "lvl": 3,
+            "runePiece": {
+                "element": "NONE",
+                "amount": 0
+            }
+        },
+        "key": "HELLION",
+        "stats": {
+            "MGC": 123,
+            "PWR": 37,
+            "SKL": 39,
+            "HP": 191,
+            "DEF": 59,
+            "LUK": 82,
+            "SPD": 58
+        },
+        "EXP": 666,
+        "rune": {
+            "id": 30
+        },
+        "LVL": 31,
+        "inventory": [
+            {
+                "id": 13,
+                "slot": "BODY"
+            }
+        ],
+        "HP": 191,
+        "status": {
+            "balloon": 0,
+            "poison": false
+        },
+        "id": 59,
+        "MP": [
+            7,
+            4,
+            3,
+            0
+        ]
+    },
+    {
+        "weapon": {
+            "lvl": 7,
+            "runePiece": {
+                "element": "NONE",
+                "amount": 0
+            }
+        },
+        "key": "TENGAAR",
+        "stats": {
+            "MGC": 175,
+            "PWR": 96,
+            "SKL": 146,
+            "HP": 433,
+            "DEF": 111,
+            "LUK": 77,
+            "SPD": 124
+        },
+        "EXP": 816,
+        "rune": {
+            "id": 6
+        },
+        "LVL": 51,
+        "inventory": [
+            {
+                "id": 13,
+                "slot": "BODY"
+            },
+            {
+                "id": 51,
+                "slot": "ACCESSORY_1"
+            }
+        ],
+        "HP": 433,
+        "status": {
+            "balloon": 0,
+            "poison": false
+        },
+        "id": 33,
+        "MP": [
+            9,
+            7,
+            6,
+            4
+        ]
+    }
+]

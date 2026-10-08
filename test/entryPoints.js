@@ -4,6 +4,7 @@ import * as entry from '../battle.js';
 import Battle, { BATTLE_STATUS, PHASE_STATE } from '../lib/Game/Battle/Battle.js';
 import Character, { exportCharacters, importCharacters } from '../lib/Game/Battle/Character.js';
 import Enemy from '../lib/Game/Battle/Enemy.js';
+import QueenAntScript from '../lib/Game/Battle/Scripts/QueenAnt.js';
 import { EnemyParty, PlayerParty } from '../lib/Game/Battle/Party.js';
 import ActionLog, { LOG_TYPES, formatRoll, rollMargin } from '../lib/Game/Battle/ActionLog.js';
 import * as Actions from '../lib/Game/Battle/Actions.js';
@@ -19,7 +20,7 @@ import { Areas } from '../lib/lib.js';
 describe('battle.js exports', () => {
   it('re-exports the library\'s own objects (not copies)', () => {
     const expected = {
-      Battle, BATTLE_STATUS, PHASE_STATE, Character, exportCharacters, importCharacters, Enemy, EnemyParty, PlayerParty, ActionLog, LOG_TYPES, formatRoll, rollMargin,
+      Battle, BATTLE_STATUS, PHASE_STATE, Character, exportCharacters, importCharacters, Enemy, QueenAntScript, EnemyParty, PlayerParty, ActionLog, LOG_TYPES, formatRoll, rollMargin,
       ACTION_TYPES: Actions.ACTION_TYPES, DEFAULT_ACTION: Actions.DEFAULT_ACTION, ROUND_COMMANDS: Actions.ROUND_COMMANDS,
       ROLL_KINDS: Actions.ROLL_KINDS, UNBALANCED_ACTION_TYPES: Actions.UNBALANCED_ACTION_TYPES,
       DEFAULT_COMMANDS: ActionPlans.DEFAULT_COMMANDS, characterActions: ActionPlans.characterActions,

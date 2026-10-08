@@ -17,7 +17,7 @@ const rows = [];
 for (let i = 0; i < 50000; i++) {
   const row = [
     rng.count,
-    rng.getRNG().toString(16),
+    rng.raw.toString(16),
     ...cursors.map((cursor) => simulateRoll(cursor, rng.clone()).roll),
   ];
   rows.push(row);

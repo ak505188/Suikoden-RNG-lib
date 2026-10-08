@@ -46,8 +46,7 @@ const battle = ({ seed = 1, turns = [], lvl = 1, escapable = true } = {}) =>
 
 /** The first seed whose escape roll (the next RNG call) gives `escapes`. */
 const seedWhere = (escapes) => {
-  for (let seed = 1; ; seed++)
-    if (RNG.isRun(new RNG(seed).next().getRNG2()) === escapes) return seed;
+  for (let seed = 1; ; seed++) if (RNG.isRun(new RNG(seed).next().rand) === escapes) return seed;
 };
 
 describe('Round commands: Fight', () => {
@@ -67,7 +66,7 @@ describe('Round commands: Run', () => {
     const b = battle({ lvl: 40, turns: [RUN, [ATTACK, ATTACK]] });
     b.run();
     assert.strictEqual(b.status, BATTLE_STATUS.ESCAPED);
-    assert.strictEqual(b.rng.getCount(), 0);
+    assert.strictEqual(b.rng.count, 0);
     assert.strictEqual(b.turn_count, 0);
     assert.strictEqual(b.log.ofType(LOG_TYPES.ROUND_START).length, 0);
   });
@@ -99,7 +98,7 @@ describe('Round commands: Run', () => {
     const b = battle({ seed: seedWhere(true), turns: [RUN, [ATTACK, ATTACK]] });
     const { status, result } = b.run({ finish: true });
     assert.strictEqual(status, BATTLE_STATUS.ESCAPED);
-    assert.strictEqual(b.rng.getCount(), 1);
+    assert.strictEqual(b.rng.count, 1);
     assert.strictEqual(b.turn_count, 0);
     assert.strictEqual(b.log.ofType(LOG_TYPES.ROUND_START).length, 0);
     assert.strictEqual(result.drop, null);

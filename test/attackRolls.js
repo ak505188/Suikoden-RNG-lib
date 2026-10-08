@@ -27,11 +27,9 @@ const makeBattle = (character, enemy, seed) =>
     rng: new RNG(seed),
   });
 
-/** The 0-99 values of the rand() calls after `count`, as the party (rng2) and enemies (rand) read them */
-const partyRoll = (/** @type {number} */ seed, /** @type {number} */ count) =>
-  new RNG(seed).next(count + 1).getRNG2() % 100;
-const enemyRoll = (/** @type {number} */ seed, /** @type {number} */ count) =>
-  new RNG(seed).next(count + 1).rand % 100;
+/** The 0-99 value of the rand() call after `count` calls, as the party and enemies read it */
+const rollAfter = (/** @type {number} */ seed, /** @type {number} */ count) =>
+  new RNG(seed).jump(count + 1).rand % 100;
 
 describe('Attack rolls in the log', () => {
   it('a party attack logs its hit and crit rolls: the RNG values it used, and its chances', () => {
@@ -44,15 +42,15 @@ describe('Attack rolls in the log', () => {
       const hitChance = Math.min(Math.max(attacker.SKL - (ant.SKL - 80), 60), 99);
       assert.deepStrictEqual(rolls[0], {
         kind: ROLL_KINDS.HIT,
-        roll: partyRoll(seed, 0),
+        roll: rollAfter(seed, 0),
         chance: hitChance,
         min: 60,
         max: 99,
-        pass: partyRoll(seed, 0) < hitChance,
+        pass: rollAfter(seed, 0) < hitChance,
       });
       if (result === ATTACK_RESULT.HIT || result === ATTACK_RESULT.CRIT) {
         assert.strictEqual(rolls[1].kind, ROLL_KINDS.CRIT);
-        assert.strictEqual(rolls[1].roll, partyRoll(seed, 1));
+        assert.strictEqual(rolls[1].roll, rollAfter(seed, 1));
         assert.strictEqual(rolls[1].pass, result === ATTACK_RESULT.CRIT);
       }
     }
@@ -68,7 +66,7 @@ describe('Attack rolls in the log', () => {
         attacker.calcAttackResult(ant, logged, []),
         attacker.calcAttackResult(ant, plain),
       );
-      assert.strictEqual(logged.getCount(), plain.getCount());
+      assert.strictEqual(logged.count, plain.count);
     }
   });
 
@@ -81,14 +79,14 @@ describe('Attack rolls in the log', () => {
       const rolls = /** @type {AttackRoll[]} */ ([]);
       const result = ant.calcAttackResult(target, new RNG(seed), rolls);
       assert.strictEqual(rolls[0].kind, ROLL_KINDS.HIT);
-      assert.strictEqual(rolls[0].roll, enemyRoll(seed, 0));
+      assert.strictEqual(rolls[0].roll, rollAfter(seed, 0));
       if (rolls[0].pass) {
         assert.strictEqual(rolls.length, 1);
         continue;
       }
       assert.deepStrictEqual(rolls[1], {
         kind: ROLL_KINDS.COUNTER,
-        roll: new RNG(seed).next(2).rand & 1,
+        roll: new RNG(seed).jump(2).rand & 1,
         chance: null,
         min: null,
         max: null,

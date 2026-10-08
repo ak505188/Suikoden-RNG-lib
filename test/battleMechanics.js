@@ -97,7 +97,7 @@ describe('Party basic attack', () => {
     dragon.busyUntil = 50;
     // Ready once its busy ends: nothing to do until tick 51
     assert.deepStrictEqual(battle.resolvePartyAttack(gremio), { status: 'Pending', until: 51 });
-    assert.strictEqual(battle.rng.getCount(), 0);
+    assert.strictEqual(battle.rng.count, 0);
   });
 });
 
@@ -185,11 +185,11 @@ describe('Counters', () => {
   });
 
   it('Defend guarantees the counter with no coin flip (1 rand() call: the hit roll)', () => {
-    assert.strictEqual(enemyCountered(true).battle.rng.getCount(), 1);
+    assert.strictEqual(enemyCountered(true).battle.rng.count, 1);
   });
 
   it('without Defend or Counter Rune, a coin flip decides (2 rand() calls)', () => {
-    assert.strictEqual(enemyCountered(false).battle.rng.getCount(), 2);
+    assert.strictEqual(enemyCountered(false).battle.rng.count, 2);
   });
 
   it('the first enemy can never be countered', () => {
@@ -410,7 +410,7 @@ describe('Talisman Unite', () => {
       pahn.knockedOut = true;
     });
     assert.strictEqual(end, 1);
-    assert.strictEqual(battle.rng.getCount(), 0);
+    assert.strictEqual(battle.rng.count, 0);
     assert.strictEqual(battle.log.ofType(LOG_TYPES.DEFEND)[0].detail, 'Talisman Attack failed');
     assert.strictEqual(gremio.defending, false);
   });
@@ -547,10 +547,10 @@ describe('Boar Rune', () => {
   it('rolls Unbalanced (one rand(), always lands) at S + 344, after the damage', () => {
     const { battle, pahn, S } = runPahnTurn();
     runOn(battle, S + 343);
-    assert.strictEqual(battle.rng.getCount(), 1);
+    assert.strictEqual(battle.rng.count, 1);
     assert.strictEqual(pahn.isUnbalanced, false);
     runOn(battle, S + 344);
-    assert.strictEqual(battle.rng.getCount(), 2);
+    assert.strictEqual(battle.rng.count, 2);
     assert.strictEqual(pahn.isUnbalanced, true);
   });
 
@@ -668,7 +668,7 @@ describe('Spell cast', () => {
     dragon.busyUntil = 50; // free from tick 51
     let resolvedAt = null,
       doneAt = null;
-    const rngAtCast = battle.rng.getCount();
+    const rngAtCast = battle.rng.count;
 
     let result = battle.castMagic(
       cleo,
@@ -687,7 +687,7 @@ describe('Spell cast', () => {
     assert.strictEqual(resolvedAt, 151); // ready at 51, + 100 wind-up
     assert.strictEqual(doneAt, 152);
     assert.strictEqual(result.gate, undefined); // gate unchanged
-    assert.strictEqual(battle.rng.getCount(), rngAtCast); // the resolve callback here rolls nothing
+    assert.strictEqual(battle.rng.count, rngAtCast); // the resolve callback here rolls nothing
   });
 
   it("spends MP of the spell's level and refuses when that level is empty", () => {

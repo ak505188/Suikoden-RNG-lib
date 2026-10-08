@@ -12,33 +12,33 @@ describe('Storm Fang Rand tests', () => {
 });
 
 const shiningWindCases = [
-  { rng: 0xd7250f7e, calls: 1302 },
-  { rng: 0x11111111, calls: 1314 },
-  { rng: 0xcafebabe, calls: 1338 },
-  { rng: 0xdeadbeef, calls: 1320 },
-  { rng: 0x00000001, calls: 1314 },
-  { rng: 0x7fffffff, calls: 1356 },
-  { rng: 0x9e3779b9, calls: 1350 },
-  { rng: 0x12345678, calls: 1308 },
-  { rng: 0xa5a5a5a5, calls: 1320 },
-  { rng: 0x00c0ffee, calls: 1338 },
-  { rng: 0x1badb002, calls: 1320 },
-  { rng: 0x5eadbeef, calls: 1320 },
-  { rng: 0x8badf00d, calls: 1338 },
-  { rng: 0xfeedface, calls: 1326 },
-  { rng: 0x0defaced, calls: 1320 },
-  { rng: 0xabad1dea, calls: 1338 },
-  { rng: 0x31337000, calls: 1308 },
-  { rng: 0x42424242, calls: 1362 },
-  { rng: 0x55555555, calls: 1344 },
-  { rng: 0xaaaaaaaa, calls: 1296 },
-  { rng: 0xfffffffe, calls: 1314 },
+  { seed: 0xd7250f7e, calls: 1302 },
+  { seed: 0x11111111, calls: 1314 },
+  { seed: 0xcafebabe, calls: 1338 },
+  { seed: 0xdeadbeef, calls: 1320 },
+  { seed: 0x00000001, calls: 1314 },
+  { seed: 0x7fffffff, calls: 1356 },
+  { seed: 0x9e3779b9, calls: 1350 },
+  { seed: 0x12345678, calls: 1308 },
+  { seed: 0xa5a5a5a5, calls: 1320 },
+  { seed: 0x00c0ffee, calls: 1338 },
+  { seed: 0x1badb002, calls: 1320 },
+  { seed: 0x5eadbeef, calls: 1320 },
+  { seed: 0x8badf00d, calls: 1338 },
+  { seed: 0xfeedface, calls: 1326 },
+  { seed: 0x0defaced, calls: 1320 },
+  { seed: 0xabad1dea, calls: 1338 },
+  { seed: 0x31337000, calls: 1308 },
+  { seed: 0x42424242, calls: 1362 },
+  { seed: 0x55555555, calls: 1344 },
+  { seed: 0xaaaaaaaa, calls: 1296 },
+  { seed: 0xfffffffe, calls: 1314 },
 ];
 
 describe('Shining Wind Rand tests', () => {
-  for (const { rng, calls } of shiningWindCases) {
-    const r = new RNG(rng);
-    it(`Should be ${calls} for ${rng.toString(16)}`, () => {
+  for (const { seed, calls } of shiningWindCases) {
+    const r = new RNG(seed);
+    it(`Should be ${calls} for ${seed.toString(16)}`, () => {
       assert.strictEqual(shiningWindRand(r).calls, calls);
     });
   }

@@ -179,12 +179,12 @@ describe('A covered attack', () => {
     for (let seed = 1; checked < 2 && seed < 2000; seed++) {
       const { battle, hero, gremio, mosquitoes } = setup(seed);
       battle.resolveEnemyAttack(mosquitoes[0], hero);
-      const before = battle.rng.getCount();
+      const before = battle.rng.count;
       // Its damage tick: calc_damage, then the reaction's status roll on Gremio
-      const roll = cDiv(new RNG(seed).next(before + 2).rand * 100, 0x7fff) % 100;
+      const roll = cDiv(new RNG(seed).jump(before + 2).rand * 100, 0x7fff) % 100;
       if (roll >= 20) continue;
       runTicks(battle, 0, 53);
-      assert.strictEqual(battle.rng.getCount(), before + 2);
+      assert.strictEqual(battle.rng.count, before + 2);
       assert.strictEqual(gremio.status[STATUS.POISON], true);
       assert.strictEqual(hero.status[STATUS.POISON], false);
       checked++;

@@ -63,13 +63,13 @@ describe('getGrowthValue', () => {
 
 describe('characterLevelUp', () => {
   it('is deterministic for a given RNG state (McDohl, level 25, 0x12 @ 30000)', () => {
-    const rng = new RNG(0x12).next(30000);
+    const rng = new RNG(0x12).jump(30000);
     const growth = characterLevelUp('McDohl', 25, rng);
     assert.deepStrictEqual(growth, { PWR: 2, SKL: 2, DEF: 2, SPD: 3, MGC: 2, LUK: 3, HP: 11 });
   });
 
   it('advances the RNG by exactly one roll per stat', () => {
-    const rng = new RNG(0x12).next(30000);
+    const rng = new RNG(0x12).jump(30000);
     characterLevelUp('McDohl', 25, rng);
     assert.strictEqual(rng.count, 30000 + 7);
   });
@@ -77,7 +77,7 @@ describe('characterLevelUp', () => {
 
 describe('generateCharacterMultipleLevelup', () => {
   it('matches characterLevelUps when summed (McDohl, 24 -> 27, 0x12 @ 30000)', () => {
-    const perLevel = generateCharacterMultipleLevelup(new RNG(0x12).next(30000), 'McDohl', 24, 3);
+    const perLevel = generateCharacterMultipleLevelup(new RNG(0x12).jump(30000), 'McDohl', 24, 3);
     const summed = perLevel.reduce((total, stats) => {
       Object.entries(stats).forEach(([stat, value]) => {
         total[stat] = (total[stat] ?? 0) + value;
@@ -85,13 +85,13 @@ describe('generateCharacterMultipleLevelup', () => {
       return total;
     }, {});
 
-    const cumulative = characterLevelUps('McDohl', 24, 3, new RNG(0x12).next(30000));
+    const cumulative = characterLevelUps('McDohl', 24, 3, new RNG(0x12).jump(30000));
 
     assert.deepStrictEqual(summed, cumulative);
   });
 
   it('is deterministic for a given RNG state (McDohl, 24 -> 27, 0x12 @ 30000)', () => {
-    const perLevel = generateCharacterMultipleLevelup(new RNG(0x12).next(30000), 'McDohl', 24, 3);
+    const perLevel = generateCharacterMultipleLevelup(new RNG(0x12).jump(30000), 'McDohl', 24, 3);
     assert.deepStrictEqual(perLevel, [
       { PWR: 2, SKL: 2, DEF: 2, SPD: 3, MGC: 2, LUK: 3, HP: 11 },
       { PWR: 2, SKL: 3, DEF: 1, SPD: 3, MGC: 3, LUK: 2, HP: 11 },
@@ -124,7 +124,7 @@ describe('Party levelups (regression baseline, 0x12 @ 30000)', () => {
     Valeria: { PWR: 3, SKL: 2, DEF: 2, SPD: 2, MGC: 2, LUK: 2, HP: 12 },
   };
 
-  const rng = new RNG(0x12).next(30000);
+  const rng = new RNG(0x12).jump(30000);
   const levelUps = {};
   for (const character of party) {
     levelUps[character.name] = generateCharacterMultipleLevelup(

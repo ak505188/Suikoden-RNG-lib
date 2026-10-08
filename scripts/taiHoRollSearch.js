@@ -4,16 +4,16 @@ import { simulateOpponentRollsFromGameStart } from '../lib/chinchironin.js';
 const START_INDEX = 15000;
 const END_INDEX = 16000;
 
-const rng = new RNG(0x12).next(START_INDEX);
+const rng = new RNG(0x12).jump(START_INDEX);
 const games = [];
 
 const isUsableRoll = (roll) => roll[0] == roll[1] || roll[1] == roll[2];
 
 for (let i = START_INDEX; i < END_INDEX; i++) {
-  const roll_data = simulateOpponentRollsFromGameStart(rng.cloneKeepIndex(), true, 203, 0);
+  const roll_data = simulateOpponentRollsFromGameStart(rng.clone(), true, 203, 0);
   const result = {
     index: rng.count,
-    rng: `0x${rng.getRNG().toString(16)}`,
+    rng: `0x${rng.raw.toString(16)}`,
     ...roll_data,
   };
 

@@ -92,7 +92,7 @@ describe('Duel: the live Kwanda capture (KwandaDuelPreStart.State)', () => {
       rounds.map((r) => r.result),
       [null, null, null, null, DUEL_RESULTS.LOSE],
     );
-    assert.strictEqual(duel.rng.rng, 0x03531a8e);
+    assert.strictEqual(duel.rng.raw, 0x03531a8e);
     assert.strictEqual(duel.rng.count, 11); // 5 move rolls + 6 hits
     assert.strictEqual(duel.player.HP, -110);
     assert.strictEqual(duel.enemy.HP, 30);
@@ -116,7 +116,7 @@ describe('Duel: matches lib/Duel.lua (Suikoden-Bizhawk-HUD) on random play', () 
           where,
         );
         assert.deepStrictEqual([duel.player.HP, duel.enemy.HP], expected.hp, where);
-        assert.strictEqual(duel.rng.rng, expected.rng, where);
+        assert.strictEqual(duel.rng.raw, expected.rng, where);
         assert.strictEqual(r.result, expected.result, where);
       }
     }

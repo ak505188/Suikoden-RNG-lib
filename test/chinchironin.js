@@ -43,9 +43,9 @@ describe('Rolls should match TaiHoRolls_0x12', () => {
   const sim_results = [];
 
   for (let i = 0; i < NUM_ROLLS_TO_TEST; i++) {
-    const sim_result = simulateOpponentRollsFromGameStart(rng.cloneKeepIndex(), true, 203, 0);
+    const sim_result = simulateOpponentRollsFromGameStart(rng.clone(), true, 203, 0);
     const rolls = sim_result.rolls.map((res) => res.roll);
-    sim_results.push({ index: rng.count, rng: rng.getRNG(), wait: sim_result.wait, rolls });
+    sim_results.push({ index: rng.count, rng: rng.raw, wait: sim_result.wait, rolls });
     rng.next();
   }
 
@@ -76,9 +76,9 @@ describe('Rolls should match Gaspar 0x43', () => {
   const rng = new RNG(0x43);
 
   for (let i = 0; i < NUM_ROLLS_TO_TEST; i++) {
-    const sim_result = simulateOpponentRollsFromGameStart(rng.cloneKeepIndex(), false, 441, 0);
+    const sim_result = simulateOpponentRollsFromGameStart(rng.clone(), false, 441, 0);
     const rolls = sim_result.rolls.map((res) => res.roll);
-    const result = { index: rng.count, rng: rng.getRNG(), wait: sim_result.wait, rolls };
+    const result = { index: rng.count, rng: rng.raw, wait: sim_result.wait, rolls };
     it(`${i} should match.`, () => {
       assert.deepStrictEqual(result, GasparRolls_0x43[i]);
     });
@@ -89,9 +89,9 @@ describe('Rolls should match Gaspar 0x43', () => {
 // describe("Test specific Tai Ho index", () => {
 //   const index = 107; // 177, 195
 //   const rng = new RNG(0x12);
-//   rng.next(index);
+//   rng.jump(index);
 //
-//   const sim_result = { index: rng.count, rng: rng.getRNG(), ...simulateOpponentRollsFromGameStart(rng.cloneKeepIndex(), true, 203, 0) };
+//   const sim_result = { index: rng.count, rng: rng.raw, ...simulateOpponentRollsFromGameStart(rng.clone(), true, 203, 0) };
 //   it(`Index ${index} should match`, () => {
 //     assert.deepStrictEqual(sim_result, TaiHoRolls_0x12[index]);
 //

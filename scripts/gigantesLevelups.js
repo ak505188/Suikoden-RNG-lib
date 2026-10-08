@@ -16,12 +16,12 @@ const end_index = 30150;
 
 const STARTING_RNG = 0x12;
 
-const base_rng = new RNG(STARTING_RNG).next(start_index);
+const base_rng = new RNG(STARTING_RNG).jump(start_index);
 const results = [];
 
 for (let i = 0; i < end_index - start_index; i++) {
   const level_ups = {};
-  const rng = base_rng.cloneKeepIndex().next(i);
+  const rng = base_rng.clone().jump(i);
   for (const character of party) {
     const stats_gained = generateCharacterMultipleLevelup(
       rng,

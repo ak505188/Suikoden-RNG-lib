@@ -5,10 +5,10 @@ import RNG from '../lib/rng.js';
 
 /** The first RNG count after `start` whose value starts a battle in `area` */
 const nextBattleAt = (/** @type {any} */ area, /** @type {number} */ start) => {
-  const probe = new RNG(0x43).next(start);
+  const probe = new RNG(0x43).jump(start);
   do probe.next();
   while (!area.isBattle(probe));
-  return probe.getCount();
+  return probe.count;
 };
 
 describe('Area.battleFreeSteps', () => {
@@ -16,13 +16,13 @@ describe('Area.battleFreeSteps', () => {
     for (const name of ['Pannu Yakuta', 'Pannu Yakuta Area', 'Gregminster Area 1']) {
       const area = Areas[name];
       for (let start = 7000; start < 7400; start += 37) {
-        const rng = new RNG(0x43).next(start);
+        const rng = new RNG(0x43).jump(start);
         assert.strictEqual(
           area.battleFreeSteps(rng, 2000),
           nextBattleAt(area, start) - start - 1,
           `${name} from ${start}`,
         );
-        assert.strictEqual(rng.getCount(), start); // not moved
+        assert.strictEqual(rng.count, start); // not moved
       }
     }
   });
@@ -30,14 +30,14 @@ describe('Area.battleFreeSteps', () => {
   it("ignores a battle on the current value: ending on it doesn't start it", () => {
     const area = Areas['Pannu Yakuta'];
     const battleAt = nextBattleAt(area, 7750);
-    const onIt = /** @type {number} */ (area.battleFreeSteps(new RNG(0x43).next(battleAt), 2000));
+    const onIt = /** @type {number} */ (area.battleFreeSteps(new RNG(0x43).jump(battleAt), 2000));
     assert.strictEqual(onIt, nextBattleAt(area, battleAt) - battleAt - 1);
-    assert.strictEqual(area.battleFreeSteps(new RNG(0x43).next(battleAt - 1), 2000), 0);
+    assert.strictEqual(area.battleFreeSteps(new RNG(0x43).jump(battleAt - 1), 2000), 0);
   });
 
   it('is null past the limit, or in a town', () => {
     const area = Areas['Pannu Yakuta'];
-    const rng = new RNG(0x43).next(7750);
+    const rng = new RNG(0x43).jump(7750);
     const free = /** @type {number} */ (area.battleFreeSteps(rng, 2000));
     assert.strictEqual(area.battleFreeSteps(rng, free), free);
     assert.strictEqual(area.battleFreeSteps(rng, free - 1), null);

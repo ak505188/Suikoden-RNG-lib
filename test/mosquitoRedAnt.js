@@ -46,7 +46,7 @@ const SEARCH_LIMIT = 5000;
 
 /** The status roll the reaction makes on the rand() at `count + 1`: ((rand * 100) / 0x7fff) % 100. */
 const statusRollAt = (/** @type {number} */ seed, /** @type {number} */ count) =>
-  cDiv(new RNG(seed).next(count + 1).rand * 100, 0x7fff) % 100;
+  cDiv(new RNG(seed).jump(count + 1).rand * 100, 0x7fff) % 100;
 
 describe('Mosquito: Poison from its hit reaction', () => {
   /**
@@ -60,9 +60,9 @@ describe('Mosquito: Poison from its hit reaction', () => {
     const battle = makeBattle([target], [mosquito], seed);
     battle.resolveEnemyAttack(mosquito, target);
     const result = battle.log.ofType(LOG_TYPES.ATTACK)[0].detail;
-    const afterRolls = battle.rng.getCount(); // the hit (and counter) rolls at t0
+    const afterRolls = battle.rng.count; // the hit (and counter) rolls at t0
     runTicks(battle, 0, 53);
-    return { battle, target, result, afterRolls, calls: battle.rng.getCount() - afterRolls };
+    return { battle, target, result, afterRolls, calls: battle.rng.count - afterRolls };
   };
 
   /** The first seeds whose Mosquito attack hits, sorted by whether the Poison roll lands. */
@@ -131,7 +131,7 @@ describe('Mosquito: Poison from its hit reaction', () => {
     assert.strictEqual(battle.animationEvents.size, 0);
     assert.strictEqual(battle.events.size, 0);
     runTicks(battle, 0, 120);
-    assert.strictEqual(battle.rng.getCount(), 0);
+    assert.strictEqual(battle.rng.count, 0);
     assert.strictEqual(target.status[STATUS.POISON], false);
   });
 
@@ -143,9 +143,9 @@ describe('Mosquito: Poison from its hit reaction', () => {
       const battle = makeBattle([target], [ant], seed);
       battle.resolveEnemyAttack(ant, target);
       if (battle.log.ofType(LOG_TYPES.ATTACK)[0].detail !== ATTACK_RESULT.HIT) continue;
-      const before = battle.rng.getCount();
+      const before = battle.rng.count;
       runTicks(battle, 0, 83);
-      assert.strictEqual(battle.rng.getCount() - before, 1);
+      assert.strictEqual(battle.rng.count - before, 1);
       checked++;
     }
   });
@@ -158,7 +158,7 @@ describe('Poison tick', () => {
     if (poisoned) target.status[STATUS.POISON] = true;
     const battle = makeBattle([target], [new Enemy(ENEMY_KEYS.FURFUR)], 1);
     battle.beginRound([{ type: ACTION_TYPES.DEFEND }]);
-    const rngAfterStart = battle.rng.getCount();
+    const rngAfterStart = battle.rng.count;
     const hpBefore = target.HP;
     battle.tick(); // the first tick commits it
     return { target, rngAfterStart, lost: hpBefore - target.HP };
@@ -211,7 +211,7 @@ describe('Red Solider Ant AI', () => {
         assert.strictEqual(/** @type {any} */ (choice).target, p.party.combatants[0]);
         strikes++;
       }
-      assert.strictEqual(p.rng.getCount(), rng.getCount());
+      assert.strictEqual(p.rng.count, rng.count);
     }
     assert.ok(attacks > strikes && strikes > 0);
   });
@@ -251,12 +251,12 @@ describe('Red Solider Ant Double Strike', () => {
 
   it('has no hit or crit roll, and deals calc_damage x 2', () => {
     const { seed, battle, target } = doubleStrike();
-    const aiRolls = battle.rng.getCount(); // the target pass and the move roll only
+    const aiRolls = battle.rng.count; // the target pass and the move roll only
     const hpBefore = target.HP;
     runTicks(battle, 0, 29);
-    assert.strictEqual(battle.rng.getCount(), aiRolls + 1); // calc_damage
+    assert.strictEqual(battle.rng.count, aiRolls + 1); // calc_damage
     const expected =
-      new Enemy(ENEMY_KEYS.RED_SOLDIER_ANT).calcAttackDamage(target, new RNG(seed).next(aiRolls)) *
+      new Enemy(ENEMY_KEYS.RED_SOLDIER_ANT).calcAttackDamage(target, new RNG(seed).jump(aiRolls)) *
       2;
     assert.strictEqual(hpBefore - target.HP, expected);
     assert.strictEqual(expected % 2, 0);

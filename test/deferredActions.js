@@ -26,7 +26,7 @@ const bonbon = () =>
       ].map((key) => new Character(key)),
     ),
     enemies: EnemyParty.fromFormation(AREAS.GREGMINSTER_AREA_1.encounters[1]),
-    rng: new RNG(0x30a82220).next(5419),
+    rng: new RNG(0x30a82220).jump(5419),
   });
 
 /** @param {Battle} battle */
@@ -92,10 +92,10 @@ describe('Deferred actions', () => {
     assert.strictEqual(battle.playRound(), false);
     assert.strictEqual(battle.awaitingChoice, 0);
     assert.strictEqual(battle.phase, PHASE_STATE.DISPATCH);
-    const rngBefore = battle.rng.getCount();
+    const rngBefore = battle.rng.count;
     // Asking again without choosing changes nothing
     assert.strictEqual(battle.playRound(), false);
-    assert.strictEqual(battle.rng.getCount(), rngBefore);
+    assert.strictEqual(battle.rng.count, rngBefore);
     battle.chooseAction({ type: ACTION_TYPES.ATTACK, target: 0 });
     assert.strictEqual(battle.awaitingChoice, null);
     assert.strictEqual(battle.playRound(), true);

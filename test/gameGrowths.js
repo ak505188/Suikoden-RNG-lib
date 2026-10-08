@@ -64,14 +64,14 @@ describe('getGrowthValue', () => {
 
 describe('Character#calculateLevelups (single level)', () => {
   it('is deterministic for a given RNG state (McDohl, level 24 -> 25, 0x12 @ 30000)', () => {
-    const rng = new RNG(0x12).next(30000);
+    const rng = new RNG(0x12).jump(30000);
     const character = new Character(CHARACTER_KEYS.MCDOHL);
     const growth = character.calculateLevelups(1, 24, rng);
     assert.deepStrictEqual(growth, { PWR: 2, SKL: 2, DEF: 2, SPD: 3, MGC: 2, LUK: 3, HP: 11 });
   });
 
   it('advances the RNG by exactly one roll per stat', () => {
-    const rng = new RNG(0x12).next(30000);
+    const rng = new RNG(0x12).jump(30000);
     const character = new Character(CHARACTER_KEYS.MCDOHL);
     character.calculateLevelups(1, 24, rng);
     assert.strictEqual(rng.count, 30000 + 7);
@@ -80,14 +80,14 @@ describe('Character#calculateLevelups (single level)', () => {
 
 describe('Character#calculateLevelups (multiple levels)', () => {
   it('sums growths across levels (McDohl, 24 -> 27, 0x12 @ 30000)', () => {
-    const rng = new RNG(0x12).next(30000);
+    const rng = new RNG(0x12).jump(30000);
     const character = new Character(CHARACTER_KEYS.MCDOHL);
     const growth = character.calculateLevelups(3, 24, rng);
     assert.deepStrictEqual(growth, { PWR: 6, SKL: 7, DEF: 5, SPD: 9, MGC: 7, LUK: 7, HP: 33 });
   });
 
   it('advances the RNG by 7 rolls per level', () => {
-    const rng = new RNG(0x12).next(30000);
+    const rng = new RNG(0x12).jump(30000);
     const character = new Character(CHARACTER_KEYS.MCDOHL);
     character.calculateLevelups(3, 24, rng);
     assert.strictEqual(rng.count, 30000 + 3 * 7);
@@ -118,7 +118,7 @@ describe('Party levelups (regression baseline, 0x12 @ 30000)', () => {
     Valeria: { PWR: 3, SKL: 2, DEF: 2, SPD: 2, MGC: 2, LUK: 2, HP: 12 },
   };
 
-  const rng = new RNG(0x12).next(30000);
+  const rng = new RNG(0x12).jump(30000);
   const levelUps = {};
   for (const member of party) {
     const character = new Character(member.key);

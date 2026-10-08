@@ -303,11 +303,11 @@ shown in the battle menu (top to bottom.)
 ```
 // Copied straight from app codebase since I'm lazy
 for (enemy in enemyGroup) {
-    let r2 = rng.getNext().rng2;
+    let r2 = rng.peek().rand;
     const dropIndex = r2 % 3;
     if (dropIndex < enemy.drops.length) {
       const dropRate = enemy.drops[dropIndex].rate;
-      r2 = rng.getNext(2).rng2;
+      r2 = rng.peek(2).rand;
       if (r2 % 100 < dropRate) {
         return enemy.drops[dropIndex].item;
       }

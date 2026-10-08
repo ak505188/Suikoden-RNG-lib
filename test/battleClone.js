@@ -34,7 +34,7 @@ const makeBattle = (turns = []) => {
 
 /** Everything that can change during a battle, for comparing two of them. */
 const snapshot = (/** @type {Battle} */ battle) => ({
-  rng: [battle.rng.getRNG(), battle.rng.getCount()],
+  rng: [battle.rng.raw, battle.rng.count],
   turn: battle.turn_count,
   frames: battle.frames,
   combatants: battle.combatants.slice(1).map((c) => [c.HP, c.knockedOut, { ...c.status }]),
@@ -96,7 +96,7 @@ describe('Battle.clone', () => {
     assert.strictEqual(mcdohl.inventory.get(ITEM_KEYS.MEDICINE).quantity, 6);
     assert.strictEqual(mcdohl.weapon.runePiece.element, WEAPON_ELEMENTS.NONE);
     assert.strictEqual(battle.enemies.combatants[0].HP, battle.enemies.combatants[0].stats.HP);
-    assert.strictEqual(battle.rng.getCount(), 0);
+    assert.strictEqual(battle.rng.count, 0);
     assert.strictEqual(battle.log.entries.length, 0);
   });
 });
@@ -222,7 +222,7 @@ describe('Battle.clone mid-round', () => {
         ].map((key) => new Character(key)),
       ),
       enemies: EnemyParty.fromFormation(AREAS.GREGMINSTER_AREA_1.encounters[1]),
-      rng: new RNG(0x30a82220).next(5419),
+      rng: new RNG(0x30a82220).jump(5419),
       escapable: true,
     });
   const strong = (/** @type {import('../lib/Game/Keys.js').CharacterKey} */ key) =>

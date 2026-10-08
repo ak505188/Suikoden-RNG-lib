@@ -72,13 +72,13 @@ describe('Sydonia AI', () => {
     const choice = sydonia.selectAction(p);
     assert.strictEqual(choice.action, ACTION_TYPES.ABILITY);
     assert.strictEqual(choice.move, ENEMY_MOVES.SYDONIA_SPECIAL);
-    assert.strictEqual(p.rng.getCount(), 2);
+    assert.strictEqual(p.rng.count, 2);
   });
 
   it('basic-attacks a back-row target, with no extra roll', () => {
     const p = params(5);
     assert.strictEqual(sydonia.selectAction(p).action, ACTION_TYPES.ATTACK);
-    assert.strictEqual(p.rng.getCount(), 1);
+    assert.strictEqual(p.rng.count, 1);
   });
 });
 
@@ -103,7 +103,7 @@ describe('Dragon AI', () => {
     const choice = select(p);
     assert.strictEqual(choice.move, ENEMY_MOVES.DRAGON_LIGHTNING);
     assert.strictEqual(choice.target, p.party.combatants[0]);
-    assert.strictEqual(p.rng.getCount(), 2);
+    assert.strictEqual(p.rng.count, 2);
   });
 
   it('Fire Breath otherwise', () => {
@@ -141,6 +141,6 @@ describe('Dragon AI', () => {
     const target = new Character(CHARACTER_KEYS.MCDOHL).setLVL(20).rest();
     const rng = new RNG(1);
     ENEMY_MOVES.DRAGON_LIGHTNING.apply(dragon, { party: new PlayerParty([target]), rng, target });
-    assert.ok(rng.getCount() > 150); // 30 particles x 5 calls on the first tick alone
+    assert.ok(rng.count > 150); // 30 particles x 5 calls on the first tick alone
   });
 });

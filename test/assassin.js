@@ -42,7 +42,7 @@ describe('Damage Roll Calculation Tests', () => {
   const arm = 81;
 
   const turn1 = simulateAssassinTurn(rng, arm);
-  const rng_after_t1 = rng.getRNG();
+  const rng_after_t1 = rng.raw;
 
   it('Move name should == Melee', () => {
     assert.strictEqual(turn1.move_name, 'Melee');
@@ -63,7 +63,7 @@ describe('Damage Roll Calculation Tests', () => {
     assert.strictEqual(turn2.damage, 19);
   });
   it('RNG should now == 0x852197d5', () => {
-    assert.strictEqual(rng.getRNG(), 0x852197d5);
+    assert.strictEqual(rng.raw, 0x852197d5);
   });
 });
 
@@ -72,7 +72,7 @@ describe('Damage Roll Calculation Test with same RNG different ARM', () => {
   const arm = 78;
 
   const turn1 = simulateAssassinTurn(rng, arm);
-  const rng_after_t1 = rng.getRNG();
+  const rng_after_t1 = rng.raw;
 
   it('Move name should == Melee', () => {
     assert.strictEqual(turn1.move_name, 'Melee');
@@ -93,7 +93,7 @@ describe('Damage Roll Calculation Test with same RNG different ARM', () => {
     assert.strictEqual(turn2.damage, 22);
   });
   it('RNG should now == 0x852197d5', () => {
-    assert.strictEqual(rng.getRNG(), 0x852197d5);
+    assert.strictEqual(rng.raw, 0x852197d5);
   });
 });
 
@@ -102,7 +102,7 @@ describe('Damage Roll Calculation Test with different RNG different ARM', () => 
   const arm = 86;
 
   const turn1 = simulateAssassinTurn(rng, arm);
-  const rng_after_t1 = rng.getRNG();
+  const rng_after_t1 = rng.raw;
 
   it('Move name should == Shuriken', () => {
     assert.strictEqual(turn1.move_name, 'Shuriken');
@@ -123,7 +123,7 @@ describe('Damage Roll Calculation Test with different RNG different ARM', () => 
     assert.strictEqual(turn2.damage, 24);
   });
   it('RNG should now == 0x4b8945bf', () => {
-    assert.strictEqual(rng.getRNG(), 0x4b8945bf);
+    assert.strictEqual(rng.raw, 0x4b8945bf);
   });
 });
 

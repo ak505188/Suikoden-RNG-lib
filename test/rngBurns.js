@@ -36,17 +36,17 @@ describe('RNG.next jump-ahead', () => {
         65537,
         1e6 + 3,
       ]) {
-        const rng = new RNG(seed).next(n);
-        assert.strictEqual(rng.rng, stepped(seed, n), `seed ${seed}, ${n} calls`);
+        const rng = new RNG(seed).jump(n);
+        assert.strictEqual(rng.raw, stepped(seed, n), `seed ${seed}, ${n} calls`);
         assert.strictEqual(rng.count, n);
       }
     }
   });
 
   it('a jump from partway along matches too', () => {
-    const rng = new RNG(0x43).next(7750);
-    rng.next(717);
-    assert.strictEqual(rng.rng, stepped(0x43, 7750 + 717));
+    const rng = new RNG(0x43).jump(7750);
+    rng.jump(717);
+    assert.strictEqual(rng.raw, stepped(0x43, 7750 + 717));
     assert.strictEqual(rng.count, 7750 + 717);
   });
 });
@@ -62,12 +62,12 @@ describe('memoizeBurn', () => {
   for (const [name, raw, memoized] of burns) {
     it(`${name}: the same RNG state and count as the unmemoized burn, on a miss and on a hit`, () => {
       for (let start = 7000; start < 7600; start++) {
-        const expected = new RNG(0x43).next(start);
+        const expected = new RNG(0x43).jump(start);
         raw(expected);
         for (let pass = 0; pass < 2; pass++) {
-          const rng = new RNG(0x43).next(start);
+          const rng = new RNG(0x43).jump(start);
           const { calls } = memoized(rng);
-          assert.strictEqual(rng.rng, expected.rng, `${name} from ${start}, pass ${pass}`);
+          assert.strictEqual(rng.raw, expected.raw, `${name} from ${start}, pass ${pass}`);
           assert.strictEqual(rng.count, expected.count);
           assert.strictEqual(calls, expected.count - start);
         }
@@ -79,33 +79,33 @@ describe('memoizeBurn', () => {
     let runs = 0;
     const burn = memoizeBurn((rng) => {
       runs++;
-      rng.next(100 + (rng.rand % 7));
+      rng.jump(100 + (rng.rand % 7));
     });
-    for (let i = 0; i < 3; i++) for (const start of [10, 20, 30]) burn(new RNG(5).next(start));
+    for (let i = 0; i < 3; i++) for (const start of [10, 20, 30]) burn(new RNG(5).jump(start));
     assert.strictEqual(runs, 3);
     assert.deepStrictEqual(burn.stats, { hits: 6, misses: 3 });
   });
 
   it('empties the cache when it fills, and stays exact', () => {
-    const burn = memoizeBurn((rng) => rng.next(1 + (rng.rand % 50)), 4);
+    const burn = memoizeBurn((rng) => rng.jump(1 + (rng.rand % 50)), 4);
     for (let start = 0; start < 20; start++) {
-      const rng = new RNG(9).next(start),
-        expected = new RNG(9).next(start);
-      expected.next(1 + (expected.rand % 50));
+      const rng = new RNG(9).jump(start),
+        expected = new RNG(9).jump(start);
+      expected.jump(1 + (expected.rand % 50));
       burn(rng);
-      assert.strictEqual(rng.rng, expected.rng);
+      assert.strictEqual(rng.raw, expected.raw);
       assert.ok(burn.cache.size <= 4);
     }
   });
 
   it('keys on the RNG state, not the count: the same state from another seed reuses it', () => {
     const burn = memoizeBurn(dragonLightningParticles);
-    const a = new RNG(0x43).next(7750);
-    const b = new RNG(a.rng); // the same state at count 0
+    const a = new RNG(0x43).jump(7750);
+    const b = new RNG(a.raw); // the same state at count 0
     burn(a);
     burn(b);
     assert.strictEqual(burn.stats.hits, 1);
-    assert.strictEqual(b.rng, a.rng);
+    assert.strictEqual(b.raw, a.raw);
     assert.strictEqual(b.count, a.count - 7750);
   });
 });

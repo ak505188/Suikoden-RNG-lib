@@ -34,7 +34,7 @@ const makeParty = (json) => {
 describe('Hell kills a whole formation', () => {
   const party = makeParty(NeclordParty);
   const enemies = EnemyParty.fromFormation(AREAS.NECLORDS_CASTLE.encounters[8]);
-  const rng = new RNG(0xdc0e0008).next(35);
+  const rng = new RNG(0xdc0e0008).jump(35);
   const battle = new Battle({ party, enemies, rng });
   battle.playTurn([{ type: ACTION_TYPES.RUNE, slot: 2 }]);
   it('casts at tick 31', () => {
@@ -54,7 +54,7 @@ describe('Hell kills a whole formation', () => {
 describe("Hell doesn't kill Ain Gide", () => {
   const party = makeParty(AinGideParty);
   const enemies = EnemyParty.fromFormation(AREAS.OTHER.scripted[3]);
-  const battle = new Battle({ party, enemies, rng: new RNG(0x323ab8b1).next(9069) });
+  const battle = new Battle({ party, enemies, rng: new RNG(0x323ab8b1).jump(9069) });
   battle.playTurn([{ type: ACTION_TYPES.RUNE, slot: 2 }]);
 
   it('casts at tick 31', () => {
@@ -75,7 +75,7 @@ describe('Hell kills one Larvae', () => {
   const battle = new Battle({
     party: makeParty(NeclordParty),
     enemies,
-    rng: new RNG(0xdc0e0008).next(35),
+    rng: new RNG(0xdc0e0008).jump(35),
   });
   battle.playTurn([{ type: ACTION_TYPES.RUNE, slot: 2, target: 0 }]);
 

@@ -23,8 +23,8 @@ function bench(label, fn) {
 bench('next() x1', (n) => {
   const rng = new RNG(0x12);
   let acc = 0;
-  for (let i = 0; i < n; i++) acc ^= rng.next().getRNG2();
+  for (let i = 0; i < n; i++) acc ^= rng.next().rand;
   return acc;
 });
 
-bench('next(n) batched', (n) => new RNG(0x12).next(n).getRNG2());
+bench('jump(n) batched', (n) => new RNG(0x12).jump(n).rand);

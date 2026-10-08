@@ -21,63 +21,63 @@ import { AREAS } from '../../battle.js';
 // windOfSleepRand is only the particle part, so its expectation is the live total minus that enemy count.
 // Native seeds first, then 20 injected ones per state.
 const eligibleFiveCases = [
-  { rng: 0x96b9137b, calls: 308 },
-  { rng: 0x8f873905, calls: 304 },
-  { rng: 0xab4c2322, calls: 304 },
-  { rng: 0x5e582083, calls: 300 },
-  { rng: 0x31dff4f5, calls: 300 },
-  { rng: 0x21799493, calls: 308 },
-  { rng: 0xe0f8c12d, calls: 304 },
-  { rng: 0xafcfd1bc, calls: 304 },
-  { rng: 0x154f6959, calls: 300 },
-  { rng: 0xab046152, calls: 300 },
-  { rng: 0xe751d526, calls: 300 },
-  { rng: 0xde582083, calls: 300 },
-  { rng: 0xbd912741, calls: 300 },
-  { rng: 0xbb4a6632, calls: 300 },
-  { rng: 0xa0304e21, calls: 300 },
-  { rng: 0x81095e8e, calls: 312 },
-  { rng: 0xc98534c4, calls: 300 },
-  { rng: 0x47edd366, calls: 300 },
-  { rng: 0x26f10a09, calls: 304 },
-  { rng: 0xe4354f4e, calls: 300 },
-  { rng: 0xd9466462, calls: 300 },
+  { seed: 0x96b9137b, calls: 308 },
+  { seed: 0x8f873905, calls: 304 },
+  { seed: 0xab4c2322, calls: 304 },
+  { seed: 0x5e582083, calls: 300 },
+  { seed: 0x31dff4f5, calls: 300 },
+  { seed: 0x21799493, calls: 308 },
+  { seed: 0xe0f8c12d, calls: 304 },
+  { seed: 0xafcfd1bc, calls: 304 },
+  { seed: 0x154f6959, calls: 300 },
+  { seed: 0xab046152, calls: 300 },
+  { seed: 0xe751d526, calls: 300 },
+  { seed: 0xde582083, calls: 300 },
+  { seed: 0xbd912741, calls: 300 },
+  { seed: 0xbb4a6632, calls: 300 },
+  { seed: 0xa0304e21, calls: 300 },
+  { seed: 0x81095e8e, calls: 312 },
+  { seed: 0xc98534c4, calls: 300 },
+  { seed: 0x47edd366, calls: 300 },
+  { seed: 0x26f10a09, calls: 304 },
+  { seed: 0xe4354f4e, calls: 300 },
+  { seed: 0xd9466462, calls: 300 },
 ];
 
 const immuneOneCases = [
-  { rng: 0xfd5ecce9, calls: 300 },
-  { rng: 0x58dbd149, calls: 304 },
-  { rng: 0xb4a56396, calls: 304 },
-  { rng: 0xf0289ce7, calls: 300 },
-  { rng: 0x9cfbae39, calls: 300 },
-  { rng: 0x7d3feff7, calls: 308 },
-  { rng: 0x3101a6f1, calls: 304 },
-  { rng: 0x6ac77c90, calls: 304 },
-  { rng: 0xdd33e45d, calls: 304 },
-  { rng: 0x67651ec6, calls: 300 },
-  { rng: 0x3a8d3d5a, calls: 300 },
-  { rng: 0x70289ce7, calls: 300 },
-  { rng: 0x10de13c5, calls: 300 },
-  { rng: 0x0d1a95a6, calls: 300 },
-  { rng: 0x4c3e8ca5, calls: 300 },
-  { rng: 0xc47f8042, calls: 312 },
-  { rng: 0xa34f3f18, calls: 300 },
-  { rng: 0xa059d79a, calls: 300 },
-  { rng: 0x87d3da0d, calls: 304 },
-  { rng: 0x4289e502, calls: 300 },
-  { rng: 0x2d6210d6, calls: 300 },
+  { seed: 0xfd5ecce9, calls: 300 },
+  { seed: 0x58dbd149, calls: 304 },
+  { seed: 0xb4a56396, calls: 304 },
+  { seed: 0xf0289ce7, calls: 300 },
+  { seed: 0x9cfbae39, calls: 300 },
+  { seed: 0x7d3feff7, calls: 308 },
+  { seed: 0x3101a6f1, calls: 304 },
+  { seed: 0x6ac77c90, calls: 304 },
+  { seed: 0xdd33e45d, calls: 304 },
+  { seed: 0x67651ec6, calls: 300 },
+  { seed: 0x3a8d3d5a, calls: 300 },
+  { seed: 0x70289ce7, calls: 300 },
+  { seed: 0x10de13c5, calls: 300 },
+  { seed: 0x0d1a95a6, calls: 300 },
+  { seed: 0x4c3e8ca5, calls: 300 },
+  { seed: 0xc47f8042, calls: 312 },
+  { seed: 0xa34f3f18, calls: 300 },
+  { seed: 0xa059d79a, calls: 300 },
+  { seed: 0x87d3da0d, calls: 304 },
+  { seed: 0x4289e502, calls: 300 },
+  { seed: 0x2d6210d6, calls: 300 },
 ];
 
 describe('Wind of Sleep Rand tests', () => {
-  for (const { rng, calls } of eligibleFiveCases) {
-    it(`Should be ${calls} particle calls for ${rng.toString(16)} (5 enemies: live total ${calls + 5})`, () => {
-      assert.strictEqual(windOfSleepRand(new RNG(rng)).calls, calls);
+  for (const { seed, calls } of eligibleFiveCases) {
+    it(`Should be ${calls} particle calls for ${seed.toString(16)} (5 enemies: live total ${calls + 5})`, () => {
+      assert.strictEqual(windOfSleepRand(new RNG(seed)).calls, calls);
     });
   }
 
-  for (const { rng, calls } of immuneOneCases) {
-    it(`Should be ${calls} particle calls for ${rng.toString(16)} (immune enemy)`, () => {
-      assert.strictEqual(windOfSleepRand(new RNG(rng)).calls, calls);
+  for (const { seed, calls } of immuneOneCases) {
+    it(`Should be ${calls} particle calls for ${seed.toString(16)} (immune enemy)`, () => {
+      assert.strictEqual(windOfSleepRand(new RNG(seed)).calls, calls);
     });
   }
 });
@@ -110,15 +110,15 @@ const makeFiveEnemies = () =>
   ].map((key) => new Enemy(key));
 
 describe('Wind of Sleep total RNG calls', () => {
-  for (const { rng, calls } of eligibleFiveCases) {
-    it(`Should be ${calls + 5} for ${rng.toString(16)} with 5 eligible enemies`, () => {
-      assert.strictEqual(cast(makeFiveEnemies(), rng).rng.count, calls + 5);
+  for (const { seed, calls } of eligibleFiveCases) {
+    it(`Should be ${calls + 5} for ${seed.toString(16)} with 5 eligible enemies`, () => {
+      assert.strictEqual(cast(makeFiveEnemies(), seed).rng.count, calls + 5);
     });
   }
 
-  for (const { rng, calls } of immuneOneCases) {
-    it(`Should be ${calls} for ${rng.toString(16)} against an immune enemy`, () => {
-      assert.strictEqual(cast([new Enemy(ENEMY_KEYS.AIN_GIDE)], rng).rng.count, calls);
+  for (const { seed, calls } of immuneOneCases) {
+    it(`Should be ${calls} for ${seed.toString(16)} against an immune enemy`, () => {
+      assert.strictEqual(cast([new Enemy(ENEMY_KEYS.AIN_GIDE)], seed).rng.count, calls);
     });
   }
 });
@@ -137,7 +137,7 @@ describe('Wind of Sleep effect', () => {
   it('rolls once per enemy in index order and sleeps on roll >= 30', () => {
     let sawSleep = false,
       sawAwake = false;
-    for (const { rng: seed } of eligibleFiveCases) {
+    for (const { seed } of eligibleFiveCases) {
       const { hits } = cast(makeFiveEnemies(), seed);
       const rolls = expectedRolls(seed, 5);
       assert.deepStrictEqual(
@@ -295,7 +295,7 @@ describe('Test 1 round of battle with Wind of Sleep cast', () => {
   const party = PlayerParty.fromCharacterJSON(WindOfSleepPartyJSON);
   const enemies = EnemyParty.fromFormation(AREAS.NECLORDS_CASTLE.encounters[8]);
 
-  const rng = new RNG(0xdc0e0008).next(35);
+  const rng = new RNG(0xdc0e0008).jump(35);
 
   /** @param {Action[]} actions */
   const actions = [{ type: ACTION_TYPES.RUNE, slot: 0 }];
@@ -305,7 +305,7 @@ describe('Test 1 round of battle with Wind of Sleep cast', () => {
   battle.playTurn(actions);
 
   it('rng == 0x77c9100b', () => {
-    assert.strictEqual(battle.rng.getRNG(), 0x77c9100b);
+    assert.strictEqual(battle.rng.raw, 0x77c9100b);
   });
   it('Combatant HP in unchanged', () => {
     battle.combatants.slice(1).forEach((c) => {

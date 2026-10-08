@@ -123,13 +123,13 @@ describe('Party item use', () => {
   it('resolves at once, heals and ends the turn at R+19, with no RNG', () => {
     const gremio = makeFighter(CHARACTER_KEYS.GREMIO).setHP(50);
     const battle = makeBattle([gremio]);
-    const rngBefore = battle.rng.getCount();
+    const rngBefore = battle.rng.count;
     const end = playItemTurn(battle, gremio, { itemKey: ITEM_KEYS.MEDICINE });
     assert.strictEqual(end, 19);
     assert.strictEqual(gremio.HP, 150);
     assert.strictEqual(gremio.inventory.get(ITEM_KEYS.MEDICINE).quantity, 5);
     assert.strictEqual(gremio.busyUntil, 83); // self-targeted
-    assert.strictEqual(battle.rng.getCount(), rngBefore);
+    assert.strictEqual(battle.rng.count, rngBefore);
     assert.deepStrictEqual(
       battle.log.ofType(LOG_TYPES.ITEM).map((e) => e.tick),
       [0],

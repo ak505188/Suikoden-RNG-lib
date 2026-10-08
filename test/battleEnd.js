@@ -137,8 +137,8 @@ describe('Battle end', () => {
     const last = entries[battleEndAt - 1];
     const battleEnd = battle.result.rng.battleEnd;
     assert.strictEqual(battleEnd.count, last.rng);
-    assert.strictEqual(battleEnd.current, new RNG(1).next(last.rng).getRNG());
-    assert.strictEqual(battleEnd.original, 1);
+    assert.strictEqual(battleEnd.raw, new RNG(1).jump(last.rng).raw);
+    assert.strictEqual(battleEnd.seed, 1);
 
     // B = the last busyUntil: wait passes B + 1, victory check B + 2, countdown to B + 33, drop B + 34
     const lastBusy = Math.max(...battle.combatants.slice(1).map((c) => c.busyUntil));
@@ -167,16 +167,16 @@ describe('Battle end', () => {
     battle.finish();
     assert.strictEqual(battle.result.drop, null);
     assert.strictEqual(battle.result.rng.afterDrop, undefined);
-    assert.strictEqual(battle.rng.getCount(), battle.result.rng.battleEnd.count);
+    assert.strictEqual(battle.rng.count, battle.result.rng.battleEnd.count);
     assert.strictEqual(battle.log.ofType(LOG_TYPES.DROP).length, 0);
   });
 
   it('refuses to play another round once over', () => {
     const battle = winningBattle();
     playUntilOver(battle, [ATTACK, ATTACK]);
-    const count = battle.rng.getCount();
+    const count = battle.rng.count;
     assert.throws(() => battle.playTurn([ATTACK, ATTACK]), /Battle is over \(Won\)/);
-    assert.strictEqual(battle.rng.getCount(), count);
+    assert.strictEqual(battle.rng.count, count);
   });
 
   it('run() stops at the round the battle ends', () => {
@@ -221,7 +221,7 @@ describe('Battle end drop', () => {
       const { battleEnd, afterDrop } = battle.result.rng;
 
       // Same roll as calculateDrop from the battle-end RNG, on a fresh copy of the formation
-      const rng = new RNG(seed).next(battleEnd.count);
+      const rng = new RNG(seed).jump(battleEnd.count);
       const drop = new EnemyParty([
         new Enemy(ENEMY_KEYS.FURFUR),
         new Enemy(ENEMY_KEYS.FURFUR),
@@ -333,7 +333,7 @@ describe('Battle end EXP', () => {
     assert.deepStrictEqual(battle.rng.snapshot(), rng.afterLevelUps);
 
     // Same rolls as levelling fresh copies from the post-drop RNG
-    const expectedRNG = new RNG(NO_DROP_SEED).next(rng.afterDrop.count);
+    const expectedRNG = new RNG(NO_DROP_SEED).jump(rng.afterDrop.count);
     const fresh = winningBattle().party.combatants;
     rewards.forEach((reward, i) => {
       assert.deepStrictEqual(reward.growths, fresh[i].calculateLevelups(1, 40, expectedRNG));
@@ -419,10 +419,10 @@ describe('Battle end EXP', () => {
 describe('Battle.finish', () => {
   it('does nothing while in progress', () => {
     const battle = winningBattle();
-    const count = battle.rng.getCount();
+    const count = battle.rng.count;
     assert.deepStrictEqual(battle.finish(), { status: BATTLE_STATUS.IN_PROGRESS, result: null });
     assert.strictEqual(battle.result, null);
-    assert.strictEqual(battle.rng.getCount(), count);
+    assert.strictEqual(battle.rng.count, count);
   });
 
   it('playTurn only ends the battle: no result, and the RNG stays at battle end', () => {
@@ -430,7 +430,7 @@ describe('Battle.finish', () => {
     playUntilOver(battle, [ATTACK, ATTACK]);
     assert.strictEqual(battle.status, BATTLE_STATUS.WON);
     assert.strictEqual(battle.result, null);
-    assert.strictEqual(battle.rng.getCount(), battle.log.ofType(LOG_TYPES.BATTLE_END)[0].rng);
+    assert.strictEqual(battle.rng.count, battle.log.ofType(LOG_TYPES.BATTLE_END)[0].rng);
     assert.deepStrictEqual(battle.log.entries.at(-1).type, 'battleEnd');
   });
 
@@ -448,18 +448,18 @@ describe('Battle.finish', () => {
     const battle = winningBattle();
     playUntilOver(battle, [ATTACK, ATTACK]);
     const first = battle.finish();
-    const count = battle.rng.getCount();
+    const count = battle.rng.count;
     const logLength = battle.log.entries.length;
     const second = battle.finish();
     assert.strictEqual(second.result, first.result);
-    assert.strictEqual(battle.rng.getCount(), count);
+    assert.strictEqual(battle.rng.count, count);
     assert.strictEqual(battle.log.entries.length, logLength);
   });
 
   it('records only the battle end when lost', () => {
     const battle = losingBattle();
     playUntilOver(battle, [DEFEND]);
-    const count = battle.rng.getCount();
+    const count = battle.rng.count;
     const { status, result } = battle.finish();
     assert.strictEqual(status, BATTLE_STATUS.LOST);
     assert.deepStrictEqual(result, {
@@ -467,7 +467,7 @@ describe('Battle.finish', () => {
       rewards: [],
       rng: { battleEnd: battle.rng.snapshot() },
     });
-    assert.strictEqual(battle.rng.getCount(), count);
+    assert.strictEqual(battle.rng.count, count);
   });
 });
 
@@ -477,7 +477,7 @@ describe('Battle.run finish option', () => {
   it("doesn't finish by default", () => {
     const battle = winningBattle(turns());
     assert.deepStrictEqual(battle.run(), { status: BATTLE_STATUS.WON, result: null });
-    assert.strictEqual(battle.rng.getCount(), battle.log.ofType(LOG_TYPES.BATTLE_END)[0].rng);
+    assert.strictEqual(battle.rng.count, battle.log.ofType(LOG_TYPES.BATTLE_END)[0].rng);
   });
 
   it('finishes with finish: true, the same as calling finish() after', () => {

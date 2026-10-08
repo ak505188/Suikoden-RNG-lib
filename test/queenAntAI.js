@@ -42,7 +42,7 @@ describe('Queen Ant (Mt. Seifu) AI', () => {
       const choice = /** @type {{ move: unknown }} */ (
         ENEMY_AI[ENEMY_KEYS.QUEEN_ANT_BOSS](queen, params(party, rng))
       );
-      assert.strictEqual(rng.getCount(), 1);
+      assert.strictEqual(rng.count, 1);
       if (cDiv(roll * 100, 32767) < 0x33)
         assert.strictEqual(choice.move, ENEMY_MOVES.QUEEN_ANT_AOE_EARTH);
       else assert.strictEqual(choice.move, ENEMY_MOVES.QUEEN_ANT_COMMAND_ANTS);
@@ -62,7 +62,7 @@ describe('Queen Ant (Mt. Seifu) AI', () => {
     const rng = new RNG(0x1234);
     const expected = new RNG(0x1234);
     ENEMY_MOVES.QUEEN_ANT_AOE_EARTH.apply(queen, { party, rng });
-    assert.strictEqual(rng.getCount(), 4);
+    assert.strictEqual(rng.count, 4);
     for (const [i, halved] of /** @type {[number, boolean][]} */ ([
       [0, false],
       [1, true],
@@ -83,7 +83,7 @@ describe('Soldier Ant (Mt. Seifu) damage', () => {
       target.setStats({ PWR: 40, SKL: 30, DEF: def, SPD: 20, MGC: 0, LUK: 20, HP: 400 });
       const rng = new RNG(77);
       const damage = ant.calcAttackDamage(target, rng);
-      assert.strictEqual(rng.getCount(), 1);
+      assert.strictEqual(rng.count, 1);
       assert.strictEqual(damage, variance(48 - target.ARM, new RNG(77).next().rand));
     }
   });

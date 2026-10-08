@@ -17,7 +17,7 @@ export function characterLevelUp(name, level, rng) {
   LevelupStatOrder.forEach((stat) => {
     rng.next();
     const growthValue = getGrowthValue(name, stat, level);
-    levelupGrowths[stat] = calculateLevelupGrowth(rng.getRNG2(), growthValue, stat === 'HP');
+    levelupGrowths[stat] = calculateLevelupGrowth(rng.rand, growthValue, stat === 'HP');
   });
   return levelupGrowths;
 }

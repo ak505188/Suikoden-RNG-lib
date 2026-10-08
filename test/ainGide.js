@@ -78,10 +78,10 @@ describe('Ain Gide move selection', () => {
       if (living === 5) party.combatants[5].die(0); // a back-row member: no scan roll, one less damage roll
       const { gide, rng, choice } = select(seed, party);
       assert.strictEqual(choice.move, ENEMY_MOVES.AIN_GIDE_SPECIAL);
-      assert.strictEqual(rng.getCount(), calls);
+      assert.strictEqual(rng.count, calls);
       ENEMY_MOVES.AIN_GIDE_SPECIAL.apply(gide, { party, rng });
-      assert.strictEqual(rng.getCount(), calls + 48 + living);
-      assert.strictEqual(rng.getRNG(), finalSeed);
+      assert.strictEqual(rng.count, calls + 48 + living);
+      assert.strictEqual(rng.raw, finalSeed);
     });
   }
 
@@ -99,7 +99,7 @@ describe('Ain Gide move selection', () => {
       const { rng, choice } = select(seed, party);
       assert.strictEqual(choice.action, ACTION_TYPES.ATTACK);
       assert.strictEqual(choice.target, party.combatants[target]);
-      assert.strictEqual(rng.getCount(), calls);
+      assert.strictEqual(rng.count, calls);
     });
   }
 });
@@ -158,11 +158,11 @@ describe('Ain Gide in a battle', () => {
    */
   const rolls = (battle, onTick) => {
     const out = [];
-    let count = battle.rng.getCount();
+    let count = battle.rng.count;
     while (battle.phase !== PHASE_STATE.ROUND_OVER) {
       onTick?.(battle);
       battle.tick();
-      const rolled = battle.rng.getCount() - count;
+      const rolled = battle.rng.count - count;
       if (rolled) out.push({ tick: battle.turn.tick, rolls: rolled });
       count += rolled;
     }
@@ -209,7 +209,7 @@ describe('3 round Queen Ant Free Wills match in-game values', () => {
   const members = structuredClone(/** @type {any} */ (AinGideParty));
   const party = PlayerParty.fromCharacterJSON(members);
   const enemies = EnemyParty.fromFormation(AREAS.OTHER.scripted[3]);
-  const rng = new RNG(0x42).next(14344);
+  const rng = new RNG(0x42).jump(14344);
   const baseBattle = new Battle({ party, enemies, rng });
 
   /* --- Battle start: 6 allies vs 1 enemies ---

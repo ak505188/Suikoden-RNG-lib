@@ -43,7 +43,7 @@ describe('Live: 3 Mosquitoes + Red Solider Ant, LVL 1 party (Gregminster area 1)
         ].map((key) => new Character(key)),
       ),
       enemies: EnemyParty.fromFormation(AREAS.GREGMINSTER_AREA_1.encounters[7]),
-      rng: new RNG(0x30a82220).next(5560),
+      rng: new RNG(0x30a82220).jump(5560),
       escapable: true,
     });
   const turn1 = [
@@ -61,7 +61,7 @@ describe('Live: 3 Mosquitoes + Red Solider Ant, LVL 1 party (Gregminster area 1)
     assert.strictEqual(ant.position, 4);
     assert.ok(!gremio.canReach(ant));
     battle.playTurn(turn1);
-    assert.strictEqual(battle.rng.getCount(), 5629);
+    assert.strictEqual(battle.rng.count, 5629);
     assert.deepStrictEqual(
       battle.enemies.combatants.map((e) => e.HP),
       [0, 0, 17, 15],

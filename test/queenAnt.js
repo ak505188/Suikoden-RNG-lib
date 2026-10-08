@@ -17,7 +17,7 @@ describe('3 round Queen Ant Free Wills match in-game values', () => {
   const members = structuredClone(/** @type {any} */ (QueenAntParty));
   const party = PlayerParty.fromCharacterJSON(members);
   const enemies = EnemyParty.fromFormation(AREAS.MT_SEIFU.scripted[0]);
-  const rng = new RNG(0x19).next(6910);
+  const rng = new RNG(0x19).jump(6910);
   const battle = new Battle({ party, enemies, rng, script: new QueenAntScript() });
 
   /** What the game showed at the end of each Free Will round */
@@ -59,7 +59,7 @@ describe('3 round Queen Ant Runs match in-game values', () => {
   const members = structuredClone(/** @type {any} */ (QueenAntParty));
   const party = PlayerParty.fromCharacterJSON(members);
   const enemies = EnemyParty.fromFormation(AREAS.MT_SEIFU.scripted[0]);
-  const rng = new RNG(0x19).next(6910);
+  const rng = new RNG(0x19).jump(6910);
   const battle = new Battle({
     party,
     enemies,
@@ -109,7 +109,7 @@ describe('3 round Queen Ant with swapped formation match in-game values', () => 
   const membersCorrectFormation = [members[0], members[4], members[3], members[2], members[1]];
   const party = PlayerParty.fromCharacterJSON(membersCorrectFormation);
   const enemies = EnemyParty.fromFormation(AREAS.MT_SEIFU.scripted[0]);
-  const rng = new RNG(0x19).next(6910);
+  const rng = new RNG(0x19).jump(6910);
   const battle = new Battle({
     party,
     enemies,

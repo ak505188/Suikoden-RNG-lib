@@ -232,7 +232,7 @@ levelups_to_generate.forEach((levelup) => generateLevelups(levelup));
 
 function generateLevelups({ label, party, rng_indexes, headers = false }) {
   rng_indexes.forEach((rng_index) => {
-    const rng = new RNG(STARTING_RNG).next(rng_index);
+    const rng = new RNG(STARTING_RNG).jump(rng_index);
     const levels_gained = Object.values(party).map((char) => char.levels_gained);
 
     const character_results = Object.entries(party)
@@ -246,7 +246,7 @@ function generateLevelups({ label, party, rng_indexes, headers = false }) {
 
         const permutations = generateLevelPermutations(starting_levels);
         return permutations.map((starting_levels_gained) => {
-          const rng_to_use = rng.cloneKeepIndex().next(starting_levels_gained * 7);
+          const rng_to_use = rng.clone().jump(starting_levels_gained * 7);
           const rng_to_use_index = rng_to_use.count;
           const stats = generateCharacterMultipleLevelup(
             rng_to_use,

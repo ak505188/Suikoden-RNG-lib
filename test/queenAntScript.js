@@ -98,11 +98,11 @@ describe('Queen Ant script: respawn', () => {
     let revivalTicks = 0;
     while (battle.phase !== 'Round Over') {
       const revives = logged(battle, LOG_TYPES.REVIVE).length,
-        rolls = battle.rng.getCount();
+        rolls = battle.rng.count;
       battle.tick();
       if (logged(battle, LOG_TYPES.REVIVE).length > revives) {
         revivalTicks++;
-        assert.strictEqual(battle.rng.getCount(), rolls, `tick ${battle.turn.tick - 1}`);
+        assert.strictEqual(battle.rng.count, rolls, `tick ${battle.turn.tick - 1}`);
       }
     }
     assert.ok(revivalTicks >= 2);
@@ -122,7 +122,7 @@ describe('Queen Ant script: respawn', () => {
       copy.log.ofType(LOG_TYPES.REVIVE).map((r) => r.tick),
       battle.log.ofType(LOG_TYPES.REVIVE).map((r) => r.tick),
     );
-    assert.strictEqual(copy.rng.getCount(), battle.rng.getCount());
+    assert.strictEqual(copy.rng.count, battle.rng.count);
   });
 });
 
@@ -134,11 +134,11 @@ describe('Queen Ant script: fight end', () => {
       battle.playTurn([DEFEND, DEFEND, DEFEND]);
     }
     assert.strictEqual(battle.status, BATTLE_STATUS.SCRIPTED_END);
-    const before = battle.rng.getCount();
+    const before = battle.rng.count;
     const { result } = battle.finish();
     assert.strictEqual(result.drop, null);
     assert.deepStrictEqual(result.rewards, []);
-    assert.strictEqual(battle.rng.getCount(), before); // no drop roll, no EXP rolls
+    assert.strictEqual(battle.rng.count, before); // no drop roll, no EXP rolls
   });
 
   it('a clean round 3 ends 65 ticks after the callback sets the flag', () => {

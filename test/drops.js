@@ -22,7 +22,7 @@ import LorimarWhipWolf from './data/drops_lorimar_0x12.json' with { type: 'json'
 const expectedRNGs = (seed, iterations) => {
   const rng = new RNG(seed);
   return Array.from({ length: iterations }, () => {
-    const value = rng.getRNG();
+    const value = rng.raw;
     rng.next();
     return value;
   });
@@ -60,7 +60,7 @@ for (const [label, { seed, iterations, groups }] of Object.entries({
           results.map((r) => r.drop?.name ?? null),
           expectedDrops(group.drops, iterations, 1, null),
         );
-        assert.strictEqual(rng.getCount(), iterations);
+        assert.strictEqual(rng.count, iterations);
       });
     }
   });
@@ -80,7 +80,7 @@ for (const [label, { seed, iterations, groups }] of Object.entries({
           results.map((r) => r.drop),
           expectedDrops(group.drops, iterations, 2, ''),
         );
-        assert.strictEqual(rng.getCount(), iterations);
+        assert.strictEqual(rng.count, iterations);
       });
     }
   });

@@ -85,7 +85,7 @@ describe('Character.gainEXP', () => {
     assert.strictEqual(c.gainEXP(699, rng).levels, 0);
     assert.strictEqual(c.EXP, 999);
     assert.strictEqual(c.LVL, 10);
-    assert.strictEqual(rng.getCount(), 0);
+    assert.strictEqual(rng.count, 0);
   });
 
   it('levels up once per 1000 EXP and keeps the remainder', () => {
@@ -94,7 +94,7 @@ describe('Character.gainEXP', () => {
     assert.strictEqual(c.gainEXP(2600, rng).levels, 3);
     assert.strictEqual(c.EXP, 500);
     assert.strictEqual(c.LVL, 13);
-    assert.strictEqual(rng.getCount(), 3 * 7);
+    assert.strictEqual(rng.count, 3 * 7);
   });
 
   it('rolls the same stat growths as levelUp', () => {
@@ -110,7 +110,7 @@ describe('Character.gainEXP', () => {
     const rng = new RNG(0x12);
     assert.strictEqual(c.gainEXP(3000, rng).levels, 1);
     assert.strictEqual(c.LVL, 99);
-    assert.strictEqual(rng.getCount(), 7);
+    assert.strictEqual(rng.count, 7);
   });
 });
 
@@ -165,7 +165,7 @@ describe('PlayerParty.awardEXP', () => {
       results.map((r) => r.levels),
       [1, 1, 1],
     );
-    assert.strictEqual(rng.getCount(), 3 * 7);
+    assert.strictEqual(rng.count, 3 * 7);
 
     const expected = makeParty();
     const expectedRNG = new RNG(0x12);

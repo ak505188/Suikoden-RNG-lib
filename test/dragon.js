@@ -191,7 +191,7 @@ describe('Dragon Lightning RNG', () => {
         rng,
         target: party.combatants[1],
       });
-      assert.strictEqual(rng.getCount(), calls);
+      assert.strictEqual(rng.count, calls);
     });
   }
 });

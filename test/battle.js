@@ -67,7 +67,7 @@ describe('Zombie Dragon 1 turn tests', () => {
   battle.run();
 
   it('rng == 0x27bc4952', () => {
-    assert.strictEqual(battle.rng.getRNG(), 0x27bc4952);
+    assert.strictEqual(battle.rng.raw, 0x27bc4952);
   });
   it('Viktor HP == 325', () => {
     assert.strictEqual(battle.party.getCombatantByName(Viktor.name).HP, 325);
@@ -128,11 +128,11 @@ describe('5 Bandit best version battle tests', () => {
     { type: ACTION_TYPES.ATTACK, target: 4 },
   ];
 
-  const rng = new RNG(0x19).next(18159);
-  const rngCloneForTest = rng.cloneKeepIndex();
+  const rng = new RNG(0x19).jump(18159);
+  const rngCloneForTest = rng.clone();
 
   it('rng at start == 0x26aeb330', () => {
-    assert.strictEqual(rngCloneForTest.getRNG(), 0x26aeb330);
+    assert.strictEqual(rngCloneForTest.raw, 0x26aeb330);
   });
   it('rng count at start 18159', () => {
     assert.strictEqual(rngCloneForTest.count, 18159);
@@ -144,7 +144,7 @@ describe('5 Bandit best version battle tests', () => {
   battle.playTurn(actions);
 
   it('rng == 0x66c25dd8', () => {
-    assert.strictEqual(battle.rng.getRNG(), 0x66c25dd8);
+    assert.strictEqual(battle.rng.raw, 0x66c25dd8);
   });
   it('rng count after battle 18215', () => {
     assert.strictEqual(battle.rng.count, 18215);
@@ -153,7 +153,7 @@ describe('5 Bandit best version battle tests', () => {
   // holds while nothing else rolls in between. Finished on a copy, so the checks here still see
   // the battle as it ended.
   it("rng after drop == 0xf8b88416 (next battle's start)", () => {
-    assert.strictEqual(battle.clone().finish().result.rng.afterDrop.current, 0xf8b88416);
+    assert.strictEqual(battle.clone().finish().result.rng.afterDrop.raw, 0xf8b88416);
   });
   it("rng count after drop 18217 (next battle's start)", () => {
     assert.strictEqual(battle.clone().finish().result.rng.afterDrop.count, 18217);
@@ -237,11 +237,11 @@ describe('Varkas & Sydonia after 5 bandit above', () => {
     { type: ACTION_TYPES.ATTACK, target: 0 },
   ];
 
-  const rng = new RNG(0x19).next(18217);
-  const rngCloneForTest = rng.cloneKeepIndex();
+  const rng = new RNG(0x19).jump(18217);
+  const rngCloneForTest = rng.clone();
 
   it('rng at start == 0xf8b88416', () => {
-    assert.strictEqual(rngCloneForTest.getRNG(), 0xf8b88416);
+    assert.strictEqual(rngCloneForTest.raw, 0xf8b88416);
   });
   it('rng count at start 18217', () => {
     assert.strictEqual(rngCloneForTest.count, 18217);
@@ -253,7 +253,7 @@ describe('Varkas & Sydonia after 5 bandit above', () => {
   battle.run();
 
   it('rng == 0xa16e5044', () => {
-    assert.strictEqual(battle.rng.getRNG(), 0xa16e5044);
+    assert.strictEqual(battle.rng.raw, 0xa16e5044);
   });
   it('rng count after battle 18283', () => {
     assert.strictEqual(battle.rng.count, 18283);
@@ -376,11 +376,11 @@ describe('Dragon tests', () => {
 
   const actions = [actionsT1, actionsT2, actionsT3, actionsT4, actionsT5, actionsT6];
 
-  const rng = new RNG(0x43).next(7750);
-  const rngCloneForTest = rng.cloneKeepIndex();
+  const rng = new RNG(0x43).jump(7750);
+  const rngCloneForTest = rng.clone();
 
   it('rng at start == 0x980a9e75', () => {
-    assert.strictEqual(rngCloneForTest.getRNG(), 0x980a9e75);
+    assert.strictEqual(rngCloneForTest.raw, 0x980a9e75);
   });
 
   const enemyParty = EnemyParty.fromFormation(AREAS.PANNU_YAKUTA.scripted[0]);
@@ -488,7 +488,7 @@ describe('Golem 3 FurFur no force to test Medicine', () => {
   const party = new PlayerParty([McDohl, Gremio, Pahn, Ted, Cleo]);
   const enemyParty = EnemyParty.fromFormation(AREAS.MAGICIANS_ISLAND.scripted[0]);
 
-  const rng = new RNG(0x17).next(141);
+  const rng = new RNG(0x17).jump(141);
 
   const battle1 = new Battle({ party, enemies: enemyParty, rng });
   const battle2 = battle1.clone();
@@ -621,7 +621,7 @@ describe('3 BonBon Celadon Urn fight', () => {
   /** @type {Round[]} */
   const roundInputs = [{ command: ROUND_COMMANDS.RUN }, actionsT2];
 
-  const rng = new RNG(0x30a82220).next(5419);
+  const rng = new RNG(0x30a82220).jump(5419);
 
   const enemyParty = EnemyParty.fromFormation(AREAS.GREGMINSTER_AREA_1.encounters[1]);
   const battle = new Battle({
@@ -678,7 +678,7 @@ describe('3 BonBon Celadon Urn fight', () => {
     previousBattle.finish();
 
     const enemies = EnemyParty.fromFormation(AREAS.GREGMINSTER_AREA_1.encounters[7]);
-    const rng = new RNG(0x30a82220).next(5560);
+    const rng = new RNG(0x30a82220).jump(5560);
 
     const actionsT1 = [
       { type: ACTION_TYPES.DEFEND },
@@ -807,7 +807,7 @@ describe('3 BonBon: COPY_ACTOR hold after a party crit, and victory -> drop timi
     const battle = new Battle({
       party,
       enemies: EnemyParty.fromFormation(AREAS.GREGMINSTER_AREA_1.encounters[1]),
-      rng: new RNG(0x30a82220).next(5419),
+      rng: new RNG(0x30a82220).jump(5419),
       escapable: true,
       turns: [{ command: ROUND_COMMANDS.RUN }, round2],
     });

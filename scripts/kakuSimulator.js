@@ -62,15 +62,15 @@ class NPC {
   simulateMovement(rng, _frame) {
     if (!this.handleExistingMovement()) return null;
 
-    const will_move = rng.next().getRNG2() < 0xcb;
+    const will_move = rng.next().rand < 0xcb;
     if (!will_move) return null;
 
     let direction_set_by = 'Previous Movement';
     let direction_int = this.direction;
 
-    if (div32ulo(rng.next().getRNG2(), 0x1fff) > 0) {
+    if (div32ulo(rng.next().rand, 0x1fff) > 0) {
       direction_set_by = 'RNG Call';
-      direction_int = div32ulo(rng.next().getRNG2(), 0x1999) % 4;
+      direction_int = div32ulo(rng.next().rand, 0x1999) % 4;
     }
 
     this.startMove(direction_int);
@@ -113,18 +113,18 @@ class Mina extends NPC {
       return null;
     }
 
-    if (Math.floor(rng.next().getRNG2() / 127) % 150 !== 0) {
+    if (Math.floor(rng.next().rand / 127) % 150 !== 0) {
       if (this.sitting) {
         debug_msg('sitting');
         return null;
       }
 
-      if (Math.floor(rng.next().getRNG2() / 127) % 3 !== 0) {
+      if (Math.floor(rng.next().rand / 127) % 3 !== 0) {
         debug_msg('%3 == 0');
         return null;
       }
 
-      if (Math.floor(rng.next().getRNG2() / 255) % 2 === 1) {
+      if (Math.floor(rng.next().rand / 255) % 2 === 1) {
         debug_msg('start mina timer');
         this.timer = 120;
         const event = { name: this.name, index: rng.count, event: 'Start Mina Timer' };
@@ -140,8 +140,8 @@ class Mina extends NPC {
       let direction = this.direction;
       this.sitting = false;
 
-      if (Math.floor(rng.next().getRNG2() / 127) % 3 !== 0) {
-        let r2 = Math.floor(rng.next().getRNG2() / 127);
+      if (Math.floor(rng.next().rand / 127) % 3 !== 0) {
+        let r2 = Math.floor(rng.next().rand / 127);
         // This block should be close to equivalent to r2 % 4;
         let r3 = r2;
         if (r2 === 0) r2 = 3;

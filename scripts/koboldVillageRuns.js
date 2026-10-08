@@ -29,7 +29,7 @@ const wm_battles = Areas['Pannu Yakuta Area']
 
 const newRNGFromBattle = (battle) => {
   const rng = new RNG(0x12);
-  rng.rng = battle.battle_rng;
+  rng.raw = battle.battle_rng;
   rng.count = battle.battle_index;
   return rng;
 };
@@ -37,12 +37,12 @@ const newRNGFromBattle = (battle) => {
 const getUsableSetups = (rng, iterations) => {
   const results = [];
   for (let i = 0; i <= iterations; i++) {
-    const rng_to_use = rng.cloneKeepIndex();
+    const rng_to_use = rng.clone();
     const stats_gained = characterLevelUps('Kuromimi', 1, 23, rng_to_use);
-    // if (RNG.isRun(rng_to_use.clone().next().rng2)) {
+    // if (RNG.isRun(rng_to_use.clone().next().rand)) {
     //   successes.push(`[${i},${rng_to_use.count},${stats_gained.SPD + 9}]`);
     // }
-    results.push(RNG.isRun(rng_to_use.next().rng2) ? stats_gained.SPD + 9 : '');
+    results.push(RNG.isRun(rng_to_use.next().rand) ? stats_gained.SPD + 9 : '');
     rng.next();
   }
   return results;
@@ -80,7 +80,7 @@ const walkToTown = (rng, battle_pool, distance, load, load_increase_if_battle) =
 const walks = dwarves_trail_battles.map((trail_battle) => {
   const rng = newRNGFromBattle(trail_battle);
   const start_index = rng.count;
-  const start_rng = `0x${rng.getRNG().toString(16)}`;
+  const start_rng = `0x${rng.raw.toString(16)}`;
   const battle_pool = wm_battles.filter(
     (battle) =>
       battle.index > rng.count &&
@@ -102,7 +102,7 @@ const walks = dwarves_trail_battles.map((trail_battle) => {
     KOBOLD_VILLAGE_LOAD,
   );
   const end_index = rng.count;
-  const end_rng = `0x${rng.getRNG().toString(16)}`;
+  const end_rng = `0x${rng.raw.toString(16)}`;
   const next_battle = wm_battles.find((battle) => battle.index > rng.count);
   const steps_until_next_battle = next_battle.index - rng.count;
 

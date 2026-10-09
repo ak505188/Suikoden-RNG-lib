@@ -1,0 +1,108 @@
+--- Battle start: 6 allies vs 1 enemies ---
+R1 t   0 rng   1  --- Round 1 ---
+R1 t  30 rng   8  Hero's turn
+R1 t  31 rng  10  Hero attacks Dragon
+R1 t  42 rng  15  Kirkis's turn
+R1 t 103 rng  16  Hero deals 92 to Dragon (HP 5908)
+R1 t 140 rng  18  Kirkis attacks Dragon
+R1 t 151 rng  22  Kuromimi's turn
+R1 t 152 rng  22  Kuromimi defends
+R1 t 154 rng  25  Viktor's turn
+R1 t 188 rng  26  Kirkis deals 67 to Dragon (HP 5841)
+R1 t 217 rng  28  Viktor attacks Dragon
+R1 t 228 rng  30  Valeria's turn
+R1 t 263 rng  31  Viktor deals 87 to Dragon (HP 5754)
+R1 t 330 rng  31  Valeria casts Falcon Rune on Dragon
+R1 t 489 rng  32  Valeria deals 297 to Dragon (HP 5457)
+R1 t 531 rng  34  Gremio's turn
+R1 t 532 rng  34  Gremio defends
+R1 t 534 rng  35  Dragon's turn
+R1 t 535 rng  36  Dragon uses a special move (continuation 80012714)
+R1 t 864 rng 743  Dragon deals 32 to Hero (HP 246)
+R1 t 948 rng 743  --- Round 1 ends ---
+R2 t   0 rng 744  --- Round 2 ---
+R2 t  30 rng 751  Hero's turn
+R2 t  31 rng 751  Hero defends
+R2 t  33 rng 757  Kirkis's turn
+R2 t  34 rng 757  Kirkis casts The Shredding on Dragon
+R2 t 256 rng 757  Kirkis deals 866 to Dragon (HP 4591)
+R2 t 315 rng 762  Kuromimi's turn
+R2 t 316 rng 764  Kuromimi attacks Dragon
+R2 t 385 rng 768  Kuromimi deals 183 to Dragon (HP 4408)
+R2 t 410 rng 768  Valeria's turn
+R2 t 442 rng 768  Valeria casts Falcon Rune on Dragon
+R2 t 601 rng 769  Valeria deals 258 to Dragon (HP 4150)
+R2 t 643 rng 772  Viktor's turn
+R2 t 644 rng 774  Viktor attacks Dragon
+R2 t 690 rng 776  Viktor deals 258 to Dragon (HP 3892)
+R2 t 725 rng 776  Gremio's turn
+R2 t 726 rng 776  Gremio defends
+R2 t 728 rng 777  Dragon's turn
+R2 t 730 rng 780  Dragon uses a special move (continuation 80012714)
+R2 t1062 rng 1497  Dragon deals 34 to Hero (HP 212)
+R2 t1146 rng 1497  --- Round 2 ends ---
+R3 t   0 rng 1498  --- Round 3 ---
+R3 t  30 rng 1505  Hero's turn
+R3 t  31 rng 1507  Hero attacks Dragon
+R3 t 103 rng 1513  Hero deals 273 to Dragon (HP 3619)
+R3 t 128 rng 1513  Kirkis's turn
+R3 t 160 rng 1513  Kirkis casts The Shredding on Dragon
+R3 t 384 rng 1513  Kirkis deals 866 to Dragon (HP 2753)
+R3 t 443 rng 1518  Kuromimi's turn
+R3 t 444 rng 1519  Kuromimi attacks Dragon
+R3 t 455 rng 1522  Viktor's turn
+R3 t 456 rng 1522  Viktor defends
+R3 t 458 rng 1524  Valeria's turn
+R3 t 570 rng 1524  Valeria casts Falcon Rune on Dragon
+R3 t 729 rng 1525  Valeria deals 267 to Dragon (HP 2486)
+R3 t 771 rng 1527  Gremio's turn
+R3 t 772 rng 1527  Gremio defends
+R3 t 774 rng 1528  Dragon's turn
+R3 t 775 rng 1529  Dragon uses a special move (continuation 80012714)
+R3 t1102 rng 1536  Dragon deals 16 to Hero (HP 196)
+R3 t1102 rng 1536  Dragon deals 47 to Viktor (HP 385)
+R3 t1102 rng 1536  Dragon deals 58 to Kuromimi (HP 183)
+R3 t1102 rng 1536  Dragon deals 43 to Kirkis (HP 153)
+R3 t1102 rng 1536  Dragon deals 46 to Valeria (HP 274)
+R3 t1102 rng 1536  Dragon deals 52 to Gremio (HP 176)
+R3 t1185 rng 1536  --- Round 3 ends ---
+R4 t   0 rng 1537  --- Round 4 ---
+R4 t  30 rng 1544  Hero's turn
+R4 t  31 rng 1546  Hero attacks Dragon
+R4 t 103 rng 1552  Hero deals 282 to Dragon (HP 2204)
+R4 t 128 rng 1552  Kirkis's turn
+R4 t 140 rng 1554  Kirkis attacks Dragon
+R4 t 188 rng 1559  Kirkis deals 201 to Dragon (HP 2003)
+R4 t 230 rng 1559  Kuromimi's turn
+R4 t 231 rng 1559  Kuromimi defends
+R4 t 233 rng 1563  Viktor's turn
+R4 t 234 rng 1565  Viktor attacks Dragon
+R4 t 245 rng 1567  Valeria's turn
+R4 t 280 rng 1568  Viktor deals 102 to Dragon (HP 1901)
+R4 t 347 rng 1568  Valeria casts Falcon Rune on Dragon
+R4 t 506 rng 1569  Valeria deals 279 to Dragon (HP 1622)
+R4 t 548 rng 1571  Gremio's turn
+R4 t 579 rng 1571  Gremio casts The Shredding on Dragon
+R4 t 801 rng 1571  Gremio deals 842 to Dragon (HP 780)
+R4 t 860 rng 1572  Dragon's turn
+R4 t 861 rng 1573  Dragon uses a special move (continuation 80012714)
+R4 t1165 rng 2325  Dragon deals 31 to Hero (HP 165)
+R4 t1249 rng 2325  --- Round 4 ends ---
+R5 t   0 rng 2326  --- Round 5 ---
+R5 t  30 rng 2333  Hero's turn
+R5 t  31 rng 2335  Hero attacks Dragon
+R5 t 103 rng 2341  Hero deals 282 to Dragon (HP 498)
+R5 t 128 rng 2341  Kirkis's turn
+R5 t 140 rng 2343  Kirkis attacks Dragon
+R5 t 188 rng 2348  Kirkis deals 228 to Dragon (HP 270)
+R5 t 230 rng 2348  Kuromimi's turn
+R5 t 231 rng 2350  Kuromimi attacks Dragon
+R5 t 300 rng 2354  Kuromimi deals 186 to Dragon (HP 84)
+R5 t 325 rng 2354  Valeria's turn
+R5 t 326 rng 2354  Valeria defends
+R5 t 328 rng 2356  Viktor's turn
+R5 t 337 rng 2358  Viktor attacks Dragon
+R5 t 348 rng 2359  Gremio's turn
+R5 t 383 rng 2360  Viktor deals 84 to Dragon (HP 0) - defeated
+R5 t 420 rng 2360  Gremio attacks Dragon
+--- Battle ended ---

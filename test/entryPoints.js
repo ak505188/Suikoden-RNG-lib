@@ -79,7 +79,7 @@ describe('Package entry points (exports)', () => {
     const internal = {
       Area: (await import('../lib/Area/Area.js')).default,
       Kaku: (await import('../lib/Kaku/Kaku.js')).default,
-      simulateAssassinFight: (await import('../lib/rng.js')).simulateAssassinFight,
+      simulateAssassinFight: (await import('../lib/Assassin.js')).simulateAssassinFight,
       Cursor: (await import('../lib/chinchironin.js')).Cursor,
       simulateRoll: (await import('../lib/chinchironin.js')).simulateRoll,
       Characters: (await import('../stats/characters.js')).Characters,

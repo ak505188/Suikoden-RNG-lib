@@ -1,21 +1,23 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import RNG, {
+import RNG from '../lib/rng.js';
+import {
   determineAssassinMove,
   simulateAssassinTurn,
   simulateAssassinFight,
-} from '../lib/rng.js';
+} from '../lib/Assassin.js';
+import { calculateDamageRoll } from '../lib/Game/Rolls.js';
 
 describe('Damage Roll Calculation Tests', () => {
   const rng = new RNG(0x49e384c7);
   it('It should = 1 with 78 ARM', () => {
-    assert.strictEqual(rng.calculateDamageRoll(120, 78), 1);
+    assert.strictEqual(calculateDamageRoll(120, 78, rng.rand), 1);
   });
   it('It should = 1 with 79 ARM', () => {
-    assert.strictEqual(rng.calculateDamageRoll(120, 79), 1);
+    assert.strictEqual(calculateDamageRoll(120, 79, rng.rand), 1);
   });
   it('It should = -3 with 80 ARM', () => {
-    assert.strictEqual(rng.calculateDamageRoll(120, 80), -3);
+    assert.strictEqual(calculateDamageRoll(120, 80, rng.rand), -3);
   });
 });
 

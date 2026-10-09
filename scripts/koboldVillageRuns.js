@@ -1,4 +1,5 @@
 import RNG from '../lib/rng.js';
+import { isRun } from '../lib/Game/Rolls.js';
 import { Areas } from '../lib/lib.js';
 import { characterLevelUps } from '../stats/growths.js';
 
@@ -39,10 +40,10 @@ const getUsableSetups = (rng, iterations) => {
   for (let i = 0; i <= iterations; i++) {
     const rng_to_use = rng.clone();
     const stats_gained = characterLevelUps('Kuromimi', 1, 23, rng_to_use);
-    // if (RNG.isRun(rng_to_use.clone().next().rand)) {
+    // if (isRun(rng_to_use.clone().next().rand)) {
     //   successes.push(`[${i},${rng_to_use.count},${stats_gained.SPD + 9}]`);
     // }
-    results.push(RNG.isRun(rng_to_use.next().rand) ? stats_gained.SPD + 9 : '');
+    results.push(isRun(rng_to_use.next().rand) ? stats_gained.SPD + 9 : '');
     rng.next();
   }
   return results;

@@ -8,6 +8,7 @@ import { ACTION_TYPES, ROUND_COMMANDS } from '../lib/Game/Battle/Actions.js';
 import { CHARACTER_KEYS, ENEMY_KEYS } from '../lib/Game/Keys.js';
 import { LOG_TYPES } from '../lib/Game/Battle/ActionLog.js';
 import RNG from '../lib/rng.js';
+import { isRun } from '../lib/Game/Rolls.js';
 
 /** @typedef {import('../lib/Game/Battle/Actions.js').Round} Round */
 /** @typedef {import('../lib/Game/Keys.js').CharacterKey} CharacterKey */
@@ -46,7 +47,7 @@ const battle = ({ seed = 1, turns = [], lvl = 1, escapable = true } = {}) =>
 
 /** The first seed whose escape roll (the next RNG call) gives `escapes`. */
 const seedWhere = (escapes) => {
-  for (let seed = 1; ; seed++) if (RNG.isRun(new RNG(seed).next().rand) === escapes) return seed;
+  for (let seed = 1; ; seed++) if (isRun(new RNG(seed).next().rand) === escapes) return seed;
 };
 
 describe('Round commands: Fight', () => {

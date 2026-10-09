@@ -16,10 +16,11 @@ import RNG from '../lib/rng.js';
 const member = (
   /** @type {import('../lib/Game/Keys.js').CharacterKey} */ key,
   /** @type {number} */ SPD,
+  /** @type {{ DEF?: number, HP?: number }} */ stats = {},
 ) =>
   new Character(key)
     .setLVL(10)
-    .setStats({ PWR: 90, SKL: 80, DEF: 60, SPD, MGC: 10, LUK: 20, HP: 9000 })
+    .setStats({ PWR: 90, SKL: 80, DEF: 60, SPD, MGC: 10, LUK: 20, HP: 9000, ...stats })
     .rest();
 
 const DEFEND = { type: ACTION_TYPES.DEFEND };
@@ -29,13 +30,14 @@ const attack = (target) => ({ type: ACTION_TYPES.ATTACK, target });
 /**
  * Gremio (fast), Pahn, Cleo (slow: acts after the Queen) against 3 Soldier Ants and the Queen.
  * @param {number} seed @param {number} round the round to play (the fight ends on the 3rd)
+ * @param {{ DEF?: number, HP?: number }} [stats] overrides for every member (1 HP, 0 DEF to wipe them)
  */
-const fight = (seed, round = 1) =>
+const fight = (seed, round = 1, stats = {}) =>
   new Battle({
     party: new PlayerParty([
-      member(CHARACTER_KEYS.GREMIO, 30),
-      member(CHARACTER_KEYS.PAHN, 26),
-      member(CHARACTER_KEYS.CLEO, 12),
+      member(CHARACTER_KEYS.GREMIO, 30, stats),
+      member(CHARACTER_KEYS.PAHN, 26, stats),
+      member(CHARACTER_KEYS.CLEO, 12, stats),
     ]),
     enemies: new EnemyParty([
       ...[0, 1, 2].map(() => new Enemy(ENEMY_KEYS.SOLDIER_ANT)),
@@ -179,5 +181,40 @@ describe('Queen Ant script: fight end', () => {
       warnings.some((w) => /Poll latency.*Item/.test(w.text)),
       JSON.stringify(warnings),
     );
+  });
+});
+
+describe('Queen Ant script: party wipe', () => {
+  const FRAIL = { DEF: 0, HP: 1 };
+
+  /** Plays one round with everyone Defending, and returns the battle and whether the party was wiped */
+  const wipeRound = (/** @type {number} */ seed, /** @type {number} */ round) => {
+    const battle = fight(seed, round, FRAIL);
+    battle.playTurn([DEFEND, DEFEND, DEFEND]);
+    return { battle, wiped: battle.party.combatants.every((c) => !c.isValidCombatant) };
+  };
+
+  for (const round of [1, 2]) {
+    it(`a wipe in round ${round} is a defeat`, () => {
+      let wipes = 0;
+      for (let seed = 1; seed <= 30; seed++) {
+        const { battle, wiped } = wipeRound(seed, round);
+        if (!wiped) continue;
+        wipes++;
+        assert.strictEqual(battle.status, BATTLE_STATUS.LOST, `seed ${seed}`);
+        assert.strictEqual(battle.script.fightEnding, false, `seed ${seed}`);
+      }
+      assert.ok(wipes >= 5, `only ${wipes} wipes`);
+    });
+  }
+
+  it('a wipe in round 3 is the scripted end, not a defeat', () => {
+    let wipes = 0;
+    for (let seed = 1; seed <= 30; seed++) {
+      const { battle, wiped } = wipeRound(seed, 3);
+      if (wiped) wipes++;
+      assert.strictEqual(battle.status, BATTLE_STATUS.SCRIPTED_END, `seed ${seed}`);
+    }
+    assert.ok(wipes >= 5, `only ${wipes} wipes`);
   });
 });

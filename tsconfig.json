@@ -18,7 +18,8 @@
     "test/**/*.js",
     "scripts/**/*.js",
     "index.js",
-    "battle.js"
+    "battle.js",
+    "war.js"
   ],
   "exclude": ["node_modules"]
 }

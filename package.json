@@ -8,6 +8,7 @@
   "exports": {
     ".": "./index.js",
     "./battle": "./battle.js",
+    "./war": "./war.js",
     "./package.json": "./package.json"
   },
   "imports": {

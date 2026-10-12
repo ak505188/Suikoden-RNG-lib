@@ -1,0 +1,1520 @@
+{
+  "characters": {
+    "MCDOHL": {
+      "name": "McDohl",
+      "id": 0,
+      "type": "CHARGE",
+      "base": 14,
+      "extra": 5,
+      "soldiers": 700,
+      "speaking": false
+    },
+    "CLEO": {
+      "name": "Cleo",
+      "id": 1,
+      "type": "CHARGE",
+      "base": 10,
+      "extra": 7,
+      "soldiers": 80,
+      "speaking": false
+    },
+    "PAHN": {
+      "name": "Pahn",
+      "id": 2,
+      "type": "CHARGE",
+      "base": 12,
+      "extra": 5,
+      "soldiers": 150,
+      "speaking": false
+    },
+    "EILEEN": {
+      "name": "Eileen",
+      "id": 3,
+      "type": "BOW",
+      "base": 14,
+      "extra": 3,
+      "soldiers": 170,
+      "speaking": false
+    },
+    "VIKTOR": {
+      "name": "Viktor",
+      "id": 4,
+      "type": "CHARGE",
+      "base": 14,
+      "extra": 2,
+      "soldiers": 300,
+      "speaking": false
+    },
+    "CAMILLE": {
+      "name": "Camille",
+      "id": 5,
+      "type": "BOW",
+      "base": 12,
+      "extra": 4,
+      "soldiers": 90,
+      "speaking": false
+    },
+    "WARREN": {
+      "name": "Warren",
+      "id": 6,
+      "type": "CHARGE",
+      "base": 12,
+      "extra": 3,
+      "soldiers": 700,
+      "speaking": false
+    },
+    "VARKAS": {
+      "name": "Varkas",
+      "id": 7,
+      "type": "CHARGE",
+      "base": 13,
+      "extra": 3,
+      "soldiers": 600,
+      "speaking": false
+    },
+    "SYDONIA": {
+      "name": "Sydonia",
+      "id": 8,
+      "type": "CHARGE",
+      "base": 12,
+      "extra": 4,
+      "soldiers": 120,
+      "speaking": false
+    },
+    "HUMPHREY": {
+      "name": "Humphrey",
+      "id": 9,
+      "type": "CHARGE",
+      "base": 17,
+      "extra": 3,
+      "soldiers": 450,
+      "speaking": false
+    },
+    "JOSHUA": {
+      "name": "Joshua",
+      "id": 10,
+      "type": "OTHER",
+      "base": 16,
+      "extra": 5,
+      "soldiers": 600,
+      "speaking": false
+    },
+    "FLIK": {
+      "name": "Flik",
+      "id": 11,
+      "type": "CHARGE",
+      "base": 11,
+      "extra": 5,
+      "soldiers": 300,
+      "speaking": false
+    },
+    "LEDON": {
+      "name": "Ledon",
+      "id": 12,
+      "type": "OTHER",
+      "base": 3,
+      "extra": 3,
+      "soldiers": 20,
+      "speaking": true
+    },
+    "KESSLER": {
+      "name": "Kessler",
+      "id": 13,
+      "type": "CHARGE",
+      "base": 8,
+      "extra": 4,
+      "soldiers": 270,
+      "speaking": true
+    },
+    "MATHIU": {
+      "name": "Mathiu",
+      "id": 14,
+      "type": "OTHER",
+      "base": 1,
+      "extra": 0,
+      "soldiers": 550,
+      "speaking": false
+    },
+    "TAI_HO": {
+      "name": "Tai Ho",
+      "id": 15,
+      "type": "CHARGE",
+      "base": 13,
+      "extra": 3,
+      "soldiers": 120,
+      "speaking": false
+    },
+    "YAM_KOO": {
+      "name": "Yam Koo",
+      "id": 16,
+      "type": "CHARGE",
+      "base": 11,
+      "extra": 4,
+      "soldiers": 60,
+      "speaking": false
+    },
+    "LUC": {
+      "name": "Luc",
+      "id": 17,
+      "type": "MAGIC",
+      "base": 19,
+      "extra": 1,
+      "soldiers": 20,
+      "speaking": true
+    },
+    "LEPANT": {
+      "name": "Lepant",
+      "id": 18,
+      "type": "CHARGE",
+      "base": 17,
+      "extra": 3,
+      "soldiers": 900,
+      "speaking": false
+    },
+    "GREMIO": {
+      "name": "Gremio",
+      "id": 19,
+      "type": "MAGIC",
+      "base": 13,
+      "extra": 7,
+      "soldiers": 150,
+      "speaking": true
+    },
+    "GIOVANNI": {
+      "name": "Giovanni",
+      "id": 20,
+      "type": "OTHER",
+      "base": 2,
+      "extra": 6,
+      "soldiers": 30,
+      "speaking": true
+    },
+    "KRIN": {
+      "name": "Krin",
+      "id": 21,
+      "type": "OTHER",
+      "base": 1,
+      "extra": 1,
+      "soldiers": 5,
+      "speaking": false
+    },
+    "JUPPO": {
+      "name": "Juppo",
+      "id": 22,
+      "type": "CHARGE",
+      "base": 3,
+      "extra": 3,
+      "soldiers": 70,
+      "speaking": true
+    },
+    "KIRKIS": {
+      "name": "Kirkis",
+      "id": 23,
+      "type": "BOW",
+      "base": 13,
+      "extra": 3,
+      "soldiers": 380,
+      "speaking": false
+    },
+    "LIUKAN": {
+      "name": "Liukan",
+      "id": 24,
+      "type": "CHARGE",
+      "base": 6,
+      "extra": 5,
+      "soldiers": 150,
+      "speaking": false
+    },
+    "GEN": {
+      "name": "Gen",
+      "id": 25,
+      "type": "CHARGE",
+      "base": 7,
+      "extra": 3,
+      "soldiers": 300,
+      "speaking": false
+    },
+    "KAMANDOL": {
+      "name": "Kamandol",
+      "id": 26,
+      "type": "CHARGE",
+      "base": 3,
+      "extra": 2,
+      "soldiers": 130,
+      "speaking": false
+    },
+    "TESLA": {
+      "name": "Tesla",
+      "id": 27,
+      "type": "CHARGE",
+      "base": 1,
+      "extra": 5,
+      "soldiers": 70,
+      "speaking": true
+    },
+    "KIMBERLY": {
+      "name": "Kimberly",
+      "id": 28,
+      "type": "CHARGE",
+      "base": 5,
+      "extra": 2,
+      "soldiers": 280,
+      "speaking": false
+    },
+    "KASUMI": {
+      "name": "Kasumi",
+      "id": 29,
+      "type": "OTHER",
+      "base": 10,
+      "extra": 6,
+      "soldiers": 90,
+      "speaking": false
+    },
+    "MOSE": {
+      "name": "Mose",
+      "id": 30,
+      "type": "CHARGE",
+      "base": 8,
+      "extra": 5,
+      "soldiers": 350,
+      "speaking": false
+    },
+    "KUN_TO": {
+      "name": "Kun To",
+      "id": 31,
+      "type": "OTHER",
+      "base": 12,
+      "extra": 3,
+      "soldiers": 240,
+      "speaking": true
+    },
+    "FUKIEN": {
+      "name": "Fukien",
+      "id": 32,
+      "type": "CHARGE",
+      "base": 6,
+      "extra": 6,
+      "soldiers": 110,
+      "speaking": false
+    },
+    "TAGGART": {
+      "name": "Taggart",
+      "id": 33,
+      "type": "CHARGE",
+      "base": 4,
+      "extra": 6,
+      "soldiers": 10,
+      "speaking": true
+    },
+    "FUTCH": {
+      "name": "Futch",
+      "id": 34,
+      "type": "OTHER",
+      "base": 9,
+      "extra": 4,
+      "soldiers": 60,
+      "speaking": false
+    },
+    "MILIA": {
+      "name": "Milia",
+      "id": 35,
+      "type": "CHARGE",
+      "base": 13,
+      "extra": 6,
+      "soldiers": 180,
+      "speaking": false
+    },
+    "TENGAAR": {
+      "name": "Tengaar",
+      "id": 36,
+      "type": "MAGIC",
+      "base": 12,
+      "extra": 2,
+      "soldiers": 30,
+      "speaking": false
+    },
+    "HIX": {
+      "name": "Hix",
+      "id": 37,
+      "type": "BOW",
+      "base": 5,
+      "extra": 4,
+      "soldiers": 10,
+      "speaking": false
+    },
+    "KWANDA": {
+      "name": "Kwanda",
+      "id": 38,
+      "type": "CHARGE",
+      "base": 14,
+      "extra": 3,
+      "soldiers": 300,
+      "speaking": true
+    },
+    "VALERIA": {
+      "name": "Valeria",
+      "id": 39,
+      "type": "CHARGE",
+      "base": 13,
+      "extra": 4,
+      "soldiers": 250,
+      "speaking": true
+    },
+    "MILICH": {
+      "name": "Milich",
+      "id": 40,
+      "type": "MAGIC",
+      "base": 14,
+      "extra": 3,
+      "soldiers": 270,
+      "speaking": true
+    },
+    "GRIFFITH": {
+      "name": "Griffith",
+      "id": 41,
+      "type": "CHARGE",
+      "base": 12,
+      "extra": 3,
+      "soldiers": 400,
+      "speaking": true
+    },
+    "KASIM": {
+      "name": "Kasim",
+      "id": 42,
+      "type": "CHARGE",
+      "base": 15,
+      "extra": 2,
+      "soldiers": 200,
+      "speaking": false
+    },
+    "SONYA": {
+      "name": "Sonya",
+      "id": 43,
+      "type": "MAGIC",
+      "base": 13,
+      "extra": 4,
+      "soldiers": 250,
+      "speaking": true
+    },
+    "SYLVINA": {
+      "name": "Sylvina",
+      "id": 44,
+      "type": "BOW",
+      "base": 7,
+      "extra": 5,
+      "soldiers": 60,
+      "speaking": false
+    },
+    "STALLION": {
+      "name": "Stallion",
+      "id": 45,
+      "type": "BOW",
+      "base": 5,
+      "extra": 3,
+      "soldiers": 20,
+      "speaking": false
+    },
+    "RONNIE": {
+      "name": "Ronnie",
+      "id": 46,
+      "type": "CHARGE",
+      "base": 6,
+      "extra": 2,
+      "soldiers": 110,
+      "speaking": true
+    },
+    "VINCENT": {
+      "name": "Vincent",
+      "id": 47,
+      "type": "CHARGE",
+      "base": 10,
+      "extra": 1,
+      "soldiers": 5,
+      "speaking": true
+    },
+    "KUROMIMI": {
+      "name": "Kuromimi",
+      "id": 48,
+      "type": "BOW",
+      "base": 9,
+      "extra": 4,
+      "soldiers": 60,
+      "speaking": false
+    },
+    "ALEN": {
+      "name": "Alen",
+      "id": 49,
+      "type": "CHARGE",
+      "base": 13,
+      "extra": 3,
+      "soldiers": 150,
+      "speaking": true
+    },
+    "GRENSEAL": {
+      "name": "Grenseal",
+      "id": 50,
+      "type": "CHARGE",
+      "base": 13,
+      "extra": 4,
+      "soldiers": 150,
+      "speaking": true
+    },
+    "ANJI": {
+      "name": "Anji",
+      "id": 51,
+      "type": "CHARGE",
+      "base": 11,
+      "extra": 2,
+      "soldiers": 300,
+      "speaking": true
+    },
+    "LEONARDO": {
+      "name": "Leonardo",
+      "id": 52,
+      "type": "CHARGE",
+      "base": 9,
+      "extra": 5,
+      "soldiers": 90,
+      "speaking": true
+    },
+    "KANAK": {
+      "name": "Kanak",
+      "id": 53,
+      "type": "CHARGE",
+      "base": 7,
+      "extra": 7,
+      "soldiers": 90,
+      "speaking": true
+    },
+    "KAGE": {
+      "name": "Kage",
+      "id": 54,
+      "type": "OTHER",
+      "base": 4,
+      "extra": 2,
+      "soldiers": 10,
+      "speaking": true
+    },
+    "SHEENA": {
+      "name": "Sheena",
+      "id": 55,
+      "type": "CHARGE",
+      "base": 8,
+      "extra": 2,
+      "soldiers": 60,
+      "speaking": true
+    },
+    "APPLE": {
+      "name": "Apple",
+      "id": 56,
+      "type": "CHARGE",
+      "base": 1,
+      "extra": 1,
+      "soldiers": 280,
+      "speaking": true
+    },
+    "ESMERALDA": {
+      "name": "Esmeralda",
+      "id": 57,
+      "type": "CHARGE",
+      "base": 6,
+      "extra": 3,
+      "soldiers": 70,
+      "speaking": true
+    },
+    "FU_SU_LU": {
+      "name": "Fu Su Lu",
+      "id": 58,
+      "type": "CHARGE",
+      "base": 2,
+      "extra": 1,
+      "soldiers": 20,
+      "speaking": true
+    },
+    "GON": {
+      "name": "Gon",
+      "id": 59,
+      "type": "BOW",
+      "base": 5,
+      "extra": 7,
+      "soldiers": 50,
+      "speaking": false
+    },
+    "RUBI": {
+      "name": "Rubi",
+      "id": 60,
+      "type": "BOW",
+      "base": 4,
+      "extra": 2,
+      "soldiers": 10,
+      "speaking": true
+    },
+    "LOTTE": {
+      "name": "Lotte",
+      "id": 61,
+      "type": "MAGIC",
+      "base": 15,
+      "extra": 4,
+      "soldiers": 220,
+      "speaking": true
+    },
+    "FUMA": {
+      "name": "Fuma",
+      "id": 62,
+      "type": "OTHER",
+      "base": 2,
+      "extra": 2,
+      "soldiers": 10,
+      "speaking": true
+    },
+    "LORELAI": {
+      "name": "Lorelai",
+      "id": 63,
+      "type": "BOW",
+      "base": 11,
+      "extra": 3,
+      "soldiers": 90,
+      "speaking": true
+    },
+    "MORGAN": {
+      "name": "Morgan",
+      "id": 64,
+      "type": "CHARGE",
+      "base": 5,
+      "extra": 4,
+      "soldiers": 80,
+      "speaking": true
+    },
+    "QUINCY": {
+      "name": "Quincy",
+      "id": 65,
+      "type": "BOW",
+      "base": 9,
+      "extra": 4,
+      "soldiers": 180,
+      "speaking": true
+    },
+    "MINA": {
+      "name": "Mina",
+      "id": 66,
+      "type": "BOW",
+      "base": 4,
+      "extra": 2,
+      "soldiers": 160,
+      "speaking": true
+    },
+    "BLACKMAN": {
+      "name": "Blackman",
+      "id": 67,
+      "type": "CHARGE",
+      "base": 15,
+      "extra": 4,
+      "soldiers": 110,
+      "speaking": true
+    },
+    "KREUTZ": {
+      "name": "Kreutz",
+      "id": 68,
+      "type": "CHARGE",
+      "base": 17,
+      "extra": 3,
+      "soldiers": 300,
+      "speaking": true
+    },
+    "KIRKE": {
+      "name": "Kirke",
+      "id": 69,
+      "type": "CHARGE",
+      "base": 9,
+      "extra": 3,
+      "soldiers": 5,
+      "speaking": true
+    },
+    "MEG": {
+      "name": "Meg",
+      "id": 70,
+      "type": "MAGIC",
+      "base": 13,
+      "extra": 2,
+      "soldiers": 190,
+      "speaking": true
+    },
+    "MAX": {
+      "name": "Max",
+      "id": 71,
+      "type": "CHARGE",
+      "base": 19,
+      "extra": 3,
+      "soldiers": 1200,
+      "speaking": true
+    },
+    "SANCHO": {
+      "name": "Sancho",
+      "id": 72,
+      "type": "CHARGE",
+      "base": 12,
+      "extra": 7,
+      "soldiers": 200,
+      "speaking": true
+    },
+    "GEORGES": {
+      "name": "Georges",
+      "id": 73,
+      "type": "BOW",
+      "base": 6,
+      "extra": 2,
+      "soldiers": 20,
+      "speaking": false
+    },
+    "ROCK": {
+      "name": "Rock",
+      "id": 74,
+      "type": "CHARGE",
+      "base": 7,
+      "extra": 4,
+      "soldiers": 70,
+      "speaking": false
+    },
+    "MELODYE": {
+      "name": "Melodye",
+      "id": 75,
+      "type": "MAGIC",
+      "base": 9,
+      "extra": 3,
+      "soldiers": 60,
+      "speaking": false
+    },
+    "WINDOW": {
+      "name": "Window",
+      "id": 76,
+      "type": "MAGIC",
+      "base": 11,
+      "extra": 3,
+      "soldiers": 60,
+      "speaking": false
+    },
+    "GASPAR": {
+      "name": "Gaspar",
+      "id": 77,
+      "type": "CHARGE",
+      "base": 14,
+      "extra": 4,
+      "soldiers": 10,
+      "speaking": false
+    },
+    "ONIL": {
+      "name": "Onil",
+      "id": 78,
+      "type": "CHARGE",
+      "base": 9,
+      "extra": 2,
+      "soldiers": 20,
+      "speaking": false
+    },
+    "ZEN": {
+      "name": "Zen",
+      "id": 79,
+      "type": "CHARGE",
+      "base": 6,
+      "extra": 4,
+      "soldiers": 300,
+      "speaking": true
+    },
+    "SARAH": {
+      "name": "Sarah",
+      "id": 80,
+      "type": "CHARGE",
+      "base": 12,
+      "extra": 4,
+      "soldiers": 80,
+      "speaking": true
+    },
+    "KAI": {
+      "name": "Kai",
+      "id": 81,
+      "type": "CHARGE",
+      "base": 13,
+      "extra": 3,
+      "soldiers": 140,
+      "speaking": false
+    },
+    "EIKEI": {
+      "name": "Eikei",
+      "id": 82,
+      "type": "CHARGE",
+      "base": 7,
+      "extra": 3,
+      "soldiers": 180,
+      "speaking": false
+    },
+    "SERGEI": {
+      "name": "Sergei",
+      "id": 83,
+      "type": "BOW",
+      "base": 5,
+      "extra": 5,
+      "soldiers": 80,
+      "speaking": false
+    },
+    "HUGO": {
+      "name": "Hugo",
+      "id": 84,
+      "type": "BOW",
+      "base": 4,
+      "extra": 4,
+      "soldiers": 110,
+      "speaking": false
+    },
+    "TEMPLETON": {
+      "name": "Templeton",
+      "id": 85,
+      "type": "BOW",
+      "base": 8,
+      "extra": 3,
+      "soldiers": 120,
+      "speaking": false
+    },
+    "IVANOV": {
+      "name": "Ivanov",
+      "id": 86,
+      "type": "CHARGE",
+      "base": 6,
+      "extra": 2,
+      "soldiers": 140,
+      "speaking": false
+    },
+    "SANSUKE": {
+      "name": "Sansuke",
+      "id": 87,
+      "type": "CHARGE",
+      "base": 5,
+      "extra": 3,
+      "soldiers": 90,
+      "speaking": false
+    },
+    "JABBA": {
+      "name": "Jabba",
+      "id": 88,
+      "type": "CHARGE",
+      "base": 9,
+      "extra": 1,
+      "soldiers": 30,
+      "speaking": false
+    },
+    "MARIE": {
+      "name": "Marie",
+      "id": 89,
+      "type": "CHARGE",
+      "base": 11,
+      "extra": 5,
+      "soldiers": 250,
+      "speaking": false
+    },
+    "VIKI": {
+      "name": "Viki",
+      "id": 90,
+      "type": "MAGIC",
+      "base": 13,
+      "extra": 2,
+      "soldiers": 220,
+      "speaking": false
+    },
+    "QLON": {
+      "name": "Qlon",
+      "id": 91,
+      "type": "CHARGE",
+      "base": 6,
+      "extra": 4,
+      "soldiers": 300,
+      "speaking": false
+    },
+    "HELLION": {
+      "name": "Hellion",
+      "id": 92,
+      "type": "MAGIC",
+      "base": 17,
+      "extra": 3,
+      "soldiers": 70,
+      "speaking": false
+    },
+    "JEANE": {
+      "name": "Jeane",
+      "id": 93,
+      "type": "MAGIC",
+      "base": 15,
+      "extra": 2,
+      "soldiers": 200,
+      "speaking": false
+    },
+    "KASIOS": {
+      "name": "Kasios",
+      "id": 94,
+      "type": "MAGIC",
+      "base": 8,
+      "extra": 3,
+      "soldiers": 30,
+      "speaking": false
+    },
+    "ANTONIO": {
+      "name": "Antonio",
+      "id": 95,
+      "type": "BOW",
+      "base": 6,
+      "extra": 4,
+      "soldiers": 180,
+      "speaking": true
+    },
+    "LESTER": {
+      "name": "Lester",
+      "id": 96,
+      "type": "BOW",
+      "base": 5,
+      "extra": 4,
+      "soldiers": 190,
+      "speaking": true
+    },
+    "MAAS": {
+      "name": "Maas",
+      "id": 97,
+      "type": "CHARGE",
+      "base": 7,
+      "extra": 4,
+      "soldiers": 90,
+      "speaking": false
+    },
+    "MEESE": {
+      "name": "Meese",
+      "id": 98,
+      "type": "CHARGE",
+      "base": 8,
+      "extra": 4,
+      "soldiers": 90,
+      "speaking": false
+    },
+    "MOOSE": {
+      "name": "Moose",
+      "id": 99,
+      "type": "CHARGE",
+      "base": 9,
+      "extra": 4,
+      "soldiers": 90,
+      "speaking": false
+    },
+    "MARCO": {
+      "name": "Marco",
+      "id": 100,
+      "type": "BOW",
+      "base": 5,
+      "extra": 2,
+      "soldiers": 30,
+      "speaking": false
+    },
+    "CHAPMAN": {
+      "name": "Chapman",
+      "id": 101,
+      "type": "OTHER",
+      "base": 6,
+      "extra": 3,
+      "soldiers": 80,
+      "speaking": false
+    },
+    "CHANDLER": {
+      "name": "Chandler",
+      "id": 102,
+      "type": "OTHER",
+      "base": 9,
+      "extra": 2,
+      "soldiers": 150,
+      "speaking": false
+    },
+    "MACE": {
+      "name": "Mace",
+      "id": 103,
+      "type": "BOW",
+      "base": 10,
+      "extra": 4,
+      "soldiers": 100,
+      "speaking": false
+    },
+    "LEON": {
+      "name": "Leon",
+      "id": 104,
+      "type": "CHARGE",
+      "base": 1,
+      "extra": 2,
+      "soldiers": 250,
+      "speaking": true
+    },
+    "CLIVE": {
+      "name": "Clive",
+      "id": 105,
+      "type": "BOW",
+      "base": 9,
+      "extra": 4,
+      "soldiers": 30,
+      "speaking": true
+    },
+    "PESMERGA": {
+      "name": "Pesmerga",
+      "id": 106,
+      "type": "CHARGE",
+      "base": 8,
+      "extra": 6,
+      "soldiers": 5,
+      "speaking": true
+    },
+    "CROWLEY": {
+      "name": "Crowley",
+      "id": 107,
+      "type": "MAGIC",
+      "base": 20,
+      "extra": 5,
+      "soldiers": 50,
+      "speaking": true
+    }
+  },
+  "units": {
+    "COMMANDERS_TEAM": {
+      "name": "Commander's Team",
+      "id": 0,
+      "members": ["MCDOHL", "PAHN", "CLEO"]
+    },
+    "HUMPHREYS_TEAM": {
+      "name": "Humphrey's Team",
+      "id": 1,
+      "members": ["HUMPHREY", "ALEN", "GRENSEAL"]
+    },
+    "LEPANT_FAMILY": {
+      "name": "Lepant Family",
+      "id": 2,
+      "members": ["LEPANT", "GREMIO", "SHEENA"]
+    },
+    "KNIGHTS_PARTY": {
+      "name": "Knights Party",
+      "id": 3,
+      "members": ["MAX", "SANCHO", "QLON"]
+    },
+    "FORMER_IMPERIAL_TEAM": {
+      "name": "Former Imperial Team",
+      "id": 4,
+      "members": ["KASIM", "GRIFFITH", "VALERIA"]
+    },
+    "VIKTORS_TEAM": {
+      "name": "Viktor's Team",
+      "id": 5,
+      "members": ["VIKTOR", "WARREN", "TAGGART"]
+    },
+    "WARRIORS_VILLAGE_KIDS": {
+      "name": "Warrior's Village Kids",
+      "id": 6,
+      "members": ["FLIK", "TENGAAR", "HIX"]
+    },
+    "FISHERMENS": {
+      "name": "Fishermens",
+      "id": 7,
+      "members": ["TAI_HO", "YAM_KOO", "KIMBERLY"]
+    },
+    "WILD_GEESE": {
+      "name": "Wild Geese",
+      "id": 8,
+      "members": ["KREUTZ", "MORGAN", "KIRKE"]
+    },
+    "BANDITS": {
+      "name": "Bandits",
+      "id": 9,
+      "members": ["VARKAS", "SYDONIA", "KESSLER"]
+    },
+    "PIRATES": {
+      "name": "Pirates",
+      "id": 10,
+      "members": ["ANJI", "LEONARDO", "KANAK"]
+    },
+    "INVULNERABLE_DEFENSE": {
+      "name": "Invulnerable Defense",
+      "id": 11,
+      "members": ["KWANDA", "EIKEI", "GASPAR"]
+    },
+    "CARPENTERS": {
+      "name": "Carpenters",
+      "id": 12,
+      "members": ["GEN", "KAMANDOL", "TESLA"]
+    },
+    "SECRET_FACTORY_TEAM": {
+      "name": "Secret Factory Team",
+      "id": 13,
+      "members": ["MOSE", "RONNIE", "SARAH"]
+    },
+    "OLD_SOLDIERS": {
+      "name": "Old Soldiers",
+      "id": 14,
+      "members": ["KAI", "LIUKAN", "FUKIEN"]
+    },
+    "BLACK_GOLDS": {
+      "name": "Black Golds",
+      "id": 15,
+      "members": ["MAAS", "MEESE", "MOOSE"]
+    },
+    "GOOD_BUDDIES": {
+      "name": "Good Buddies",
+      "id": 16,
+      "members": ["MARIE", "ONIL", "SANSUKE"]
+    },
+    "FELLOWS": {
+      "name": "Fellows",
+      "id": 17,
+      "members": ["BLACKMAN", "ZEN", "IVANOV"]
+    },
+    "TRICKSTERS": {
+      "name": "Tricksters",
+      "id": 18,
+      "members": ["JUPPO", "JABBA", "MEG"]
+    },
+    "FOREST_PROTECTORS": {
+      "name": "Forest Protectors",
+      "id": 19,
+      "members": ["KIRKIS", "SYLVINA", "STALLION"]
+    },
+    "EXPERTS": {
+      "name": "Experts",
+      "id": 20,
+      "members": ["CLIVE", "PESMERGA", "MACE"]
+    },
+    "ADVENTURERS": {
+      "name": "Adventurers",
+      "id": 21,
+      "members": ["LORELAI", "QUINCY", "MINA"]
+    },
+    "ARCHERS": {
+      "name": "Archers",
+      "id": 22,
+      "members": ["RUBI", "GEORGES", "MARCO"]
+    },
+    "KOBOLDS": {
+      "name": "Kobolds",
+      "id": 23,
+      "members": ["FU_SU_LU", "KUROMIMI", "GON"]
+    },
+    "THIEVES": {
+      "name": "Thieves",
+      "id": 24,
+      "members": ["KRIN", "LEDON", "GIOVANNI"]
+    },
+    "ENGINEERS": {
+      "name": "Engineers",
+      "id": 25,
+      "members": ["SERGEI", "HUGO", "TEMPLETON"]
+    },
+    "COOKS": {
+      "name": "Cooks",
+      "id": 26,
+      "members": ["ANTONIO", "LESTER", "ROCK"]
+    },
+    "CHILDREN_OF_THE_RUNES": {
+      "name": "Children of the Runes",
+      "id": 27,
+      "members": ["CROWLEY", "LUC", "LOTTE"]
+    },
+    "MAGICIANS": {
+      "name": "Magicians",
+      "id": 28,
+      "members": ["JEANE", "HELLION", "VIKI"]
+    },
+    "NARCISTS": {
+      "name": "Narcists",
+      "id": 29,
+      "members": ["MILICH", "VINCENT", "ESMERALDA"]
+    },
+    "SOLDIER_BEAUTIES": {
+      "name": "Soldier Beauties",
+      "id": 30,
+      "members": ["SONYA", "EILEEN", "CAMILLE"]
+    },
+    "MUSICIANS": {
+      "name": "Musicians",
+      "id": 31,
+      "members": ["KASIOS", "MELODYE", "WINDOW"]
+    },
+    "STRATEGISTS": {
+      "name": "Strategists",
+      "id": 32,
+      "members": ["MATHIU", "LEON", "APPLE"]
+    },
+    "NINJAS": {
+      "name": "Ninjas",
+      "id": 33,
+      "members": ["KAGE", "KASUMI", "FUMA"]
+    },
+    "DRAGON_KNIGHTS": {
+      "name": "Dragon Knights",
+      "id": 34,
+      "members": ["JOSHUA", "MILIA", "FUTCH"]
+    },
+    "MERCHANTS": {
+      "name": "Merchants",
+      "id": 35,
+      "members": ["KUN_TO", "CHAPMAN", "CHANDLER"]
+    }
+  },
+  "scenarios": {
+    "KUWA": {
+      "enemySoldiers": 9000,
+      "soldiersPerSprite": 300,
+      "actions": [
+        {
+          "type": "CHARGE",
+          "power": 12,
+          "name": "Charge Attack"
+        },
+        {
+          "type": "CHARGE",
+          "power": 8,
+          "name": "Charge Attack"
+        },
+        {
+          "type": "BOW",
+          "power": 11,
+          "name": "Bow attack"
+        },
+        {
+          "type": "MAGIC",
+          "power": 12,
+          "name": "Magic Attack"
+        },
+        {
+          "type": "CHARGE",
+          "power": 25,
+          "name": "Kwanda's Attack"
+        }
+      ],
+      "turns": [
+        [4, 4],
+        [0, 3],
+        [0, 3],
+        [0, 3],
+        [0, 3]
+      ],
+      "turnLimit": null,
+      "gameOverOnLoss": true,
+      "seed": 67,
+      "resolver": "STANDARD"
+    },
+    "GARA": {
+      "enemySoldiers": 6000,
+      "soldiersPerSprite": 300,
+      "actions": [
+        {
+          "type": "CHARGE",
+          "power": 12,
+          "name": "Charge Attack"
+        },
+        {
+          "type": "CHARGE",
+          "power": 9,
+          "name": "Charge Attack"
+        },
+        {
+          "type": "CHARGE",
+          "power": 7,
+          "name": "Charge Attack"
+        },
+        {
+          "type": "BOW",
+          "power": 8,
+          "name": "Bow attack"
+        },
+        {
+          "type": "BOW",
+          "power": 13,
+          "name": "Bow attack"
+        }
+      ],
+      "turns": [
+        [0, 4],
+        [0, 4],
+        [0, 4],
+        [0, 4],
+        [0, 4]
+      ],
+      "turnLimit": null,
+      "gameOverOnLoss": true,
+      "seed": 67,
+      "resolver": "STANDARD"
+    },
+    "SCA1": {
+      "enemySoldiers": 12000,
+      "soldiersPerSprite": 400,
+      "actions": [
+        {
+          "type": "MAGIC",
+          "power": 10,
+          "name": "Poisonous Pollen"
+        },
+        {
+          "type": "CHARGE",
+          "power": 10,
+          "name": "Charge Attack"
+        },
+        {
+          "type": "BOW",
+          "power": 10,
+          "name": "Bow attack"
+        },
+        {
+          "type": "MAGIC",
+          "power": 10,
+          "name": "Magic Attack"
+        },
+        {
+          "type": "CHARGE",
+          "power": 20,
+          "name": "Bow attack"
+        }
+      ],
+      "turns": [
+        [0, 0],
+        [0, 3],
+        [0, 3],
+        [0, 3],
+        [4, 4]
+      ],
+      "turnLimit": 1,
+      "gameOverOnLoss": false,
+      "seed": 67,
+      "resolver": "SCA1"
+    },
+    "SCA2": {
+      "enemySoldiers": 12000,
+      "soldiersPerSprite": 400,
+      "actions": [
+        {
+          "type": "CHARGE",
+          "power": 12,
+          "name": "Charge Attack"
+        },
+        {
+          "type": "CHARGE",
+          "power": 13,
+          "name": "Charge Attack"
+        },
+        {
+          "type": "BOW",
+          "power": 8,
+          "name": "Bow attack"
+        },
+        {
+          "type": "BOW",
+          "power": 8,
+          "name": "Bow attack"
+        },
+        {
+          "type": "MAGIC",
+          "power": 17,
+          "name": "Milich's Attack"
+        }
+      ],
+      "turns": [
+        [0, 0],
+        [4, 4],
+        [0, 3],
+        [0, 3],
+        [0, 3]
+      ],
+      "turnLimit": null,
+      "gameOverOnLoss": true,
+      "seed": 67,
+      "resolver": "STANDARD"
+    },
+    "TEO1": {
+      "enemySoldiers": 14000,
+      "soldiersPerSprite": 450,
+      "actions": [
+        {
+          "type": "CHARGE",
+          "power": 30,
+          "name": "Armored cavalry"
+        },
+        {
+          "type": "CHARGE",
+          "power": 30,
+          "name": "Armored cavalry"
+        },
+        {
+          "type": "CHARGE",
+          "power": 40,
+          "name": "Teo's Charge"
+        }
+      ],
+      "turns": [
+        [0, 0],
+        [1, 1],
+        [2, 2]
+      ],
+      "turnLimit": 3,
+      "gameOverOnLoss": false,
+      "seed": 67,
+      "resolver": "TEO1"
+    },
+    "TEO2": {
+      "enemySoldiers": 14000,
+      "soldiersPerSprite": 450,
+      "actions": [
+        {
+          "type": "CHARGE",
+          "power": 20,
+          "name": "Armored cavalry"
+        },
+        {
+          "type": "CHARGE",
+          "power": 20,
+          "name": "Armored cavalry"
+        },
+        {
+          "type": "CHARGE",
+          "power": 30,
+          "name": "Teo's Charge"
+        }
+      ],
+      "turns": [
+        [0, 0],
+        [1, 1],
+        [2, 2]
+      ],
+      "turnLimit": null,
+      "gameOverOnLoss": true,
+      "seed": 66,
+      "resolver": "TEO2"
+    },
+    "KITA": {
+      "enemySoldiers": 3700,
+      "soldiersPerSprite": 450,
+      "actions": [
+        {
+          "type": "CHARGE",
+          "power": 13,
+          "name": "Charge Attack"
+        },
+        {
+          "type": "CHARGE",
+          "power": 20,
+          "name": "Griffith's Charge"
+        },
+        {
+          "type": "BOW",
+          "power": 11,
+          "name": "Bow attack"
+        },
+        {
+          "type": "BOW",
+          "power": 11,
+          "name": "Bow attack"
+        },
+        {
+          "type": "MAGIC",
+          "power": 13,
+          "name": "Magic Attack"
+        }
+      ],
+      "turns": [
+        [0, 4],
+        [0, 4],
+        [0, 4],
+        [0, 4],
+        [0, 4]
+      ],
+      "turnLimit": null,
+      "gameOverOnLoss": true,
+      "seed": 67,
+      "resolver": "STANDARD"
+    },
+    "SHAS": {
+      "enemySoldiers": 17000,
+      "soldiersPerSprite": 500,
+      "actions": [
+        {
+          "type": "CHARGE",
+          "power": 10,
+          "name": "Charge Attack"
+        },
+        {
+          "type": "CHARGE",
+          "power": 15,
+          "name": "Charge Attack"
+        },
+        {
+          "type": "BOW",
+          "power": 14,
+          "name": "Bow attack"
+        },
+        {
+          "type": "CHARGE",
+          "power": 25,
+          "name": "Sonya's Charge"
+        },
+        {
+          "type": "MAGIC",
+          "power": 17,
+          "name": "Sonya's Magic"
+        }
+      ],
+      "turns": [
+        [4, 4],
+        [0, 3],
+        [0, 3],
+        [0, 3],
+        [0, 3]
+      ],
+      "turnLimit": null,
+      "gameOverOnLoss": true,
+      "seed": 67,
+      "resolver": "STANDARD"
+    },
+    "LAST": {
+      "enemySoldiers": 20000,
+      "soldiersPerSprite": 600,
+      "actions": [
+        {
+          "type": "CHARGE",
+          "power": 18,
+          "name": "Charge Attack"
+        },
+        {
+          "type": "CHARGE",
+          "power": 18,
+          "name": "Charge Attack"
+        },
+        {
+          "type": "BOW",
+          "power": 12,
+          "name": "Bow attack"
+        },
+        {
+          "type": "MAGIC",
+          "power": 13,
+          "name": "Magic Attack"
+        },
+        {
+          "type": "MAGIC",
+          "power": 15,
+          "name": "Magic Attack"
+        },
+        {
+          "type": "CHARGE",
+          "power": 30,
+          "name": "Yuber's Charge"
+        }
+      ],
+      "turns": [
+        [0, 4],
+        [0, 4],
+        [5, 5],
+        [0, 4],
+        [0, 4],
+        [0, 4]
+      ],
+      "turnLimit": null,
+      "gameOverOnLoss": true,
+      "seed": 67,
+      "resolver": "STANDARD"
+    }
+  }
+}

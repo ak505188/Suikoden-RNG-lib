@@ -8,6 +8,7 @@ import { ACTION_TYPES, ROUND_COMMANDS } from '../lib/Game/Battle/Actions.js';
 import { CHARACTER_KEYS, ENEMY_KEYS } from '../lib/Game/Keys.js';
 import { LOG_TYPES } from '../lib/Game/Battle/ActionLog.js';
 import RNG from '../lib/rng.js';
+import { STATUS } from '../lib/Game/Constants.js';
 import { isRun } from '../lib/Game/Rolls.js';
 
 /** @typedef {import('../lib/Game/Battle/Actions.js').Round} Round */
@@ -267,6 +268,53 @@ describe('Round commands: Free Will', () => {
       [ACTION_TYPES.DEFEND, ACTION_TYPES.ATTACK],
     );
     assert.strictEqual(actions[1].target, 1); // the first Attack of the pass starts at the cursor's 1
+  });
+
+  it('Asleep members Defend, without moving the cursor', () => {
+    // battle_free_will_plan skips members with wStatusFlags & 0x60: Sleep (0x20) as well as Unbalanced
+    const p = party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO]);
+    p.combatants[0].status[STATUS.SLEEP] = true;
+    const actions = p.freeWillActions(furfurs(2));
+    assert.deepStrictEqual(
+      actions.map((a) => a.type),
+      [ACTION_TYPES.DEFEND, ACTION_TYPES.ATTACK],
+    );
+    assert.strictEqual(actions[1].target, 1);
+  });
+
+  it('a fallen member ahead of the living takes a step, and its target goes unused', () => {
+    // Decompile: no fallen test in the loop. 5 members, the first fallen, 3 living enemies all in
+    // reach, cursor at 0: by formation slot [E1, E2, E0, E1, E2], M1's E1 consumed (it never acts)
+    const p = party(Array(5).fill(CHARACTER_KEYS.MCDOHL));
+    p.combatants[0].die(0);
+    assert.deepStrictEqual(
+      p.freeWillActions(furfurs(3)).map((a) => a.target),
+      [1, 2, 0, 1, 2],
+    );
+  });
+
+  it("the scan never checks the cursor's own candidate, yet the cursor steps", () => {
+    // Candidates E0 (back row), E1 (front), E2 (back row), all members Medium range: the game gives
+    // [E1, Defend, E1, E1, Defend] (synthetic: not seen live)
+    const enemies = furfurs(3);
+    enemies.combatants[0].position = 4;
+    enemies.combatants[2].position = 4;
+    const p = party(Array(5).fill(CHARACTER_KEYS.MCDOHL));
+    const actions = p.freeWillActions(enemies);
+    assert.deepStrictEqual(
+      actions.map((a) => a.type),
+      [
+        ACTION_TYPES.ATTACK,
+        ACTION_TYPES.DEFEND,
+        ACTION_TYPES.ATTACK,
+        ACTION_TYPES.ATTACK,
+        ACTION_TYPES.DEFEND,
+      ],
+    );
+    assert.deepStrictEqual(
+      actions.map((a) => a.target),
+      [1, undefined, 1, 1, undefined],
+    );
   });
 
   it('picks targets from the state when the round is played', () => {

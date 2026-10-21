@@ -89,6 +89,35 @@ describe('Party basic attack', () => {
     assert.strictEqual(ant.fx & 0x2, 0x2); // its dodge sets 0x2
   });
 
+  it('a hit primes the attacker (flag 0x2) until the round ends', () => {
+    const gremio = makeGremio(),
+      dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
+    const battle = makeBattle([gremio], [dragon], HIT_SEED);
+    gremio.setAction({ type: ACTION_TYPES.ATTACK });
+    battle.resolvePartyAttack(gremio);
+    assert.strictEqual(gremio.fx, 0x2);
+  });
+
+  it('a miss primes the attacker too, as well as the target that dodged', () => {
+    const gremio = makeGremio(1),
+      ant = new Enemy(ENEMY_KEYS.SOLDIER_ANT);
+    const battle = makeBattle([gremio], [ant], MISS_SEED);
+    gremio.setAction({ type: ACTION_TYPES.ATTACK });
+    battle.resolvePartyAttack(gremio);
+    assert.strictEqual(gremio.fx, 0x2);
+    assert.strictEqual(ant.fx, 0x2);
+  });
+
+  it("every combatant's flags are cleared when the round ends", () => {
+    const gremio = makeGremio(),
+      dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
+    const battle = makeBattle([gremio], [dragon], HIT_SEED);
+    gremio.fx = dragon.fx = 0x2;
+    battle.endRound();
+    assert.strictEqual(gremio.fx, 0);
+    assert.strictEqual(dragon.fx, 0);
+  });
+
   it('waits on a busy target without using RNG', () => {
     const gremio = makeGremio(),
       dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
@@ -107,6 +136,7 @@ describe('Enemy basic attack', () => {
       dragon = new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON);
     const battle = makeBattle([gremio], [dragon], HIT_SEED);
     battle.resolveEnemyAttack(dragon, gremio);
+    assert.strictEqual(dragon.fx, 0x2); // an enemy's attack primes it too
     assert.deepStrictEqual([...battle.events.keys()], [57]);
     assert.strictEqual(gremio.busyUntil, 102);
     assert.strictEqual(dragon.busyUntil, 108);

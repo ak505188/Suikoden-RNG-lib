@@ -367,7 +367,7 @@ describe('Battle end EXP', () => {
     assert.match(battle.log.format(), /McDohl gains 5 EXP\n.*McDohl levels up: LVL 40 -> 41\n/);
   });
 
-  it('gives fallen members nothing and splits between the rest', () => {
+  it('gives fallen members nothing', () => {
     const battle = winningBattle();
     battle.party.combatants[1].setHP(0);
     battle.party.resetBattleState();
@@ -381,9 +381,30 @@ describe('Battle end EXP', () => {
     );
     assert.strictEqual(
       battle.result.rewards[0].exp,
-      calculateBattleEXP(40, [furfurLVL, furfurLVL], 1),
+      calculateBattleEXP(40, [furfurLVL, furfurLVL], 2),
     );
     assert.strictEqual(battle.party.combatants[1].EXP, 0);
+  });
+
+  it("splits by the party's size, the fallen counted, and the fallen get nothing", () => {
+    // 5 members, #2 fallen: the four standing each get the 5-way share, not the 4-way one. LVL 1
+    // members against a Zombie Dragon, so the share is well above the minimum.
+    const party = new PlayerParty(
+      Array.from({ length: 5 }, () => new Character(CHARACTER_KEYS.MCDOHL).setLVL(1).rest()),
+    );
+    party.combatants[1].setHP(0);
+    const enemies = new EnemyParty([new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)]);
+    const dragonLVL = enemies.combatants[0].LVL;
+    const share = calculateBattleEXP(1, [dragonLVL], 5);
+    assert.ok(share > calculateBattleEXP(1, [dragonLVL], 6) && share > 5);
+    assert.notStrictEqual(share, calculateBattleEXP(1, [dragonLVL], 4));
+    const rewards = party.awardEXP(enemies, new RNG(1));
+    assert.strictEqual(rewards.length, 4);
+    assert.deepStrictEqual(
+      rewards.map((r) => r.exp),
+      [share, share, share, share],
+    );
+    assert.strictEqual(party.combatants[1].EXP, 0);
   });
 
   it('gives nothing when lost', () => {

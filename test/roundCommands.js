@@ -328,6 +328,36 @@ describe('Round commands: Free Will', () => {
   });
 });
 
+describe('Round commands: a basic attack with no target left', () => {
+  it('leaves the roll gate alone, so the next turn comes a few ticks later, not 10', () => {
+    // Capture (BizHawk, Golem, a Free Will round): the Golem died at t216 and the members still
+    // queued to attack it had their tags flip at t217, t220 and t223, their turns coming at t219 and
+    // t222: 2 and 3 ticks apart, not the Free Will gate's 10
+    const enemies = furfurs(1);
+    enemies.combatants[0].HP = 1; // the first attack kills it
+    const b = new Battle({
+      party: party([
+        CHARACTER_KEYS.MCDOHL,
+        CHARACTER_KEYS.GREMIO,
+        CHARACTER_KEYS.PAHN,
+        CHARACTER_KEYS.CLEO,
+        CHARACTER_KEYS.TED,
+      ]),
+      enemies,
+      rng: new RNG(1),
+      turns: [FREE_WILL],
+    });
+    b.playTurn(FREE_WILL);
+    const entries = b.log.entries;
+    const death = entries.findIndex((e) => e.type === LOG_TYPES.DEATH);
+    assert.notStrictEqual(death, -1);
+    const turns = entries.slice(death).filter((e) => e.type === LOG_TYPES.TURN);
+    assert.ok(turns.length >= 2, JSON.stringify(turns.map((e) => e.tick)));
+    for (let i = 1; i < turns.length; i++)
+      assert.ok(turns[i].tick - turns[i - 1].tick <= 3, JSON.stringify(turns.map((e) => e.tick)));
+  });
+});
+
 describe('Battle.clone with round commands', () => {
   it('copies Fight commands, so editing one plan leaves the other alone', () => {
     const original = battle({

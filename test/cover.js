@@ -212,6 +212,47 @@ describe('A covered attack', () => {
     assert.strictEqual(battle.log.ofType(LOG_TYPES.COVER).length, 0);
   });
 
+  // Live (5 Bandits, RNG count 18248): the Hero (slot 1, 9 HP) is covered by Cleo at t380, Cleo
+  // (11 HP) is free at t488 and is covered by Pahn when attacked at t489, so she is a cover target
+  // herself until t607; the Hero is freed at t618, 11 frames after Cleo's last free, and the round
+  // ends at t824. The Hero's wait on Cleo can't be set once from Cleo's busy time at the first
+  // cover: it follows her through the second one.
+  it('an ally who is covered herself frees the Hero 11 after her last free', () => {
+    const [hero, pahn, cleo, gremio] = [
+      member(CHARACTER_KEYS.MCDOHL, 28),
+      member(CHARACTER_KEYS.PAHN, 120),
+      member(CHARACTER_KEYS.CLEO, 28),
+      member(CHARACTER_KEYS.GREMIO, 120),
+    ];
+    const mosquitoes = [new Enemy(ENEMY_KEYS.MOSQUITO), new Enemy(ENEMY_KEYS.MOSQUITO)];
+    const battle = new Battle({
+      party: new PlayerParty([hero, pahn, cleo, gremio]),
+      enemies: new EnemyParty(mosquitoes),
+      rng: new RNG(1),
+    });
+    hero.setHP(6);
+    cleo.setHP(6);
+    // Gremio and Pahn can't cover the Hero: Cleo does
+    pahn.busyUntil = 400;
+    gremio.busyUntil = 10_000;
+    battle.turn.tick = 0;
+    battle.resolveEnemyAttack(mosquitoes[0], hero);
+    assert.strictEqual(battle.log.ofType(LOG_TYPES.COVER)[0].actor, cleo.label);
+    assert.strictEqual(hero.busyUntil, Infinity);
+    const cleoFree = cleo.busyUntil;
+    // Pahn is free again by the time Cleo is attacked, the tick after she frees
+    runTicks(battle, 0, cleoFree);
+    pahn.busyUntil = -1;
+    battle.turn.tick = cleoFree + 1;
+    battle.resolveEnemyAttack(mosquitoes[1], cleo);
+    assert.strictEqual(battle.log.ofType(LOG_TYPES.COVER)[1].actor, pahn.label);
+    assert.strictEqual(cleo.busyUntil, Infinity, 'Cleo is a cover target now');
+    runTicks(battle, cleoFree + 1, cleoFree + 600);
+    const cleoLast = cleo.busyUntil;
+    assert.ok(cleoLast < Infinity && cleoLast > cleoFree);
+    assert.strictEqual(hero.busyUntil, cleoLast + 11);
+  });
+
   it('a clone taken mid-cover plays out exactly like the original', () => {
     const { battle, hero, mosquitoes } = setup();
     battle.resolveEnemyAttack(mosquitoes[0], hero);

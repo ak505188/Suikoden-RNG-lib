@@ -19,7 +19,8 @@
     "scripts/**/*.js",
     "index.js",
     "battle.js",
-    "war.js"
+    "war.js",
+    "encounters.js"
   ],
   "exclude": ["node_modules"]
 }

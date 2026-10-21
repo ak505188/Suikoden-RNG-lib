@@ -10,6 +10,7 @@ import ActionLog, { LOG_TYPES, formatRoll, rollMargin } from '../lib/Game/Battle
 import * as Actions from '../lib/Game/Battle/Actions.js';
 import * as ActionPlans from '../lib/Game/Battle/ActionPlans.js';
 import { AREAS } from '../lib/Game/Bestiary/Areas.js';
+import * as Encounters from '../lib/Game/Encounters.js';
 import * as Keys from '../lib/Game/Keys.js';
 import { ITEMS } from '../lib/Game/Items.js';
 import { RUNES, RUNE_TYPES } from '../lib/Game/Magic/Runes.js';
@@ -56,6 +57,24 @@ describe('battle.js exports', () => {
       RUNES,
       RUNE_TYPES,
       STATUS,
+      RNG,
+    };
+    assert.deepStrictEqual(Object.keys(entry).sort(), Object.keys(expected).sort());
+    for (const [name, value] of Object.entries(expected)) {
+      assert.ok(value !== undefined, name);
+      assert.strictEqual(entry[name], value, name);
+    }
+  });
+});
+
+describe('encounters.js exports', () => {
+  it("re-exports the library's own objects (not copies)", async () => {
+    const entry = await import('suikoden-rng-lib/encounters');
+    const expected = {
+      ...Encounters,
+      AREAS,
+      ENEMY_KEYS: Keys.ENEMY_KEYS,
+      EnemyParty,
       RNG,
     };
     assert.deepStrictEqual(Object.keys(entry).sort(), Object.keys(expected).sort());

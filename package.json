@@ -9,6 +9,7 @@
     ".": "./index.js",
     "./battle": "./battle.js",
     "./war": "./war.js",
+    "./encounters": "./encounters.js",
     "./package.json": "./package.json"
   },
   "imports": {

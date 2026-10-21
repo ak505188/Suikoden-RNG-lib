@@ -83,14 +83,16 @@ describe('Live: 3 Mosquitoes + Red Solider Ant, LVL 1 party (Gregminster area 1)
     );
   });
 
-  it('turn 2 [D, Attack 3, D, D, Attack 2] wins: 685 + 431 frames, Holy crystal, battle end RNG 5667', () => {
+  it('turn 2 [D, Attack 3, D, D, Attack 2] wins: 691 + 431 frames, Holy crystal, battle end RNG 5667', () => {
     const battle = make();
     battle.playTurn(turn1);
-    assert.strictEqual(battle.frames, 685);
+    // Cleo's Medicine in turn 1 takes her own item timing (done 25, not McDohl's 19): the frame
+    // counts are 6 above what the one-timing-for-all engine gave (685, 1116); RNG is unchanged
+    assert.strictEqual(battle.frames, 691);
     battle.playTurn([D, A(3), D, D, A(2)]);
     battle.finish();
     assert.strictEqual(battle.status, BATTLE_STATUS.WON);
-    assert.strictEqual(battle.frames, 1116);
+    assert.strictEqual(battle.frames, 1122);
     assert.strictEqual(battle.result.drop?.name, 'Holy crystal');
     assert.strictEqual(battle.result.rng.battleEnd.count, 5667);
   });

@@ -119,31 +119,62 @@ const playItemTurn = (/** @type {Battle} */ battle, /** @type {Character} */ cha
   throw new Error('item turn never ended');
 };
 
+/**
+ * Keeps ticking until the battle's tick is past `tick` (the turn has ended; scheduled events fall
+ * due on the way).
+ */
+const tickPast = (/** @type {Battle} */ battle, /** @type {number} */ tick) => {
+  for (let guard = 0; guard < 1000; guard++) {
+    if (battle.turn.tick > tick) return;
+    battle.tick();
+  }
+  throw new Error(`never reached tick ${tick}`);
+};
+
 describe('Party item use', () => {
-  it('resolves at once, heals and ends the turn at R+19, with no RNG', () => {
+  // Each user's item-use script has its own length (BizHawk logs and the Ghidra walk,
+  // CharacterAttackTimings.js): Gremio's target script starts 22 frames after R (McDohl's: 19), the
+  // HP change lands 32 frames after that, and the target, here Gremio himself, is free 64 after it.
+  it("ends the turn at the user's itemDone and heals 32 frames later, with no RNG", () => {
     const gremio = makeFighter(CHARACTER_KEYS.GREMIO).setHP(50);
     const battle = makeBattle([gremio]);
     const rngBefore = battle.rng.count;
     const end = playItemTurn(battle, gremio, { itemKey: ITEM_KEYS.MEDICINE });
-    assert.strictEqual(end, 19);
-    assert.strictEqual(gremio.HP, 150);
+    assert.strictEqual(end, 22);
+    assert.strictEqual(gremio.HP, 50);
     assert.strictEqual(gremio.inventory.get(ITEM_KEYS.MEDICINE).quantity, 5);
-    assert.strictEqual(gremio.busyUntil, 83); // self-targeted
+    assert.strictEqual(gremio.busyUntil, 22 + 64); // self-targeted
     assert.strictEqual(battle.rng.count, rngBefore);
+    tickPast(battle, 22 + 32);
+    assert.strictEqual(gremio.HP, 150);
     assert.deepStrictEqual(
       battle.log.ofType(LOG_TYPES.ITEM).map((e) => e.tick),
       [0],
     );
     assert.deepStrictEqual(
       battle.log.ofType(LOG_TYPES.DAMAGE).map((e) => [e.tick, e.amount]),
-      [[19, -100]],
+      [[22 + 32, -100]],
     );
+  });
+
+  // McDohl's own timing is the spec's (live, Zombie Dragon and the Mosquito fight): done 19, HP
+  // change at 19 + 32 = 51, free at 19 + 64 = 83 on himself.
+  it("McDohl's item use is the spec's: done 19, heal at 51, free at 83", () => {
+    const mcdohl = makeFighter(CHARACTER_KEYS.MCDOHL).setHP(50);
+    const battle = makeBattle([mcdohl]);
+    const end = playItemTurn(battle, mcdohl, { itemKey: ITEM_KEYS.MEDICINE });
+    assert.strictEqual(end, 19);
+    assert.strictEqual(mcdohl.busyUntil, 83);
+    tickPast(battle, 51);
+    assert.strictEqual(mcdohl.HP, 150);
   });
 
   it('caps the heal at HPMax (Mega medicine)', () => {
     const gremio = makeFighter(CHARACTER_KEYS.GREMIO).setHP(10);
     gremio.inventory.add(ITEM_KEYS.MEGA_MEDICINE);
-    playItemTurn(makeBattle([gremio]), gremio, { itemKey: ITEM_KEYS.MEGA_MEDICINE });
+    const battle = makeBattle([gremio]);
+    playItemTurn(battle, gremio, { itemKey: ITEM_KEYS.MEGA_MEDICINE });
+    tickPast(battle, 22 + 32);
     assert.strictEqual(gremio.HP, 201);
   });
 
@@ -154,6 +185,7 @@ describe('Party item use', () => {
     playItemTurn(battle, mcdohl, { itemKey: ITEM_KEYS.MEDICINE, target: 1 });
     assert.strictEqual(mcdohl.busyUntil, 88);
     assert.strictEqual(gremio.busyUntil, 83);
+    tickPast(battle, 19 + 32);
     assert.strictEqual(gremio.HP, 101);
   });
 
@@ -167,28 +199,109 @@ describe('Party item use', () => {
     assert.strictEqual(end, 41 + 19);
   });
 
-  it('cures its status (Antitoxin: Poison, Needle: Balloon)', () => {
-    const gremio = makeFighter(CHARACTER_KEYS.GREMIO);
-    gremio.inventory.add(ITEM_KEYS.ANTITOXIN);
-    gremio.inventory.add(ITEM_KEYS.NEEDLE);
-    const battle = makeBattle([gremio]);
+  // Antitoxin on a poisoned ally (BizHawk log, Cleo -> Gremio, Mosquito fight): Cleo's done is 25
+  // and her ally-free 105. The target's script starts at done, the Poison bit clears 31 frames
+  // later (Items.md, simulated) and the target is free at done + 33. No HP change.
+  it('Antitoxin on a poisoned ally runs a 33 frame script', () => {
+    const cleo = makeFighter(CHARACTER_KEYS.CLEO),
+      gremio = makeFighter(CHARACTER_KEYS.GREMIO).setHP(100);
+    cleo.inventory.add(ITEM_KEYS.ANTITOXIN);
+    const battle = makeBattle([cleo, gremio]);
     gremio.status[STATUS.POISON] = true;
-    gremio.status[STATUS.BALLOON] = 2;
-    playItemTurn(battle, gremio, { itemKey: ITEM_KEYS.ANTITOXIN });
+    const end = playItemTurn(battle, cleo, { itemKey: ITEM_KEYS.ANTITOXIN, target: 1 });
+    assert.strictEqual(end, 25);
+    assert.strictEqual(cleo.busyUntil, 105);
+    tickPast(battle, 25);
+    assert.strictEqual(gremio.busyUntil, 25 + 33);
+    assert.strictEqual(gremio.status[STATUS.POISON], true);
+    tickPast(battle, 25 + 31);
     assert.strictEqual(gremio.status[STATUS.POISON], false);
-    battle.turn.tick = 100;
-    playItemTurn(battle, gremio, { itemKey: ITEM_KEYS.NEEDLE });
-    assert.strictEqual(gremio.status[STATUS.BALLOON], 0);
+    assert.strictEqual(gremio.HP, 100);
   });
 
-  it('Dragon seal incense heals every living party member 50 and is never used up', () => {
+  // Antitoxin on a healthy ally (log, Ted -> Cleo, done 24, ally-free 105): the handler plays
+  // nothing on the target, no busy and no cure. Ted is free at R + 105.
+  it('Antitoxin on a healthy ally does nothing to it', () => {
+    const ted = makeFighter(CHARACTER_KEYS.TED),
+      cleo = makeFighter(CHARACTER_KEYS.CLEO);
+    ted.inventory.add(ITEM_KEYS.ANTITOXIN);
+    const battle = makeBattle([ted, cleo]);
+    const idle = cleo.busyUntil;
+    const held = ted.inventory.get(ITEM_KEYS.ANTITOXIN).quantity;
+    const end = playItemTurn(battle, ted, { itemKey: ITEM_KEYS.ANTITOXIN, target: 1 });
+    assert.strictEqual(end, 24);
+    assert.strictEqual(cleo.busyUntil, idle);
+    assert.strictEqual(ted.busyUntil, 105);
+    assert.strictEqual(ted.inventory.get(ITEM_KEYS.ANTITOXIN).quantity, held - 1); // still used up
+  });
+
+  // Antitoxin on a healthy self (log, Ted -> Ted): the user's script runs to its end, the ally
+  // value (R + 105), not Medicine's self value (done + 64 = 88).
+  it('Antitoxin on a healthy self frees the user at the ally value', () => {
+    const ted = makeFighter(CHARACTER_KEYS.TED);
+    ted.inventory.add(ITEM_KEYS.ANTITOXIN);
+    const battle = makeBattle([ted]);
+    playItemTurn(battle, ted, { itemKey: ITEM_KEYS.ANTITOXIN });
+    tickPast(battle, 24 + 40);
+    assert.strictEqual(ted.busyUntil, 105);
+  });
+
+  // Items.md table: user free done + 33 on self when poisoned
+  it('Antitoxin on a poisoned self frees the user at done + 33', () => {
+    const ted = makeFighter(CHARACTER_KEYS.TED);
+    ted.inventory.add(ITEM_KEYS.ANTITOXIN);
+    const battle = makeBattle([ted]);
+    ted.status[STATUS.POISON] = true;
+    playItemTurn(battle, ted, { itemKey: ITEM_KEYS.ANTITOXIN });
+    tickPast(battle, 24 + 31);
+    assert.strictEqual(ted.status[STATUS.POISON], false);
+    assert.strictEqual(ted.busyUntil, 24 + 33);
+  });
+
+  // Needle (Items.md): one Balloon stage per use. The stage clears at done + 12 and the target is
+  // free at done + 14. Cleo's done is 25, ally value 105.
+  it('Needle clears one Balloon stage and frees the target at done + 14', () => {
+    const cleo = makeFighter(CHARACTER_KEYS.CLEO),
+      gremio = makeFighter(CHARACTER_KEYS.GREMIO).setHP(100);
+    cleo.inventory.add(ITEM_KEYS.NEEDLE);
+    const battle = makeBattle([cleo, gremio]);
+    gremio.status[STATUS.BALLOON] = 2;
+    const end = playItemTurn(battle, cleo, { itemKey: ITEM_KEYS.NEEDLE, target: 1 });
+    assert.strictEqual(end, 25);
+    assert.strictEqual(cleo.busyUntil, 105);
+    tickPast(battle, 25);
+    assert.strictEqual(gremio.busyUntil, 25 + 14);
+    assert.strictEqual(gremio.status[STATUS.BALLOON], 2);
+    tickPast(battle, 25 + 12);
+    assert.strictEqual(gremio.status[STATUS.BALLOON], 1);
+  });
+
+  it('Needle on a healthy ally does nothing to it', () => {
+    const cleo = makeFighter(CHARACTER_KEYS.CLEO),
+      gremio = makeFighter(CHARACTER_KEYS.GREMIO);
+    cleo.inventory.add(ITEM_KEYS.NEEDLE);
+    const battle = makeBattle([cleo, gremio]);
+    const idle = gremio.busyUntil;
+    playItemTurn(battle, cleo, { itemKey: ITEM_KEYS.NEEDLE, target: 1 });
+    assert.strictEqual(gremio.busyUntil, idle);
+    assert.strictEqual(cleo.busyUntil, 105);
+  });
+
+  // Dragon Seal Incense (Items.md): the handler waits for the user's own script, so it fires one
+  // tick after the user's ally-free time (McDohl: 88 + 1 = 89). Each member's HP change is at
+  // fire + 32 and each member, the user included, is free at fire + 65. Never used up.
+  it("Dragon seal incense fires after the user's script and heals every living member 50", () => {
     const mcdohl = makeFighter(CHARACTER_KEYS.MCDOHL).setHP(10),
       gremio = makeFighter(CHARACTER_KEYS.GREMIO).setHP(20);
     mcdohl.inventory.add(ITEM_KEYS.DRAGON_SEAL_INCENSE);
     const battle = makeBattle([mcdohl, gremio]);
-    playItemTurn(battle, mcdohl, { itemKey: ITEM_KEYS.DRAGON_SEAL_INCENSE });
+    const end = playItemTurn(battle, mcdohl, { itemKey: ITEM_KEYS.DRAGON_SEAL_INCENSE });
+    assert.strictEqual(end, 89);
+    tickPast(battle, 89 + 31);
+    assert.deepStrictEqual([mcdohl.HP, gremio.HP], [10, 20]);
+    tickPast(battle, 89 + 32);
     assert.deepStrictEqual([mcdohl.HP, gremio.HP], [60, 70]);
-    assert.deepStrictEqual([mcdohl.busyUntil, gremio.busyUntil], [83, 83]);
+    assert.deepStrictEqual([mcdohl.busyUntil, gremio.busyUntil], [89 + 65, 89 + 65]);
     assert.strictEqual(mcdohl.inventory.has(ITEM_KEYS.DRAGON_SEAL_INCENSE), true);
   });
 

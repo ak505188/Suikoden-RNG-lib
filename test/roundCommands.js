@@ -201,8 +201,26 @@ describe('Round commands: Free Will', () => {
     const p = party([CHARACTER_KEYS.MCDOHL, CHARACTER_KEYS.GREMIO, CHARACTER_KEYS.CLEO]);
     assert.deepStrictEqual(
       p.freeWillActions(enemies).map((a) => a.target),
-      [2, 2, 0],
-    ); // the dead #2 is skipped from the cursor at 1; the cursor then moves on by one, not past the pick
+      [2, 0, 2],
+    ); // the cursor walks the living enemies only ([0, 2]): 1 -> #3, 2 -> #1, 3 -> #3
+  });
+
+  it('wraps the cursor over the living enemies (Mt. Seifu 5 Bandits round 2, #4 and #5 dead)', () => {
+    // Live: the game's targets were combatants [7, 8, 6, 7, 8], i.e. enemy indexes [1, 2, 0, 1, 2]
+    const enemies = furfurs(5);
+    enemies.combatants[3].knockedOut = true;
+    enemies.combatants[4].knockedOut = true;
+    const p = party([
+      CHARACTER_KEYS.MCDOHL,
+      CHARACTER_KEYS.GREMIO,
+      CHARACTER_KEYS.CLEO,
+      CHARACTER_KEYS.MCDOHL,
+      CHARACTER_KEYS.GREMIO,
+    ]);
+    assert.deepStrictEqual(
+      p.freeWillActions(enemies).map((a) => a.target),
+      [1, 2, 0, 1, 2],
+    );
   });
 
   it('Short range in the back row Defends, without moving the cursor', () => {

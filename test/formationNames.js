@@ -60,11 +60,9 @@ describe('formationName defaults', () => {
   });
 
   it('names every formation in AREAS', () => {
-    for (const [areaKey, area] of Object.entries(AREAS)) {
-      for (const formation of [
-        ...area.encounters,
-        .../** @type {import('../lib/Game/Bestiary/Areas.js').Area} */ ((area).scripted ?? []),
-      ]) {
+    for (const [areaKey, entry] of Object.entries(AREAS)) {
+      const area = /** @type {import('../lib/Game/Bestiary/Areas.js').Area} */ (entry);
+      for (const formation of [...area.encounters, ...(area.scripted ?? [])]) {
         const name = formationName(formation);
         assert.ok(name && !name.includes('undefined'), `${areaKey}: ${formation} -> ${name}`);
       }

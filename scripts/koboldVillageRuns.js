@@ -1,6 +1,8 @@
 import RNG from '../lib/rng.js';
 import { isRun } from '../lib/Game/Rolls.js';
-import { Areas } from '../lib/lib.js';
+import { AREAS } from '../lib/Game/Bestiary/Areas.js';
+import { generateEncounters } from '../lib/Game/Encounters.js';
+import { formationName } from '../lib/Game/Bestiary/FormationNames.js';
 import { characterLevelUps } from '../stats/growths.js';
 
 const STARTING_RNG = 0x12;
@@ -11,22 +13,22 @@ const KOBOLD_VILLAGE_LOAD = 5;
 
 const base_rng = new RNG(STARTING_RNG);
 
-const dwarves_trail_battles = Areas['Dwarves Trail']
-  .generateEncounters(base_rng.clone(), 50000)
-  .map((battle) => ({
-    enemy_group: battle.enemyGroup.name,
-    index: battle.index,
-    battle_index: battle.index + 1,
-    battle_rng: battle.battleRNG,
-  }));
-const wm_battles = Areas['Pannu Yakuta Area']
-  .generateEncounters(base_rng.clone(), 60000)
-  .map((battle) => ({
-    enemy_group: battle.enemyGroup.name,
-    index: battle.index,
-    battle_index: battle.index + 1,
-    battle_rng: battle.battleRNG,
-  }));
+const dwarves_trail_battles = generateEncounters(base_rng.clone(), AREAS.DWARVES_TRAIL, {
+  iterations: 50000,
+}).map((battle) => ({
+  enemy_group: formationName(battle.enemyGroup.formation),
+  index: battle.index,
+  battle_index: battle.index + 1,
+  battle_rng: battle.battleRNG,
+}));
+const wm_battles = generateEncounters(base_rng.clone(), AREAS.PANNU_YAKUTA_AREA, {
+  iterations: 60000,
+}).map((battle) => ({
+  enemy_group: formationName(battle.enemyGroup.formation),
+  index: battle.index,
+  battle_index: battle.index + 1,
+  battle_rng: battle.battleRNG,
+}));
 
 const newRNGFromBattle = (battle) => {
   const rng = new RNG(0x12);

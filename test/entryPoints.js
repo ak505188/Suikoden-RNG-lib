@@ -15,7 +15,7 @@ import * as Keys from '../lib/Game/Keys.js';
 import { ITEMS } from '../lib/Game/Items.js';
 import { RUNES, RUNE_TYPES } from '../lib/Game/Magic/Runes.js';
 import { STATUS } from '../lib/Game/Constants.js';
-import RNG from '../lib/rng.js';
+import RNG, { MULTIPLIER, INCREMENT } from '../lib/rng.js';
 import { Areas } from '../lib/lib.js';
 
 describe('battle.js exports', () => {
@@ -67,6 +67,8 @@ describe('battle.js exports', () => {
   });
 });
 
+const LCG = { MULTIPLIER, INCREMENT };
+
 describe('encounters.js exports', () => {
   it("re-exports the library's own objects (not copies)", async () => {
     const entry = await import('suikoden-rng-lib/encounters');
@@ -75,12 +77,14 @@ describe('encounters.js exports', () => {
       AREAS,
       ENEMY_KEYS: Keys.ENEMY_KEYS,
       EnemyParty,
+      LCG,
       RNG,
     };
     assert.deepStrictEqual(Object.keys(entry).sort(), Object.keys(expected).sort());
     for (const [name, value] of Object.entries(expected)) {
       assert.ok(value !== undefined, name);
-      assert.strictEqual(entry[name], value, name);
+      if (name === 'LCG') assert.deepStrictEqual(entry[name], value, name);
+      else assert.strictEqual(entry[name], value, name);
     }
   });
 });

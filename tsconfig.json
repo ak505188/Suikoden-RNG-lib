@@ -20,7 +20,8 @@
     "index.js",
     "battle.js",
     "war.js",
-    "encounters.js"
+    "encounters.js",
+    "enemy-images.js"
   ],
   "exclude": ["node_modules"]
 }

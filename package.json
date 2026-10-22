@@ -10,6 +10,7 @@
     "./battle": "./battle.js",
     "./war": "./war.js",
     "./encounters": "./encounters.js",
+    "./enemy-images": "./enemy-images.js",
     "./package.json": "./package.json"
   },
   "imports": {

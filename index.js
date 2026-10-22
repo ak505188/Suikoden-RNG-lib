@@ -1,6 +1,8 @@
 // suikoden-rng-lib: the RNG tools. The battle simulator has its own entry, suikoden-rng-lib/battle
 // (battle.js). Anything not exported from an entry point is internal.
+import { MULTIPLIER, INCREMENT } from './lib/rng.js';
 export { default as RNG } from './lib/rng.js';
+export const LCG = { MULTIPLIER, INCREMENT };
 export {
   simulateAssassinFight,
   simulateAssassinTurn,

@@ -10,6 +10,7 @@ import ActionLog, { LOG_TYPES, formatRoll, rollMargin } from '../lib/Game/Battle
 import * as Actions from '../lib/Game/Battle/Actions.js';
 import * as ActionPlans from '../lib/Game/Battle/ActionPlans.js';
 import { AREAS } from '../lib/Game/Bestiary/Areas.js';
+import { formationName } from '../lib/Game/Bestiary/FormationNames.js';
 import * as Encounters from '../lib/Game/Encounters.js';
 import * as Keys from '../lib/Game/Keys.js';
 import { ITEMS } from '../lib/Game/Items.js';
@@ -77,6 +78,7 @@ describe('encounters.js exports', () => {
       AREAS,
       ENEMY_KEYS: Keys.ENEMY_KEYS,
       EnemyParty,
+      formationName,
       LCG,
       RNG,
     };

@@ -20,12 +20,7 @@ export { div32ulo } from './lib/util/math.js';
 export * as Helpers from './lib/helpers.js';
 
 // Roll checks that used to be RNG methods
-export {
-  isCliveAppearance,
-  isMarieDialogue,
-  countWheelAttempts,
-  isRun,
-} from './lib/Game/Rolls.js';
+export { isCliveAppearance, isMarieDialogue, countWheelAttempts, isRun } from './lib/Game/Rolls.js';
 
 export {
   CURSOR_POSITIONS,

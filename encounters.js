@@ -16,6 +16,7 @@ export {
   rollEncounter,
 } from './lib/Game/Encounters.js';
 export { AREAS } from './lib/Game/Bestiary/Areas.js';
+export { formationName } from './lib/Game/Bestiary/FormationNames.js';
 export { ENEMY_KEYS } from './lib/Game/Keys.js';
 export { EnemyParty } from './lib/Game/Battle/Party.js';
 import { MULTIPLIER, INCREMENT } from './lib/rng.js';

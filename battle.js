@@ -42,6 +42,7 @@ export {
 export { AREAS } from './lib/Game/Bestiary/Areas.js';
 export { Areas as ENCOUNTER_AREAS } from './lib/lib.js'; // by name: walking encounter checks (Area.isBattle, battleFreeSteps)
 export { CHARACTER_KEYS, ENEMY_KEYS, ITEM_KEYS, RUNE_KEYS, UNITE_KEYS } from './lib/Game/Keys.js';
+export { default as CHARACTERS } from './lib/Game/Characters.js';
 export { ITEMS } from './lib/Game/Items.js';
 export { RUNES, RUNE_TYPES } from './lib/Game/Magic/Runes.js';
 export { STATUS } from './lib/Game/Constants.js';

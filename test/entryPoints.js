@@ -13,6 +13,7 @@ import { AREAS } from '../lib/Game/Bestiary/Areas.js';
 import { formationName } from '../lib/Game/Bestiary/FormationNames.js';
 import * as Encounters from '../lib/Game/Encounters.js';
 import * as Keys from '../lib/Game/Keys.js';
+import CHARACTERS from '../lib/Game/Characters.js';
 import { ITEMS } from '../lib/Game/Items.js';
 import { RUNES, RUNE_TYPES } from '../lib/Game/Magic/Runes.js';
 import { STATUS } from '../lib/Game/Constants.js';
@@ -54,6 +55,7 @@ describe('battle.js exports', () => {
       ITEM_KEYS: Keys.ITEM_KEYS,
       RUNE_KEYS: Keys.RUNE_KEYS,
       UNITE_KEYS: Keys.UNITE_KEYS,
+      CHARACTERS,
       ITEMS,
       RUNES,
       RUNE_TYPES,

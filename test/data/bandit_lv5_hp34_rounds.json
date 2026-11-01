@@ -1,0 +1,2062 @@
+{
+  "source": "Suikoden-Bizhawk-HUD enemy_profiles/enemies/bandit_lv5_hp34/sim_fixture.json (v1.0, 20 seeds x 1 party: Bandit Lv5 x2)",
+  "runs": [
+    {
+      "party": "S-hit",
+      "characters": [
+        {
+          "HP": 999,
+          "key": "MCDOHL",
+          "rune": {
+            "id": 0
+          },
+          "MP": [8, 6, 5, 2],
+          "EXP": 505,
+          "LVL": 53,
+          "id": 8,
+          "stats": {
+            "LUK": 149,
+            "DEF": 150,
+            "HP": 999,
+            "MGC": 154,
+            "SPD": 1,
+            "PWR": 143,
+            "SKL": 0
+          },
+          "weapon": {
+            "lvl": 8,
+            "runePiece": {
+              "amount": 0,
+              "element": "NONE"
+            }
+          },
+          "inventory": [],
+          "status": {
+            "balloon": 0,
+            "poison": false
+          }
+        },
+        {
+          "HP": 999,
+          "key": "VIKTOR",
+          "rune": {
+            "id": 0
+          },
+          "MP": [5, 2, 1, 0],
+          "EXP": 807,
+          "LVL": 47,
+          "id": 35,
+          "stats": {
+            "LUK": 106,
+            "DEF": 150,
+            "HP": 999,
+            "MGC": 79,
+            "SPD": 1,
+            "PWR": 152,
+            "SKL": 0
+          },
+          "weapon": {
+            "lvl": 3,
+            "runePiece": {
+              "amount": 0,
+              "element": "NONE"
+            }
+          },
+          "inventory": [],
+          "status": {
+            "balloon": 0,
+            "poison": false
+          }
+        },
+        {
+          "HP": 999,
+          "key": "FLIK",
+          "rune": {
+            "id": 0
+          },
+          "MP": [7, 5, 4, 1],
+          "EXP": 32,
+          "LVL": 51,
+          "id": 17,
+          "stats": {
+            "LUK": 114,
+            "DEF": 150,
+            "HP": 999,
+            "MGC": 132,
+            "SPD": 1,
+            "PWR": 148,
+            "SKL": 0
+          },
+          "weapon": {
+            "lvl": 9,
+            "runePiece": {
+              "amount": 0,
+              "element": "NONE"
+            }
+          },
+          "inventory": [],
+          "status": {
+            "balloon": 0,
+            "poison": false
+          }
+        },
+        {
+          "HP": 999,
+          "key": "LUC",
+          "rune": {
+            "id": 0
+          },
+          "MP": [9, 8, 6, 5],
+          "EXP": 565,
+          "LVL": 49,
+          "id": 26,
+          "stats": {
+            "LUK": 58,
+            "DEF": 150,
+            "HP": 999,
+            "MGC": 186,
+            "SPD": 1,
+            "PWR": 42,
+            "SKL": 0
+          },
+          "weapon": {
+            "lvl": 3,
+            "runePiece": {
+              "amount": 0,
+              "element": "NONE"
+            }
+          },
+          "inventory": [],
+          "status": {
+            "balloon": 0,
+            "poison": false
+          }
+        },
+        {
+          "HP": 999,
+          "key": "HELLION",
+          "rune": {
+            "id": 0
+          },
+          "MP": [7, 4, 3, 0],
+          "EXP": 666,
+          "LVL": 31,
+          "id": 59,
+          "stats": {
+            "LUK": 82,
+            "DEF": 150,
+            "HP": 999,
+            "MGC": 123,
+            "SPD": 1,
+            "PWR": 37,
+            "SKL": 0
+          },
+          "weapon": {
+            "lvl": 3,
+            "runePiece": {
+              "amount": 0,
+              "element": "NONE"
+            }
+          },
+          "inventory": [],
+          "status": {
+            "balloon": 0,
+            "poison": false
+          }
+        },
+        {
+          "HP": 999,
+          "key": "TENGAAR",
+          "rune": {
+            "id": 0
+          },
+          "MP": [9, 7, 6, 4],
+          "EXP": 816,
+          "LVL": 51,
+          "id": 33,
+          "stats": {
+            "LUK": 77,
+            "DEF": 150,
+            "HP": 999,
+            "MGC": 175,
+            "SPD": 1,
+            "PWR": 96,
+            "SKL": 0
+          },
+          "weapon": {
+            "lvl": 7,
+            "runePiece": {
+              "amount": 0,
+              "element": "NONE"
+            }
+          },
+          "inventory": [],
+          "status": {
+            "balloon": 0,
+            "poison": false
+          }
+        }
+      ],
+      "enemies": ["BANDIT_RED", "BANDIT_RED"],
+      "seeds": [
+        {
+          "seed": "08d12dfd",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 147926526,
+              "rngAtRoundEnd": 1217165162,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 162, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [137, 2, -1]
+              ],
+              "frames": 237,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;74:2;84:4;124:1;137:1;164:3;167:2;170:2;173:1;183:1",
+              "enemyTurns": [
+                [8, 60, 800580951, 8, 1, "Attack", 12],
+                [7, 72, 2041849935, 10, 2, "Attack", 90]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 147926527,
+              "rngAtRoundEnd": 3332154327,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 73, 2, "Attack"],
+                [7, 73, 163, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [125, 2, -1],
+                [138, 1, -1]
+              ],
+              "frames": 238,
+              "randTimeline": "29:1;59:8;61:3;62:3;72:6;74:2;75:2;85:4;125:1;138:1;165:3;168:2;171:2;174:1;184:1",
+              "enemyTurns": [
+                [8, 60, 1068627044, 12, 2, "Attack", 13],
+                [7, 73, 3363523560, 10, 1, "Attack", 90]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 147926528,
+              "rngAtRoundEnd": 1496811998,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 2, "Attack"],
+                [8, 72, 161, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 2, -1],
+                [136, 1, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:3;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 1336673137, 9, 2, "Attack", 12],
+                [8, 72, 3399776558, 8, 1, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 147926529,
+              "rngAtRoundEnd": 436329990,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [8, 60, 1604719230, 8, 1, "Attack", 12],
+                [7, 72, 2758275926, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            }
+          ]
+        },
+        {
+          "seed": "17156075",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 387276918,
+              "rngAtRoundEnd": 3549803874,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 162, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [137, 2, -1]
+              ],
+              "frames": 237,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;74:2;84:4;124:1;137:1;164:3;167:2;170:2;173:1;183:1",
+              "enemyTurns": [
+                [8, 60, 961772911, 8, 1, "Attack", 12],
+                [7, 72, 4109871975, 10, 2, "Attack", 90]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 387276919,
+              "rngAtRoundEnd": 1456935155,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 3, "Attack"],
+                [8, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 3, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:4;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 1229819004, 10, 3, "Attack", 12],
+                [8, 72, 4135595442, 9, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 387276920,
+              "rngAtRoundEnd": 3653134614,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 161, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 3, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 1497865097, 8, 1, "Attack", 12],
+                [8, 72, 3155833537, 9, 3, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 387276921,
+              "rngAtRoundEnd": 4254619422,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [8, 60, 1765911190, 8, 1, "Attack", 12],
+                [7, 72, 531330670, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            }
+          ]
+        },
+        {
+          "seed": "1fe68e72",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 535203443,
+              "rngAtRoundEnd": 3039246473,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 2, "Attack"],
+                [7, 72, 161, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 2, -1],
+                [136, 1, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:3;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [8, 60, 2847319624, 9, 2, "Attack", 12],
+                [7, 72, 2611959577, 8, 1, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 535203444,
+              "rngAtRoundEnd": 4276591806,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 73, 3, "Attack"],
+                [7, 73, 162, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [125, 3, -1],
+                [137, 1, -1]
+              ],
+              "frames": 237,
+              "randTimeline": "29:1;59:8;61:3;62:4;72:6;74:2;84:4;125:1;137:1;164:3;167:2;170:1;173:1;183:1",
+              "enemyTurns": [
+                [8, 60, 3115365717, 13, 3, "Attack", 13],
+                [7, 73, 1699222542, 8, 1, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 535203445,
+              "rngAtRoundEnd": 2183121258,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 3383411810, 8, 1, "Attack", 12],
+                [8, 72, 1405910458, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 535203446,
+              "rngAtRoundEnd": 1388396868,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 161, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 3, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [8, 60, 3651457903, 8, 1, "Attack", 12],
+                [7, 72, 3076374887, 9, 3, "Attack", 89]
+              ],
+              "counters": []
+            }
+          ]
+        },
+        {
+          "seed": "2e2ac0ea",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 774553835,
+              "rngAtRoundEnd": 900601793,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 161, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 3, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [8, 60, 3008511584, 8, 1, "Attack", 12],
+                [7, 72, 133003640, 9, 3, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 774553836,
+              "rngAtRoundEnd": 3152623478,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 2, "Attack"],
+                [7, 72, 162, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 2, -1],
+                [137, 3, -1]
+              ],
+              "frames": 237,
+              "randTimeline": "29:1;59:8;61:3;71:6;73:2;74:3;84:4;124:1;137:1;164:3;167:2;170:2;173:1;183:1",
+              "enemyTurns": [
+                [8, 60, 3276557677, 9, 2, "Attack", 12],
+                [7, 72, 305528570, 11, 3, "Attack", 90]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 774553837,
+              "rngAtRoundEnd": 1706443394,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 3544603770, 8, 1, "Attack", 12],
+                [8, 72, 3473932498, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 774553838,
+              "rngAtRoundEnd": 3544719484,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 161, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 3, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [8, 60, 3812649863, 8, 1, "Attack", 12],
+                [7, 72, 849429631, 9, 3, "Attack", 89]
+              ],
+              "counters": []
+            }
+          ]
+        },
+        {
+          "seed": "3c6ef362",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 1013904227,
+              "rngAtRoundEnd": 3056924409,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 2, "Attack"],
+                [7, 72, 161, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 2, -1],
+                [136, 1, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:3;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [8, 60, 3169703544, 9, 2, "Attack", 12],
+                [7, 72, 2955909513, 8, 1, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 1013904228,
+              "rngAtRoundEnd": 1167700431,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 3, "Attack"],
+                [8, 72, 162, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 3, -1],
+                [137, 2, -1]
+              ],
+              "frames": 237,
+              "randTimeline": "29:1;59:8;61:4;71:6;73:2;74:3;84:4;124:1;137:1;164:3;167:2;170:2;173:1;183:1",
+              "enemyTurns": [
+                [7, 60, 3437749637, 10, 3, "Attack", 12],
+                [8, 72, 885465475, 11, 2, "Attack", 90]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 1013904229,
+              "rngAtRoundEnd": 1849418689,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 3, "Attack"],
+                [8, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 3, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:4;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 3705795730, 10, 3, "Attack", 12],
+                [8, 72, 1535899000, 9, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 1013904230,
+              "rngAtRoundEnd": 854639751,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [136, 2, -1],
+                [157, 8, -34]
+              ],
+              "frames": 352,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;136:1;157:1;163:3;166:2;169:1;181:1;184:1",
+              "enemyTurns": [
+                [8, 60, 3973841823, 8, 1, "Attack", 12],
+                [7, 72, 2917451671, 8, 2, "Attack", 89]
+              ],
+              "counters": [[157, 8, 1, 34]]
+            }
+          ]
+        },
+        {
+          "seed": "4540215f",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 1161830752,
+              "rngAtRoundEnd": 2774125630,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 2, "Attack"],
+                [8, 72, 161, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 2, -1],
+                [136, 1, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:3;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 760282961, 9, 2, "Attack", 12],
+                [8, 72, 3481756558, 8, 1, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 1161830753,
+              "rngAtRoundEnd": 792186663,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 161, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 3, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 1028329054, 8, 1, "Attack", 12],
+                [8, 72, 2121567030, 9, 3, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 1161830754,
+              "rngAtRoundEnd": 3078108883,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [8, 60, 1296375147, 8, 1, "Attack", 12],
+                [7, 72, 3792031459, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 1161830755,
+              "rngAtRoundEnd": 1871592095,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 3, "Attack"],
+                [8, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 3, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:4;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 1564421240, 10, 3, "Attack", 12],
+                [8, 72, 522015630, 9, 2, "Attack", 89]
+              ],
+              "counters": []
+            }
+          ]
+        },
+        {
+          "seed": "538453d7",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 1401181144,
+              "rngAtRoundEnd": 1892902372,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 3, "Attack"],
+                [8, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 3, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:4;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 921474921, 10, 3, "Attack", 12],
+                [8, 72, 4220259463, 9, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 1401181145,
+              "rngAtRoundEnd": 2948509279,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 2, "Attack"],
+                [8, 72, 161, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 2, -1],
+                [136, 1, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:3;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 1189521014, 9, 2, "Attack", 12],
+                [8, 72, 1175325551, 8, 1, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 1401181146,
+              "rngAtRoundEnd": 2601431019,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 1457567107, 8, 1, "Attack", 12],
+                [8, 72, 1565086203, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 1401181147,
+              "rngAtRoundEnd": 271759465,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 210, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [174, 8, -34]
+              ],
+              "frames": 369,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;74:2;84:4;124:1;174:1;212:5;215:4;218:3;221:2;224:1",
+              "enemyTurns": [
+                [7, 60, 1725613200, 8, 1, "Attack", 12],
+                [8, 72, 3235550632, 10, 2, "Attack", 138]
+              ],
+              "counters": [[174, 8, 2, 34]]
+            }
+          ]
+        },
+        {
+          "seed": "5c5581d4",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 1549107669,
+              "rngAtRoundEnd": 4007944497,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 3, "Attack"],
+                [8, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 3, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:4;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 2807021634, 10, 3, "Attack", 12],
+                [8, 72, 2555942568, 9, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 1549107670,
+              "rngAtRoundEnd": 529932855,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 3075067727, 8, 1, "Attack", 12],
+                [8, 72, 2439665991, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 1549107671,
+              "rngAtRoundEnd": 683771533,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 161, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 3, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [8, 60, 3343113820, 8, 1, "Attack", 12],
+                [7, 72, 4110130420, 9, 3, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 1549107672,
+              "rngAtRoundEnd": 4044598135,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 3, "Attack"],
+                [8, 72, 161, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 3, -1],
+                [136, 1, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:4;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 3611159913, 10, 3, "Attack", 12],
+                [8, 72, 212275847, 8, 1, "Attack", 89]
+              ],
+              "counters": []
+            }
+          ]
+        },
+        {
+          "seed": "6a99b44c",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 1788458061,
+              "rngAtRoundEnd": 2045615913,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 3, "Attack"],
+                [8, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 3, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:4;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 2968213594, 10, 3, "Attack", 12],
+                [8, 72, 3910519680, 9, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 1788458062,
+              "rngAtRoundEnd": 479416293,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 3, "Attack"],
+                [8, 72, 161, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 3, -1],
+                [136, 1, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:4;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 3236259687, 10, 3, "Attack", 12],
+                [8, 72, 265985909, 8, 1, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 1788458063,
+              "rngAtRoundEnd": 2840094149,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 161, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 3, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 3504305780, 8, 1, "Attack", 12],
+                [8, 72, 1883185164, 9, 3, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 1788458064,
+              "rngAtRoundEnd": 3597970729,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 3772351873, 8, 1, "Attack", 12],
+                [8, 72, 3553649593, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            }
+          ]
+        },
+        {
+          "seed": "78dde6c4",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 2027808453,
+              "rngAtRoundEnd": 162738056,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 2, "Attack"],
+                [8, 72, 161, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 2, -1],
+                [136, 3, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:3;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 3129405554, 9, 2, "Attack", 12],
+                [8, 72, 2376044859, 9, 3, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 2027808454,
+              "rngAtRoundEnd": 2285385906,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 162, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [137, 2, -1]
+              ],
+              "frames": 237,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;74:2;84:4;124:1;137:1;164:3;167:2;170:2;173:1;183:1",
+              "enemyTurns": [
+                [7, 60, 3397451647, 8, 1, "Attack", 12],
+                [8, 72, 2280742775, 10, 2, "Attack", 90]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 2027808455,
+              "rngAtRoundEnd": 3496418644,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 3665497740, 8, 1, "Attack", 12],
+                [8, 72, 3951207204, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 2027808456,
+              "rngAtRoundEnd": 1318314279,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 3, "Attack"],
+                [8, 72, 161, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 3, -1],
+                [136, 1, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:4;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 3933543833, 10, 3, "Attack", 12],
+                [8, 72, 2921430071, 8, 1, "Attack", 89]
+              ],
+              "counters": []
+            }
+          ]
+        },
+        {
+          "seed": "81af14c1",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 2175734978,
+              "rngAtRoundEnd": 87561328,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 2, "Attack"],
+                [8, 72, 161, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 2, -1],
+                [136, 1, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:3;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 719984971, 9, 2, "Attack", 12],
+                [8, 72, 2901891904, 8, 1, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 2175734979,
+              "rngAtRoundEnd": 1424920480,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 988031064, 8, 1, "Attack", 12],
+                [8, 72, 530819696, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 2175734980,
+              "rngAtRoundEnd": 418650690,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 161, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 3, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [8, 60, 1256077157, 8, 1, "Attack", 12],
+                [7, 72, 2201284125, 9, 3, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 2175734981,
+              "rngAtRoundEnd": 2345885959,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 3, "Attack"],
+                [7, 72, 162, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 3, -1],
+                [137, 1, -1]
+              ],
+              "frames": 237,
+              "randTimeline": "29:1;59:8;61:4;71:6;73:2;74:2;84:4;124:1;137:1;164:3;167:2;170:2;173:1;183:1",
+              "enemyTurns": [
+                [8, 60, 1524123250, 10, 3, "Attack", 12],
+                [7, 72, 1257113176, 10, 1, "Attack", 90]
+              ],
+              "counters": []
+            }
+          ]
+        },
+        {
+          "seed": "8ff34739",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 2415085370,
+              "rngAtRoundEnd": 2243883944,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 161, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 3, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 881176931, 8, 1, "Attack", 12],
+                [8, 72, 928377307, 9, 3, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 2415085371,
+              "rngAtRoundEnd": 948242616,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [8, 60, 1149223024, 8, 1, "Attack", 12],
+                [7, 72, 2598841736, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 2415085372,
+              "rngAtRoundEnd": 1253974817,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 162, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [137, 3, -1]
+              ],
+              "frames": 237,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;74:3;84:4;124:1;137:1;164:3;167:2;170:2;173:1;183:1",
+              "enemyTurns": [
+                [8, 60, 1417269117, 8, 1, "Attack", 12],
+                [7, 72, 4269306165, 11, 3, "Attack", 90]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 2415085373,
+              "rngAtRoundEnd": 197991058,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 2, "Attack"],
+                [8, 72, 161, 1, "Attack"]
+              ],
+              "hpChanges": [[136, 1, -1]],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:3;71:6;73:2;83:4;136:1;163:3;166:2;169:1;174:1;182:1",
+              "enemyTurns": [
+                [7, 60, 1685315210, 9, 2, "Attack", 12],
+                [8, 72, 4228583539, 7, 1, "Attack", 89]
+              ],
+              "counters": []
+            }
+          ]
+        },
+        {
+          "seed": "9e3779b1",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 2654435762,
+              "rngAtRoundEnd": 3946527129,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 2, "Attack"],
+                [8, 72, 161, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 2, -1],
+                [136, 3, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:3;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 1042368891, 9, 2, "Attack", 12],
+                [8, 72, 3245841840, 9, 3, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 2654435763,
+              "rngAtRoundEnd": 277546373,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 163, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [138, 2, -1]
+              ],
+              "frames": 238,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;74:2;75:2;85:4;124:1;138:1;165:3;168:2;171:2;174:1;184:1",
+              "enemyTurns": [
+                [8, 60, 1310414984, 8, 1, "Attack", 12],
+                [7, 72, 371896480, 12, 2, "Attack", 91]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 2654435764,
+              "rngAtRoundEnd": 96438973,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [8, 60, 1578461077, 8, 1, "Attack", 12],
+                [7, 72, 2042360909, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 2654435765,
+              "rngAtRoundEnd": 2749356955,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 2, "Attack"],
+                [8, 72, 161, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 2, -1],
+                [136, 1, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:3;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 1846507170, 9, 2, "Attack", 12],
+                [8, 72, 2253074859, 8, 1, "Attack", 89]
+              ],
+              "counters": []
+            }
+          ]
+        },
+        {
+          "seed": "a708a7ae",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 2802362287,
+              "rngAtRoundEnd": 2695033884,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 2927915604, 8, 1, "Attack", 12],
+                [8, 72, 1246476268, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 2802362288,
+              "rngAtRoundEnd": 2135468814,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 161, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 3, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [8, 60, 3195961697, 8, 1, "Attack", 12],
+                [7, 72, 2916940697, 9, 3, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 2802362289,
+              "rngAtRoundEnd": 1109820112,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 73, 1, "Attack"],
+                [7, 73, 163, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [125, 1, -1],
+                [138, 2, -1]
+              ],
+              "frames": 238,
+              "randTimeline": "29:1;59:8;61:3;62:2;72:6;74:2;75:2;85:4;125:1;138:1;165:3;168:2;171:2;174:1;184:1",
+              "enemyTurns": [
+                [8, 60, 3464007790, 11, 1, "Attack", 13],
+                [7, 73, 3583790173, 10, 2, "Attack", 90]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 2802362290,
+              "rngAtRoundEnd": 2466558176,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 2, "Attack"],
+                [7, 72, 161, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 2, -1],
+                [136, 1, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:3;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [8, 60, 3732053883, 9, 2, "Attack", 12],
+                [7, 72, 2778921904, 8, 1, "Attack", 89]
+              ],
+              "counters": []
+            }
+          ]
+        },
+        {
+          "seed": "b54cda26",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 3041712679,
+              "rngAtRoundEnd": 43657376,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 2, "Attack"],
+                [7, 72, 162, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 2, -1],
+                [137, 1, -1]
+              ],
+              "frames": 237,
+              "randTimeline": "29:1;59:8;61:3;71:6;73:2;74:2;84:4;124:1;137:1;164:3;167:2;170:2;173:1;183:1",
+              "enemyTurns": [
+                [8, 60, 3089107564, 9, 2, "Attack", 12],
+                [7, 72, 1796180205, 10, 1, "Attack", 90]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 3041712680,
+              "rngAtRoundEnd": 1843230241,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [8, 60, 3357153657, 8, 1, "Attack", 12],
+                [7, 72, 689995441, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 3041712681,
+              "rngAtRoundEnd": 2605282088,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 163, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [138, 3, -1]
+              ],
+              "frames": 238,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;74:2;75:3;85:4;124:1;138:1;165:3;168:2;171:2;174:1;184:1",
+              "enemyTurns": [
+                [8, 60, 3625199750, 8, 1, "Attack", 12],
+                [7, 72, 2360459870, 13, 3, "Attack", 91]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 3041712682,
+              "rngAtRoundEnd": 1379576023,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 73, 1, "Attack"],
+                [8, 73, 162, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [125, 1, -1],
+                [137, 3, -1]
+              ],
+              "frames": 237,
+              "randTimeline": "29:1;59:8;61:3;62:2;72:6;74:3;84:4;125:1;137:1;164:3;167:2;170:1;173:1;183:1",
+              "enemyTurns": [
+                [7, 60, 3893245843, 11, 1, "Attack", 13],
+                [8, 73, 842432934, 9, 3, "Attack", 89]
+              ],
+              "counters": []
+            }
+          ]
+        },
+        {
+          "seed": "be1e0823",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 3189639204,
+              "rngAtRoundEnd": 4066699373,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 679686981, 8, 1, "Attack", 12],
+                [8, 72, 1564575229, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 3189639205,
+              "rngAtRoundEnd": 919914790,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 2, "Attack"],
+                [8, 72, 162, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 2, -1],
+                [137, 1, -1]
+              ],
+              "frames": 237,
+              "randTimeline": "29:1;59:8;61:3;71:6;73:2;74:2;84:4;124:1;137:1;164:3;167:2;170:2;173:1;183:1",
+              "enemyTurns": [
+                [7, 60, 947733074, 9, 2, "Attack", 12],
+                [8, 72, 1991104923, 10, 1, "Attack", 90]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 3189639206,
+              "rngAtRoundEnd": 650657810,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 73, 1, "Attack"],
+                [8, 73, 162, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [125, 1, -1],
+                [137, 2, -1]
+              ],
+              "frames": 237,
+              "randTimeline": "29:1;59:8;61:3;62:2;72:6;74:2;84:4;125:1;137:1;164:3;167:2;170:1;173:1;183:1",
+              "enemyTurns": [
+                [7, 60, 1215779167, 11, 1, "Attack", 13],
+                [8, 73, 3741874786, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 3189639207,
+              "rngAtRoundEnd": 378871456,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 73, 2, "Attack"],
+                [8, 73, 162, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [125, 2, -1],
+                [137, 1, -1]
+              ],
+              "frames": 237,
+              "randTimeline": "29:1;59:8;61:3;62:3;72:6;74:2;84:4;125:1;137:1;164:3;167:2;170:1;173:1;183:1",
+              "enemyTurns": [
+                [7, 60, 1483825260, 12, 2, "Attack", 13],
+                [8, 73, 788035952, 8, 1, "Attack", 89]
+              ],
+              "counters": []
+            }
+          ]
+        },
+        {
+          "seed": "cc623a9b",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 3428989596,
+              "rngAtRoundEnd": 3590021509,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 840878941, 8, 1, "Attack", 12],
+                [8, 72, 3632597269, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 3428989597,
+              "rngAtRoundEnd": 3243402092,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 163, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [138, 3, -1]
+              ],
+              "frames": 238,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;74:2;75:3;85:4;124:1;138:1;165:3;168:2;171:2;174:1;184:1",
+              "enemyTurns": [
+                [7, 60, 1108925034, 8, 1, "Attack", 12],
+                [8, 72, 1008094402, 13, 3, "Attack", 91]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 3428989598,
+              "rngAtRoundEnd": 4183376300,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 2, "Attack"],
+                [8, 72, 161, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 2, -1],
+                [136, 1, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:3;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 1376971127, 9, 2, "Attack", 12],
+                [8, 72, 3979641212, 8, 1, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 3428989599,
+              "rngAtRoundEnd": 2201437333,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 161, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 3, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 1645017220, 8, 1, "Attack", 12],
+                [8, 72, 54055964, 9, 3, "Attack", 89]
+              ],
+              "counters": []
+            }
+          ]
+        },
+        {
+          "seed": "daa66d13",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 3668339988,
+              "rngAtRoundEnd": 1713642258,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 161, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 3, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 1002070901, 8, 1, "Attack", 12],
+                [8, 72, 1405652013, 9, 3, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 3668339989,
+              "rngAtRoundEnd": 2738217866,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 1270116994, 8, 1, "Attack", 12],
+                [8, 72, 3076116442, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 3668339990,
+              "rngAtRoundEnd": 1020967938,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 73, 1, "Attack"],
+                [8, 73, 162, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [125, 1, -1],
+                [137, 2, -1]
+              ],
+              "frames": 237,
+              "randTimeline": "29:1;59:8;61:3;62:2;72:6;74:2;84:4;125:1;137:1;164:3;167:2;170:1;173:1;183:1",
+              "enemyTurns": [
+                [7, 60, 1538163087, 11, 1, "Attack", 13],
+                [8, 73, 1518017106, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 3668339991,
+              "rngAtRoundEnd": 1147921538,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 3, "Attack"],
+                [8, 72, 161, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 3, -1],
+                [136, 1, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:4;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 1806209180, 10, 3, "Attack", 12],
+                [8, 72, 406397650, 8, 1, "Attack", 89]
+              ],
+              "counters": []
+            }
+          ]
+        },
+        {
+          "seed": "e3779b10",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 3816266513,
+              "rngAtRoundEnd": 1430843479,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 161, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 3, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [8, 60, 2887617614, 8, 1, "Attack", 12],
+                [7, 72, 3950696230, 9, 3, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 3816266514,
+              "rngAtRoundEnd": 291593923,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 3155663707, 8, 1, "Attack", 12],
+                [8, 72, 1326193363, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 3816266515,
+              "rngAtRoundEnd": 3136010063,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 73, 1, "Attack"],
+                [8, 73, 162, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [125, 1, -1],
+                [137, 2, -1]
+              ],
+              "frames": 237,
+              "randTimeline": "29:1;59:8;61:3;62:2;72:6;74:2;84:4;125:1;137:1;164:3;167:2;170:1;173:1;183:1",
+              "enemyTurns": [
+                [7, 60, 3423709800, 11, 1, "Attack", 13],
+                [8, 73, 2788030559, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 3816266516,
+              "rngAtRoundEnd": 3836309661,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 1, "Attack"],
+                [8, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 3691755893, 8, 1, "Attack", 12],
+                [8, 72, 372154925, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            }
+          ]
+        },
+        {
+          "seed": "f1bbcd88",
+          "rounds": [
+            {
+              "round": 1,
+              "rngAtConfirm": 4055616905,
+              "rngAtRoundEnd": 190041838,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 161, 2, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 2, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [8, 60, 3048809574, 8, 1, "Attack", 12],
+                [7, 72, 1723750974, 8, 2, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 2,
+              "rngAtConfirm": 4055616906,
+              "rngAtRoundEnd": 1605227128,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 2, "Attack"],
+                [8, 72, 161, 1, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 2, -1],
+                [136, 1, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:3;71:6;73:2;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 3316855667, 9, 2, "Attack", 12],
+                [8, 72, 885393224, 8, 1, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 3,
+              "rngAtConfirm": 4055616907,
+              "rngAtRoundEnd": 3046348934,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [7, 60, 72, 2, "Attack"],
+                [8, 72, 161, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 2, -1],
+                [136, 3, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:3;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [7, 60, 3584901760, 9, 2, "Attack", 12],
+                [8, 72, 554470897, 9, 3, "Attack", 89]
+              ],
+              "counters": []
+            },
+            {
+              "round": 4,
+              "rngAtConfirm": 4055616908,
+              "rngAtRoundEnd": 1936316490,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 34, 34],
+              "ended": false,
+              "turns": [
+                [8, 60, 72, 1, "Attack"],
+                [7, 72, 161, 3, "Attack"]
+              ],
+              "hpChanges": [
+                [124, 1, -1],
+                [136, 3, -1]
+              ],
+              "frames": 236,
+              "randTimeline": "29:1;59:8;61:2;71:6;73:3;83:4;124:1;136:1;163:3;166:2;169:1;172:1;182:1",
+              "enemyTurns": [
+                [8, 60, 3852947853, 8, 1, "Attack", 12],
+                [7, 72, 2440176965, 9, 3, "Attack", 89]
+              ],
+              "counters": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

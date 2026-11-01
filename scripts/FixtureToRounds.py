@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Converts a Suikoden-Bizhawk-HUD enemy fixture (enemy_profiles/enemies/<slug>/sim_fixture.json,
 see that repo's enemy_profiles/SIMULATOR.md) into the rounds data the battle tests read
-(test/data/<slug>_rounds.json): every run, enemy slots mapped to simulator keys, one
+(test/fixtures/enemies/<slug>_rounds.json): every run, enemy slots mapped to simulator keys, one
 seed entry per seed with its rounds in round order, 1-based combatant indices throughout.
 
 Per round: rngAtConfirm / rngAtRoundEnd / hpAtConfirm / frames / ended,
@@ -85,6 +85,6 @@ out = {
     f"(v1.0, {seed_count} seeds across {len(runs)} party: {fixture['fight']['composition']})",
     "runs": runs,
 }
-path = ROOT / "test" / "data" / f"{slug}_rounds.json"
+path = ROOT / "test" / "fixtures" / "enemies" / f"{slug}_rounds.json"
 path.write_text(json.dumps(out, indent=1) + "\n")
 print(path, sum(len(s["rounds"]) for r in runs for s in r["seeds"]), "rounds")

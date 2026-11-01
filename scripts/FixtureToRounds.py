@@ -6,7 +6,11 @@ seed entry per seed with its rounds in round order, 1-based combatant indices th
 
 Per round: rngAtConfirm / rngAtRoundEnd / hpAtConfirm / frames / ended,
 turns = turn_clock as [actor, start, end, stored_target, move],
+turnOrderInputs = turn_order_inputs as [frame, combatant, action_tag, busy] (when recorded),
+partyActions = party_actions as recorded (type.slot.target; 1.0.0 = Defend, 0.0.N = Attack combatant N),
 hpChanges = hp_changes as [frame, combatant, hp_delta],
+bucketAtRoundEnd / sleepAtRoundEnd = per party member, whether combatant_rec +0x4a bit 0x10 (Bucket) /
+0x20 (Sleep) is set at the round end,
 enemyTurns = [actor, start, rng0, randCalls, stored_target, move] for the decision replay.
 
 A turn whose path was classified "Death (not a move)" (the enemy died mid-turn) is recorded with
@@ -32,25 +36,94 @@ keys = sys.argv[2].split(",")
 fixture = json.load(open(FIXTURE_ROOT / slug / "sim_fixture.json"))
 
 
+def normalise_move(move):
+    """The simulator's names for moves the fixture labels with their script: a Flying Squirrel's own
+    turn is the plain Attack; the Beast Commander's Command and its Sleep attack."""
+    if move.startswith("Flying Squirrel"):
+        return "Attack"
+    if move.startswith("Command"):
+        return "Command"
+    if move.startswith("Attack (custom script"):
+        return "Sleep"
+    return move
+
+
+def busied_member(timeline):
+    """1-based party member whose busy byte first reads 8 in a turn's party_state_timeline (the member
+    a move that doesn't store its target, +0x49, picked)"""
+    prev = None
+    for entry in timeline.split(";"):
+        members = [m.split(".")[2] for m in entry.split(":")[1].split(",")]
+        if prev is not None:
+            for i, (a, b) in enumerate(zip(prev, members)):
+                if a != "8" and b == "8":
+                    return i + 1
+        prev = members
+    return 0
+
+
+def game_order(run):
+    """party_characters in the order the game lists the party (combatants 1..n). The party JSON files are
+    shared by every enemy and not always in that order (S-hit and L list Hellion before Tengaar; the game
+    has Tengaar 5th, Hellion 6th). The recording gives the game's order twice: each turn's party_levels and
+    hp_at_confirm (max HP - 1). Members are matched on both."""
+    chars = list(run["party_characters"])
+    first = run["rounds"][0]
+    levels = next((t["party_levels"] for t in first["enemy_turns"] if t.get("party_levels")), None)
+    hp = first["hp_at_confirm"][: len(chars)]
+    ordered = []
+    for i in range(len(chars)):
+        match = [c for c in chars if c["stats"]["HP"] - 1 == hp[i] and (levels is None or c["LVL"] == levels[i])]
+        assert match, (run["party"], i, hp[i], levels and levels[i])
+        ordered.append(match[0])
+        chars.remove(match[0])
+    return ordered
+
+
 def convert(run):
     party_len = len(run["party_characters"])
 
-    # slot -> simulator key, from the slot order recorded in the fixture
-    names = {}
-    for rd in run["rounds"]:
-        for t in rd["enemy_turns"]:
-            names[t["actor"]] = t["enemy_name"]
-    slots = sorted(names)
+    # every enemy slot, in combatant order (hp_at_confirm lists the party first)
+    slots = list(range(party_len + 1, len(run["rounds"][0]["hp_at_confirm"]) + 1))
     assert len(slots) == len(keys), f"{len(slots)} enemy slots, {len(keys)} keys"
 
     seeds = {}
+    last_actor = {}  # seed -> the last enemy to act in its previous round
     for rd in run["rounds"]:
         rounds = seeds.setdefault(rd["seed"], [])
+        # A turn_clock entry starting at frame 1 isn't a turn: when the previous round's last actor was an
+        # enemy it is still the current actor until the first turn roll (frame 59), and the recorder logs
+        # it (rng0 = confirm + 2, its rolls are the round's first poll). Dropped, after checking whose it is.
+        for t in [t for t in rd["turn_clock"] if t["start"] == 1]:
+            assert t["actor"] == last_actor.get(rd["seed"]), (rd["seed"], rd["round"], t)
+        rd["turn_clock"] = [t for t in rd["turn_clock"] if t["start"] != 1]
+        rd["enemy_turns"] = [t for t in rd["enemy_turns"] if t["start"] != 1]
+        if rd["turn_clock"]:
+            last_actor[rd["seed"]] = rd["turn_clock"][-1]["actor"]
         # a turn whose path is a death is recorded with the move the AI committed to before dying
-        move_of = {t["actor"]: ("Attack" if t["move"] == "Death (not a move)" else t["move"]) for t in rd["enemy_turns"]}
-        turns = [[t["actor"], t["start"], t["end"], t["stored_target"], move_of[t["actor"]]] for t in rd["turn_clock"]]
+        # (an actor can take several turns in a round once the Beast Commander's attacks are split from their own turns)
+        def move_name(t):
+            return "Attack" if t["move"] == "Death (not a move)" else normalise_move(t["move"])
+
+        def target_of(t):
+            # the Sleep attack doesn't store its target, and a Squirrel's full-script turn (6cd4170d) reads 0
+            # in this fight though it hits someone: the member it busied is the one it picked
+            if move_name(t) == "Sleep" or (t["path"] == "6cd4170d" and t["stored_target"] == 0):
+                et = next(e for e in rd["enemy_turns"] if e["start"] == t["start"] and e["actor"] == t["actor"])
+                return busied_member(et["party_state_timeline"])
+            return t["stored_target"]
+
+        turns = [[t["actor"], t["start"], t["end"], target_of(t), move_name(t)] for t in rd["turn_clock"]]
         enemy_turns = [
-            [et["actor"], et["start"], et["rng0"], et["rand_calls"], et["stored_target"], move_of[et["actor"]], et["frames"]]
+            [
+                et["actor"],
+                et["start"],
+                et["rng0"],
+                et["rand_calls"],
+                target_of(et),
+                move_name(et),
+                et["frames"],
+            ]
             for et in rd["enemy_turns"]
         ]
         rounds.append(
@@ -60,6 +133,19 @@ def convert(run):
                 "rngAtRoundEnd": rd["rng_at_round_end"],
                 "hpAtConfirm": rd["hp_at_confirm"],
                 "ended": rd["ended_battle"] is not None,
+                # party members carrying Bucket (combatant_rec +0x4a bit 0x10) at the round end, 1-based
+                "bucketAtRoundEnd": [
+                    bool(int(m.split(".")[1], 16) & 0x10) for m in rd["party_status_at_round_end"].split(",")
+                ],
+                "sleepAtRoundEnd": [
+                    bool(int(m.split(".")[1], 16) & 0x20) for m in rd["party_status_at_round_end"].split(",")
+                ],
+                "partyActions": rd["party_actions"],
+                **(
+                    {"turnOrderInputs": [[i["frame"], i["combatant"], i["action_tag"], i["busy"]] for i in rd["turn_order_inputs"]]}
+                    if rd.get("turn_order_inputs")
+                    else {}
+                ),
                 "turns": turns,
                 "hpChanges": [[h["frame"], h["combatant"], h["hp_delta"]] for h in rd["hp_changes"]],
                 "frames": rd["frames"],
@@ -72,7 +158,8 @@ def convert(run):
         rounds.sort(key=lambda r: r["round"])
     return {
         "party": run["party"],
-        "characters": run["party_characters"],
+        "scenario": run.get("scenario"),
+        "characters": game_order(run),
         "enemies": [keys[i - party_len - 1] for i in slots],
         "seeds": [{"seed": s, "rounds": seeds[s]} for s in run["seeds"]],
     }

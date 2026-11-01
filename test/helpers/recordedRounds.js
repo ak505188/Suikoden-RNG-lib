@@ -4,6 +4,7 @@ import Battle from '../../lib/Game/Battle/Battle.js';
 import { ACTION_TYPES } from '../../lib/Game/Battle/Actions.js';
 import { LOG_TYPES } from '../../lib/Game/Battle/ActionLog.js';
 import { ENEMY_KEYS } from '../../lib/Game/Keys.js';
+import { STATUS } from '../../lib/Game/Constants.js';
 import RNG from '../../lib/rng.js';
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
@@ -20,6 +21,10 @@ import assert from 'node:assert';
  * @property {number} rngAtRoundEnd
  * @property {number[]} hpAtConfirm - every combatant, party first, in the battle's 1-based order
  * @property {boolean} ended
+ * @property {boolean[]} [bucketAtRoundEnd] - per party member, Bucket set at the round end
+ * @property {boolean[]} [sleepAtRoundEnd] - per party member, Sleep set at the round end
+ * @property {string[]} [partyActions] - type.slot.target per member as recorded: 1.0.0 Defend, 0.0.N Attack
+ *   combatant N. Absent: everyone Defends
  * @property {[number, number, number, number, string][]} turns - [actor, start, end, target, move]
  * @property {[number, number, number][]} hpChanges - [frame, combatant, hp delta]
  * @property {number} frames - the round's length
@@ -31,7 +36,7 @@ import assert from 'node:assert';
  * @property {[number, number, number, number][]} counters - [frame, attacker, countered by, damage]
  */
 
-/** @typedef {{ party: string, characters: any[], enemies: string[], seeds: { seed: string, rounds: RecordedRound[] }[] }} RecordedRun */
+/** @typedef {{ party: string, scenario?: string | null, characters: any[], enemies: string[], seeds: { seed: string, rounds: RecordedRound[] }[] }} RecordedRun */
 
 const CLOCK = 30;
 
@@ -68,8 +73,20 @@ function playRound(battle, rng, idxOf, partyLen, round) {
   });
   const from = battle.log.entries.length;
   const startCount = rng.count; // the log's rng counts are cumulative over the battle
-  battle.playTurn(battle.party.combatants.map(() => ({ type: ACTION_TYPES.DEFEND })));
+  battle.playTurn(
+    battle.party.combatants.map((_, i) => {
+      const [type, , target] = (round.partyActions?.[i] ?? '1.0.0').split('.').map(Number);
+      // 0 = Attack on combatant `target` (1-based, party first); the sim's target is the enemy index
+      return type === 0
+        ? { type: ACTION_TYPES.ATTACK, target: target - partyLen - 1 }
+        : { type: ACTION_TYPES.DEFEND };
+    }),
+  );
   const entries = battle.log.entries.slice(from);
+
+  const roundEnd = /** @type {number} | undefined */ (
+    entries.filter((e) => e.type === LOG_TYPES.ROUND_END).at(-1)?.tick
+  );
 
   // every enemy turn the log recorded, in order
   const turnEntries = entries
@@ -77,16 +94,30 @@ function playRound(battle, rng, idxOf, partyLen, round) {
     .filter(
       ({ e }) => e.type === LOG_TYPES.TURN && /** @type {number} */ (idxOf.get(e.actor)) > partyLen,
     );
-  const turns = turnEntries.map(({ e, i }, t) => {
+  const turns = turnEntries.map(({ e, i }) => {
     const dec = entries
       .slice(i + 1)
       .find((x) => x.type === LOG_TYPES.ATTACK || x.type === LOG_TYPES.CAST);
-    const nextDefend = entries.slice(i + 1).find((x) => x.type === LOG_TYPES.DEFEND);
-    const next = turnEntries[t + 1];
+    // a turn ends as the next actor of either side becomes current (a party member can act between
+    // two enemies: the Beast Commander's, then Hellion's, then a Squirrel's). The roll that picks an
+    // enemy starts its turn a tick later; a party member's copy can wait for the current actor's
+    // release, so it's read off the member's own first action
+    const next = entries.slice(i + 1).find((x) => x.type === LOG_TYPES.TURN);
+    const nextAction =
+      next &&
+      entries
+        .slice(i + 1)
+        .find((x) => x.actor === next.actor && x.type !== LOG_TYPES.TURN);
+    const nextIsEnemy = next && /** @type {number} */ (idxOf.get(next.actor)) > partyLen;
+    const fallback = entries.slice(i + 1).find((x) => x.type === LOG_TYPES.DEFEND);
     return [
       /** @type {number} */ (idxOf.get(e.actor)),
       e.tick + CLOCK + 1,
-      next ? next.e.tick + CLOCK + 1 : /** @type {number} */ (nextDefend?.tick) - 1 + CLOCK,
+      nextIsEnemy
+        ? next.tick + CLOCK + 1
+        : next || fallback
+          ? /** @type {number} */ ((nextAction ?? fallback)?.tick) - 1 + CLOCK
+          : /** @type {number} */ (roundEnd) + CLOCK + 19, // no later actor: the round's own length
       dec ? /** @type {number} */ (idxOf.get(dec.target)) : 0,
       dec?.type === LOG_TYPES.CAST
         ? /** @type {string} */ (moveName(dec.detail ?? ''))
@@ -99,7 +130,7 @@ function playRound(battle, rng, idxOf, partyLen, round) {
   const calls = timeline(round.randTimeline);
   const windowCalls = (/** @type {number} */ start, /** @type {number} */ frames) =>
     Object.entries(calls)
-      .filter(([f]) => Number(f) >= start && Number(f) < start + frames)
+      .filter(([f]) => Number(f) >= start && Number(f) <= start + frames)
       .reduce((s, [, n]) => s + n, 0);
 
   // HP changes: the log's amount is the raw roll, the fixture's delta is what the HP actually moved
@@ -127,10 +158,6 @@ function playRound(battle, rng, idxOf, partyLen, round) {
       /** @type {number} */ (idxOf.get(e.actor)),
     ]);
 
-  const roundEnd = /** @type {number} | undefined */ (
-    entries.filter((e) => e.type === LOG_TYPES.ROUND_END).at(-1)?.tick
-  );
-
   return {
     round: round.round,
     turns,
@@ -148,6 +175,10 @@ function playRound(battle, rng, idxOf, partyLen, round) {
     frames: roundEnd === undefined ? null : roundEnd + CLOCK + 19,
     expectedFrames: round.frames,
     ended: battle.status !== 'In Progress',
+    bucket: battle.party.combatants.map((c) => !!c.status[STATUS.BUCKET]),
+    expectedBucket: round.bucketAtRoundEnd,
+    sleep: battle.party.combatants.map((c) => !!c.status[STATUS.SLEEP]),
+    expectedSleep: round.sleepAtRoundEnd,
     expectedEnded: round.ended,
   };
 }
@@ -189,7 +220,7 @@ export function describeFixture(data, title) {
     for (const run of data.runs) {
       for (const { seed, rounds } of playRecordedRun(run)) {
         for (const r of rounds) {
-          it(`${run.party} seed ${seed} round ${r.round}`, () => {
+          it(`${run.party}${run.scenario ? ` ${run.scenario}` : ''} seed ${seed} round ${r.round}`, () => {
             assert.deepStrictEqual(
               r.turns,
               r.expectedTurns,
@@ -215,6 +246,8 @@ export function describeFixture(data, title) {
             // the victory wait after a round that ends the battle isn't modelled
             if (!r.expectedEnded) assert.strictEqual(r.frames, r.expectedFrames, 'round length');
             assert.strictEqual(r.ended, r.expectedEnded, 'the battle ended');
+            if (r.expectedBucket) assert.deepStrictEqual(r.bucket, r.expectedBucket, 'Bucket per member');
+            if (r.expectedSleep) assert.deepStrictEqual(r.sleep, r.expectedSleep, 'Sleep per member');
           });
         }
       }

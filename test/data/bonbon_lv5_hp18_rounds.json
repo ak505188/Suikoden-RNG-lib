@@ -1,0 +1,1024 @@
+{
+  "source": "Suikoden-Bizhawk-HUD enemy_profiles/enemies/bonbon_lv5_hp18/sim_fixture.json (v1.0, 20 seeds x 1 party)",
+  "runs": [
+    {
+      "party": "S-hit",
+      "characters": [
+        {
+          "HP": 999,
+          "key": "MCDOHL",
+          "rune": {
+            "id": 0
+          },
+          "MP": [8, 6, 5, 2],
+          "EXP": 505,
+          "LVL": 53,
+          "id": 8,
+          "stats": {
+            "LUK": 149,
+            "DEF": 150,
+            "HP": 999,
+            "MGC": 154,
+            "SPD": 1,
+            "PWR": 143,
+            "SKL": 0
+          },
+          "weapon": {
+            "lvl": 8,
+            "runePiece": {
+              "amount": 0,
+              "element": "NONE"
+            }
+          },
+          "inventory": [],
+          "status": {
+            "balloon": 0,
+            "poison": false
+          }
+        },
+        {
+          "HP": 999,
+          "key": "VIKTOR",
+          "rune": {
+            "id": 0
+          },
+          "MP": [5, 2, 1, 0],
+          "EXP": 807,
+          "LVL": 47,
+          "id": 35,
+          "stats": {
+            "LUK": 106,
+            "DEF": 150,
+            "HP": 999,
+            "MGC": 79,
+            "SPD": 1,
+            "PWR": 152,
+            "SKL": 0
+          },
+          "weapon": {
+            "lvl": 3,
+            "runePiece": {
+              "amount": 0,
+              "element": "NONE"
+            }
+          },
+          "inventory": [],
+          "status": {
+            "balloon": 0,
+            "poison": false
+          }
+        },
+        {
+          "HP": 999,
+          "key": "FLIK",
+          "rune": {
+            "id": 0
+          },
+          "MP": [7, 5, 4, 1],
+          "EXP": 32,
+          "LVL": 51,
+          "id": 17,
+          "stats": {
+            "LUK": 114,
+            "DEF": 150,
+            "HP": 999,
+            "MGC": 132,
+            "SPD": 1,
+            "PWR": 148,
+            "SKL": 0
+          },
+          "weapon": {
+            "lvl": 9,
+            "runePiece": {
+              "amount": 0,
+              "element": "NONE"
+            }
+          },
+          "inventory": [],
+          "status": {
+            "balloon": 0,
+            "poison": false
+          }
+        },
+        {
+          "HP": 999,
+          "key": "LUC",
+          "rune": {
+            "id": 0
+          },
+          "MP": [9, 8, 6, 5],
+          "EXP": 565,
+          "LVL": 49,
+          "id": 26,
+          "stats": {
+            "LUK": 58,
+            "DEF": 150,
+            "HP": 999,
+            "MGC": 186,
+            "SPD": 1,
+            "PWR": 42,
+            "SKL": 0
+          },
+          "weapon": {
+            "lvl": 3,
+            "runePiece": {
+              "amount": 0,
+              "element": "NONE"
+            }
+          },
+          "inventory": [],
+          "status": {
+            "balloon": 0,
+            "poison": false
+          }
+        },
+        {
+          "HP": 999,
+          "key": "HELLION",
+          "rune": {
+            "id": 0
+          },
+          "MP": [7, 4, 3, 0],
+          "EXP": 666,
+          "LVL": 31,
+          "id": 59,
+          "stats": {
+            "LUK": 82,
+            "DEF": 150,
+            "HP": 999,
+            "MGC": 123,
+            "SPD": 1,
+            "PWR": 37,
+            "SKL": 0
+          },
+          "weapon": {
+            "lvl": 3,
+            "runePiece": {
+              "amount": 0,
+              "element": "NONE"
+            }
+          },
+          "inventory": [],
+          "status": {
+            "balloon": 0,
+            "poison": false
+          }
+        },
+        {
+          "HP": 999,
+          "key": "TENGAAR",
+          "rune": {
+            "id": 0
+          },
+          "MP": [9, 7, 6, 4],
+          "EXP": 816,
+          "LVL": 51,
+          "id": 33,
+          "stats": {
+            "LUK": 77,
+            "DEF": 150,
+            "HP": 999,
+            "MGC": 175,
+            "SPD": 1,
+            "PWR": 96,
+            "SKL": 0
+          },
+          "weapon": {
+            "lvl": 7,
+            "runePiece": {
+              "amount": 0,
+              "element": "NONE"
+            }
+          },
+          "inventory": [],
+          "status": {
+            "balloon": 0,
+            "poison": false
+          }
+        }
+      ],
+      "seeds": [
+        {
+          "seed": "9e3779b1",
+          "rounds": [
+            {
+              "rngAtConfirm": 2654435762,
+              "rngAtRoundEnd": 3923849031,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 3, "Attack"]],
+              "hpChanges": [[74, 3, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 2654435763,
+              "rngAtRoundEnd": 740230545,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [],
+              "frames": 154
+            },
+            {
+              "rngAtConfirm": 2654435764,
+              "rngAtRoundEnd": 3851451019,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 2654435765,
+              "rngAtRoundEnd": 1863530528,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            }
+          ]
+        },
+        {
+          "seed": "3c6ef362",
+          "rounds": [
+            {
+              "rngAtConfirm": 1013904227,
+              "rngAtRoundEnd": 1653506150,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 1013904228,
+              "rngAtRoundEnd": 3960552955,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 1013904229,
+              "rngAtRoundEnd": 1972632464,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 1013904230,
+              "rngAtRoundEnd": 4279679269,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            }
+          ]
+        },
+        {
+          "seed": "daa66d13",
+          "rounds": [
+            {
+              "rngAtConfirm": 3668339988,
+              "rngAtRoundEnd": 4069654891,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 3668339989,
+              "rngAtRoundEnd": 2081734400,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 3668339990,
+              "rngAtRoundEnd": 93813909,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 3668339991,
+              "rngAtRoundEnd": 2400860714,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            }
+          ]
+        },
+        {
+          "seed": "78dde6c4",
+          "rounds": [
+            {
+              "rngAtConfirm": 2027808453,
+              "rngAtRoundEnd": 2190836336,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 2027808454,
+              "rngAtRoundEnd": 3999956860,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [],
+              "frames": 154
+            },
+            {
+              "rngAtConfirm": 2027808455,
+              "rngAtRoundEnd": 2509962650,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 2027808456,
+              "rngAtRoundEnd": 522042159,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            }
+          ]
+        },
+        {
+          "seed": "17156075",
+          "rounds": [
+            {
+              "rngAtConfirm": 387276918,
+              "rngAtRoundEnd": 312017781,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 387276919,
+              "rngAtRoundEnd": 2619064586,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 387276920,
+              "rngAtRoundEnd": 2770505790,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [],
+              "frames": 154
+            },
+            {
+              "rngAtConfirm": 387276921,
+              "rngAtRoundEnd": 1974905437,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 2, "Attack"]],
+              "hpChanges": [[74, 2, -1]],
+              "frames": 174
+            }
+          ]
+        },
+        {
+          "seed": "b54cda26",
+          "rounds": [
+            {
+              "rngAtConfirm": 3041712679,
+              "rngAtRoundEnd": 2728166522,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 3041712680,
+              "rngAtRoundEnd": 740246031,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 3041712681,
+              "rngAtRoundEnd": 246808845,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 2, "Attack"]],
+              "hpChanges": [[74, 2, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 3041712682,
+              "rngAtRoundEnd": 2936730613,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 77, 2, "Attack"]],
+              "hpChanges": [[75, 2, -1]],
+              "frames": 175
+            }
+          ]
+        },
+        {
+          "seed": "538453d7",
+          "rounds": [
+            {
+              "rngAtConfirm": 1401181144,
+              "rngAtRoundEnd": 849347967,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 1401181145,
+              "rngAtRoundEnd": 2183143858,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 3, "Attack"]],
+              "hpChanges": [[74, 3, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 1401181146,
+              "rngAtRoundEnd": 2153870894,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 2, "Attack"]],
+              "hpChanges": [[74, 2, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 1401181147,
+              "rngAtRoundEnd": 1494062239,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 2, "Attack"]],
+              "hpChanges": [[74, 2, -1]],
+              "frames": 174
+            }
+          ]
+        },
+        {
+          "seed": "f1bbcd88",
+          "rounds": [
+            {
+              "rngAtConfirm": 4055616905,
+              "rngAtRoundEnd": 3265496708,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 4055616906,
+              "rngAtRoundEnd": 509021887,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 3, "Attack"]],
+              "hpChanges": [[74, 3, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 4055616907,
+              "rngAtRoundEnd": 223113948,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 3, "Attack"]],
+              "hpChanges": [[74, 3, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 4055616908,
+              "rngAtRoundEnd": 3401124288,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 2, "Attack"]],
+              "hpChanges": [[74, 2, -1]],
+              "frames": 174
+            }
+          ]
+        },
+        {
+          "seed": "8ff34739",
+          "rounds": [
+            {
+              "rngAtConfirm": 2415085370,
+              "rngAtRoundEnd": 2992645006,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 2, "Attack"]],
+              "hpChanges": [[74, 2, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 2415085371,
+              "rngAtRoundEnd": 2332836351,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 2, "Attack"]],
+              "hpChanges": [[74, 2, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 2415085372,
+              "rngAtRoundEnd": 1673027696,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 2, "Attack"]],
+              "hpChanges": [[74, 2, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 2415085373,
+              "rngAtRoundEnd": 1013219041,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 3, "Attack"]],
+              "hpChanges": [],
+              "frames": 159
+            }
+          ]
+        },
+        {
+          "seed": "2e2ac0ea",
+          "rounds": [
+            {
+              "rngAtConfirm": 774553835,
+              "rngAtRoundEnd": 604739759,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 2, "Attack"]],
+              "hpChanges": [[74, 2, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 774553836,
+              "rngAtRoundEnd": 1455745241,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 3, "Attack"]],
+              "hpChanges": [[74, 3, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 774553837,
+              "rngAtRoundEnd": 3580089745,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 2, "Attack"]],
+              "hpChanges": [[74, 2, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 774553838,
+              "rngAtRoundEnd": 2920281090,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 2, "Attack"]],
+              "hpChanges": [[74, 2, -1]],
+              "frames": 174
+            }
+          ]
+        },
+        {
+          "seed": "cc623a9b",
+          "rounds": [
+            {
+              "rngAtConfirm": 3428989596,
+              "rngAtRoundEnd": 2511801808,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 2, "Attack"]],
+              "hpChanges": [[74, 2, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 3428989597,
+              "rngAtRoundEnd": 4231055144,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 2, "Attack"]],
+              "hpChanges": [],
+              "frames": 159
+            },
+            {
+              "rngAtConfirm": 3428989598,
+              "rngAtRoundEnd": 3790682627,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 3, "Attack"]],
+              "hpChanges": [[74, 3, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 3428989599,
+              "rngAtRoundEnd": 532375843,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 2, "Attack"]],
+              "hpChanges": [[74, 2, -1]],
+              "frames": 174
+            }
+          ]
+        },
+        {
+          "seed": "6a99b44c",
+          "rounds": [
+            {
+              "rngAtConfirm": 1788458061,
+              "rngAtRoundEnd": 2626340183,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 77, 1, "Attack"]],
+              "hpChanges": [[75, 1, -1]],
+              "frames": 175
+            },
+            {
+              "rngAtConfirm": 1788458062,
+              "rngAtRoundEnd": 2402468595,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 77, 1, "Attack"]],
+              "hpChanges": [],
+              "frames": 155
+            },
+            {
+              "rngAtConfirm": 1788458063,
+              "rngAtRoundEnd": 364316098,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 2, "Attack"]],
+              "hpChanges": [],
+              "frames": 159
+            },
+            {
+              "rngAtConfirm": 1788458064,
+              "rngAtRoundEnd": 2671362903,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            }
+          ]
+        },
+        {
+          "seed": "08d12dfd",
+          "rounds": [
+            {
+              "rngAtConfirm": 147926526,
+              "rngAtRoundEnd": 2030958610,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 2, "Attack"]],
+              "hpChanges": [[74, 2, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 147926527,
+              "rngAtRoundEnd": 3858601951,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 77, 3, "Attack"]],
+              "hpChanges": [[75, 3, -1]],
+              "frames": 175
+            },
+            {
+              "rngAtConfirm": 147926528,
+              "rngAtRoundEnd": 2780464839,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 147926529,
+              "rngAtRoundEnd": 792544348,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            }
+          ]
+        },
+        {
+          "seed": "a708a7ae",
+          "rounds": [
+            {
+              "rngAtConfirm": 2802362287,
+              "rngAtRoundEnd": 3938020659,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 2, "Attack"]],
+              "hpChanges": [[74, 2, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 2802362288,
+              "rngAtRoundEnd": 2889566775,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 2802362289,
+              "rngAtRoundEnd": 901646284,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 2802362290,
+              "rngAtRoundEnd": 3208693089,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            }
+          ]
+        },
+        {
+          "seed": "4540215f",
+          "rounds": [
+            {
+              "rngAtConfirm": 1161830752,
+              "rngAtRoundEnd": 1960977917,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 3, "Attack"]],
+              "hpChanges": [[74, 3, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 1161830753,
+              "rngAtRoundEnd": 204073263,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [],
+              "frames": 154
+            },
+            {
+              "rngAtConfirm": 1161830754,
+              "rngAtRoundEnd": 3317795025,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 1161830755,
+              "rngAtRoundEnd": 1329874534,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            }
+          ]
+        },
+        {
+          "seed": "e3779b10",
+          "rounds": [
+            {
+              "rngAtConfirm": 3816266513,
+              "rngAtRoundEnd": 1119850156,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 3816266514,
+              "rngAtRoundEnd": 3426896961,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 3816266515,
+              "rngAtRoundEnd": 1438976470,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 3816266516,
+              "rngAtRoundEnd": 3746023275,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            }
+          ]
+        },
+        {
+          "seed": "81af14c1",
+          "rounds": [
+            {
+              "rngAtConfirm": 2175734978,
+              "rngAtRoundEnd": 3535998897,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 2175734979,
+              "rngAtRoundEnd": 3808879905,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [],
+              "frames": 154
+            },
+            {
+              "rngAtConfirm": 2175734980,
+              "rngAtRoundEnd": 3855125211,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 2175734981,
+              "rngAtRoundEnd": 1867204720,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            }
+          ]
+        },
+        {
+          "seed": "1fe68e72",
+          "rounds": [
+            {
+              "rngAtConfirm": 535203443,
+              "rngAtRoundEnd": 1657180342,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 535203444,
+              "rngAtRoundEnd": 3964227147,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 535203445,
+              "rngAtRoundEnd": 2579428835,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [],
+              "frames": 154
+            },
+            {
+              "rngAtConfirm": 535203446,
+              "rngAtRoundEnd": 996908298,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 2, "Attack"]],
+              "hpChanges": [[74, 2, -1]],
+              "frames": 174
+            }
+          ]
+        },
+        {
+          "seed": "be1e0823",
+          "rounds": [
+            {
+              "rngAtConfirm": 3189639204,
+              "rngAtRoundEnd": 4073329083,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 3189639205,
+              "rngAtRoundEnd": 2085408592,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 3189639206,
+              "rngAtRoundEnd": 97488101,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 3189639207,
+              "rngAtRoundEnd": 770876935,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 77, 3, "Attack"]],
+              "hpChanges": [[75, 3, -1]],
+              "frames": 175
+            }
+          ]
+        },
+        {
+          "seed": "5c5581d4",
+          "rounds": [
+            {
+              "rngAtConfirm": 1549107669,
+              "rngAtRoundEnd": 2194510528,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 1549107670,
+              "rngAtRoundEnd": 206590037,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 1, "Attack"]],
+              "hpChanges": [[74, 1, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 1549107671,
+              "rngAtRoundEnd": 1175873755,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 76, 2, "Attack"]],
+              "hpChanges": [[74, 2, -1]],
+              "frames": 174
+            },
+            {
+              "rngAtConfirm": 1549107672,
+              "rngAtRoundEnd": 2904640682,
+              "hpAtConfirm": [998, 998, 998, 998, 998, 998, 18],
+              "ended": false,
+              "turns": [[7, 60, 77, 1, "Attack"]],
+              "hpChanges": [[75, 1, -1]],
+              "frames": 175
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

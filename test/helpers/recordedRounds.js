@@ -57,6 +57,14 @@ const timeline = (/** @type {string} */ text) =>
   );
 
 /**
+ * 1 when a turn starts on the frame the previous turn ends: the fixture counts a roll on that shared
+ * frame in the previous turn only (its window's inclusive end), and the turn's RNG is taken after it.
+ * @param {(string | number | null)[][]} turns the round's enemy turns as [actor, start, end, ...]
+ * @param {number} t index of the turn
+ */
+const sharedFrame = (turns, t) => (t > 0 && turns[t - 1][2] === turns[t][1] ? 1 : 0);
+
+/**
  * One round: the sim plays it from the recorded confirm (RNG and HP) and returns what it did
  * beside what the fixture recorded, in the same shapes, so a test can compare them.
  * @param {Battle} battle
@@ -104,10 +112,7 @@ function playRound(battle, rng, idxOf, partyLen, round) {
     // release, so it's read off the member's own first action
     const next = entries.slice(i + 1).find((x) => x.type === LOG_TYPES.TURN);
     const nextAction =
-      next &&
-      entries
-        .slice(i + 1)
-        .find((x) => x.actor === next.actor && x.type !== LOG_TYPES.TURN);
+      next && entries.slice(i + 1).find((x) => x.actor === next.actor && x.type !== LOG_TYPES.TURN);
     const nextIsEnemy = next && /** @type {number} */ (idxOf.get(next.actor)) > partyLen;
     const fallback = entries.slice(i + 1).find((x) => x.type === LOG_TYPES.DEFEND);
     return [
@@ -162,9 +167,19 @@ function playRound(battle, rng, idxOf, partyLen, round) {
     round: round.round,
     turns,
     expectedTurns: round.turns.map(([a, s, e, t, move]) => [a, s, e, t, moveName(move)]),
-    rng0: turnEntries.map(({ e }) => rawAfter(round.rngAtConfirm, e.rng - startCount)),
+    rng0: turnEntries.map(({ e }, t) =>
+      rawAfter(
+        round.rngAtConfirm,
+        e.rng - startCount + (sharedFrame(turns, t) ? (calls[turns[t][1]] ?? 0) : 0),
+      ),
+    ),
     expectedRng0: round.enemyTurns.map((t) => t[2]),
-    windows: turnEntries.map(({ e }, t) => windowCalls(e.tick + CLOCK + 1, round.enemyTurns[t][6])),
+    windows: turnEntries.map(({ e }, t) =>
+      windowCalls(
+        e.tick + CLOCK + 1 + sharedFrame(turns, t),
+        round.enemyTurns[t][6] - sharedFrame(turns, t),
+      ),
+    ),
     expectedWindows: round.enemyTurns.map((t) => t[3]),
     damage,
     expectedDamage: round.hpChanges,
@@ -246,8 +261,10 @@ export function describeFixture(data, title) {
             // the victory wait after a round that ends the battle isn't modelled
             if (!r.expectedEnded) assert.strictEqual(r.frames, r.expectedFrames, 'round length');
             assert.strictEqual(r.ended, r.expectedEnded, 'the battle ended');
-            if (r.expectedBucket) assert.deepStrictEqual(r.bucket, r.expectedBucket, 'Bucket per member');
-            if (r.expectedSleep) assert.deepStrictEqual(r.sleep, r.expectedSleep, 'Sleep per member');
+            if (r.expectedBucket)
+              assert.deepStrictEqual(r.bucket, r.expectedBucket, 'Bucket per member');
+            if (r.expectedSleep)
+              assert.deepStrictEqual(r.sleep, r.expectedSleep, 'Sleep per member');
           });
         }
       }

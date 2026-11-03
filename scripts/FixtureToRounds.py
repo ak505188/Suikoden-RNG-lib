@@ -6,11 +6,12 @@ seed entry per seed with its rounds in round order, 1-based combatant indices th
 
 Per round: rngAtConfirm / rngAtRoundEnd / hpAtConfirm / frames / ended,
 turns = turn_clock as [actor, start, end, stored_target, move],
+idleTimerT0 = [actor, start, idle_timer_t0] per turn that carries it (Holly Spirit's Command),
 turnOrderInputs = turn_order_inputs as [frame, combatant, action_tag, busy] (when recorded),
 partyActions = party_actions as recorded (type.slot.target; 1.0.0 = Defend, 0.0.N = Attack combatant N),
 hpChanges = hp_changes as [frame, combatant, hp_delta],
 bucketAtRoundEnd / sleepAtRoundEnd = per party member, whether combatant_rec +0x4a bit 0x10 (Bucket) /
-0x20 (Sleep) is set at the round end,
+0x20 (Sleep) is set at the round end, balloonAtRoundEnd = its Balloon stage (byte 0x02: 1, 0x06: 2),
 enemyTurns = [actor, start, rng0, randCalls, stored_target, move] for the decision replay.
 
 A turn whose path was classified "Death (not a move)" (the enemy died mid-turn) is recorded with
@@ -19,7 +20,9 @@ simulator models the attack and then the death.
 
 Usage: FixtureToRounds.py <slug> <key-per-slot> [fixture-root]
   <key-per-slot> is the simulator ENEMY_KEYS value for each enemy slot, in slot order
-  (e.g. BANDIT_RED,BANDIT_RED,BANDIT_YELLOW for bandit_lv7_hp55).
+  (e.g. BANDIT_RED,BANDIT_RED,BANDIT_YELLOW for bandit_lv7_hp55). For a fixture whose runs fight
+  different groups, <HP>=<KEY> pairs instead (e.g. 80=HOLLY_BOY_2,350=HOLLY_SPIRIT): each run's slots
+  are keyed by their HP at the first confirm.
   [fixture-root] defaults to ../Suikoden-Bizhawk-HUD/enemy_profiles/enemies next to this repo.
 """
 import json, sys, pathlib
@@ -33,6 +36,7 @@ FIXTURE_ROOT = (
 
 slug = sys.argv[1]
 keys = sys.argv[2].split(",")
+keys_by_hp = dict(k.split("=") for k in keys) if "=" in keys[0] else None
 fixture = json.load(open(FIXTURE_ROOT / slug / "sim_fixture.json"))
 
 
@@ -41,10 +45,14 @@ def normalise_move(move):
     turn is the plain Attack; the Beast Commander's Command and its Sleep attack."""
     if move.startswith("Flying Squirrel"):
         return "Attack"
+    if move.startswith("Skip"):
+        return "Skip"
     if move.startswith("Command"):
         return "Command"
     if move.startswith("Attack (custom script"):
         return "Sleep"
+    if move.startswith("Holly Boy "):  # "Holly Boy Flee (cut short ...)": the label names the script path
+        return move.split(" ")[2]
     return move
 
 
@@ -82,6 +90,11 @@ def game_order(run):
 
 def convert(run):
     party_len = len(run["party_characters"])
+    keys = (
+        [keys_by_hp[str(hp)] for hp in run["rounds"][0]["hp_at_confirm"][party_len:]]
+        if keys_by_hp
+        else globals()["keys"]
+    )
 
     # every enemy slot, in combatant order (hp_at_confirm lists the party first)
     slots = list(range(party_len + 1, len(run["rounds"][0]["hp_at_confirm"]) + 1))
@@ -111,7 +124,8 @@ def convert(run):
             if move_name(t) == "Sleep" or (t["path"] == "6cd4170d" and t["stored_target"] == 0):
                 et = next(e for e in rd["enemy_turns"] if e["start"] == t["start"] and e["actor"] == t["actor"])
                 return busied_member(et["party_state_timeline"])
-            return t["stored_target"]
+            # a Holly Spirit's scan with no acceptor stores -1 (255) and takes no target
+            return 0 if t["stored_target"] == 255 else t["stored_target"]
 
         turns = [[t["actor"], t["start"], t["end"], target_of(t), move_name(t)] for t in rd["turn_clock"]]
         enemy_turns = [
@@ -140,6 +154,10 @@ def convert(run):
                 "sleepAtRoundEnd": [
                     bool(int(m.split(".")[1], 16) & 0x20) for m in rd["party_status_at_round_end"].split(",")
                 ],
+                # Balloon stage per member: combatant_rec +0x4a bits 0x02 (stage 1) and 0x04 (stage 2, byte 0x06)
+                "balloonAtRoundEnd": [
+                    [0, 1, 1, 2][(int(m.split(".")[1], 16) >> 1) & 3] for m in rd["party_status_at_round_end"].split(",")
+                ],
                 "partyActions": rd["party_actions"],
                 **(
                     {"turnOrderInputs": [[i["frame"], i["combatant"], i["action_tag"], i["busy"]] for i in rd["turn_order_inputs"]]}
@@ -147,11 +165,23 @@ def convert(run):
                     else {}
                 ),
                 "turns": turns,
+                # a recorded timing input the sim doesn't model (the Holly Spirit's idle_timer_t0): [actor, start, value]
+                **(
+                    {
+                        "idleTimerT0": [
+                            [t["actor"], t["start"], t["idle_timer_t0"]]
+                            for t in rd["turn_clock"]
+                            if "idle_timer_t0" in t
+                        ]
+                    }
+                    if any("idle_timer_t0" in t for t in rd["turn_clock"])
+                    else {}
+                ),
                 "hpChanges": [[h["frame"], h["combatant"], h["hp_delta"]] for h in rd["hp_changes"]],
                 "frames": rd["frames"],
                 "randTimeline": rd["rand_timeline"],
                 "enemyTurns": enemy_turns,
-                "counters": [[c["frame"], c["attacker"], c["countered_by"], c["damage"]] for c in rd["counters"]],
+                "counters": [[c["frame"], c["attacker"], c["countered_by"], c["damage"]] for c in rd["counters"] or []],
             }
         )
     for rounds in seeds.values():

@@ -23,6 +23,8 @@ import assert from 'node:assert';
  * @property {boolean} ended
  * @property {boolean[]} [bucketAtRoundEnd] - per party member, Bucket set at the round end
  * @property {boolean[]} [sleepAtRoundEnd] - per party member, Sleep set at the round end
+ * @property {number[]} [balloonAtRoundEnd] - per party member, its Balloon stage at the round end
+ * @property {[number, number, number][]} [idleTimerT0] - [actor, start, T0]: a Command turn's recorded idle timer
  * @property {string[]} [partyActions] - type.slot.target per member as recorded: 1.0.0 Defend, 0.0.N Attack
  *   combatant N. Absent: everyone Defends
  * @property {[number, number, number, number, string][]} turns - [actor, start, end, target, move]
@@ -105,30 +107,30 @@ function playRound(battle, rng, idxOf, partyLen, round) {
   const turns = turnEntries.map(({ e, i }) => {
     const dec = entries
       .slice(i + 1)
-      .find((x) => x.type === LOG_TYPES.ATTACK || x.type === LOG_TYPES.CAST);
-    // a turn ends as the next actor of either side becomes current (a party member can act between
-    // two enemies: the Beast Commander's, then Hellion's, then a Squirrel's). The roll that picks an
-    // enemy starts its turn a tick later; a party member's copy can wait for the current actor's
-    // release, so it's read off the member's own first action
+      .find(
+        (x) => x.actor === e.actor && (x.type === LOG_TYPES.ATTACK || x.type === LOG_TYPES.CAST),
+      );
+    // a turn runs from the tick its actor becomes current (a copy held for the previous actor's release
+    // comes later than the roll that picked it) until the next actor of either side does (a party member
+    // can act between two enemies: the Beast Commander's, then Hellion's, then a Squirrel's)
     const next = entries.slice(i + 1).find((x) => x.type === LOG_TYPES.TURN);
-    const nextAction =
-      next && entries.slice(i + 1).find((x) => x.actor === next.actor && x.type !== LOG_TYPES.TURN);
-    const nextIsEnemy = next && /** @type {number} */ (idxOf.get(next.actor)) > partyLen;
     const fallback = entries.slice(i + 1).find((x) => x.type === LOG_TYPES.DEFEND);
     return [
       /** @type {number} */ (idxOf.get(e.actor)),
-      e.tick + CLOCK + 1,
-      nextIsEnemy
-        ? next.tick + CLOCK + 1
-        : next || fallback
-          ? /** @type {number} */ ((nextAction ?? fallback)?.tick) - 1 + CLOCK
+      (e.copiedAt ?? e.tick + 1) + CLOCK,
+      next
+        ? (next.copiedAt ?? next.tick + 1) + CLOCK
+        : fallback
+          ? /** @type {number} */ (fallback.tick) - 1 + CLOCK
           : /** @type {number} */ (roundEnd) + CLOCK + 19, // no later actor: the round's own length
       dec ? /** @type {number} */ (idxOf.get(dec.target)) : 0,
       dec?.type === LOG_TYPES.CAST
         ? /** @type {string} */ (moveName(dec.detail ?? ''))
         : dec
           ? 'Attack'
-          : null,
+          : entries.slice(i + 1).find((x) => x.type === LOG_TYPES.SKIP && x.actor === e.actor)
+            ? 'Skip'
+            : null,
     ];
   });
 
@@ -170,20 +172,25 @@ function playRound(battle, rng, idxOf, partyLen, round) {
     rng0: turnEntries.map(({ e }, t) =>
       rawAfter(
         round.rngAtConfirm,
-        e.rng - startCount + (sharedFrame(turns, t) ? (calls[turns[t][1]] ?? 0) : 0),
+        (e.copiedRng ?? e.rng) -
+          startCount +
+          (sharedFrame(turns, t) ? (calls[turns[t][1]] ?? 0) : 0),
       ),
     ),
     expectedRng0: round.enemyTurns.map((t) => t[2]),
-    windows: turnEntries.map(({ e }, t) =>
+    windows: turnEntries.map((_, t) =>
       windowCalls(
-        e.tick + CLOCK + 1 + sharedFrame(turns, t),
+        /** @type {number} */ (turns[t][1]) + sharedFrame(turns, t),
         round.enemyTurns[t][6] - sharedFrame(turns, t),
       ),
     ),
     expectedWindows: round.enemyTurns.map((t) => t[3]),
     damage,
     expectedDamage: round.hpChanges,
-    counters,
+    // the fixture has no counters (null) in a round where a party member attacks: an enemy's HP loss is
+    // then the attack, which the sim logs as the same kind of damage entry
+    counters:
+      round.partyActions?.some((a) => a.startsWith('0.')) && !round.counters.length ? [] : counters,
     expectedCounters: round.counters.map((c) => [c[0], c[1], c[2]]),
     rngEnd: rng.raw,
     expectedRngEnd: round.rngAtRoundEnd,
@@ -194,6 +201,8 @@ function playRound(battle, rng, idxOf, partyLen, round) {
     expectedBucket: round.bucketAtRoundEnd,
     sleep: battle.party.combatants.map((c) => !!c.status[STATUS.SLEEP]),
     expectedSleep: round.sleepAtRoundEnd,
+    balloon: battle.party.combatants.map((c) => Number(c.status[STATUS.BALLOON])),
+    expectedBalloon: round.balloonAtRoundEnd,
     expectedEnded: round.ended,
   };
 }
@@ -213,10 +222,20 @@ export function playRecordedRun(run) {
     );
     const enemies = new EnemyParty(keys.map((key) => new Enemy(key)));
     const rng = new RNG(rounds[0].rngAtConfirm);
-    const battle = new Battle({ party, enemies, rng, freeWillGate: 10 });
+    // a recorded timing input (the Holly Spirit's idle timer): each Command turn of the round, in order
+    /** @type {number[]} */
+    let idleTimers = [];
+    const battle = new Battle({
+      party,
+      enemies,
+      rng,
+      freeWillGate: 10,
+      idleTimer: () => idleTimers.shift() ?? 0,
+    });
     const idxOf = new Map(battle.combatants.map((c, i) => [c?.label, i]));
     const out = [];
     for (const round of rounds) {
+      idleTimers = (round.idleTimerT0 ?? []).map(([, , t0]) => t0);
       out.push(playRound(battle, rng, idxOf, party.combatants.length, round));
       if (round.ended) break;
     }
@@ -265,6 +284,8 @@ export function describeFixture(data, title) {
               assert.deepStrictEqual(r.bucket, r.expectedBucket, 'Bucket per member');
             if (r.expectedSleep)
               assert.deepStrictEqual(r.sleep, r.expectedSleep, 'Sleep per member');
+            if (r.expectedBalloon)
+              assert.deepStrictEqual(r.balloon, r.expectedBalloon, 'Balloon stage per member');
           });
         }
       }

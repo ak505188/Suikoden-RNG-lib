@@ -186,8 +186,10 @@ function playRound(battle, rng, idxOf, partyLen, round) {
       ),
     ),
     expectedWindows: round.enemyTurns.map((t) => t[3]),
-    damage,
-    expectedDamage: round.hpChanges,
+    // the fixture lists HP changes on the same frame in combatant order (the recorder's scan order), not
+    // the order the game applied them, so compare by (frame, combatant)
+    damage: [...damage].sort((a, b) => a[0] - b[0] || a[1] - b[1]),
+    expectedDamage: [...round.hpChanges].sort((a, b) => a[0] - b[0] || a[1] - b[1]),
     // the fixture has no counters (null) in a round where a party member attacks: an enemy's HP loss is
     // then the attack, which the sim logs as the same kind of damage entry
     counters:

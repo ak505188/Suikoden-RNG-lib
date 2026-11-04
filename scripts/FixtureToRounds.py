@@ -58,6 +58,8 @@ def normalise_move(move):
         return "Attack"
     if move.startswith("Special"):
         return "Special"
+    if move.replace(" ", "").startswith("RobotSoldier"):  # "Robot Soldier hp160 Attack in group 3 ...": the plain generic Attack
+        return "Attack"
     if move.startswith("Ghost spirits"):
         return "Ghost Spirits"
     if move.startswith("Holly Boy "):  # "Holly Boy Flee (cut short ...)": the label names the script path

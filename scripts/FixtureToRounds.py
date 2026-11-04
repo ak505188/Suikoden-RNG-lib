@@ -26,7 +26,8 @@ Usage: FixtureToRounds.py <slug> <key-per-slot> [fixture-root]
   are keyed by their HP at the first confirm.
   [fixture-root] defaults to ../Suikoden-Bizhawk-HUD/enemy_profiles/enemies next to this repo.
 """
-import json, sys, pathlib
+import json
+import re, sys, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 FIXTURE_ROOT = (
@@ -93,10 +94,32 @@ def game_order(run):
     ordered = []
     for i in range(len(chars)):
         match = [c for c in chars if (c["stats"]["HP"] - 1 == hp[i] or (hp[i] == 0 and c["HP"] == 0)) and (levels is None or c["LVL"] == levels[i])]
+        if not match and levels is not None:
+            # a run that sets the party's HP itself (Slot Man's hplevels: 100..998): the level alone
+            match = [c for c in chars if c["LVL"] == levels[i]]
         assert match, (run["party"], i, hp[i], levels and levels[i])
         ordered.append(match[0])
         chars.remove(match[0])
     return ordered
+
+
+# the Slot Man's outcome from its turn length (the fixture labels every turn "Slot F"): base length, name
+SLOT_OUTCOMES = {"Slot B": 183, "Slot D": 303, "Slot C": 292, "Slot E": 346, "Slot A": 356, "Slot F": 430}
+
+
+def slot_outcome(rd, t):
+    """The Slot Man's real outcome and its recorded wait. The turn is base + wait long, wait 0-3 (C, E, F, A;
+    D and B never wait), plus 1 when the first scan missed (the rolls then start a frame later, which the
+    sim's AI tick reproduces)."""
+    et = next(e for e in rd["enemy_turns"] if e["start"] == t["start"] and e["actor"] == t["actor"])
+    shift = min(int(k.split(":")[0]) for k in et["rand_timeline"].split(";") if int(k.split(":")[0]) >= 30) - 36
+    length = t["end"] - t["start"] - shift
+    for name, base in SLOT_OUTCOMES.items():
+        if base <= length <= base + 3 and not (name == "Slot A" and length > 358) and not (
+            name == "Slot E" and length > 349
+        ):
+            return name, length - base
+    raise AssertionError((rd["seed"], rd["round"], t, length))
 
 
 def ghost_wait(rd, t):
@@ -139,6 +162,8 @@ def convert(run):
         # a turn whose path is a death is recorded with the move the AI committed to before dying
         # (an actor can take several turns in a round once the Beast Commander's attacks are split from their own turns)
         def move_name(t):
+            if t["move"].startswith("Slot "):
+                return slot_outcome(rd, t)[0]
             return "Attack" if t["move"] == "Death (not a move)" else normalise_move(t["move"])
 
         def target_of(t):
@@ -200,6 +225,18 @@ def convert(run):
                     if any("idle_cycle_wait" in t for t in rd["turn_clock"])
                     else {}
                 ),
+                # the Slot Man's recorded wait (see slot_outcome): [actor, start, value]
+                **(
+                    {
+                        "idleCycleWait": [
+                            [t["actor"], t["start"], slot_outcome(rd, t)[1]]
+                            for t in rd["turn_clock"]
+                            if t["move"].startswith("Slot ")
+                        ]
+                    }
+                    if any(t["move"].startswith("Slot ") for t in rd["turn_clock"])
+                    else {}
+                ),
                 # a recorded timing input the sim doesn't model (the Holly Spirit's idle_timer_t0): [actor, start, value]
                 **(
                     {
@@ -214,7 +251,7 @@ def convert(run):
                 ),
                 "hpChanges": [[h["frame"], h["combatant"], h["hp_delta"]] for h in rd["hp_changes"]],
                 "frames": rd["frames"],
-                "randTimeline": rd["rand_timeline"],
+                "randTimeline": re.sub(r":>64(?=;|$)", ":90", rd["rand_timeline"]),  # recorder caps a frame at ">64"; the Slot Man A effect rolls 30 x 3 = 90 there (ai.json)
                 "enemyTurns": enemy_turns,
                 "counters": [[c["frame"], c["attacker"], c["countered_by"], c["damage"]] for c in rd["counters"] or []],
             }

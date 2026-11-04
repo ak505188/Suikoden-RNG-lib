@@ -144,27 +144,24 @@ function playRound(battle, rng, idxOf, partyLen, round) {
   // HP changes: the log's amount is the raw roll, the fixture's delta is what the HP actually moved
   // (a hit that kills deals at most the target's HP), so take the delta from the log's hp field
   const hp = new Map(battle.combatants.map((c, i) => [c?.label, round.hpAtConfirm[i - 1]]));
-  const damage = entries
+  // an entry that moves no HP (a heal on a full-HP combatant: the Slot Man's) is no HP change in the fixture
+  const changes = entries
     .filter((e) => e.type === LOG_TYPES.DAMAGE)
     .map((e) => {
       const idx = /** @type {number} */ (idxOf.get(e.target));
       const before = /** @type {number} */ (hp.get(e.target));
       const after = e.hp ?? Math.max(before - (e.amount ?? 0), 0);
       hp.set(e.target, after);
-      return [e.tick + CLOCK, idx, after - before];
-    });
+      return { e, idx, delta: after - before };
+    })
+    .filter(({ delta }) => delta !== 0);
+  const damage = changes.map(({ e, idx, delta }) => [e.tick + CLOCK, idx, delta]);
 
   // the party's counter-attacks: a DAMAGE entry on an enemy, whose attacker is the member it
-  // countered (the fixture infers counters from HP changes + the turn clock)
-  const counters = entries
-    .filter(
-      (e) => e.type === LOG_TYPES.DAMAGE && /** @type {number} */ (idxOf.get(e.target)) > partyLen,
-    )
-    .map((e) => [
-      e.tick + CLOCK,
-      /** @type {number} */ (idxOf.get(e.target)),
-      /** @type {number} */ (idxOf.get(e.actor)),
-    ]);
+  // countered (the fixture infers counters from HP changes + the turn clock): an HP loss, not a heal
+  const counters = changes
+    .filter(({ idx, delta }) => idx > partyLen && delta < 0)
+    .map(({ e, idx }) => [e.tick + CLOCK, idx, /** @type {number} */ (idxOf.get(e.actor))]);
 
   return {
     round: round.round,

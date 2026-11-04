@@ -51,6 +51,12 @@ def normalise_move(move):
         return "Command"
     if move.startswith("Attack (custom script"):
         return "Sleep"
+    if move.startswith("Attack (generic"):
+        return "Attack"
+    if move.startswith("Counter-hit reaction"):  # the Oannes' Attack, whose own hit reaction ran after a counter
+        return "Attack"
+    if move.startswith("Special"):
+        return "Special"
     if move.startswith("Holly Boy "):  # "Holly Boy Flee (cut short ...)": the label names the script path
         return move.split(" ")[2]
     return move

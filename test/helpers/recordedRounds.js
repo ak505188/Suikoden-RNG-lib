@@ -24,6 +24,7 @@ import assert from 'node:assert';
  * @property {boolean[]} [bucketAtRoundEnd] - per party member, Bucket set at the round end
  * @property {boolean[]} [sleepAtRoundEnd] - per party member, Sleep set at the round end
  * @property {number[]} [balloonAtRoundEnd] - per party member, its Balloon stage at the round end
+ * @property {[number, number, number][]} [idleCycleWait] - [actor, start, wait]: a Ghost Armor turn's idle-cycle wait
  * @property {[number, number, number][]} [idleTimerT0] - [actor, start, T0]: a Command turn's recorded idle timer
  * @property {string[]} [partyActions] - type.slot.target per member as recorded: 1.0.0 Defend, 0.0.N Attack
  *   combatant N. Absent: everyone Defends
@@ -235,7 +236,7 @@ export function playRecordedRun(run) {
     const idxOf = new Map(battle.combatants.map((c, i) => [c?.label, i]));
     const out = [];
     for (const round of rounds) {
-      idleTimers = (round.idleTimerT0 ?? []).map(([, , t0]) => t0);
+      idleTimers = (round.idleTimerT0 ?? round.idleCycleWait ?? []).map(([, , t0]) => t0);
       out.push(playRound(battle, rng, idxOf, party.combatants.length, round));
       if (round.ended) break;
     }

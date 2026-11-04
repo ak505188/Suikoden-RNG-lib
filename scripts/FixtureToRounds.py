@@ -7,6 +7,7 @@ seed entry per seed with its rounds in round order, 1-based combatant indices th
 Per round: rngAtConfirm / rngAtRoundEnd / hpAtConfirm / frames / ended,
 turns = turn_clock as [actor, start, end, stored_target, move],
 idleTimerT0 = [actor, start, idle_timer_t0] per turn that carries it (Holly Spirit's Command),
+idleCycleWait = [actor, start, wait] per turn that carries idle_cycle_wait (Ghost Armor; the true wait, see ghost_wait),
 turnOrderInputs = turn_order_inputs as [frame, combatant, action_tag, busy] (when recorded),
 partyActions = party_actions as recorded (type.slot.target; 1.0.0 = Defend, 0.0.N = Attack combatant N),
 hpChanges = hp_changes as [frame, combatant, hp_delta],
@@ -57,6 +58,8 @@ def normalise_move(move):
         return "Attack"
     if move.startswith("Special"):
         return "Special"
+    if move.startswith("Ghost spirits"):
+        return "Ghost Spirits"
     if move.startswith("Holly Boy "):  # "Holly Boy Flee (cut short ...)": the label names the script path
         return move.split(" ")[2]
     return move
@@ -87,11 +90,23 @@ def game_order(run):
     hp = first["hp_at_confirm"][: len(chars)]
     ordered = []
     for i in range(len(chars)):
-        match = [c for c in chars if c["stats"]["HP"] - 1 == hp[i] and (levels is None or c["LVL"] == levels[i])]
+        match = [c for c in chars if (c["stats"]["HP"] - 1 == hp[i] or (hp[i] == 0 and c["HP"] == 0)) and (levels is None or c["LVL"] == levels[i])]
         assert match, (run["party"], i, hp[i], levels and levels[i])
         ordered.append(match[0])
         chars.remove(match[0])
     return ordered
+
+
+def ghost_wait(rd, t):
+    """The Ghost Armor's idle_cycle_wait as the simulator's input: the frames its first hit is delayed. The
+    fixture value is turn frames - 93: exact with 2 or 3 targets, 2 low with one (the turn is 2 frames
+    shorter), and meaningless in the busy run (the turn started after the Ghost Armor's own hit reaction),
+    where it is read off the first hit instead: hits are at 44 + wait + {1, 47, 0} for list slots 1, 2, 3."""
+    et = next(e for e in rd["enemy_turns"] if e["start"] == t["start"] and e["actor"] == t["actor"])
+    if et["path"] != "ce08fa3d":
+        return t["idle_cycle_wait"] + (2 if et["hits"] == 1 else 0)
+    first = min(int(h.split(":")[0]) for h in et["damage_timeline"].split(";"))
+    return first - (44 if et["hits"] == 3 else 45)
 
 
 def convert(run):
@@ -171,6 +186,18 @@ def convert(run):
                     else {}
                 ),
                 "turns": turns,
+                # the Ghost Armor's idle_cycle_wait, as the sim's input (see ghost_wait): [actor, start, value]
+                **(
+                    {
+                        "idleCycleWait": [
+                            [t["actor"], t["start"], ghost_wait(rd, t)]
+                            for t in rd["turn_clock"]
+                            if "idle_cycle_wait" in t
+                        ]
+                    }
+                    if any("idle_cycle_wait" in t for t in rd["turn_clock"])
+                    else {}
+                ),
                 # a recorded timing input the sim doesn't model (the Holly Spirit's idle_timer_t0): [actor, start, value]
                 **(
                     {

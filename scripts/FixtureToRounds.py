@@ -24,6 +24,9 @@ Usage: FixtureToRounds.py <slug> <key-per-slot> [fixture-root]
   (e.g. BANDIT_RED,BANDIT_RED,BANDIT_YELLOW for bandit_lv7_hp55). For a fixture whose runs fight
   different groups, <HP>=<KEY> pairs instead (e.g. 80=HOLLY_BOY_2,350=HOLLY_SPIRIT): each run's slots
   are keyed by their HP at the first confirm.
+  A fixture whose runs fight different groups can also name the keys by enemy name (NAME=KEY pairs, e.g.
+  Nightmare=NIGHTMARE,"Red Slime"=RED_SLIME): each run's slots then follow its composition ("Red Slime Lv27 x3,
+  Nightmare Lv32"; a run without one has the fixture's own).
   [fixture-root] defaults to ../Suikoden-Bizhawk-HUD/enemy_profiles/enemies next to this repo.
 """
 import json
@@ -38,7 +41,8 @@ FIXTURE_ROOT = (
 
 slug = sys.argv[1]
 keys = sys.argv[2].split(",")
-keys_by_hp = dict(k.split("=") for k in keys) if "=" in keys[0] else None
+keys_by_hp = dict(k.split("=") for k in keys) if "=" in keys[0] and keys[0].split("=")[0].isdigit() else None
+keys_by_name = dict(k.split("=") for k in keys) if "=" in keys[0] and keys_by_hp is None else None
 fixture = json.load(open(FIXTURE_ROOT / slug / "sim_fixture.json"))
 
 
@@ -49,6 +53,8 @@ def normalise_move(move):
         return "Attack"
     if move.startswith("Skip"):
         return "Skip"
+    if move.startswith("Roulette pick"):  # the Nightmare's three outcomes, told apart by the fixture (turn length, hit count)
+        return {"0": "Heal", "1": "Long hit", "2": "Short hit"}[move[len("Roulette pick ")]]
     if move.startswith("Command"):
         return "Command"
     if move.startswith("Attack (custom script"):
@@ -147,8 +153,11 @@ def is_shield_special(t):
 def timing_events(t):
     """A Devil Shield / mage Kobold Special's recorded event ticks (the fixture's effect_burst and hit, turn clock
     with 1 = the turn's first tick), as the absolute round-clock frames [start + tick - 1]: [actor, start, burst
-    (null for the Kobold), hit]. The sim schedules its events on them and derives nothing."""
+    (null for the Kobold), hit]. The sim schedules its events on them and derives nothing. The Nightmare's heal has
+    only effect_start (its particle effect's first tick, the burst); the heal lands 128 ticks after it."""
     abs_ = lambda f: t["start"] + f - 1
+    if "effect_start" in t:
+        return [t["actor"], t["start"], abs_(t["effect_start"]), abs_(t["effect_start"]) + 128]
     return [t["actor"], t["start"], abs_(t["effect_burst"]) if "effect_burst" in t else None, abs_(t["hit"])]
 
 
@@ -166,11 +175,17 @@ def devil_wait(rd, t):
 
 def convert(run):
     party_len = len(run["party_characters"])
-    keys = (
-        [keys_by_hp[str(hp)] for hp in run["rounds"][0]["hp_at_confirm"][party_len:]]
-        if keys_by_hp
-        else globals()["keys"]
-    )
+    if keys_by_name:
+        keys = []
+        for part in (run.get("composition") or fixture["fight"]["composition"]).split(", "):
+            m = re.fullmatch(r"(.+?) Lv\d+(?: x(\d+))?", part)
+            keys += [keys_by_name[m.group(1)]] * int(m.group(2) or 1)
+    else:
+        keys = (
+            [keys_by_hp[str(hp)] for hp in run["rounds"][0]["hp_at_confirm"][party_len:]]
+            if keys_by_hp
+            else globals()["keys"]
+        )
 
     # every enemy slot, in combatant order (hp_at_confirm lists the party first)
     slots = list(range(party_len + 1, len(run["rounds"][0]["hp_at_confirm"]) + 1))
@@ -269,8 +284,8 @@ def convert(run):
                 ),
                 # the Devil Shield's and the mage Kobold's recorded Special event ticks (turn_clock hit / effect_burst) (see timing_events)
                 **(
-                    {"timingEvents": [timing_events(t) for t in rd["turn_clock"] if "hit" in t]}
-                    if any("hit" in t for t in rd["turn_clock"])
+                    {"timingEvents": [timing_events(t) for t in rd["turn_clock"] if "hit" in t or "effect_start" in t]}
+                    if any("hit" in t or "effect_start" in t for t in rd["turn_clock"])
                     else {}
                 ),
                 # the Devil Armor's Multi-hit wait (see devil_wait): [actor, start, value]
@@ -308,7 +323,7 @@ def convert(run):
         rounds.sort(key=lambda r: r["round"])
     return {
         "party": run["party"],
-        "scenario": run.get("scenario"),
+        "scenario": run.get("scenario") or (f"group {run['group']}" if run.get("group") else None),
         "characters": game_order(run),
         "enemies": [keys[i - party_len - 1] for i in slots],
         "seeds": [{"seed": s, "rounds": seeds[s]} for s in run["seeds"]],

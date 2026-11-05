@@ -27,7 +27,7 @@ Usage: FixtureToRounds.py <slug> <key-per-slot> [fixture-root]
   [fixture-root] defaults to ../Suikoden-Bizhawk-HUD/enemy_profiles/enemies next to this repo.
 """
 import json
-import re, sys, pathlib
+import re, subprocess, sys, pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 FIXTURE_ROOT = (
@@ -126,22 +126,6 @@ def slot_outcome(rd, t):
         ):
             return name, length - base
     raise AssertionError((rd["seed"], rd["round"], t, length))
-
-
-def is_kobold_special(t):
-    """A mage Kobold Special that carries no recorded hit tick (the Strong Arm's group fixture): its wait is derived"""
-    return t["path"] == "2a10451b" and "hit" not in t
-
-
-def kobold_special_wait(rd, t):
-    """The mage Kobold's Special wait, the frames its effect and the turn's end are late: the hit's damage roll
-    is the turn frame d - 1 (the first HP change is d), 242 + wait ticks after the last scan frame (the AI
-    tick), wait 0-5 (an idle-cycle input like the Ghost Armor's, not in the fixture)."""
-    et = next(e for e in rd["enemy_turns"] if e["start"] == t["start"] and e["actor"] == t["actor"])
-    roll = min(int(h.split(":")[0]) for h in et["damage_timeline"].split(";")) - 1
-    tick = max(int(k.split(":")[0]) for k in et["rand_timeline"].split(";") if int(k.split(":")[0]) < roll - 200)
-    assert 0 <= roll - tick - 242 <= 5, (rd["seed"], rd["round"], roll, tick)
-    return roll - tick - 242
 
 
 def ghost_wait(rd, t):
@@ -283,7 +267,7 @@ def convert(run):
                     if any(t["move"].startswith("Slot ") for t in rd["turn_clock"])
                     else {}
                 ),
-                # the Devil Shield's and the mage Kobold's recorded Special event ticks (see timing_events)
+                # the Devil Shield's and the mage Kobold's recorded Special event ticks (turn_clock hit / effect_burst) (see timing_events)
                 **(
                     {"timingEvents": [timing_events(t) for t in rd["turn_clock"] if "hit" in t]}
                     if any("hit" in t for t in rd["turn_clock"])
@@ -299,18 +283,6 @@ def convert(run):
                         ]
                     }
                     if any(is_devil_multihit(t) for t in rd["turn_clock"])
-                    else {}
-                ),
-                # the mage Kobold's Special wait where the fixture records no hit tick (see kobold_special_wait): [actor, start, value]
-                **(
-                    {
-                        "idleCycleWait": [
-                            [t["actor"], t["start"], kobold_special_wait(rd, t)]
-                            for t in rd["turn_clock"]
-                            if is_kobold_special(t)
-                        ]
-                    }
-                    if any(is_kobold_special(t) for t in rd["turn_clock"])
                     else {}
                 ),
                 # a recorded timing input the sim doesn't model (the Holly Spirit's idle_timer_t0): [actor, start, value]
@@ -352,4 +324,8 @@ out = {
 }
 path = ROOT / "test" / "fixtures" / "enemies" / f"{slug}_rounds.json"
 path.write_text(json.dumps(out, indent=1) + "\n")
+# the committed fixtures are prettier-formatted (npm run format): do the same, so a re-conversion diffs by content only
+prettier = ROOT / "node_modules" / ".bin" / "prettier"
+if prettier.exists():
+    subprocess.run([str(prettier), "--write", str(path)], check=True, capture_output=True)
 print(path, sum(len(s["rounds"]) for r in runs for s in r["seeds"]), "rounds")

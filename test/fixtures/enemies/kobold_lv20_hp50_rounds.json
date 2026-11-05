@@ -746,11 +746,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         4
+         null,
+         308
         ]
        ],
        "hpChanges": [
@@ -1187,11 +1188,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         0
+         null,
+         304
         ]
        ],
        "hpChanges": [
@@ -1337,11 +1339,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         1
+         null,
+         305
         ]
        ],
        "hpChanges": [
@@ -2069,11 +2072,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         306
         ]
        ],
        "hpChanges": [
@@ -2219,11 +2223,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         306
         ]
        ],
        "hpChanges": [
@@ -2369,11 +2374,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         0
+         null,
+         304
         ]
        ],
        "hpChanges": [
@@ -2519,11 +2525,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         0
+         null,
+         304
         ]
        ],
        "hpChanges": [
@@ -2674,11 +2681,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         306
         ]
        ],
        "hpChanges": [
@@ -3258,11 +3266,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         306
         ]
        ],
        "hpChanges": [
@@ -3408,11 +3417,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         306
         ]
        ],
        "hpChanges": [
@@ -3558,11 +3568,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         0
+         null,
+         304
         ]
        ],
        "hpChanges": [
@@ -3708,11 +3719,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         0
+         null,
+         304
         ]
        ],
        "hpChanges": [
@@ -4447,11 +4459,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         306
         ]
        ],
        "hpChanges": [
@@ -4597,11 +4610,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         3
+         null,
+         307
         ]
        ],
        "hpChanges": [
@@ -4747,11 +4761,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         0
+         null,
+         304
         ]
        ],
        "hpChanges": [
@@ -5622,11 +5637,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         306
         ]
        ],
        "hpChanges": [
@@ -5772,11 +5788,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         306
         ]
        ],
        "hpChanges": [
@@ -5922,11 +5939,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         0
+         null,
+         304
         ]
        ],
        "hpChanges": [
@@ -6072,11 +6090,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         3
+         null,
+         307
         ]
        ],
        "hpChanges": [
@@ -6656,11 +6675,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         306
         ]
        ],
        "hpChanges": [
@@ -6954,11 +6974,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         306
         ]
        ],
        "hpChanges": [
@@ -7538,11 +7559,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         3
+         null,
+         308
         ]
        ],
        "hpChanges": [
@@ -7688,11 +7710,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         0
+         null,
+         304
         ]
        ],
        "hpChanges": [
@@ -7838,11 +7861,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         1
+         null,
+         305
         ]
        ],
        "hpChanges": [
@@ -7993,11 +8017,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         306
         ]
        ],
        "hpChanges": [
@@ -8143,11 +8168,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         306
         ]
        ],
        "hpChanges": [
@@ -8293,11 +8319,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         0
+         null,
+         304
         ]
        ],
        "hpChanges": [
@@ -8591,11 +8618,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         307
         ]
        ],
        "hpChanges": [
@@ -9461,11 +9489,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         0
+         null,
+         304
         ]
        ],
        "hpChanges": [
@@ -9759,11 +9788,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         307
         ]
        ],
        "hpChanges": [
@@ -9909,11 +9939,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         306
         ]
        ],
        "hpChanges": [
@@ -10059,11 +10090,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         0
+         null,
+         304
         ]
        ],
        "hpChanges": [
@@ -10209,11 +10241,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         1
+         null,
+         305
         ]
        ],
        "hpChanges": [
@@ -10364,11 +10397,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         307
         ]
        ],
        "hpChanges": [
@@ -10514,11 +10548,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         306
         ]
        ],
        "hpChanges": [
@@ -10955,11 +10990,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         307
         ]
        ],
        "hpChanges": [
@@ -11248,11 +11284,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         0
+         null,
+         304
         ]
        ],
        "hpChanges": [
@@ -11546,11 +11583,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         306
         ]
        ],
        "hpChanges": [
@@ -11696,11 +11734,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         2
+         null,
+         306
         ]
        ],
        "hpChanges": [
@@ -11846,11 +11885,12 @@
          "Attack"
         ]
        ],
-       "idleCycleWait": [
+       "timingEvents": [
         [
          10,
          60,
-         0
+         null,
+         305
         ]
        ],
        "hpChanges": [

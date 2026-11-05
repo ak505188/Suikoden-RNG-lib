@@ -65,6 +65,8 @@ def normalise_move(move):
         return "Special" if " special" in move else "Attack"
     if move.replace(" ", "").startswith("RobotSoldier"):  # "Robot Soldier hp160 Attack in group 3 ...": the plain generic Attack
         return "Attack"
+    if move.startswith("Multi-hit"):  # the Devil Armor's three-member hit
+        return "Multi-hit"
     if move.startswith("Ghost spirits"):
         return "Ghost Spirits"
     if move.startswith("Holly Boy "):  # "Holly Boy Flee (cut short ...)": the label names the script path
@@ -127,7 +129,8 @@ def slot_outcome(rd, t):
 
 
 def is_kobold_special(t):
-    return t["path"] == "2a10451b"
+    """A mage Kobold Special that carries no recorded hit tick (the Strong Arm's group fixture): its wait is derived"""
+    return t["path"] == "2a10451b" and "hit" not in t
 
 
 def kobold_special_wait(rd, t):
@@ -151,6 +154,30 @@ def ghost_wait(rd, t):
         return t["idle_cycle_wait"] + (2 if et["hits"] == 1 else 0)
     first = min(int(h.split(":")[0]) for h in et["damage_timeline"].split(";"))
     return first - (44 if et["hits"] == 3 else 45)
+
+
+def is_shield_special(t):
+    return t["path"] == "fe3d5dd5"
+
+
+def timing_events(t):
+    """A Devil Shield / mage Kobold Special's recorded event ticks (the fixture's effect_burst and hit, turn clock
+    with 1 = the turn's first tick), as the absolute round-clock frames [start + tick - 1]: [actor, start, burst
+    (null for the Kobold), hit]. The sim schedules its events on them and derives nothing."""
+    abs_ = lambda f: t["start"] + f - 1
+    return [t["actor"], t["start"], abs_(t["effect_burst"]) if "effect_burst" in t else None, abs_(t["hit"])]
+
+
+def is_devil_multihit(t):
+    return t["path"] == "c32c9edf"
+
+
+def devil_wait(rd, t):
+    """The Devil Armor's idle-cycle wait: its first landing hit (list slot 3) is at turn frame 44 + wait (damage_timeline is turn-relative)
+    (0 in round 1, 13 in rounds 2-4 of the recording); read off the first hit as the Ghost Armor's is."""
+    et = next(e for e in rd["enemy_turns"] if e["start"] == t["start"] and e["actor"] == t["actor"])
+    assert et["hits"] == 3, (rd["seed"], rd["round"])
+    return min(int(h.split(":")[0]) for h in et["damage_timeline"].split(";")) - 44
 
 
 def convert(run):
@@ -256,7 +283,25 @@ def convert(run):
                     if any(t["move"].startswith("Slot ") for t in rd["turn_clock"])
                     else {}
                 ),
-                # the mage Kobold's Special wait (see kobold_special_wait): [actor, start, value]
+                # the Devil Shield's and the mage Kobold's recorded Special event ticks (see timing_events)
+                **(
+                    {"timingEvents": [timing_events(t) for t in rd["turn_clock"] if "hit" in t]}
+                    if any("hit" in t for t in rd["turn_clock"])
+                    else {}
+                ),
+                # the Devil Armor's Multi-hit wait (see devil_wait): [actor, start, value]
+                **(
+                    {
+                        "idleCycleWait": [
+                            [t["actor"], t["start"], devil_wait(rd, t)]
+                            for t in rd["turn_clock"]
+                            if is_devil_multihit(t)
+                        ]
+                    }
+                    if any(is_devil_multihit(t) for t in rd["turn_clock"])
+                    else {}
+                ),
+                # the mage Kobold's Special wait where the fixture records no hit tick (see kobold_special_wait): [actor, start, value]
                 **(
                     {
                         "idleCycleWait": [

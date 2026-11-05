@@ -1,0 +1,10005 @@
+{
+ "source": "Suikoden-Bizhawk-HUD enemy_profiles/enemies/veteran_soldier_lv26_hp250/sim_fixture.json (v1.0, 20 seeds across 1 party: Veteran Soldier Lv26 x3)",
+ "runs": [
+  {
+   "party": "S-hit",
+   "scenario": null,
+   "characters": [
+    {
+     "HP": 999,
+     "key": "MCDOHL",
+     "rune": {
+      "id": 0
+     },
+     "MP": [
+      8,
+      6,
+      5,
+      2
+     ],
+     "EXP": 505,
+     "LVL": 53,
+     "id": 8,
+     "stats": {
+      "LUK": 149,
+      "DEF": 150,
+      "HP": 999,
+      "MGC": 154,
+      "SPD": 1,
+      "PWR": 143,
+      "SKL": 0
+     },
+     "weapon": {
+      "lvl": 8,
+      "runePiece": {
+       "amount": 0,
+       "element": "NONE"
+      }
+     },
+     "inventory": [],
+     "status": {
+      "balloon": 0,
+      "poison": false
+     }
+    },
+    {
+     "HP": 999,
+     "key": "VIKTOR",
+     "rune": {
+      "id": 0
+     },
+     "MP": [
+      5,
+      2,
+      1,
+      0
+     ],
+     "EXP": 807,
+     "LVL": 47,
+     "id": 35,
+     "stats": {
+      "LUK": 106,
+      "DEF": 150,
+      "HP": 999,
+      "MGC": 79,
+      "SPD": 1,
+      "PWR": 152,
+      "SKL": 0
+     },
+     "weapon": {
+      "lvl": 3,
+      "runePiece": {
+       "amount": 0,
+       "element": "NONE"
+      }
+     },
+     "inventory": [],
+     "status": {
+      "balloon": 0,
+      "poison": false
+     }
+    },
+    {
+     "HP": 999,
+     "key": "FLIK",
+     "rune": {
+      "id": 0
+     },
+     "MP": [
+      7,
+      5,
+      4,
+      1
+     ],
+     "EXP": 32,
+     "LVL": 51,
+     "id": 17,
+     "stats": {
+      "LUK": 114,
+      "DEF": 150,
+      "HP": 999,
+      "MGC": 132,
+      "SPD": 1,
+      "PWR": 148,
+      "SKL": 0
+     },
+     "weapon": {
+      "lvl": 9,
+      "runePiece": {
+       "amount": 0,
+       "element": "NONE"
+      }
+     },
+     "inventory": [],
+     "status": {
+      "balloon": 0,
+      "poison": false
+     }
+    },
+    {
+     "HP": 999,
+     "key": "LUC",
+     "rune": {
+      "id": 0
+     },
+     "MP": [
+      9,
+      8,
+      6,
+      5
+     ],
+     "EXP": 565,
+     "LVL": 49,
+     "id": 26,
+     "stats": {
+      "LUK": 58,
+      "DEF": 150,
+      "HP": 999,
+      "MGC": 186,
+      "SPD": 1,
+      "PWR": 42,
+      "SKL": 0
+     },
+     "weapon": {
+      "lvl": 3,
+      "runePiece": {
+       "amount": 0,
+       "element": "NONE"
+      }
+     },
+     "inventory": [],
+     "status": {
+      "balloon": 0,
+      "poison": false
+     }
+    },
+    {
+     "HP": 999,
+     "key": "TENGAAR",
+     "rune": {
+      "id": 0
+     },
+     "MP": [
+      9,
+      7,
+      6,
+      4
+     ],
+     "EXP": 816,
+     "LVL": 51,
+     "id": 33,
+     "stats": {
+      "LUK": 77,
+      "DEF": 150,
+      "HP": 999,
+      "MGC": 175,
+      "SPD": 1,
+      "PWR": 96,
+      "SKL": 0
+     },
+     "weapon": {
+      "lvl": 7,
+      "runePiece": {
+       "amount": 0,
+       "element": "NONE"
+      }
+     },
+     "inventory": [],
+     "status": {
+      "balloon": 0,
+      "poison": false
+     }
+    },
+    {
+     "HP": 999,
+     "key": "HELLION",
+     "rune": {
+      "id": 0
+     },
+     "MP": [
+      7,
+      4,
+      3,
+      0
+     ],
+     "EXP": 666,
+     "LVL": 31,
+     "id": 59,
+     "stats": {
+      "LUK": 82,
+      "DEF": 150,
+      "HP": 999,
+      "MGC": 123,
+      "SPD": 1,
+      "PWR": 37,
+      "SKL": 0
+     },
+     "weapon": {
+      "lvl": 3,
+      "runePiece": {
+       "amount": 0,
+       "element": "NONE"
+      }
+     },
+     "inventory": [],
+     "status": {
+      "balloon": 0,
+      "poison": false
+     }
+    }
+   ],
+   "enemies": [
+    "VETERAN_SOLDIER_BOW",
+    "VETERAN_SOLDIER_BOW",
+    "VETERAN_SOLDIER_BOW"
+   ],
+   "seeds": [
+    {
+     "seed": "08d12dfd",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 147926526,
+       "rngAtRoundEnd": 2943524918,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         96,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         2,
+         -11
+        ],
+        [
+         137,
+         3,
+         -13
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         3514259524,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         2130584805,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         1778604660,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 147926527,
+       "rngAtRoundEnd": 1964877427,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         73,
+         1,
+         "Attack"
+        ],
+        [
+         7,
+         73,
+         85,
+         3,
+         "Attack"
+        ],
+        [
+         9,
+         85,
+         97,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         114,
+         1,
+         -13
+        ],
+        [
+         126,
+         3,
+         -13
+        ],
+        [
+         138,
+         2,
+         -13
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:3;62:2;72:7;74:3;84:5;86:2;96:3;99:2;102:1;114:1;126:1;138:1;151:1;163:1;175:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         3230906061,
+         12,
+         1,
+         "Attack",
+         13
+        ],
+        [
+         7,
+         73,
+         2333094401,
+         8,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         85,
+         3483377721,
+         5,
+         2,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 147926528,
+       "rngAtRoundEnd": 3720783736,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         96,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         2,
+         -12
+        ],
+        [
+         137,
+         3,
+         -11
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         2947552598,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         3431451855,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         9863174,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 147926529,
+       "rngAtRoundEnd": 1290840030,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         3,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         96,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -11
+        ],
+        [
+         125,
+         3,
+         -12
+        ],
+        [
+         137,
+         2,
+         -12
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:3;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         2664199135,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         4081885380,
+         8,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         792544348,
+         5,
+         2,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    },
+    {
+     "seed": "17156075",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 387276918,
+       "rngAtRoundEnd": 2224932270,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         96,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         2,
+         -11
+        ],
+        [
+         137,
+         3,
+         -13
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         194931324,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         3485161917,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         244279980,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 387276919,
+       "rngAtRoundEnd": 702885349,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         97,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -11
+        ],
+        [
+         125,
+         1,
+         -12
+        ],
+        [
+         138,
+         3,
+         -13
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:2;83:5;85:1;86:2;96:3;99:2;102:1;113:1;125:1;138:1;150:1;162:1;175:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         4206545157,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         2351685891,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         2619064586,
+         6,
+         3,
+         "Attack",
+         13
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 387276920,
+       "rngAtRoundEnd": 3767022507,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         85,
+         3,
+         "Attack"
+        ],
+        [
+         9,
+         85,
+         100,
+         1,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -12
+        ],
+        [
+         126,
+         3,
+         -12
+        ],
+        [
+         141,
+         1,
+         -12
+        ]
+       ],
+       "frames": 232,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:2;74:3;84:5;86:1;87:1;88:1;89:2;99:3;102:2;105:1;113:1;126:1;141:1;150:1;163:1;178:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         3923191694,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         722257492,
+         10,
+         3,
+         "Attack",
+         13
+        ],
+        [
+         9,
+         85,
+         4172509770,
+         8,
+         1,
+         "Attack",
+         15
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 387276921,
+       "rngAtRoundEnd": 2326413459,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         86,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         86,
+         99,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -13
+        ],
+        [
+         127,
+         1,
+         -12
+        ],
+        [
+         140,
+         3,
+         -12
+        ]
+       ],
+       "frames": 231,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:2;74:2;75:2;85:5;87:1;88:2;98:3;101:2;104:1;113:1;127:1;140:1;150:1;164:1;177:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         3639838231,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         3387796389,
+         11,
+         1,
+         "Attack",
+         14
+        ],
+        [
+         9,
+         86,
+         3048204192,
+         6,
+         3,
+         "Attack",
+         13
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    },
+    {
+     "seed": "1fe68e72",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 535203443,
+       "rngAtRoundEnd": 3392645323,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         96,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         2,
+         -13
+        ],
+        [
+         137,
+         3,
+         -13
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         3441356001,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         1820845022,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         53203025,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 535203444,
+       "rngAtRoundEnd": 1552450966,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         73,
+         2,
+         "Attack"
+        ],
+        [
+         7,
+         73,
+         85,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         85,
+         99,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         114,
+         2,
+         -12
+        ],
+        [
+         126,
+         1,
+         -12
+        ],
+        [
+         140,
+         3,
+         -12
+        ]
+       ],
+       "frames": 231,
+       "randTimeline": "29:1;59:9;61:3;62:3;72:7;74:2;84:5;86:1;87:1;88:2;98:3;101:2;104:1;114:1;126:1;140:1;151:1;163:1;177:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         3158002538,
+         13,
+         2,
+         "Attack",
+         13
+        ],
+        [
+         7,
+         73,
+         648085039,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         85,
+         1190565606,
+         7,
+         3,
+         "Attack",
+         14
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 535203445,
+       "rngAtRoundEnd": 3660323778,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         84,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         96,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -12
+        ],
+        [
+         125,
+         1,
+         -13
+        ],
+        [
+         137,
+         3,
+         -12
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         2874649075,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         1992270945,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         1976306656,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 535203446,
+       "rngAtRoundEnd": 2641560264,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         3,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         85,
+         2,
+         "Attack"
+        ],
+        [
+         9,
+         85,
+         98,
+         1,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         3,
+         -13
+        ],
+        [
+         126,
+         2,
+         -12
+        ],
+        [
+         139,
+         1,
+         -12
+        ]
+       ],
+       "frames": 230,
+       "randTimeline": "29:1;59:9;61:4;71:7;73:2;74:3;84:5;86:1;87:2;97:3;100:2;103:1;113:1;126:1;139:1;150:1;163:1;176:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         2591295612,
+         11,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         3506113795,
+         10,
+         2,
+         "Attack",
+         13
+        ],
+        [
+         9,
+         85,
+         1599047665,
+         6,
+         1,
+         "Attack",
+         13
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    },
+    {
+     "seed": "2e2ac0ea",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 774553835,
+       "rngAtRoundEnd": 190551276,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         85,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         85,
+         99,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -12
+        ],
+        [
+         126,
+         1,
+         -13
+        ],
+        [
+         140,
+         3,
+         -12
+        ]
+       ],
+       "frames": 231,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:2;74:2;84:5;86:1;87:1;88:2;98:3;101:2;104:1;113:1;126:1;140:1;150:1;163:1;177:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         122027801,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         4139198903,
+         9,
+         1,
+         "Attack",
+         13
+        ],
+        [
+         9,
+         85,
+         1741653180,
+         7,
+         3,
+         "Attack",
+         14
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 774553836,
+       "rngAtRoundEnd": 3040290896,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         85,
+         2,
+         "Attack"
+        ],
+        [
+         7,
+         85,
+         99,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         126,
+         2,
+         -12
+        ],
+        [
+         140,
+         3,
+         -12
+        ]
+       ],
+       "frames": 231,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;74:2;84:5;86:1;87:1;88:2;98:3;101:2;104:1;113:1;126:1;140:1;150:1;163:1;177:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         4133641634,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         3825855659,
+         9,
+         2,
+         "Attack",
+         13
+        ],
+        [
+         7,
+         85,
+         4239898400,
+         7,
+         3,
+         "Attack",
+         14
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 774553837,
+       "rngAtRoundEnd": 902143962,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         84,
+         3,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         96,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         3,
+         -12
+        ],
+        [
+         137,
+         2,
+         -12
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:3;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         3850288171,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         181321888,
+         8,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         4121953208,
+         5,
+         2,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 774553838,
+       "rngAtRoundEnd": 750912276,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         85,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         85,
+         97,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         126,
+         2,
+         -12
+        ],
+        [
+         138,
+         3,
+         -12
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;74:2;84:5;86:2;96:3;99:2;102:1;113:1;126:1;138:1;150:1;163:1;175:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         3566934708,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         831755413,
+         9,
+         2,
+         "Attack",
+         13
+        ],
+        [
+         8,
+         85,
+         2920281090,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    },
+    {
+     "seed": "3c6ef362",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 1013904227,
+       "rngAtRoundEnd": 4178152497,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         84,
+         3,
+         "Attack"
+        ],
+        [
+         7,
+         84,
+         97,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         3,
+         -13
+        ],
+        [
+         138,
+         2,
+         -12
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:3;83:5;85:1;86:2;96:3;99:2;102:1;113:1;125:1;138:1;150:1;162:1;175:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         1097666897,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         235031950,
+         8,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         84,
+         1653506150,
+         6,
+         2,
+         "Attack",
+         13
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 1013904228,
+       "rngAtRoundEnd": 3044748616,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         85,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         85,
+         98,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -12
+        ],
+        [
+         126,
+         1,
+         -11
+        ],
+        [
+         139,
+         3,
+         -11
+        ]
+       ],
+       "frames": 230,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:2;74:2;84:5;86:1;87:2;97:3;100:2;103:1;113:1;126:1;139:1;150:1;163:1;176:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         814313434,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         1397841664,
+         9,
+         1,
+         "Attack",
+         13
+        ],
+        [
+         8,
+         85,
+         1963819121,
+         6,
+         3,
+         "Attack",
+         13
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 1013904229,
+       "rngAtRoundEnd": 2218233150,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         84,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         100,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -13
+        ],
+        [
+         125,
+         1,
+         -11
+        ],
+        [
+         141,
+         3,
+         -12
+        ]
+       ],
+       "frames": 232,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:2;83:5;85:1;86:1;87:1;88:1;89:2;99:3;102:2;105:1;113:1;125:1;141:1;150:1;162:1;178:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         530959971,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         4063380561,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         1972632464,
+         9,
+         3,
+         "Attack",
+         16
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 1013904230,
+       "rngAtRoundEnd": 3940793727,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         97,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -13
+        ],
+        [
+         125,
+         2,
+         -12
+        ],
+        [
+         138,
+         3,
+         -12
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;83:5;85:1;86:2;96:3;99:2;102:1;113:1;125:1;138:1;150:1;162:1;175:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         247606508,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         2186332525,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         2921376028,
+         6,
+         3,
+         "Attack",
+         13
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    },
+    {
+     "seed": "4540215f",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 1161830752,
+       "rngAtRoundEnd": 1852681879,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         85,
+         3,
+         "Attack"
+        ],
+        [
+         8,
+         85,
+         97,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         126,
+         3,
+         -12
+        ],
+        [
+         138,
+         2,
+         -12
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;74:3;84:5;86:2;96:3;99:2;102:1;113:1;126:1;138:1;150:1;163:1;175:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         49124278,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         2865682351,
+         10,
+         3,
+         "Attack",
+         13
+        ],
+        [
+         8,
+         85,
+         1960977917,
+         5,
+         2,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 1161830753,
+       "rngAtRoundEnd": 4111246645,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         85,
+         3,
+         "Attack"
+        ],
+        [
+         8,
+         85,
+         97,
+         1,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -12
+        ],
+        [
+         126,
+         3,
+         -12
+        ],
+        [
+         138,
+         1,
+         -13
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:2;74:3;84:5;86:2;96:3;99:2;102:1;113:1;126:1;138:1;150:1;163:1;175:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         4060738111,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         2667855117,
+         10,
+         3,
+         "Attack",
+         13
+        ],
+        [
+         8,
+         85,
+         2566252875,
+         5,
+         1,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 1161830754,
+       "rngAtRoundEnd": 1933164153,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         86,
+         3,
+         "Attack"
+        ],
+        [
+         9,
+         86,
+         103,
+         1,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -12
+        ],
+        [
+         127,
+         3,
+         -12
+        ],
+        [
+         144,
+         1,
+         -12
+        ]
+       ],
+       "frames": 235,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:2;74:2;75:3;85:5;87:1;88:1;89:1;90:1;91:1;92:2;102:3;105:2;108:1;113:1;127:1;144:1;150:1;164:1;181:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         3777384648,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         1038426718,
+         12,
+         3,
+         "Attack",
+         14
+        ],
+        [
+         9,
+         86,
+         2176055490,
+         10,
+         1,
+         "Attack",
+         17
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 1161830755,
+       "rngAtRoundEnd": 4049671446,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         84,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         98,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -11
+        ],
+        [
+         125,
+         1,
+         -12
+        ],
+        [
+         139,
+         3,
+         -13
+        ]
+       ],
+       "frames": 230,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:2;83:5;85:1;86:1;87:2;97:3;100:2;103:1;113:1;125:1;139:1;150:1;162:1;176:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         3494031185,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         3703965615,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         1329874534,
+         7,
+         3,
+         "Attack",
+         14
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    },
+    {
+     "seed": "538453d7",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 1401181144,
+       "rngAtRoundEnd": 576042586,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         101,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -12
+        ],
+        [
+         125,
+         1,
+         -13
+        ],
+        [
+         142,
+         3,
+         -12
+        ]
+       ],
+       "frames": 233,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:2;83:5;85:1;86:1;87:1;88:1;89:1;90:2;100:3;103:2;106:1;113:1;125:1;142:1;150:1;162:1;179:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         1024763374,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         3185354676,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         849347967,
+         10,
+         3,
+         "Attack",
+         17
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 1401181145,
+       "rngAtRoundEnd": 513447894,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         3,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         96,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         3,
+         -12
+        ],
+        [
+         137,
+         2,
+         -12
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:3;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         741409911,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         575725692,
+         8,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         3156394772,
+         5,
+         2,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 1401181146,
+       "rngAtRoundEnd": 447596254,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         85,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         85,
+         99,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -12
+        ],
+        [
+         140,
+         3,
+         -13
+        ]
+       ],
+       "frames": 242,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:2;74:2;84:5;86:1;87:1;88:2;98:3;101:2;104:1;113:1;140:1;150:1;177:1;188:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         458056448,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         4221465174,
+         9,
+         1,
+         "Attack",
+         13
+        ],
+        [
+         8,
+         85,
+         1897235919,
+         7,
+         3,
+         "Attack",
+         14
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 1401181147,
+       "rngAtRoundEnd": 2326204410,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         73,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         73,
+         85,
+         3,
+         "Attack"
+        ],
+        [
+         9,
+         85,
+         99,
+         1,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         114,
+         2,
+         -12
+        ],
+        [
+         126,
+         3,
+         -12
+        ],
+        [
+         140,
+         1,
+         -12
+        ]
+       ],
+       "frames": 231,
+       "randTimeline": "29:1;59:9;61:3;62:3;72:7;74:3;84:5;86:1;87:1;88:2;98:3;101:2;104:1;114:1;126:1;140:1;151:1;163:1;177:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         174702985,
+         13,
+         2,
+         "Attack",
+         13
+        ],
+        [
+         8,
+         73,
+         3019293938,
+         8,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         85,
+         2825257034,
+         7,
+         1,
+         "Attack",
+         14
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    },
+    {
+     "seed": "5c5581d4",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 1549107669,
+       "rngAtRoundEnd": 3200986096,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         84,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         98,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -12
+        ],
+        [
+         125,
+         1,
+         -11
+        ],
+        [
+         139,
+         3,
+         -12
+        ]
+       ],
+       "frames": 230,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:2;83:5;85:1;86:1;87:2;97:3;100:2;103:1;113:1;125:1;139:1;150:1;162:1;176:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         4271188051,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         160400833,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         2194510528,
+         7,
+         3,
+         "Attack",
+         14
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 1549107670,
+       "rngAtRoundEnd": 3960922894,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         96,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         2,
+         -12
+        ],
+        [
+         137,
+         3,
+         -12
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         3987834588,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         3206376093,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         2773638924,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 1549107671,
+       "rngAtRoundEnd": 54585007,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         96,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -11
+        ],
+        [
+         125,
+         2,
+         -13
+        ],
+        [
+         137,
+         3,
+         -12
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         3704481125,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         3856809618,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         1889268181,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 1549107672,
+       "rngAtRoundEnd": 3779744078,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         84,
+         3,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         96,
+         1,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -12
+        ],
+        [
+         125,
+         3,
+         -13
+        ],
+        [
+         137,
+         1,
+         -13
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:3;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         3421127662,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         3862050228,
+         8,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         516065100,
+         5,
+         1,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    },
+    {
+     "seed": "6a99b44c",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 1788458061,
+       "rngAtRoundEnd": 2882931642,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         84,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         96,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -12
+        ],
+        [
+         125,
+         1,
+         -12
+        ],
+        [
+         137,
+         3,
+         -12
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         951859851,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         3343439289,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         45189784,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 1788458062,
+       "rngAtRoundEnd": 89826631,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         84,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         96,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -12
+        ],
+        [
+         125,
+         1,
+         -12
+        ],
+        [
+         137,
+         3,
+         -12
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         668506388,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         1714010890,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         2352236589,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 1788458063,
+       "rngAtRoundEnd": 3630959655,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         96,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         2,
+         -12
+        ],
+        [
+         137,
+         3,
+         -12
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         385152925,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         916419434,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         354943501,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 1788458064,
+       "rngAtRoundEnd": 2595256427,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         96,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         125,
+         2,
+         -11
+        ],
+        [
+         137,
+         3,
+         -12
+        ]
+       ],
+       "frames": 231,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;83:5;85:2;95:3;98:2;101:1;125:1;137:1;162:1;174:1;177:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         101799462,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         1566852959,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         3765540054,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    },
+    {
+     "seed": "78dde6c4",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 2027808453,
+       "rngAtRoundEnd": 2135108189,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         96,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         2,
+         -12
+        ],
+        [
+         137,
+         3,
+         -12
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         1927498947,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         970129496,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         589360307,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 2027808454,
+       "rngAtRoundEnd": 896150538,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         72,
+         3,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         7,
+         84,
+         97,
+         1,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         3,
+         -12
+        ],
+        [
+         125,
+         2,
+         -12
+        ],
+        [
+         138,
+         1,
+         -12
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:4;71:7;73:3;83:5;85:1;86:2;96:3;99:2;102:1;113:1;125:1;138:1;150:1;162:1;175:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         1644145484,
+         11,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         2056420371,
+         8,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         84,
+         2910542475,
+         6,
+         1,
+         "Attack",
+         13
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 2027808455,
+       "rngAtRoundEnd": 2913954097,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         73,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         73,
+         85,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         85,
+         100,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         114,
+         1,
+         -12
+        ],
+        [
+         126,
+         2,
+         -13
+        ],
+        [
+         141,
+         3,
+         -13
+        ]
+       ],
+       "frames": 232,
+       "randTimeline": "29:1;59:9;61:3;62:2;72:7;74:2;84:5;86:1;87:1;88:1;89:2;99:3;102:2;105:1;114:1;126:1;141:1;151:1;163:1;178:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         1360792021,
+         12,
+         1,
+         "Attack",
+         13
+        ],
+        [
+         9,
+         73,
+         2404488841,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         85,
+         2624634536,
+         8,
+         3,
+         "Attack",
+         15
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 2027808456,
+       "rngAtRoundEnd": 2213431093,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         84,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         100,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -13
+        ],
+        [
+         125,
+         1,
+         -12
+        ],
+        [
+         141,
+         3,
+         -13
+        ]
+       ],
+       "frames": 232,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:2;83:5;85:1;86:1;87:1;88:1;89:2;99:3;102:2;105:1;113:1;125:1;141:1;150:1;162:1;178:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         1077438558,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         1638192548,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         522042159,
+         9,
+         3,
+         "Attack",
+         16
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    },
+    {
+     "seed": "81af14c1",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 2175734978,
+       "rngAtRoundEnd": 3302821242,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         96,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         2,
+         -13
+        ],
+        [
+         137,
+         3,
+         -11
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         878956328,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         3600779897,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         398283352,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 2175734979,
+       "rngAtRoundEnd": 1120015350,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         84,
+         1,
+         "Attack"
+        ],
+        [
+         7,
+         84,
+         98,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -12
+        ],
+        [
+         125,
+         1,
+         -12
+        ],
+        [
+         139,
+         3,
+         -12
+        ]
+       ],
+       "frames": 230,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:2;83:5;85:1;86:1;87:2;97:3;100:2;103:1;113:1;125:1;139:1;150:1;162:1;176:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         595602865,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         1872095503,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         84,
+         1548078406,
+         7,
+         3,
+         "Attack",
+         14
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 2175734980,
+       "rngAtRoundEnd": 2960043930,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         97,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -12
+        ],
+        [
+         125,
+         1,
+         -11
+        ],
+        [
+         138,
+         3,
+         -12
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:2;83:5;85:1;86:2;96:3;99:2;102:1;113:1;125:1;138:1;150:1;162:1;175:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         312249402,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         242667104,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         3855125211,
+         6,
+         3,
+         "Attack",
+         13
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 2175734981,
+       "rngAtRoundEnd": 3300591267,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         84,
+         3,
+         "Attack"
+        ],
+        [
+         7,
+         84,
+         96,
+         1,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -12
+        ],
+        [
+         125,
+         3,
+         -13
+        ],
+        [
+         137,
+         1,
+         -12
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:3;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         28895939,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         2908206001,
+         8,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         84,
+         3384813545,
+         5,
+         1,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    },
+    {
+     "seed": "8ff34739",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 2415085370,
+       "rngAtRoundEnd": 2432864192,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         72,
+         3,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         96,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         3,
+         -12
+        ],
+        [
+         125,
+         1,
+         -13
+        ],
+        [
+         137,
+         2,
+         -12
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:4;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         1854595424,
+         11,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         926894263,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         2992645006,
+         5,
+         2,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 2415085371,
+       "rngAtRoundEnd": 2972858003,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         96,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         2,
+         -12
+        ],
+        [
+         137,
+         3,
+         -12
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         1571241961,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         1310823238,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         2274555225,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 2415085372,
+       "rngAtRoundEnd": 2593965472,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         3,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         99,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         3,
+         -11
+        ],
+        [
+         140,
+         2,
+         -13
+        ]
+       ],
+       "frames": 231,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:3;83:5;85:1;86:1;87:1;88:2;98:3;101:2;104:1;113:1;125:1;140:1;150:1;162:1;177:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         1287888498,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         1961256763,
+         8,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         1705804467,
+         8,
+         2,
+         "Attack",
+         15
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 2415085373,
+       "rngAtRoundEnd": 4206717418,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         84,
+         3,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         96,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -13
+        ],
+        [
+         125,
+         3,
+         -13
+        ],
+        [
+         137,
+         2,
+         -12
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:3;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         1004535035,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         2611690288,
+         8,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         4012851272,
+         5,
+         2,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    },
+    {
+     "seed": "9e3779b1",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 2654435762,
+       "rngAtRoundEnd": 1237918043,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         97,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -13
+        ],
+        [
+         125,
+         2,
+         -12
+        ],
+        [
+         138,
+         3,
+         -13
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;83:5;85:1;86:2;96:3;99:2;102:1;113:1;125:1;138:1;150:1;162:1;175:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         2830234520,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         2014966825,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         1624601288,
+         6,
+         3,
+         "Attack",
+         13
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 2654435763,
+       "rngAtRoundEnd": 1971564007,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         73,
+         2,
+         "Attack"
+        ],
+        [
+         9,
+         73,
+         85,
+         1,
+         "Attack"
+        ],
+        [
+         7,
+         85,
+         97,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         114,
+         2,
+         -12
+        ],
+        [
+         126,
+         1,
+         -13
+        ],
+        [
+         138,
+         3,
+         -12
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:3;62:3;72:7;74:2;84:5;86:2;96:3;99:2;102:1;114:1;126:1;138:1;151:1;163:1;175:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         2546881057,
+         13,
+         2,
+         "Attack",
+         13
+        ],
+        [
+         9,
+         73,
+         2099988522,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         85,
+         396192205,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 2654435764,
+       "rngAtRoundEnd": 3267873802,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         3,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         96,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         3,
+         -13
+        ],
+        [
+         125,
+         1,
+         -12
+        ],
+        [
+         137,
+         2,
+         -12
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:4;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         2263527594,
+         11,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         2044758089,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         3596400488,
+         5,
+         2,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 2654435765,
+       "rngAtRoundEnd": 2001160828,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         85,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         85,
+         102,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         126,
+         2,
+         -12
+        ],
+        [
+         143,
+         3,
+         -12
+        ]
+       ],
+       "frames": 234,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;74:2;84:5;86:1;87:1;88:1;89:1;90:1;91:2;101:3;104:2;107:1;113:1;126:1;143:1;150:1;163:1;180:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         1980174131,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         3966267400,
+         9,
+         2,
+         "Attack",
+         13
+        ],
+        [
+         8,
+         85,
+         2936591833,
+         10,
+         3,
+         "Attack",
+         17
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    },
+    {
+     "seed": "a708a7ae",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 2802362287,
+       "rngAtRoundEnd": 1799796445,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         84,
+         3,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         97,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         3,
+         -13
+        ],
+        [
+         138,
+         2,
+         -13
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:3;83:5;85:1;86:2;96:3;99:2;102:1;113:1;125:1;138:1;150:1;162:1;175:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         1781691901,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         350649930,
+         8,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         582519970,
+         6,
+         2,
+         "Attack",
+         13
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 2802362288,
+       "rngAtRoundEnd": 1170026279,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         3,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         97,
+         1,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -12
+        ],
+        [
+         125,
+         3,
+         -13
+        ],
+        [
+         138,
+         1,
+         -11
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:3;83:5;85:1;86:2;96:3;99:2;102:1;113:1;125:1;138:1;150:1;162:1;175:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         1498338438,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         918251276,
+         8,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         3278212004,
+         6,
+         1,
+         "Attack",
+         13
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 2802362289,
+       "rngAtRoundEnd": 3334011900,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         72,
+         3,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         7,
+         84,
+         96,
+         1,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         3,
+         -12
+        ],
+        [
+         125,
+         2,
+         -12
+        ],
+        [
+         137,
+         1,
+         -13
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:4;71:7;73:3;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         1214984975,
+         11,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         1069484498,
+         8,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         84,
+         3063284010,
+         5,
+         1,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 2802362290,
+       "rngAtRoundEnd": 3783096155,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         84,
+         3,
+         "Attack"
+        ],
+        [
+         7,
+         84,
+         96,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -13
+        ],
+        [
+         125,
+         3,
+         -13
+        ],
+        [
+         137,
+         2,
+         -12
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:3;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         931631512,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         2301950505,
+         8,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         84,
+         3208693089,
+         5,
+         2,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    },
+    {
+     "seed": "b54cda26",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 3041712679,
+       "rngAtRoundEnd": 1953711381,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         84,
+         3,
+         "Attack"
+        ],
+        [
+         7,
+         84,
+         97,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         3,
+         -13
+        ],
+        [
+         138,
+         2,
+         -13
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:3;83:5;85:1;86:2;96:3;99:2;102:1;113:1;125:1;138:1;150:1;162:1;175:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         2757330997,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         1705227042,
+         8,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         84,
+         2728166522,
+         6,
+         2,
+         "Attack",
+         13
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 3041712680,
+       "rngAtRoundEnd": 2294258718,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         3,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         97,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -13
+        ],
+        [
+         125,
+         3,
+         -12
+        ],
+        [
+         138,
+         2,
+         -12
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:3;83:5;85:1;86:2;96:3;99:2;102:1;113:1;125:1;138:1;150:1;162:1;175:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         2473977534,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         2355660567,
+         8,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         740246031,
+         6,
+         2,
+         "Attack",
+         13
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 3041712681,
+       "rngAtRoundEnd": 2970793586,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         3,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         98,
+         1,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         3,
+         -12
+        ],
+        [
+         125,
+         2,
+         -12
+        ],
+        [
+         139,
+         1,
+         -12
+        ]
+       ],
+       "frames": 230,
+       "randTimeline": "29:1;59:9;61:4;71:7;73:3;83:5;85:1;86:1;87:2;97:3;100:2;103:1;113:1;125:1;139:1;150:1;162:1;176:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         2190624071,
+         11,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         1339270762,
+         8,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         3571357890,
+         7,
+         1,
+         "Attack",
+         14
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 3041712682,
+       "rngAtRoundEnd": 2975353392,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         3,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         84,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         96,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         3,
+         -13
+        ],
+        [
+         125,
+         1,
+         -12
+        ],
+        [
+         137,
+         2,
+         -12
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:4;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         1907270608,
+         11,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         1763309543,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         3881967486,
+         5,
+         2,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    },
+    {
+     "seed": "be1e0823",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 3189639204,
+       "rngAtRoundEnd": 354344875,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         73,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         73,
+         85,
+         2,
+         "Attack"
+        ],
+        [
+         7,
+         85,
+         97,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         114,
+         1,
+         -12
+        ],
+        [
+         126,
+         2,
+         -12
+        ],
+        [
+         138,
+         3,
+         -12
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:3;62:2;72:7;74:2;84:5;86:2;96:3;99:2;102:1;114:1;126:1;138:1;151:1;163:1;175:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         1708788378,
+         12,
+         1,
+         "Attack",
+         13
+        ],
+        [
+         8,
+         73,
+         924036158,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         85,
+         3854424625,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 3189639205,
+       "rngAtRoundEnd": 355750322,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         84,
+         3,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         96,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         3,
+         -12
+        ],
+        [
+         137,
+         2,
+         -12
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:3;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         1425434915,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         691343672,
+         8,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         2085408592,
+         5,
+         2,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 3189639206,
+       "rngAtRoundEnd": 440909674,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         72,
+         3,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         98,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         3,
+         -11
+        ],
+        [
+         125,
+         1,
+         -13
+        ],
+        [
+         139,
+         2,
+         -12
+        ]
+       ],
+       "frames": 230,
+       "randTimeline": "29:1;59:9;61:4;71:7;73:2;83:5;85:1;86:1;87:2;97:3;100:2;103:1;113:1;125:1;139:1;150:1;162:1;176:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         1142081452,
+         11,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         363997171,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         3563779002,
+         7,
+         2,
+         "Attack",
+         14
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 3189639207,
+       "rngAtRoundEnd": 1067768859,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         73,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         73,
+         85,
+         2,
+         "Attack"
+        ],
+        [
+         9,
+         85,
+         98,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         114,
+         1,
+         -13
+        ],
+        [
+         126,
+         2,
+         -12
+        ],
+        [
+         139,
+         3,
+         -12
+        ]
+       ],
+       "frames": 230,
+       "randTimeline": "29:1;59:9;61:3;62:2;72:7;74:2;84:5;86:1;87:2;97:3;100:2;103:1;114:1;126:1;139:1;151:1;163:1;176:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         858727989,
+         12,
+         1,
+         "Attack",
+         13
+        ],
+        [
+         8,
+         73,
+         292291817,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         85,
+         2996700808,
+         6,
+         3,
+         "Attack",
+         13
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    },
+    {
+     "seed": "cc623a9b",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 3428989596,
+       "rngAtRoundEnd": 3645134636,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         73,
+         3,
+         "Attack"
+        ],
+        [
+         8,
+         73,
+         85,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         85,
+         100,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         114,
+         3,
+         -12
+        ],
+        [
+         126,
+         1,
+         -12
+        ],
+        [
+         141,
+         2,
+         -12
+        ]
+       ],
+       "frames": 232,
+       "randTimeline": "29:1;59:9;61:3;62:4;72:7;74:2;84:5;86:1;87:1;88:1;89:2;99:3;102:2;105:1;114:1;126:1;141:1;151:1;163:1;178:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         2684427474,
+         14,
+         3,
+         "Attack",
+         13
+        ],
+        [
+         8,
+         73,
+         865165156,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         85,
+         2921704431,
+         8,
+         2,
+         "Attack",
+         15
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 3428989597,
+       "rngAtRoundEnd": 4113475505,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         85,
+         3,
+         "Attack"
+        ],
+        [
+         7,
+         85,
+         98,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -11
+        ],
+        [
+         126,
+         3,
+         -12
+        ],
+        [
+         139,
+         2,
+         -13
+        ]
+       ],
+       "frames": 230,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;74:3;84:5;86:1;87:2;97:3;100:2;103:1;113:1;126:1;139:1;150:1;163:1;176:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         2401074011,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         2045920784,
+         10,
+         3,
+         "Attack",
+         13
+        ],
+        [
+         7,
+         85,
+         4076590566,
+         6,
+         2,
+         "Attack",
+         13
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 3428989598,
+       "rngAtRoundEnd": 3541135574,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         96,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         2,
+         -13
+        ],
+        [
+         137,
+         3,
+         -13
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         2117720548,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         2696354309,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         700023828,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 3428989599,
+       "rngAtRoundEnd": 3929764983,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         96,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -11
+        ],
+        [
+         125,
+         2,
+         -12
+        ],
+        [
+         137,
+         3,
+         -13
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         1834367085,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         3346787834,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         4110620381,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    },
+    {
+     "seed": "daa66d13",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 3668339988,
+       "rngAtRoundEnd": 1474558570,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         98,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         2,
+         -13
+        ],
+        [
+         139,
+         3,
+         -12
+        ]
+       ],
+       "frames": 230,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;83:5;85:1;86:1;87:2;97:3;100:2;103:1;113:1;125:1;139:1;150:1;162:1;176:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         3660066570,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         2750064371,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         934440634,
+         7,
+         3,
+         "Attack",
+         14
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 3668339989,
+       "rngAtRoundEnd": 4117933225,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         84,
+         3,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         98,
+         1,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -11
+        ],
+        [
+         125,
+         3,
+         -12
+        ],
+        [
+         139,
+         1,
+         -12
+        ]
+       ],
+       "frames": 230,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:3;83:5;85:1;86:1;87:2;97:3;100:2;103:1;113:1;125:1;139:1;150:1;162:1;176:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         3376713107,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         3147445505,
+         8,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         3775365945,
+         7,
+         1,
+         "Attack",
+         14
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 3668339990,
+       "rngAtRoundEnd": 2155653244,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         3,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         84,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         96,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         3,
+         -11
+        ],
+        [
+         125,
+         1,
+         -12
+        ],
+        [
+         137,
+         2,
+         -13
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:4;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         3093359644,
+         11,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         903569699,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         3115557290,
+         5,
+         2,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 3668339991,
+       "rngAtRoundEnd": 2496200581,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         2,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         84,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         97,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         2,
+         -12
+        ],
+        [
+         125,
+         1,
+         -12
+        ],
+        [
+         138,
+         3,
+         -13
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:3;71:7;73:2;83:5;85:1;86:2;96:3;99:2;102:1;113:1;125:1;138:1;150:1;162:1;175:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         2810006181,
+         10,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         4183556003,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         2400860714,
+         6,
+         3,
+         "Attack",
+         13
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    },
+    {
+     "seed": "e3779b10",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 3816266513,
+       "rngAtRoundEnd": 687575887,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         8,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         85,
+         2,
+         "Attack"
+        ],
+        [
+         7,
+         85,
+         97,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         126,
+         2,
+         -12
+        ],
+        [
+         138,
+         3,
+         -12
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;74:2;84:5;86:2;96:3;99:2;102:1;113:1;126:1;138:1;150:1;163:1;175:1",
+       "enemyTurns": [
+        [
+         8,
+         60,
+         2611523951,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         1085747476,
+         9,
+         2,
+         "Attack",
+         13
+        ],
+        [
+         7,
+         85,
+         3457177461,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 3816266514,
+       "rngAtRoundEnd": 938309655,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         3,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         85,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         85,
+         98,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         3,
+         -12
+        ],
+        [
+         126,
+         1,
+         -12
+        ],
+        [
+         139,
+         2,
+         -12
+        ]
+       ],
+       "frames": 230,
+       "randTimeline": "29:1;59:9;61:4;71:7;73:2;74:2;84:5;86:1;87:2;97:3;100:2;103:1;113:1;126:1;139:1;150:1;163:1;176:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         2328170488,
+         11,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         3799224623,
+         9,
+         1,
+         "Attack",
+         13
+        ],
+        [
+         9,
+         85,
+         2107690452,
+         6,
+         2,
+         "Attack",
+         13
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 3816266515,
+       "rngAtRoundEnd": 437359750,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         3,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         9,
+         84,
+         96,
+         1,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         3,
+         -12
+        ],
+        [
+         125,
+         2,
+         -12
+        ],
+        [
+         137,
+         1,
+         -12
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:4;71:7;73:3;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         2044817025,
+         11,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         4223263404,
+         8,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         84,
+         4010007364,
+         5,
+         1,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 3816266516,
+       "rngAtRoundEnd": 305438931,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         73,
+         3,
+         "Attack"
+        ],
+        [
+         7,
+         73,
+         86,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         86,
+         102,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         114,
+         3,
+         -12
+        ],
+        [
+         127,
+         1,
+         -12
+        ],
+        [
+         143,
+         2,
+         -13
+        ]
+       ],
+       "frames": 234,
+       "randTimeline": "29:1;59:9;61:3;62:4;72:7;74:2;75:2;85:5;87:1;88:1;89:1;90:1;91:2;101:3;104:2;107:1;114:1;127:1;143:1;151:1;164:1;180:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         1761463562,
+         14,
+         3,
+         "Attack",
+         13
+        ],
+        [
+         7,
+         73,
+         2658936028,
+         9,
+         1,
+         "Attack",
+         13
+        ],
+        [
+         8,
+         86,
+         3836309661,
+         9,
+         2,
+         "Attack",
+         16
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    },
+    {
+     "seed": "f1bbcd88",
+     "rounds": [
+      {
+       "round": 1,
+       "rngAtConfirm": 4055616905,
+       "rngAtRoundEnd": 267062493,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         72,
+         3,
+         "Attack"
+        ],
+        [
+         8,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         7,
+         84,
+         98,
+         1,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         3,
+         -12
+        ],
+        [
+         125,
+         2,
+         -12
+        ]
+       ],
+       "frames": 255,
+       "randTimeline": "29:1;59:9;61:4;71:7;73:3;83:5;85:1;86:1;87:2;97:3;100:2;103:1;113:1;125:1;150:1;162:1;201:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         3587163047,
+         11,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         72,
+         3644972106,
+         8,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         84,
+         794929826,
+         7,
+         1,
+         "Attack",
+         14
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 2,
+       "rngAtConfirm": 4055616906,
+       "rngAtRoundEnd": 2883033922,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         96,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         2,
+         -13
+        ],
+        [
+         137,
+         3,
+         -13
+        ]
+       ],
+       "frames": 228,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;83:5;85:2;95:3;98:2;101:1;113:1;125:1;137:1;150:1;162:1;174:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         3303809584,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         3090758113,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         2619635552,
+         5,
+         3,
+         "Attack",
+         12
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 3,
+       "rngAtConfirm": 4055616907,
+       "rngAtRoundEnd": 212599008,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         7,
+         60,
+         72,
+         1,
+         "Attack"
+        ],
+        [
+         9,
+         72,
+         84,
+         2,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         97,
+         3,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         1,
+         -12
+        ],
+        [
+         125,
+         2,
+         -13
+        ],
+        [
+         138,
+         3,
+         -12
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:2;71:7;73:2;83:5;85:1;86:2;96:3;99:2;102:1;113:1;125:1;138:1;150:1;162:1;175:1",
+       "enemyTurns": [
+        [
+         7,
+         60,
+         3020456121,
+         9,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         9,
+         72,
+         3741191638,
+         7,
+         2,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         1735264809,
+         6,
+         3,
+         "Attack",
+         13
+        ]
+       ],
+       "counters": []
+      },
+      {
+       "round": 4,
+       "rngAtConfirm": 4055616908,
+       "rngAtRoundEnd": 1303052083,
+       "hpAtConfirm": [
+        998,
+        998,
+        998,
+        998,
+        998,
+        998,
+        250,
+        250,
+        250
+       ],
+       "ended": false,
+       "bucketAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "sleepAtRoundEnd": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+       ],
+       "balloonAtRoundEnd": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+       ],
+       "partyActions": [
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0",
+        "1.0.0"
+       ],
+       "turns": [
+        [
+         9,
+         60,
+         72,
+         3,
+         "Attack"
+        ],
+        [
+         7,
+         72,
+         84,
+         1,
+         "Attack"
+        ],
+        [
+         8,
+         84,
+         97,
+         2,
+         "Attack"
+        ]
+       ],
+       "hpChanges": [
+        [
+         113,
+         3,
+         -12
+        ],
+        [
+         125,
+         1,
+         -12
+        ],
+        [
+         138,
+         2,
+         -12
+        ]
+       ],
+       "frames": 229,
+       "randTimeline": "29:1;59:9;61:4;71:7;73:2;83:5;85:1;86:2;96:3;99:2;102:1;113:1;125:1;138:1;150:1;162:1;175:1",
+       "enemyTurns": [
+        [
+         9,
+         60,
+         2737102658,
+         11,
+         3,
+         "Attack",
+         12
+        ],
+        [
+         7,
+         72,
+         622121153,
+         7,
+         1,
+         "Attack",
+         12
+        ],
+        [
+         8,
+         84,
+         3401124288,
+         6,
+         2,
+         "Attack",
+         13
+        ]
+       ],
+       "counters": []
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

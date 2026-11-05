@@ -53,12 +53,16 @@ def normalise_move(move):
         return "Command"
     if move.startswith("Attack (custom script"):
         return "Sleep"
+    if move.startswith(("Attack (throw", "Attack (punch")):  # the Strong Arm's two scripts; the sim picks one from the enemies' busy flags
+        return "Attack"
     if move.startswith("Attack (generic"):
         return "Attack"
     if move.startswith("Counter-hit reaction"):  # the Oannes' Attack, whose own hit reaction ran after a counter
         return "Attack"
     if move.startswith("Special"):
         return "Special"
+    if move.startswith("Kobold Lv20"):  # the wm2 Kobolds' labels name the hp and the cut-short length; "special" is the hp50 mage's
+        return "Special" if " special" in move else "Attack"
     if move.replace(" ", "").startswith("RobotSoldier"):  # "Robot Soldier hp160 Attack in group 3 ...": the plain generic Attack
         return "Attack"
     if move.startswith("Ghost spirits"):
@@ -120,6 +124,21 @@ def slot_outcome(rd, t):
         ):
             return name, length - base
     raise AssertionError((rd["seed"], rd["round"], t, length))
+
+
+def is_kobold_special(t):
+    return t["path"] == "2a10451b"
+
+
+def kobold_special_wait(rd, t):
+    """The mage Kobold's Special wait, the frames its effect and the turn's end are late: the hit's damage roll
+    is the turn frame d - 1 (the first HP change is d), 242 + wait ticks after the last scan frame (the AI
+    tick), wait 0-5 (an idle-cycle input like the Ghost Armor's, not in the fixture)."""
+    et = next(e for e in rd["enemy_turns"] if e["start"] == t["start"] and e["actor"] == t["actor"])
+    roll = min(int(h.split(":")[0]) for h in et["damage_timeline"].split(";")) - 1
+    tick = max(int(k.split(":")[0]) for k in et["rand_timeline"].split(";") if int(k.split(":")[0]) < roll - 200)
+    assert 0 <= roll - tick - 242 <= 5, (rd["seed"], rd["round"], roll, tick)
+    return roll - tick - 242
 
 
 def ghost_wait(rd, t):
@@ -235,6 +254,18 @@ def convert(run):
                         ]
                     }
                     if any(t["move"].startswith("Slot ") for t in rd["turn_clock"])
+                    else {}
+                ),
+                # the mage Kobold's Special wait (see kobold_special_wait): [actor, start, value]
+                **(
+                    {
+                        "idleCycleWait": [
+                            [t["actor"], t["start"], kobold_special_wait(rd, t)]
+                            for t in rd["turn_clock"]
+                            if is_kobold_special(t)
+                        ]
+                    }
+                    if any(is_kobold_special(t) for t in rd["turn_clock"])
                     else {}
                 ),
                 # a recorded timing input the sim doesn't model (the Holly Spirit's idle_timer_t0): [actor, start, value]

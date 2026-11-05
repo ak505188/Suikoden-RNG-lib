@@ -20,7 +20,9 @@ describe('Beast Commander turn-order polls see the recorded acted / busy bytes',
   for (const run of Rounds.runs) {
     for (const { seed, rounds } of run.seeds) {
       it(`${run.party}${run.scenario ? ` ${run.scenario}` : ''} seed ${seed}`, () => {
-        const party = PlayerParty.fromCharacterJSON(structuredClone(/** @type {any} */ (run.characters)));
+        const party = PlayerParty.fromCharacterJSON(
+          structuredClone(/** @type {any} */ (run.characters)),
+        );
         const enemies = new EnemyParty(
           run.enemies.map((key) => new Enemy(/** @type {any} */ (ENEMY_KEYS)[key])),
         );
@@ -55,13 +57,19 @@ describe('Beast Commander turn-order polls see the recorded acted / busy bytes',
           for (const { frame, eligible } of polls) {
             /** @type {Map<number, [number, number]>} */
             const state = new Map();
-            for (const [f, combatant, tag, busy] of /** @type {number[][]} */ (round.turnOrderInputs))
+            for (const [f, combatant, tag, busy] of /** @type {number[][]} */ (
+              round.turnOrderInputs
+            ))
               if (f < frame) state.set(combatant, [tag, busy]);
             const recorded = [...state]
               .filter(([, [tag, busy]]) => tag === 0 && busy === 0)
               .map(([c]) => c)
               .sort((a, b) => a - b);
-            assert.deepStrictEqual(eligible, recorded, `round ${round.round}, poll at frame ${frame}`);
+            assert.deepStrictEqual(
+              eligible,
+              recorded,
+              `round ${round.round}, poll at frame ${frame}`,
+            );
           }
         }
       });

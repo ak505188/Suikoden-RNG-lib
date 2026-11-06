@@ -68,6 +68,8 @@ def normalise_move(move):
         return "Attack"
     if move.startswith("Attack (generic"):
         return "Attack"
+    if move == "Attack (countered)":  # the target's counter is carried by the round's counters, the turn is the plain Attack
+        return "Attack"
     if move.startswith("Counter-hit reaction"):  # the Oannes' Attack, whose own hit reaction ran after a counter
         return "Attack"
     if move.startswith("Sunshine"):  # the Sunshine King's only move: "Sunshine (hits all six members)"
@@ -208,7 +210,7 @@ def devil_wait(rd, t):
 
 # the roll count at a frame the recorder capped at ">64" when it is not the Slot Man's 90: the Sorcerer's effect starts
 # 20 particles x 4 rolls = 80 (its turn's exact rand_calls minus the known frames, 80 in all 47 Specials)
-BURST_ROLLS = {"sorcerer_lv40_hp200": 80}
+BURST_ROLLS = {"sorcerer_lv40_hp200": 80, "magus_lv54_hp300": 80}  # the Magus's Special is the same effect (ai.json: the 80-roll burst)
 
 
 def convert(run):
@@ -227,6 +229,13 @@ def convert(run):
 
     # every enemy slot, in combatant order (hp_at_confirm lists the party first)
     slots = list(range(party_len + 1, len(run["rounds"][0]["hp_at_confirm"]) + 1))
+    if slug == "whip_master_lv51_hp700" and keys.count("WHIP_MASTER") == 1:
+        # the composition text lists types, not slots: the lone Whip Master stands where the fixture's Command turns say
+        # (group 3, Hell Hound x5 + Whip Master: actor 10, the formation in Areas.js)
+        commander = {t["actor"] for rd in run["rounds"] for t in rd["turn_clock"] if t["move"] == "Command"}
+        assert len(commander) == 1
+        others = iter(k for k in keys if k != "WHIP_MASTER")
+        keys = ["WHIP_MASTER" if slot in commander else next(others) for slot in slots]
     assert len(slots) == len(keys), f"{len(slots)} enemy slots, {len(keys)} keys"
 
     seeds = {}

@@ -61,6 +61,8 @@ def normalise_move(move):
         return "Sleep"
     if move.startswith(("Attack (throw", "Attack (punch")):  # the Strong Arm's two scripts; the sim picks one from the enemies' busy flags
         return "Attack"
+    if move.replace(" ", "").startswith("HellHoundAttack"):  # "Hell Hound Attack (cut short)": the plain generic Attack
+        return "Attack"
     if move.startswith("Attack (generic"):
         return "Attack"
     if move.startswith("Counter-hit reaction"):  # the Oannes' Attack, whose own hit reaction ran after a counter
@@ -158,6 +160,8 @@ def timing_events(t):
     (null for the Kobold), hit]. The sim schedules its events on them and derives nothing. The Nightmare's heal has
     only effect_start (its particle effect's first tick, the burst); the heal lands 128 ticks after it."""
     abs_ = lambda f: t["start"] + f - 1
+    if "effect_start" in t and "hit" in t:  # the Sorcerer's Special: both ticks recorded
+        return [t["actor"], t["start"], abs_(t["effect_start"]), abs_(t["hit"])]
     if "effect_start" in t:
         return [t["actor"], t["start"], abs_(t["effect_start"]), abs_(t["effect_start"]) + 128]
     return [t["actor"], t["start"], abs_(t["effect_burst"]) if "effect_burst" in t else None, abs_(t["hit"])]
@@ -173,6 +177,11 @@ def devil_wait(rd, t):
     et = next(e for e in rd["enemy_turns"] if e["start"] == t["start"] and e["actor"] == t["actor"])
     assert et["hits"] == 3, (rd["seed"], rd["round"])
     return min(int(h.split(":")[0]) for h in et["damage_timeline"].split(";")) - 44
+
+
+# the roll count at a frame the recorder capped at ">64" when it is not the Slot Man's 90: the Sorcerer's effect starts
+# 20 particles x 4 rolls = 80 (its turn's exact rand_calls minus the known frames, 80 in all 47 Specials)
+BURST_ROLLS = {"sorcerer_lv40_hp200": 80}
 
 
 def convert(run):
@@ -323,7 +332,7 @@ def convert(run):
                 ),
                 "hpChanges": [[h["frame"], h["combatant"], h["hp_delta"]] for h in rd["hp_changes"]],
                 "frames": rd["frames"],
-                "randTimeline": re.sub(r":>64(?=;|$)", ":90", rd["rand_timeline"]),  # recorder caps a frame at ">64"; the Slot Man A effect rolls 30 x 3 = 90 there (ai.json)
+                "randTimeline": re.sub(r":>64(?=;|$)", f":{BURST_ROLLS.get(slug, 90)}", rd["rand_timeline"]),  # recorder caps a frame at ">64"; the Slot Man A effect rolls 30 x 3 = 90 there (ai.json)
                 "enemyTurns": enemy_turns,
                 "counters": [[c["frame"], c["attacker"], c["countered_by"], c["damage"]] for c in rd["counters"] or []],
             }

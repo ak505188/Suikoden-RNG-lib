@@ -47,6 +47,9 @@ fixture = json.load(open(FIXTURE_ROOT / slug / "sim_fixture.json"))
 
 
 def normalise_move(move):
+    if move.startswith("[") and "] " in move:  # "[Rock Buster] Attack": another enemy's turn in the Queen Ant's fixture (group 11)
+        move = move.split("] ", 1)[1]
+
     """The simulator's names for moves the fixture labels with their script: a Flying Squirrel's own
     turn is the plain Attack; the Beast Commander's Command and its Sleep attack."""
     if move.startswith("Flying Squirrel"):
@@ -173,7 +176,7 @@ def timing_events(t, rd=None):
     (null for the Kobold), hit]. The sim schedules its events on them and derives nothing. The Nightmare's heal has
     only effect_start (its particle effect's first tick, the burst); the heal lands 128 ticks after it."""
     abs_ = lambda f: t["start"] + f - 1
-    if slug in ALL_MEMBER_HIT_SLUGS and t["path"] in ("07d7a5a7", "2a85a2cf"):
+    if slug in ALL_MEMBER_HIT_SLUGS and t["path"] in ("07d7a5a7", "2a85a2cf", "67829c0f", "523048c7"):
         return [t["actor"], t["start"], None, abs_(all_members_hit(rd, t))]
     if "effect_start" in t and "hit" in t:  # the Sorcerer's Special: both ticks recorded
         return [t["actor"], t["start"], abs_(t["effect_start"]), abs_(t["hit"])]
@@ -183,7 +186,12 @@ def timing_events(t, rd=None):
 
 
 # the Cave of the Past fixtures, whose Special `hit` must be re-read from the damage timeline (see all_members_hit)
-ALL_MEMBER_HIT_SLUGS = ("clay_doll_lv44_hp450", "banshee_lv41_hp120", "red_elemental_lv42_hp80")
+ALL_MEMBER_HIT_SLUGS = ("clay_doll_lv44_hp450", "banshee_lv41_hp120", "red_elemental_lv42_hp80", "earth_golem_lv53_hp600", "queen_ant_lv52_hp800")  # the Golem's fixture has no `hit` on its Special (path 67829c0f): read from the burst too
+
+
+def has_event(t):
+    """A turn that carries a recorded Special event tick: the fixture's hit / effect_start, or the Earth Golem's Special (no `hit` in its fixture)"""
+    return "hit" in t or "effect_start" in t or (slug == "earth_golem_lv53_hp600" and t["path"] == "67829c0f") or (slug == "queen_ant_lv52_hp800" and t["path"] == "523048c7")
 
 
 def is_devil_multihit(t):
@@ -331,8 +339,8 @@ def convert(run):
                 ),
                 # the Devil Shield's and the mage Kobold's recorded Special event ticks (turn_clock hit / effect_burst) (see timing_events)
                 **(
-                    {"timingEvents": [timing_events(t, rd) for t in rd["turn_clock"] if not is_larvae(t) and ("hit" in t or "effect_start" in t)]}
-                    if any(not is_larvae(t) and ("hit" in t or "effect_start" in t) for t in rd["turn_clock"])
+                    {"timingEvents": [timing_events(t, rd) for t in rd["turn_clock"] if not is_larvae(t) and has_event(t)]}
+                    if any(not is_larvae(t) and has_event(t) for t in rd["turn_clock"])
                     else {}
                 ),
                 # each Larvae Attack's recorded resolve tick, [actor, start, absolute frame] (its hit when it hit): it follows the

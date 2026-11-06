@@ -27,6 +27,10 @@ import assert from 'node:assert';
  * @property {boolean[]} [silenceAtRoundEnd] - per party member, Silence set at the round end
  * @property {number[]} [balloonAtRoundEnd] - per party member, its Balloon stage at the round end
  * @property {[number, number, number][]} [idleCycleWait] - [actor, start, wait]: a Ghost Armor turn's idle-cycle wait
+ * @property {number} [clockShift] - the round started this many frames late on the recording's clock (its first roll is
+ *   on frame 29 + clockShift; every turn start moves with it, the absolute recorded inputs do not)
+ * @property {[number, number, number][]} [attackResolves] - [actor, start, frame]: a Larvae Attack's recorded resolve frame (its hit
+ *   when it hit; menu-dependent, so an input)
  * @property {[number, number, number | null, number][]} [timingEvents] - [actor, start, burst, hit]: a Special's recorded
  *   event frames on the round clock (the Devil Shield's, the mage Kobold's)
  * @property {[number, number, number][]} [idleTimerT0] - [actor, start, T0]: a Command turn's recorded idle timer
@@ -45,7 +49,9 @@ import assert from 'node:assert';
 
 /** @typedef {{ party: string, scenario?: string | null, characters: any[], enemies: string[], seeds: { seed: string, rounds: RecordedRound[] }[] }} RecordedRun */
 
-const CLOCK = 30;
+const BASE_CLOCK = 30;
+/** The round clock's offset of the round being played: BASE_CLOCK + the round's recorded one-frame shift (clockShift). */
+let CLOCK = BASE_CLOCK;
 
 /** The RNG's raw value `calls` calls after `from` */
 const rawAfter = (/** @type {number} */ from, /** @type {number} */ calls) =>
@@ -81,6 +87,7 @@ const sharedFrame = (turns, t) => (t > 0 && turns[t - 1][2] === turns[t][1] ? 1 
  * @param {RecordedRound} round
  */
 function playRound(battle, rng, idxOf, partyLen, round) {
+  CLOCK = BASE_CLOCK + (round.clockShift ?? 0);
   rng.raw = round.rngAtConfirm;
   // hpAtConfirm is 1-based: index 0 = combatant 1
   battle.combatants.forEach((c, i) => {
@@ -235,14 +242,26 @@ export function playRecordedRun(run) {
     let idleTimers = [];
     /** @type {[number, number, number | null, number][]} */
     let timingEvents = [];
+    /** @type {[number, number, number][]} */
+    let attackResolves = [];
     const battle = new Battle({
       party,
       enemies,
       rng,
       freeWillGate: 10,
-      idleTimer: () => idleTimers.shift() ?? 0,
+      idleTimer: () => {
+        // a menu-dependent input: never defaulted here, the fixture must carry it
+        const t = idleTimers.shift();
+        if (t === undefined)
+          throw new Error('menu-dependent idle timer requested but not recorded');
+        return t;
+      },
       // round-clock frames -> sim ticks: a roll on frame F is the sim tick F - CLOCK - 1 (the HP change is
       // the hit frame itself)
+      attackResolve: (enemy) => {
+        const i = attackResolves.findIndex(([actor]) => actor === idxOf.get(enemy.label));
+        return i < 0 ? undefined : attackResolves.splice(i, 1)[0][2] - CLOCK;
+      },
       timingEvents: () => {
         const e = timingEvents.shift();
         return e && { burst: e[2] === null ? undefined : e[2] - CLOCK - 1, hit: e[3] - CLOCK };
@@ -251,7 +270,9 @@ export function playRecordedRun(run) {
     const idxOf = new Map(battle.combatants.map((c, i) => [c?.label, i]));
     const out = [];
     for (const round of rounds) {
+      CLOCK = BASE_CLOCK + (round.clockShift ?? 0);
       timingEvents = [...(round.timingEvents ?? [])];
+      attackResolves = [...(round.attackResolves ?? [])];
       idleTimers = (round.idleTimerT0 ?? round.idleCycleWait ?? []).map(([, , t0]) => t0);
       out.push(playRound(battle, rng, idxOf, party.combatants.length, round));
       if (round.ended) break;

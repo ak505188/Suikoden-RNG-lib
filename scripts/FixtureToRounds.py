@@ -71,7 +71,7 @@ def normalise_move(move):
         return "Sunshine"
     if move.startswith("Special"):
         return "Special"
-    if move.startswith(("Clay Doll ", "Banshee ")):  # the Red Elemental groups label the other enemies' turns "Clay Doll Attack", "Banshee Special"
+    if move.startswith(("Clay Doll ", "Banshee ", "Larvae ", "Demon Sorcerer ", "Hell Unicorn ")):  # the group runs label the other enemies' turns "Clay Doll Attack", "Banshee Special", "Larvae Attack"
         return move.split(" ")[-1]
     if move.startswith("Kobold Lv20"):  # the wm2 Kobolds' labels name the hp and the cut-short length; "special" is the hp50 mage's
         return "Special" if " special" in move else "Attack"
@@ -142,12 +142,11 @@ def slot_outcome(rd, t):
 
 def ghost_wait(rd, t):
     """The Ghost Armor's idle_cycle_wait as the simulator's input: the frames its first hit is delayed. The
-    fixture value is turn frames - 93: exact with 2 or 3 targets, 2 low with one (the turn is 2 frames
-    shorter), and meaningless in the busy run (the turn started after the Ghost Armor's own hit reaction),
+    fixture value is exact since 2026-11-04 (before it was turn frames - 93: 2 low with one target), and meaningless in the busy run (the turn started after the Ghost Armor's own hit reaction),
     where it is read off the first hit instead: hits are at 44 + wait + {1, 47, 0} for list slots 1, 2, 3."""
     et = next(e for e in rd["enemy_turns"] if e["start"] == t["start"] and e["actor"] == t["actor"])
     if et["path"] != "ce08fa3d":
-        return t["idle_cycle_wait"] + (2 if et["hits"] == 1 else 0)
+        return t["idle_cycle_wait"]  # exact in every run since the 2026-11-04 fixtures (older ones read 2 low with one target)
     first = min(int(h.split(":")[0]) for h in et["damage_timeline"].split(";"))
     return first - (44 if et["hits"] == 3 else 45)
 
@@ -242,6 +241,9 @@ def convert(run):
                 return slot_outcome(rd, t)[0]
             return "Attack" if t["move"] == "Death (not a move)" else normalise_move(t["move"])
 
+        def is_larvae(t):
+            return keys[t["actor"] - party_len - 1] == "LARVAE"
+
         def target_of(t):
             # the Sleep attack doesn't store its target, and a Squirrel's full-script turn (6cd4170d) reads 0
             # in this fight though it hits someone: the member it busied is the one it picked
@@ -289,6 +291,13 @@ def convert(run):
                 "balloonAtRoundEnd": [
                     [0, 1, 1, 2][(int(m.split(".")[1], 16) >> 1) & 3] for m in rd["party_status_at_round_end"].split(",")
                 ],
+                # a round whose first roll is not on frame 29 started that many frames late (Demon Sorcerer lv46 seed 78dde6c4
+                # round 4, Hell Unicorn group 9 seed cc623a9b round 3: 30, every turn start +1); the helper moves its clock
+                **(
+                    {"clockShift": int(rd["rand_timeline"].split(";")[0].split(":")[0]) - 29}
+                    if int(rd["rand_timeline"].split(";")[0].split(":")[0]) != 29
+                    else {}
+                ),
                 "partyActions": rd["party_actions"],
                 **(
                     {"turnOrderInputs": [[i["frame"], i["combatant"], i["action_tag"], i["busy"]] for i in rd["turn_order_inputs"]]}
@@ -322,8 +331,15 @@ def convert(run):
                 ),
                 # the Devil Shield's and the mage Kobold's recorded Special event ticks (turn_clock hit / effect_burst) (see timing_events)
                 **(
-                    {"timingEvents": [timing_events(t, rd) for t in rd["turn_clock"] if "hit" in t or "effect_start" in t]}
-                    if any("hit" in t or "effect_start" in t for t in rd["turn_clock"])
+                    {"timingEvents": [timing_events(t, rd) for t in rd["turn_clock"] if not is_larvae(t) and ("hit" in t or "effect_start" in t)]}
+                    if any(not is_larvae(t) and ("hit" in t or "effect_start" in t) for t in rd["turn_clock"])
+                    else {}
+                ),
+                # each Larvae Attack's recorded resolve tick, [actor, start, absolute frame] (its hit when it hit): it follows the
+                # sprite's idle cycle, which depends on the menu time, so it is an input (turn_clock resolve, 1 = the turn's first tick)
+                **(
+                    {"attackResolves": [[t["actor"], t["start"], t["start"] + t["resolve"] - 1] for t in rd["turn_clock"] if is_larvae(t)]}
+                    if any(is_larvae(t) for t in rd["turn_clock"])
                     else {}
                 ),
                 # the Devil Armor's Multi-hit wait (see devil_wait): [actor, start, value]

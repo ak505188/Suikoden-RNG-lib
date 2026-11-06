@@ -249,6 +249,13 @@ def convert(run):
                 "sleepAtRoundEnd": [
                     bool(int(m.split(".")[1], 16) & 0x20) for m in rd["party_status_at_round_end"].split(",")
                 ],
+                # Poison (0x01) and Silence (0x80, id 6): the wm6 enemies' status rolls
+                "poisonAtRoundEnd": [
+                    bool(int(m.split(".")[1], 16) & 0x01) for m in rd["party_status_at_round_end"].split(",")
+                ],
+                "silenceAtRoundEnd": [
+                    bool(int(m.split(".")[1], 16) & 0x80) for m in rd["party_status_at_round_end"].split(",")
+                ],
                 # Balloon stage per member: combatant_rec +0x4a bits 0x02 (stage 1) and 0x04 (stage 2, byte 0x06)
                 "balloonAtRoundEnd": [
                     [0, 1, 1, 2][(int(m.split(".")[1], 16) >> 1) & 3] for m in rd["party_status_at_round_end"].split(",")

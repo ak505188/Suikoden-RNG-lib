@@ -23,6 +23,8 @@ import assert from 'node:assert';
  * @property {boolean} ended
  * @property {boolean[]} [bucketAtRoundEnd] - per party member, Bucket set at the round end
  * @property {boolean[]} [sleepAtRoundEnd] - per party member, Sleep set at the round end
+ * @property {boolean[]} [poisonAtRoundEnd] - per party member, Poison set at the round end
+ * @property {boolean[]} [silenceAtRoundEnd] - per party member, Silence set at the round end
  * @property {number[]} [balloonAtRoundEnd] - per party member, its Balloon stage at the round end
  * @property {[number, number, number][]} [idleCycleWait] - [actor, start, wait]: a Ghost Armor turn's idle-cycle wait
  * @property {[number, number, number | null, number][]} [timingEvents] - [actor, start, burst, hit]: a Special's recorded
@@ -203,6 +205,10 @@ function playRound(battle, rng, idxOf, partyLen, round) {
     expectedBucket: round.bucketAtRoundEnd,
     sleep: battle.party.combatants.map((c) => !!c.status[STATUS.SLEEP]),
     expectedSleep: round.sleepAtRoundEnd,
+    poison: battle.party.combatants.map((c) => !!c.status[STATUS.POISON]),
+    expectedPoison: round.poisonAtRoundEnd,
+    silence: battle.party.combatants.map((c) => !!c.status[STATUS.SILENCE]),
+    expectedSilence: round.silenceAtRoundEnd,
     balloon: battle.party.combatants.map((c) => Number(c.status[STATUS.BALLOON])),
     expectedBalloon: round.balloonAtRoundEnd,
     expectedEnded: round.ended,
@@ -295,6 +301,10 @@ export function describeFixture(data, title) {
               assert.deepStrictEqual(r.bucket, r.expectedBucket, 'Bucket per member');
             if (r.expectedSleep)
               assert.deepStrictEqual(r.sleep, r.expectedSleep, 'Sleep per member');
+            if (r.expectedPoison)
+              assert.deepStrictEqual(r.poison, r.expectedPoison, 'Poison per member');
+            if (r.expectedSilence)
+              assert.deepStrictEqual(r.silence, r.expectedSilence, 'Silence per member');
             if (r.expectedBalloon)
               assert.deepStrictEqual(r.balloon, r.expectedBalloon, 'Balloon stage per member');
           });

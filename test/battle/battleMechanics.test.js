@@ -7,6 +7,7 @@ import { EnemyParty, PlayerParty } from '../../lib/Game/Battle/Party.js';
 import { ACTION_TYPES, ATTACK_RESULT } from '../../lib/Game/Battle/Actions.js';
 import { RUNES } from '../../lib/Game/Magic/Runes.js';
 import { STATUS } from '../../lib/Game/Constants.js';
+import { characterActions } from '../../lib/Game/Battle/ActionPlans.js';
 import Battle, { PHASE_STATE } from '../../lib/Game/Battle/Battle.js';
 import RNG from '../../lib/rng.js';
 import { LOG_TYPES } from '../../lib/Game/Battle/ActionLog.js';
@@ -331,6 +332,7 @@ describe('Battle start', () => {
       [STATUS.BUCKET]: false,
       [STATUS.UNBALANCED]: 0,
       [STATUS.SLEEP]: false,
+      [STATUS.SILENCE]: false,
       [STATUS.HP_LOCKED]: 0,
     });
   });
@@ -373,6 +375,57 @@ describe('Unbalanced', () => {
     dragon.unbalance();
     battle.party.decayStatuses();
     assert.strictEqual(dragon.status[STATUS.UNBALANCED], 2);
+  });
+});
+
+describe('Silence', () => {
+  it('forbids Rune actions in a plan but allows Attack, Defend and Item', () => {
+    const gremio = makeGremio();
+    const battle = makeBattle([gremio], [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)], HIT_SEED);
+    gremio.status[STATUS.SILENCE] = true;
+    assert.throws(() => battle.party.setActionPlan([{ type: ACTION_TYPES.RUNE }]), /Silenced/);
+    battle.party.setActionPlan([{ type: ACTION_TYPES.ATTACK, target: 0 }]);
+    battle.party.setActionPlan([{ type: ACTION_TYPES.ITEM, itemKey: ITEM_KEYS.MEDICINE }]);
+    battle.party.setActionPlan([]);
+    assert.strictEqual(gremio.action.type, ACTION_TYPES.DEFEND);
+  });
+
+  it('checks Silence as of the plan: a deferred Rune chosen after it lands mid-round is allowed', () => {
+    const gremio = makeGremio();
+    const battle = makeBattle([gremio], [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)], HIT_SEED);
+    battle.beginRound([{ type: ACTION_TYPES.DEFERRED }]); // planned unsilenced
+    gremio.status[STATUS.SILENCE] = true; // lands during the round, before Gremio's turn
+    assert.strictEqual(battle.playRound(), false); // stopped for Gremio's choice
+    assert.strictEqual(battle.awaitingChoice, 0);
+    assert.doesNotThrow(() => battle.chooseAction({ type: ACTION_TYPES.RUNE }));
+    assert.strictEqual(gremio.action.type, ACTION_TYPES.RUNE);
+  });
+
+  it('refuses a deferred Rune when Silence was already on at the plan', () => {
+    const gremio = makeGremio();
+    const battle = makeBattle([gremio], [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)], HIT_SEED);
+    gremio.status[STATUS.SILENCE] = true;
+    battle.beginRound([{ type: ACTION_TYPES.DEFERRED }]);
+    assert.strictEqual(battle.playRound(), false);
+    assert.throws(() => battle.chooseAction({ type: ACTION_TYPES.RUNE }), /Silenced/);
+  });
+
+  it('lasts across battles and only a cure removes it', () => {
+    const gremio = makeGremio();
+    gremio.status[STATUS.SILENCE] = true;
+    makeBattle([gremio], [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)], HIT_SEED);
+    assert.strictEqual(gremio.status[STATUS.SILENCE], true);
+    gremio.cureAilments();
+    assert.strictEqual(gremio.status[STATUS.SILENCE], false);
+  });
+
+  it('removes Rune actions from the enumerated plans', () => {
+    const gremio = makeGremio();
+    const battle = makeBattle([gremio], [new Enemy(ENEMY_KEYS.ZOMBIE_DRAGON)], HIT_SEED);
+    const types = () => new Set(characterActions(gremio, battle).map((a) => a.type));
+    gremio.status[STATUS.SILENCE] = true;
+    assert.ok(!types().has(ACTION_TYPES.RUNE));
+    assert.ok(types().has(ACTION_TYPES.ATTACK));
   });
 });
 

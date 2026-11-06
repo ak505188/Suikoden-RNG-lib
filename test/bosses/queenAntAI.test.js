@@ -91,33 +91,45 @@ describe('Soldier Ant (Mt. Seifu) damage', () => {
 
 describe('Queen Ant (Mt. Seifu) turn timing', () => {
   /** A round of one defending member against the Queen alone; her AI roll tick and the log */
-  const round = (/** @type {number} */ seed) => {
+  const round = (/** @type {number} */ seed, /** @type {number} */ busyUntil = 0) => {
     const party = [member(10), member(10)];
     const battle = new Battle({
       party: new PlayerParty(party),
       enemies: new EnemyParty([new Enemy(ENEMY_KEYS.QUEEN_ANT_BOSS)]),
       rng: new RNG(seed),
     });
-    battle.playTurn([{ type: 'Defend' }, { type: 'Defend' }]);
+    battle.beginRound([{ type: 'Defend' }, { type: 'Defend' }]); // clears the busy flags, so set it after
+    battle.party.combatants[0].busyUntil = busyUntil;
+    battle.playRound();
     return battle;
   };
-  const seeds = (/** @type {boolean} */ aoe) => {
+  const seeds = (/** @type {boolean} */ aoe, busyUntil = 0) => {
     const found = [];
     for (let seed = 1; found.length < 3; seed++) {
-      const b = round(seed);
+      const b = round(seed, busyUntil);
       const cast = b.log.ofType(LOG_TYPES.CAST)[0]?.detail;
       if ((cast === 'AoE Earth') === aoe) found.push(b);
     }
     return found;
   };
 
-  it('AoE Earth: all damage rolls on one tick, A + 175 after the AI roll', () => {
+  it('AoE Earth: all damage rolls on one tick, A + 175 after the wind-up starts, 57 + 175 with an idle party', () => {
     for (const b of seeds(true)) {
       const cast = b.log.ofType(LOG_TYPES.CAST)[0];
       const hits = b.log.ofType(LOG_TYPES.DAMAGE);
       assert.strictEqual(hits.length, 2);
       assert.strictEqual(hits[0].tick, hits[1].tick);
-      assert.strictEqual(hits[0].tick - cast.tick, 164 + 175);
+      assert.strictEqual(hits[0].tick - cast.tick, 57 + 175);
+    }
+  });
+
+  it('AoE Earth: the wind-up waits for every living member to be idle (A = first idle tick + 57)', () => {
+    const busyUntil = 150;
+    for (const b of seeds(true, busyUntil)) {
+      const cast = b.log.ofType(LOG_TYPES.CAST)[0];
+      const hits = b.log.ofType(LOG_TYPES.DAMAGE);
+      assert.ok(cast.tick < busyUntil);
+      assert.strictEqual(hits[0].tick, busyUntil + 1 + 57 + 175);
     }
   });
 

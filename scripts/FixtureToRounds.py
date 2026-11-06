@@ -71,6 +71,8 @@ def normalise_move(move):
         return "Sunshine"
     if move.startswith("Special"):
         return "Special"
+    if move.startswith(("Clay Doll ", "Banshee ")):  # the Red Elemental groups label the other enemies' turns "Clay Doll Attack", "Banshee Special"
+        return move.split(" ")[-1]
     if move.startswith("Kobold Lv20"):  # the wm2 Kobolds' labels name the hp and the cut-short length; "special" is the hp50 mage's
         return "Special" if " special" in move else "Attack"
     if move.replace(" ", "").startswith("RobotSoldier"):  # "Robot Soldier hp160 Attack in group 3 ...": the plain generic Attack
@@ -154,17 +156,35 @@ def is_shield_special(t):
     return t["path"] == "fe3d5dd5"
 
 
-def timing_events(t):
+def all_members_hit(rd, t):
+    """The Clay Doll's / Banshee's Special hit tick (turn clock, 1 = the turn's first tick): the frame of its turn's
+    damage_timeline that holds the most entries (the six-member hit). The fixture's `hit` there is the turn's FIRST
+    damage entry, which is the previous actor's still-playing Attack landing (frame 44) in the Specials that waited."""
+    et = next(e for e in rd["enemy_turns"] if e["actor"] == t["actor"] and e["start"] == t["start"])
+    counts = {}
+    for h in et["damage_timeline"].split(";"):
+        frame = int(h.split(":")[0])
+        counts[frame] = counts.get(frame, 0) + 1
+    return max(counts, key=lambda f: (counts[f], f))
+
+
+def timing_events(t, rd=None):
     """A Devil Shield / mage Kobold Special's recorded event ticks (the fixture's effect_burst and hit, turn clock
     with 1 = the turn's first tick), as the absolute round-clock frames [start + tick - 1]: [actor, start, burst
     (null for the Kobold), hit]. The sim schedules its events on them and derives nothing. The Nightmare's heal has
     only effect_start (its particle effect's first tick, the burst); the heal lands 128 ticks after it."""
     abs_ = lambda f: t["start"] + f - 1
+    if slug in ALL_MEMBER_HIT_SLUGS and t["path"] in ("07d7a5a7", "2a85a2cf"):
+        return [t["actor"], t["start"], None, abs_(all_members_hit(rd, t))]
     if "effect_start" in t and "hit" in t:  # the Sorcerer's Special: both ticks recorded
         return [t["actor"], t["start"], abs_(t["effect_start"]), abs_(t["hit"])]
     if "effect_start" in t:
         return [t["actor"], t["start"], abs_(t["effect_start"]), abs_(t["effect_start"]) + 128]
     return [t["actor"], t["start"], abs_(t["effect_burst"]) if "effect_burst" in t else None, abs_(t["hit"])]
+
+
+# the Cave of the Past fixtures, whose Special `hit` must be re-read from the damage timeline (see all_members_hit)
+ALL_MEMBER_HIT_SLUGS = ("clay_doll_lv44_hp450", "banshee_lv41_hp120", "red_elemental_lv42_hp80")
 
 
 def is_devil_multihit(t):
@@ -302,7 +322,7 @@ def convert(run):
                 ),
                 # the Devil Shield's and the mage Kobold's recorded Special event ticks (turn_clock hit / effect_burst) (see timing_events)
                 **(
-                    {"timingEvents": [timing_events(t) for t in rd["turn_clock"] if "hit" in t or "effect_start" in t]}
+                    {"timingEvents": [timing_events(t, rd) for t in rd["turn_clock"] if "hit" in t or "effect_start" in t]}
                     if any("hit" in t or "effect_start" in t for t in rd["turn_clock"])
                     else {}
                 ),

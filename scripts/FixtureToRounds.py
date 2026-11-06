@@ -65,6 +65,8 @@ def normalise_move(move):
         return "Attack"
     if move.startswith("Counter-hit reaction"):  # the Oannes' Attack, whose own hit reaction ran after a counter
         return "Attack"
+    if move.startswith("Sunshine"):  # the Sunshine King's only move: "Sunshine (hits all six members)"
+        return "Sunshine"
     if move.startswith("Special"):
         return "Special"
     if move.startswith("Kobold Lv20"):  # the wm2 Kobolds' labels name the hp and the cut-short length; "special" is the hp50 mage's

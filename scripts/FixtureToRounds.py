@@ -68,6 +68,8 @@ def normalise_move(move):
         return "Attack"
     if move.startswith("Attack (generic"):
         return "Attack"
+    if move.startswith("Attack (cut short"):  # a foreign turn in a group fixture, e.g. "[Imperial Guards] Attack (cut short)" (Ekidonna's group 8)
+        return "Attack"
     if move == "Attack (countered)":  # the target's counter is carried by the round's counters, the turn is the plain Attack
         return "Attack"
     if move.startswith("Counter-hit reaction"):  # the Oannes' Attack, whose own hit reaction ran after a counter
@@ -304,9 +306,9 @@ def convert(run):
                 "silenceAtRoundEnd": [
                     bool(int(m.split(".")[1], 16) & 0x80) for m in rd["party_status_at_round_end"].split(",")
                 ],
-                # Balloon stage per member: combatant_rec +0x4a bits 0x02 (stage 1) and 0x04 (stage 2, byte 0x06)
+                # Balloon stage per member: combatant_rec +0x4a bits 0x02 (stage 1), 0x04 (stage 2, byte 0x06) and 0x08 (stage 3, byte 0x0e: Ekidonna's repeated hits)
                 "balloonAtRoundEnd": [
-                    [0, 1, 1, 2][(int(m.split(".")[1], 16) >> 1) & 3] for m in rd["party_status_at_round_end"].split(",")
+                    bin((int(m.split(".")[1], 16) >> 1) & 7).count("1") for m in rd["party_status_at_round_end"].split(",")
                 ],
                 # a round whose first roll is not on frame 29 started that many frames late (Demon Sorcerer lv46 seed 78dde6c4
                 # round 4, Hell Unicorn group 9 seed cc623a9b round 3: 30, every turn start +1); the helper moves its clock

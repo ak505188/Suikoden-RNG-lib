@@ -215,6 +215,11 @@ def devil_wait(rd, t):
 BURST_ROLLS = {"sorcerer_lv40_hp200": 80, "magus_lv54_hp300": 80}  # the Magus's Special is the same effect (ai.json: the 80-roll burst)
 
 
+# Crystal Core round 1 Flaming Arrow (kill_spell / _bare / _se and final_spell, heap_flaming_arrow_words.txt): low 12 bits of the 20 particles' words
+CRYSTAL_CORE_FA_WORDS = [0xD56, 0x8A0, 0x8A0, 0, 0, 0x7E] + [0] * 14
+CRYSTAL_CORE_FA_RUNS = ("kill_spell", "kill_spell_bare", "kill_spell_se", "final_spell")
+
+
 def convert(run):
     party_len = len(run["party_characters"])
     if keys_by_name:
@@ -383,6 +388,20 @@ def convert(run):
                         ]
                     }
                     if any("idle_timer_t0" in t for t in rd["turn_clock"])
+                    else {}
+                ),
+                # a party spell's recorded start (the round-clock frame of its particle burst: the one roll the recorder caps at ">64"),
+                # the recorded input per cast (it varies 80-83 for Earthquake, 147-148 for Flaming Arrows: the cast's own cue wait)
+                **(
+                    {"castBurst": int(re.search(r"(\d+):>64", rd["rand_timeline"]).group(1))}
+                    if re.search(r"(\d+):>64", rd["rand_timeline"]) and any(a.startswith("2.") for a in rd["party_actions"])
+                    else {}
+                ),
+                # Crystal Core: the stale trail_x words of round 1's Flaming Arrow cast (heap_flaming_arrow_words.txt; the first cast of
+                # the fight only, a later cast sits on another heap layout: no words, the baked table)
+                **(
+                    {"flamingArrowWords": CRYSTAL_CORE_FA_WORDS}
+                    if slug == "crystal_core_lv60_hp5000" and rd["round"] == 1 and run.get("scenario") in CRYSTAL_CORE_FA_RUNS
                     else {}
                 ),
                 "hpChanges": [[h["frame"], h["combatant"], h["hp_delta"]] for h in rd["hp_changes"]],

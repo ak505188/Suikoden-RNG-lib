@@ -27,6 +27,8 @@ import assert from 'node:assert';
  * @property {boolean[]} [silenceAtRoundEnd] - per party member, Silence set at the round end
  * @property {number[]} [balloonAtRoundEnd] - per party member, its Balloon stage at the round end
  * @property {[number, number, number][]} [idleCycleWait] - [actor, start, wait]: a Ghost Armor turn's idle-cycle wait
+ * @property {number[]} [flamingArrowWords] - the stale trail_x words (low 12 bits) of a Flaming Arrows cast's heap, a recorded input
+ * @property {number} [castBurst] - the round-clock frame of a party spell's particle burst, when a spell was cast (the recorded input per cast)
  * @property {number} [clockShift] - the round started this many frames late on the recording's clock (its first roll is
  *   on frame 29 + clockShift; every turn start moves with it, the absolute recorded inputs do not)
  * @property {[number, number, number][]} [attackResolves] - [actor, start, frame]: a Larvae Attack's recorded resolve frame (its hit
@@ -35,7 +37,7 @@ import assert from 'node:assert';
  *   event frames on the round clock (the Devil Shield's, the mage Kobold's)
  * @property {[number, number, number][]} [idleTimerT0] - [actor, start, T0]: a Command turn's recorded idle timer
  * @property {string[]} [partyActions] - type.slot.target per member as recorded: 1.0.0 Defend, 0.0.N Attack
- *   combatant N. Absent: everyone Defends
+ *   combatant N, 2.S.N the Rune's spell S (1-based) on combatant N. Absent: everyone Defends
  * @property {[number, number, number, number, string][]} turns - [actor, start, end, target, move]
  * @property {[number, number, number][]} hpChanges - [frame, combatant, hp delta]
  * @property {number} frames - the round's length
@@ -52,6 +54,10 @@ import assert from 'node:assert';
 const BASE_CLOCK = 30;
 /** The round clock's offset of the round being played: BASE_CLOCK + the round's recorded one-frame shift (clockShift). */
 let CLOCK = BASE_CLOCK;
+/** The round's recorded spell burst frame (round clock), the input per cast */
+/** The round's recorded Flaming Arrow stale words, when the fixture carries them */
+let flamingArrowWords = /** @type {number[] | undefined} */ (undefined);
+let castBurst = /** @type {number | undefined} */ (undefined);
 
 /** The RNG's raw value `calls` calls after `from` */
 const rawAfter = (/** @type {number} */ from, /** @type {number} */ calls) =>
@@ -97,11 +103,13 @@ function playRound(battle, rng, idxOf, partyLen, round) {
   const startCount = rng.count; // the log's rng counts are cumulative over the battle
   battle.playTurn(
     battle.party.combatants.map((_, i) => {
-      const [type, , target] = (round.partyActions?.[i] ?? '1.0.0').split('.').map(Number);
+      const [type, slot, target] = (round.partyActions?.[i] ?? '1.0.0').split('.').map(Number);
       // 0 = Attack on combatant `target` (1-based, party first); the sim's target is the enemy index
-      return type === 0
-        ? { type: ACTION_TYPES.ATTACK, target: target - partyLen - 1 }
-        : { type: ACTION_TYPES.DEFEND };
+      if (type === 0) return { type: ACTION_TYPES.ATTACK, target: target - partyLen - 1 };
+      // 2 = the Rune's spell number `slot` (1-based: the scenarios call 2.1.7 "spell slot 1 (Flaming Arrow)") on combatant `target`
+      if (type === 2)
+        return { type: ACTION_TYPES.RUNE, slot: slot - 1, target: target - partyLen - 1 };
+      return { type: ACTION_TYPES.DEFEND };
     }),
   );
   const entries = battle.log.entries.slice(from);
@@ -198,10 +206,13 @@ function playRound(battle, rng, idxOf, partyLen, round) {
     // the order the game applied them, so compare by (frame, combatant)
     damage: [...damage].sort((a, b) => a[0] - b[0] || a[1] - b[1]),
     expectedDamage: [...round.hpChanges].sort((a, b) => a[0] - b[0] || a[1] - b[1]),
-    // the fixture has no counters (null) in a round where a party member attacks: an enemy's HP loss is
+    // the fixture has no counters (null) in a round where a party member attacks or casts: an enemy's HP loss is
     // then the attack, which the sim logs as the same kind of damage entry
     counters:
-      round.partyActions?.some((a) => a.startsWith('0.')) && !round.counters.length ? [] : counters,
+      round.partyActions?.some((a) => a.startsWith('0.') || a.startsWith('2.')) &&
+      !round.counters.length
+        ? []
+        : counters,
     expectedCounters: round.counters.map((c) => [c[0], c[1], c[2]]),
     rngEnd: rng.raw,
     expectedRngEnd: round.rngAtRoundEnd,
@@ -262,6 +273,8 @@ export function playRecordedRun(run) {
         const i = attackResolves.findIndex(([actor]) => actor === idxOf.get(enemy.label));
         return i < 0 ? undefined : attackResolves.splice(i, 1)[0][2] - CLOCK;
       },
+      flamingArrowWords: () => flamingArrowWords,
+      castBurst: () => (castBurst === undefined ? undefined : castBurst - CLOCK),
       timingEvents: () => {
         const e = timingEvents.shift();
         return e && { burst: e[2] === null ? undefined : e[2] - CLOCK - 1, hit: e[3] - CLOCK };
@@ -271,6 +284,8 @@ export function playRecordedRun(run) {
     const out = [];
     for (const round of rounds) {
       CLOCK = BASE_CLOCK + (round.clockShift ?? 0);
+      castBurst = round.castBurst;
+      flamingArrowWords = round.flamingArrowWords;
       timingEvents = [...(round.timingEvents ?? [])];
       attackResolves = [...(round.attackResolves ?? [])];
       idleTimers = (round.idleTimerT0 ?? round.idleCycleWait ?? []).map(([, , t0]) => t0);

@@ -6,6 +6,8 @@ import { LOG_TYPES } from '../../lib/Game/Battle/ActionLog.js';
 import { ENEMY_KEYS } from '../../lib/Game/Keys.js';
 import { STATUS } from '../../lib/Game/Constants.js';
 import RNG from '../../lib/rng.js';
+import VfxHeap from '../../lib/Game/Heap/VfxHeap.js';
+import { loadHeapDump } from './heapDumps.js';
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 
@@ -27,7 +29,6 @@ import assert from 'node:assert';
  * @property {boolean[]} [silenceAtRoundEnd] - per party member, Silence set at the round end
  * @property {number[]} [balloonAtRoundEnd] - per party member, its Balloon stage at the round end
  * @property {[number, number, number][]} [idleCycleWait] - [actor, start, wait]: a Ghost Armor turn's idle-cycle wait
- * @property {number[]} [flamingArrowWords] - the stale trail_x words (low 12 bits) of a Flaming Arrows cast's heap, a recorded input
  * @property {number} [castBurst] - the round-clock frame of a party spell's particle burst, when a spell was cast (the recorded input per cast)
  * @property {number} [clockShift] - the round started this many frames late on the recording's clock (its first roll is
  *   on frame 29 + clockShift; every turn start moves with it, the absolute recorded inputs do not)
@@ -55,8 +56,6 @@ const BASE_CLOCK = 30;
 /** The round clock's offset of the round being played: BASE_CLOCK + the round's recorded one-frame shift (clockShift). */
 let CLOCK = BASE_CLOCK;
 /** The round's recorded spell burst frame (round clock), the input per cast */
-/** The round's recorded Flaming Arrow stale words, when the fixture carries them */
-let flamingArrowWords = /** @type {number[] | undefined} */ (undefined);
 let castBurst = /** @type {number | undefined} */ (undefined);
 
 /** The RNG's raw value `calls` calls after `from` */
@@ -243,6 +242,7 @@ export function playRecordedRun(run) {
     const party = PlayerParty.fromCharacterJSON(
       structuredClone(/** @type {any} */ (run.characters)),
     );
+    const heap = run.heapDump ? new VfxHeap(loadHeapDump(run.heapDump)) : null;
     const keys = run.enemies.map(
       (key) => /** @type {any} */ (ENEMY_KEYS[/** @type {any} */ (key)]),
     );
@@ -260,6 +260,7 @@ export function playRecordedRun(run) {
       enemies,
       rng,
       freeWillGate: 10,
+      heap,
       idleTimer: () => {
         // a menu-dependent input: never defaulted here, the fixture must carry it
         const t = idleTimers.shift();
@@ -273,7 +274,6 @@ export function playRecordedRun(run) {
         const i = attackResolves.findIndex(([actor]) => actor === idxOf.get(enemy.label));
         return i < 0 ? undefined : attackResolves.splice(i, 1)[0][2] - CLOCK;
       },
-      flamingArrowWords: () => flamingArrowWords,
       castBurst: () => (castBurst === undefined ? undefined : castBurst - CLOCK),
       timingEvents: () => {
         const e = timingEvents.shift();
@@ -285,7 +285,6 @@ export function playRecordedRun(run) {
     for (const round of rounds) {
       CLOCK = BASE_CLOCK + (round.clockShift ?? 0);
       castBurst = round.castBurst;
-      flamingArrowWords = round.flamingArrowWords;
       timingEvents = [...(round.timingEvents ?? [])];
       attackResolves = [...(round.attackResolves ?? [])];
       idleTimers = (round.idleTimerT0 ?? round.idleCycleWait ?? []).map(([, , t0]) => t0);

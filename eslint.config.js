@@ -15,6 +15,8 @@ export default [
         process: 'readonly',
         performance: 'readonly',
         structuredClone: 'readonly',
+        atob: 'readonly',
+        URL: 'readonly',
       },
     },
     rules: {

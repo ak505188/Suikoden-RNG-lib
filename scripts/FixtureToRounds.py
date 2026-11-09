@@ -215,9 +215,9 @@ def devil_wait(rd, t):
 BURST_ROLLS = {"sorcerer_lv40_hp200": 80, "magus_lv54_hp300": 80}  # the Magus's Special is the same effect (ai.json: the 80-roll burst)
 
 
-# Crystal Core round 1 Flaming Arrow (kill_spell / _bare / _se and final_spell, heap_flaming_arrow_words.txt): low 12 bits of the 20 particles' words
-CRYSTAL_CORE_FA_WORDS = [0xD56, 0x8A0, 0x8A0, 0, 0, 0x7E] + [0] * 14
-CRYSTAL_CORE_FA_RUNS = ("kill_spell", "kill_spell_bare", "kill_spell_se", "final_spell")
+# Crystal Core: the runs that cast Flaming Arrow start from the heap dump of round 1's Fight prompt (test/fixtures/heap, from
+# Suikoden-Bizhawk-HUD scripts/heap/data/dumps; L-fire, the same words in L-fire-bare and L-fire-se); later rounds carry the heap forward
+CRYSTAL_CORE_HEAP_RUNS = ("kill_spell", "kill_spell_bare", "kill_spell_se", "final_spell")
 
 
 def convert(run):
@@ -397,13 +397,6 @@ def convert(run):
                     if re.search(r"(\d+):>64", rd["rand_timeline"]) and any(a.startswith("2.") for a in rd["party_actions"])
                     else {}
                 ),
-                # Crystal Core: the stale trail_x words of round 1's Flaming Arrow cast (heap_flaming_arrow_words.txt; the first cast of
-                # the fight only, a later cast sits on another heap layout: no words, the baked table)
-                **(
-                    {"flamingArrowWords": CRYSTAL_CORE_FA_WORDS}
-                    if slug == "crystal_core_lv60_hp5000" and rd["round"] == 1 and run.get("scenario") in CRYSTAL_CORE_FA_RUNS
-                    else {}
-                ),
                 "hpChanges": [[h["frame"], h["combatant"], h["hp_delta"]] for h in rd["hp_changes"]],
                 "frames": rd["frames"],
                 "randTimeline": re.sub(r":>64(?=;|$)", f":{BURST_ROLLS.get(slug, 90)}", rd["rand_timeline"]),  # recorder caps a frame at ">64"; the Slot Man A effect rolls 30 x 3 = 90 there (ai.json)
@@ -415,6 +408,7 @@ def convert(run):
         rounds.sort(key=lambda r: r["round"])
     return {
         "party": run["party"],
+        **({"heapDump": "crystal_core_L-fire_r1_preconfirm"} if slug == "crystal_core_lv60_hp5000" and run.get("scenario") in CRYSTAL_CORE_HEAP_RUNS else {}),
         "scenario": run.get("scenario") or (f"group {run['group']}" if run.get("group") else None),
         "characters": game_order(run),
         "enemies": [keys[i - party_len - 1] for i in slots],

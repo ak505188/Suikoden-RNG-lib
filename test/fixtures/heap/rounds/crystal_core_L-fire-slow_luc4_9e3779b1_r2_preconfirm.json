@@ -1,0 +1,14 @@
+{
+  "freeListRaw": [["0x8018fe30", 673], ["0x80182000", 2797]],
+  "kill": "luc",
+  "killRound": 4,
+  "menuBlocks": ["0x8018c570", "0x8018c500", "0x8018c390", "0x8018c220", "0x8018c648", "0x8018c198", "0x8018c180", "0x8018c010", "0x8018bea0", "0x8018c1c0", "0x8018bde8", "0x8018bdb8", "0x8018bc48", "0x8018bad8", "0x8018be40", "0x8018ba28", "0x8018b9f8", "0x8018b888", "0x8018b718", "0x8018ba78", "0x8018b648", "0x8018b608", "0x8018b498", "0x8018b328", "0x8018b6b8", "0x8018b288", "0x8018b260", "0x8018b0f0", "0x8018af80", "0x8018b2c8", "0x8018aef8", "0x8018aee0", "0x8018ad70", "0x8018ac00", "0x8018af20", "0x8018aa30", "0x8018a970", "0x8018a800", "0x8018a690", "0x8018aba0", "0x8018a660", "0x8018c6a8", "0x80188ee8", "0x80187770"],
+  "menuState": "0x8018c6a8",
+  "moment": "Free Will chosen, actions set (kill round: luc, boss at 1 HP), before confirmRound",
+  "name": "crystal_core_L-fire-slow_luc4_9e3779b1_r2_preconfirm",
+  "note": "arena = 0x80182000, 0x18000 bytes; free list = { address, units of 8 bytes } in list order; menuBlocks = the Fight menu's blocks of this round's prompt",
+  "party": "L-fire-slow",
+  "round": 2,
+  "rover": "0x8018fe30",
+  "seed": "0x9e3779b1"
+}

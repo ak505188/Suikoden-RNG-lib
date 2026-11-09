@@ -1,0 +1,22 @@
+move special kill luc killround 1 party L-fire-slow pre 0 extra 0 killspell nil lowhp 1@3
+FlamingArrow seed 9e3779b1 | live 10,20,0,dc,2,8f8,0,0,0,0,0,0,0,0,0,0,0,0,0,0 | predicted 10,20,0,dc,2,8f8,0,0,0,0,0,0,0,0,0,0,0,0,0,0 | residual wrong 0 pointers wrong 0 complete=true | rand calls real 528, from live words 528, from predicted 528, baked 528 | enemyFirst=true
+FlamingArrow seed 3c6ef362 | live 10,20,0,dc,2,c92,0,0,0,0,0,0,0,0,0,0,0,0,0,0 | predicted 10,20,0,dc,2,c92,0,0,0,0,0,0,0,0,0,0,0,0,0,0 | residual wrong 0 pointers wrong 0 complete=true | rand calls real 516, from live words 516, from predicted 516, baked 516 | enemyFirst=true
+FlamingArrow seed daa66d13 | live 10,20,0,dc,2,d0c,0,0,0,0,0,0,0,0,0,0,0,0,0,0 | predicted 10,20,0,dc,2,d0c,0,0,0,0,0,0,0,0,0,0,0,0,0,0 | residual wrong 0 pointers wrong 0 complete=true | rand calls real 508, from live words 508, from predicted 508, baked 512 | enemyFirst=true
+FlamingArrow seed 78dde6c4 | live 10,20,0,dc,2,d76,0,0,0,0,0,0,0,0,0,0,0,0,0,0 | predicted 10,20,0,dc,2,d76,0,0,0,0,0,0,0,0,0,0,0,0,0,0 | residual wrong 0 pointers wrong 0 complete=true | rand calls real 492, from live words 492, from predicted 492, baked 492 | enemyFirst=true
+Explosion seed 9e3779b1: only 0 of 30 particle allocs / ctx nil
+Explosion seed 3c6ef362: only 0 of 30 particle allocs / ctx nil
+Explosion seed daa66d13: only 0 of 30 particle allocs / ctx nil
+Explosion seed 78dde6c4: only 0 of 30 particle allocs / ctx nil
+Thor seed 9e3779b1: only 0 of 20 particle allocs / ctx nil
+Thor seed 3c6ef362: only 0 of 20 particle allocs / ctx nil
+Thor seed daa66d13: only 0 of 20 particle allocs / ctx nil
+Thor seed 78dde6c4: only 0 of 20 particle allocs / ctx nil
+BlackShadow seed 9e3779b1: struct alloc never seen
+BlackShadow seed 3c6ef362: struct alloc never seen
+BlackShadow seed daa66d13: struct alloc never seen
+BlackShadow seed 78dde6c4: struct alloc never seen
+Hell seed 9e3779b1: struct alloc never seen
+Hell seed 3c6ef362: struct alloc never seen
+Hell seed daa66d13: struct alloc never seen
+Hell seed 78dde6c4: struct alloc never seen
+done

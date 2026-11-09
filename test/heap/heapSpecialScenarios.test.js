@@ -219,6 +219,7 @@ describe('the Luc-kill scenario from round 1 (crystal_core_L-fire-slow_r1_prompt
     const rng = new RNG(0);
     const heap = new VfxHeap(loadHeapDump('crystal_core_L-fire-slow_r1_prompt'), {
       party: 'L-fire-slow',
+      index: 0,
     });
     const boss = new Enemy(ENEMY_KEYS.CRYSTAL_CORE);
     boss.HP = 1;

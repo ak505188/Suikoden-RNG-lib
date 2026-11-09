@@ -118,7 +118,7 @@ describe('the second Special: particle phase from the parity of round 1 failed p
   // the Special after round 1's Attack: the heap sees that Attack, so it takes the phase from its passes
   for (const seed of ['17156075', '185eaefe', '19a7fd87', '9e3779b1']) {
     for (const spell of SPELLS) {
-      it(`Special then ${spell}, seed ${seed}: a known word is the live word, the phase from the Attack's passes`, () => {
+      it(`Special then ${spell}, seed ${seed}: a known word is the live word, the phase from the index, set from the Attack's passes`, () => {
         const live = (
           slowSeeds.includes(seed)
             ? liveWords('special', 'after_move', '_L-fire-slow_slowphase')
@@ -128,10 +128,11 @@ describe('the second Special: particle phase from the parity of round 1 failed p
           loadHeapDump(`crystal_core_L-fire-slow_inround_later_special_${seed}_prompt0`),
           { party: 'L-fire-slow' },
         );
-        const p1 = scanPrediction(seedNumber(seed), 1);
-        heap.attacks.push({ round: 1, passes: p1.passes, camera: p1.camera, target: p1.slot });
+        // the index at this round's start: the older recordings carry no index; the recorded phase (odd passes = slow) fixes it as
+        // the parity of the first round's passes (round 1's Attack is 1 + passes ticks, 3 members act before Crystal Core)
+        heap.index = scanPrediction(seedNumber(seed), 1).passes % 2;
         heap.roundStart();
-        heap.enemyMove('CRYSTAL_CORE', 'Special', { repeat: true });
+        heap.enemyMove('CRYSTAL_CORE', 'Special', { repeat: true, before: 3 });
         const p = predictCast(heap, spell, 'special', seedNumber(seed), { round: 3, rolls: 0 });
         const want = liveList(live);
         p.words.forEach((w, i) => {

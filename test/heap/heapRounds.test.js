@@ -195,3 +195,50 @@ describe("a party Attack that kills allocates over the last move's blocks", () =
     assert.strictEqual(known, 0);
   });
 });
+
+describe('the draw buffer index chain of the fast party L-fire (Luc and McDohl act before Crystal Core; heap_fast, 36 runs)', () => {
+  const fastRows =
+    /** @type {{ scenario: string, delay: number, seed: string, idx0: number[] }[]} */ (
+      read('rounds_fast_idx0').rows
+    );
+  it('Luc kills in round k (430 ticks, no Attack), Viktor + Flik kill (226): the index of every round, luc1-3 and vf1-3', () => {
+    for (const row of fastRows) {
+      const kill = row.scenario.slice(0, -1);
+      const k = Number(row.scenario.slice(-1));
+      const characters = structuredClone(/** @type {any} */ (run).characters);
+      const rng = new RNG(0);
+      const heap = new VfxHeap(loadHeapDump('crystal_core_L-fire_r1_prompt'), {
+        party: 'L-fire',
+        index: 0,
+      });
+      const boss = new Enemy(ENEMY_KEYS.CRYSTAL_CORE);
+      boss.HP = 1;
+      const battle = new Battle({
+        party: PlayerParty.fromCharacterJSON(characters),
+        enemies: new EnemyParty([boss]),
+        rng,
+        freeWillGate: 10,
+        heap,
+      });
+      const idx0 = [];
+      for (let r = 1; r <= k + 2; r++) {
+        battle.party.combatants.forEach((c, i) => {
+          if (i < 6) c.HP = RECORDED_HP[i];
+        });
+        const actions = Array(6).fill(defend);
+        if (r === k) {
+          if (kill === 'luc') actions[3] = rune(0);
+          else {
+            actions[1] = attack;
+            actions[2] = attack;
+          }
+        }
+        if (r === k + 2) heap.menuDelay = row.delay;
+        rng.raw = (seedNumber(row.seed) + r) >>> 0;
+        battle.playTurn(actions);
+        idx0.push(heap.idx0);
+      }
+      assert.deepStrictEqual(idx0, row.idx0, `${row.scenario} ${row.seed}`);
+    }
+  });
+});

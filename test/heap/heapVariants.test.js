@@ -7,7 +7,6 @@ import Battle from '../../lib/Game/Battle/Battle.js';
 import { ACTION_TYPES } from '../../lib/Game/Battle/Actions.js';
 import { ENEMY_KEYS } from '../../lib/Game/Keys.js';
 import VfxHeap from '../../lib/Game/Heap/VfxHeap.js';
-import { scanPrediction } from '../../lib/Game/Heap/ScanPrediction.js';
 import RNG from '../../lib/rng.js';
 import { SPELLS, liveWords, loadHeapDump } from '../helpers/heapAfterMoves.js';
 import Rounds from '../fixtures/enemies/crystal_core_lv60_hp5000_rounds.json' with { type: 'json' };
@@ -64,7 +63,7 @@ function roundOne(variant, seed) {
   const rng = new RNG(0);
   const heap = new VfxHeap(
     loadHeapDump(fast ? 'crystal_core_L-fire_r1_prompt' : 'crystal_core_L-fire-slow_r1_prompt'),
-    { party: fast ? 'L-fire' : 'L-fire-slow' },
+    { party: fast ? 'L-fire' : 'L-fire-slow', ...(variant === 'ord' ? { index: 1 } : {}) },
   );
   /** @type {number | undefined} */
   let tick;
@@ -137,9 +136,8 @@ describe('the Attack words by array slot (delay 0 runs)', () => {
         if (known === undefined) unknown++;
         else assert.strictEqual(known, word, `0x${addr.toString(16)}`);
       }
-      if (row.variant === 'ord')
-        assert.strictEqual(unknown, live.size, 'another party order: nothing claimed');
-      else assert.strictEqual(unknown, 0);
+      // the other party order has its own round-1 images, for the keys recorded: no known word is wrong (the rest stays unknown)
+      if (row.variant !== 'ord') assert.strictEqual(unknown, 0);
     });
   }
 });
@@ -195,15 +193,24 @@ describe('the fast party (L-fire) takes the same tables: a Battle casts the five
   }
 });
 
-describe('the Black Shadow / Hell posX pattern follows the second Special phase (base phase flipped by the parity of the failed scan passes)', () => {
+describe("the Black Shadow / Hell posX pattern follows the second Special's phase: the cast round's start index + members before Crystal Core + 1", () => {
+  const idxRows =
+    /** @type {{ scenario: string, delay: number, seed: string, idx0: number[] }[]} */ (
+      JSON.parse(
+        fs.readFileSync(
+          new URL('../fixtures/heap/tables/rounds_idx0.json', import.meta.url),
+          'utf8',
+        ),
+      ).rows
+    );
   const SCENARIOS = /** @type {const} */ ({
-    vf1: ['vf', 1, 'slow'],
-    vf2: ['vf', 2, 'fast'],
-    luc2: ['luc', 2, 'slow'],
-    luc4: ['luc', 4, 'slow'],
-    vf4: ['vf', 4, 'fast'],
+    vf1: ['vf', 1],
+    vf2: ['vf', 2],
+    luc2: ['luc', 2],
+    luc4: ['luc', 4],
+    vf4: ['vf', 4],
   });
-  for (const [scenario, [kill, kr, base]] of Object.entries(SCENARIOS)) {
+  for (const [scenario, [kill, kr]] of Object.entries(SCENARIOS)) {
     const live = liveWords('special', 'after_move', `_L-fire-slow_kill_${scenario}`);
     for (const spell of /** @type {const} */ (['BlackShadow', 'Hell'])) {
       for (const seed of ['9e3779b1', 'f1bbcd88', '3c6ef362']) {
@@ -215,15 +222,13 @@ describe('the Black Shadow / Hell posX pattern follows the second Special phase 
             { party: 'L-fire-slow' },
           );
           heap.assumedMoves.add('CRYSTAL_CORE/Special');
-          heap.specialBase = base;
-          // the rounds that scanned: every round, but a Viktor + Flik kill round (the boss dies before it acts)
-          for (let r = 1; r <= kr; r++) {
-            if (kill === 'vf' && r === kr) continue;
-            const p = scanPrediction(seedNumber(seed), r, 23);
-            heap.attacks.push({ round: r, passes: p.passes, camera: p.camera, target: p.slot });
-          }
+          const row = idxRows.find(
+            (r) => r.scenario === scenario && r.delay === 0 && r.seed === seed,
+          );
+          heap.index = /** @type {number} */ (row?.idx0.at(-1));
           heap.roundStart();
-          heap.enemyMove('CRYSTAL_CORE', 'Special', { round: kr + 2 });
+          // the slow party: Viktor, Flik and Tengaar act before Crystal Core
+          heap.enemyMove('CRYSTAL_CORE', 'Special', { round: kr + 2, before: 3 });
           const p = heap.predictSoulEater(spell);
           const want = live[spell][seed].posX;
           assert.strictEqual(p.staleResidual.length, want.length);

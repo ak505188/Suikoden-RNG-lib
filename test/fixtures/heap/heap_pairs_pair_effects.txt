@@ -1,0 +1,13 @@
+I (cast then cast in consecutive rounds, party L-fire, seeds 9e3779b1 3c6ef362 daa66d13): for each first spell (row, cast in round 1) and second spell (column, cast in round 2 = between 0, or round 3 = between 1 with an everyone-Defends round in between) the number of compared results (live words / posX+scale / RNG count lines) that DIFFER from the control (round 1 everyone Defends instead of the first cast). Format differing/compared.
+between 0
+ FlamingArrow  Fla:3/3 Exp:0/3 Tho:3/3 Bla:6/6 Hel:6/6
+ Explosion     Fla:0/3 Exp:3/3 Tho:3/3 Bla:6/6 Hel:6/6
+ Thor          Fla:3/3 Exp:3/3 Tho:3/3 Bla:6/6 Hel:6/6
+ BlackShadow   Fla:3/3 Exp:3/3 Tho:3/3 Bla:6/6 Hel:6/6
+ Hell          Fla:3/3 Exp:3/3 Tho:3/3 Bla:6/6 Hel:6/6
+between 1
+ FlamingArrow  Fla:3/3 Exp:0/3 Tho:3/3 Bla:6/6 Hel:6/6
+ Explosion     Fla:0/3 Exp:3/3 Tho:3/3 Bla:6/6 Hel:6/6
+ Thor          Fla:3/3 Exp:3/3 Tho:3/3 Bla:6/6 Hel:6/6
+ BlackShadow   Fla:3/3 Exp:3/3 Tho:3/3 Bla:6/6 Hel:6/6
+ Hell          Fla:3/3 Exp:3/3 Tho:3/3 Bla:6/6 Hel:6/6

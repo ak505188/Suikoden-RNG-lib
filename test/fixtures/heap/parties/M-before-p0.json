@@ -1,0 +1,302 @@
+[
+ {
+  "HP": 599,
+  "key": "MCDOHL",
+  "rune": {
+   "id": 1
+  },
+  "MP": [
+   8,
+   6,
+   5,
+   2
+  ],
+  "EXP": 505,
+  "LVL": 53,
+  "id": 8,
+  "stats": {
+   "LUK": 149,
+   "DEF": 135,
+   "HP": 599,
+   "MGC": 154,
+   "SPD": 163,
+   "PWR": 143,
+   "SKL": 169
+  },
+  "weapon": {
+   "lvl": 8,
+   "runePiece": {
+    "amount": 0,
+    "element": "NONE"
+   }
+  },
+  "inventory": [
+   {
+    "id": 81
+   },
+   {
+    "quantity": 254,
+    "id": 73
+   },
+   {
+    "id": 17
+   },
+   {
+    "id": 144
+   },
+   {
+    "quantity": 1,
+    "id": 72
+   }
+  ],
+  "status": {
+   "balloon": 0,
+   "poison": false
+  }
+ },
+ {
+  "HP": 550,
+  "key": "VIKTOR",
+  "rune": {
+   "id": 21
+  },
+  "MP": [
+   5,
+   2,
+   1,
+   0
+  ],
+  "EXP": 807,
+  "LVL": 47,
+  "id": 35,
+  "stats": {
+   "LUK": 106,
+   "DEF": 148,
+   "HP": 550,
+   "MGC": 79,
+   "SPD": 1,
+   "PWR": 152,
+   "SKL": 70
+  },
+  "weapon": {
+   "lvl": 3,
+   "runePiece": {
+    "amount": 0,
+    "element": "NONE"
+   }
+  },
+  "inventory": [
+   {
+    "slot": "BODY",
+    "id": 11
+   },
+   {
+    "slot": "ACCESSORY_1",
+    "id": 28
+   }
+  ],
+  "status": {
+   "balloon": 0,
+   "poison": false
+  }
+ },
+ {
+  "HP": 581,
+  "key": "FLIK",
+  "rune": {
+   "id": 29
+  },
+  "MP": [
+   7,
+   5,
+   4,
+   1
+  ],
+  "EXP": 32,
+  "LVL": 51,
+  "id": 17,
+  "stats": {
+   "LUK": 114,
+   "DEF": 114,
+   "HP": 581,
+   "MGC": 132,
+   "SPD": 1,
+   "PWR": 148,
+   "SKL": 144
+  },
+  "weapon": {
+   "lvl": 9,
+   "runePiece": {
+    "amount": 0,
+    "element": "NONE"
+   }
+  },
+  "inventory": [
+   {
+    "slot": "HEAD",
+    "id": 1
+   },
+   {
+    "slot": "BODY",
+    "id": 12
+   },
+   {
+    "slot": "SHIELD",
+    "id": 67
+   },
+   {
+    "slot": "ACCESSORY_1",
+    "id": 38
+   },
+   {
+    "id": 65
+   }
+  ],
+  "status": {
+   "balloon": 0,
+   "poison": false
+  }
+ },
+ {
+  "HP": 271,
+  "key": "LUC",
+  "rune": {
+   "id": 2
+  },
+  "MP": [
+   9,
+   8,
+   6,
+   5
+  ],
+  "EXP": 565,
+  "LVL": 49,
+  "id": 26,
+  "stats": {
+   "LUK": 58,
+   "DEF": 51,
+   "HP": 271,
+   "MGC": 186,
+   "SPD": 126,
+   "PWR": 42,
+   "SKL": 118
+  },
+  "weapon": {
+   "lvl": 3,
+   "runePiece": {
+    "amount": 0,
+    "element": "NONE"
+   }
+  },
+  "inventory": [
+   {
+    "id": 13,
+    "slot": "BODY",
+    "locked": true
+   },
+   {
+    "id": 52,
+    "slot": "ACCESSORY_1",
+    "locked": true
+   },
+   {
+    "id": 62
+   },
+   {
+    "id": 164
+   }
+  ],
+  "status": {
+   "balloon": 0,
+   "poison": false
+  }
+ },
+ {
+  "HP": 433,
+  "key": "TENGAAR",
+  "rune": {
+   "id": 6
+  },
+  "MP": [
+   9,
+   7,
+   6,
+   4
+  ],
+  "EXP": 816,
+  "LVL": 51,
+  "id": 33,
+  "stats": {
+   "LUK": 77,
+   "DEF": 111,
+   "HP": 433,
+   "MGC": 175,
+   "SPD": 1,
+   "PWR": 96,
+   "SKL": 146
+  },
+  "weapon": {
+   "lvl": 7,
+   "runePiece": {
+    "amount": 0,
+    "element": "NONE"
+   }
+  },
+  "inventory": [
+   {
+    "slot": "BODY",
+    "id": 13
+   },
+   {
+    "slot": "ACCESSORY_1",
+    "id": 51
+   }
+  ],
+  "status": {
+   "balloon": 0,
+   "poison": false
+  }
+ },
+ {
+  "HP": 191,
+  "key": "HELLION",
+  "rune": {
+   "id": 30
+  },
+  "MP": [
+   7,
+   4,
+   3,
+   0
+  ],
+  "EXP": 666,
+  "LVL": 31,
+  "id": 59,
+  "stats": {
+   "LUK": 82,
+   "DEF": 59,
+   "HP": 191,
+   "MGC": 123,
+   "SPD": 1,
+   "PWR": 37,
+   "SKL": 39
+  },
+  "weapon": {
+   "lvl": 3,
+   "runePiece": {
+    "amount": 0,
+    "element": "NONE"
+   }
+  },
+  "inventory": [
+   {
+    "slot": "BODY",
+    "id": 13
+   }
+  ],
+  "status": {
+   "balloon": 0,
+   "poison": false
+  }
+ }
+]

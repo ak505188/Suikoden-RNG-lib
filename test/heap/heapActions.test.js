@@ -267,3 +267,127 @@ describe("the second Special's start tick and phase by turn-order position (heap
     }
   });
 });
+
+describe('the turn-order parties M-after-p* / M-before-p* played from round 1 (luc1: Luc kills, Special, the five casts; 3 seeds)', () => {
+  const parties = fs
+    .readdirSync(new URL('../fixtures/heap/parties/', import.meta.url))
+    .filter((f) => f.endsWith('.json'))
+    .map((f) => f.slice(0, -5))
+    .sort();
+  /** @param {string} name @param {string} seed @param {string | null} spell */
+  function replay(name, seed, spell) {
+    const chars = JSON.parse(
+      fs.readFileSync(new URL(`../fixtures/heap/parties/${name}.json`, import.meta.url), 'utf8'),
+    );
+    const fast = name.includes('before');
+    const rng = new RNG(0);
+    const heap = new VfxHeap(
+      loadHeapDump(fast ? 'crystal_core_L-fire_r1_prompt' : 'crystal_core_L-fire-slow_r1_prompt'),
+      { party: fast ? 'L-fire' : 'L-fire-slow', index: 0 },
+    );
+    const out = {
+      before: /** @type {(number | undefined)[]} */ ([]),
+      idx0: /** @type {any[]} */ ([]),
+      calls: -1,
+      pred: /** @type {any} */ (null),
+    };
+    let on = false;
+    const special = heap.enemyMove.bind(heap);
+    heap.enemyMove = (key, move, options) => {
+      if (move === 'Special') out.before.push(options?.before);
+      return special(key, move, options);
+    };
+    for (const method of /** @type {const} */ (['castSpell', 'castFlamingArrow'])) {
+      const original = /** @type {(...a: any[]) => any} */ (heap[method]).bind(heap);
+      /** @type {any} */ (heap)[method] = (/** @type {any[]} */ ...args) => {
+        const r = /** @type {RNG} */ (args[args.length - 1]);
+        const start = r.count;
+        const result = original(...args);
+        if (on) out.calls = r.count - start;
+        return result;
+      };
+    }
+    for (const method of /** @type {const} */ (['predictParticles', 'predictSoulEater'])) {
+      const original = /** @type {(...a: any[]) => any} */ (heap[method]).bind(heap);
+      /** @type {any} */ (heap)[method] = (/** @type {any[]} */ ...args) => {
+        const result = original(...args);
+        if (on) out.pred = result;
+        return result;
+      };
+    }
+    const boss = new Enemy(ENEMY_KEYS.CRYSTAL_CORE);
+    boss.HP = 1;
+    const battle = new Battle({
+      party: PlayerParty.fromCharacterJSON(chars),
+      enemies: new EnemyParty([boss]),
+      rng,
+      freeWillGate: 10,
+      heap,
+    });
+    for (let r = 1; r <= 3; r++) {
+      battle.party.combatants.forEach((c, i) => {
+        if (i < 6) c.HP = RECORDED_HP[i];
+      });
+      const actions = Array(6).fill({ type: ACTION_TYPES.DEFEND });
+      if (r === 1) actions[3] = { type: ACTION_TYPES.RUNE, slot: 0, target: 0 };
+      if (r === 3 && spell) {
+        on = true;
+        const c = CASTS[spell];
+        if (spell !== 'Thor')
+          battle.party.combatants[3].setRune(
+            /** @type {any} */ (Object.values(RUNES).find((x) => x.id === 2)),
+          );
+        for (const [i, id] of Object.entries(c.runes))
+          battle.party.combatants[Number(i)].setRune(
+            /** @type {any} */ (Object.values(RUNES).find((x) => x.id === id)),
+          );
+        for (const [i, a] of Object.entries(c.acts)) actions[Number(i)] = a;
+      }
+      rng.raw = (parseInt(seed, 16) + r) >>> 0;
+      battle.playTurn(actions);
+      out.idx0.push(heap.idx0);
+    }
+    return out;
+  }
+  const rows = /** @type {{ party: string, seed: string, idx0: number }[]} */ (
+    JSON.parse(
+      fs.readFileSync(
+        new URL('../fixtures/heap/tables/special_start_by_position.json', import.meta.url),
+        'utf8',
+      ),
+    ).rows
+  );
+  it('the Battle counts the members before Crystal Core as your table does: 40 of 40', () => {
+    for (const row of rows) {
+      const m = /** @type {RegExpMatchArray} */ (row.party.match(/M-(after|before)-p(\d)/));
+      const want = Math.min(Number(m[2]), 3) + (m[1] === 'before' ? 2 : 0);
+      assert.deepStrictEqual(replay(row.party, row.seed, null).before, [want, want], row.party);
+    }
+  });
+  it("the index is never wrong: the recorded round lengths are the recorded parties' (another party leaves it unknown)", () => {
+    for (const row of rows) {
+      const got = replay(row.party, row.seed, null).idx0[2];
+      assert.ok(got === undefined || got === row.idx0, `${row.party} ${row.seed}`);
+    }
+  });
+  for (const name of parties) {
+    it(`${name}: no known word is wrong, and every word known means the live RNG count`, () => {
+      const live = liveWords('special', 'after_move', `_L-fire-slow_turnorder_${name}`);
+      for (const spell of SPELLS)
+        for (const seed of Object.keys(live[spell] ?? {})) {
+          const l = live[spell][seed];
+          const sim = replay(name, seed, spell);
+          const p = sim.pred;
+          const flags = /** @type {boolean[]} */ (
+            p.staleResidual ? [...p.staleResidualUnknown, ...p.staleScaleUnknown] : p.unknown
+          );
+          const words = p.staleResidual ? [...p.staleResidual, ...p.staleScale] : p.residual;
+          const want = liveList(l);
+          words.forEach((/** @type {number} */ w, /** @type {number} */ i) => {
+            if (!flags[i]) assert.strictEqual(w, want[i], `${spell} ${seed} word ${i}`);
+          });
+          if (!flags.some(Boolean)) assert.strictEqual(sim.calls, l.calls, `${spell} ${seed}`);
+        }
+    });
+  }
+});

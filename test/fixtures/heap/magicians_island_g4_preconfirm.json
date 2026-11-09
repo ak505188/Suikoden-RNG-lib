@@ -1,0 +1,18 @@
+{
+  "arenaBase": "0x80182000",
+  "arenaSize": 98304,
+  "battleBlocks": ["0x80187260", "0x80185ae8"],
+  "build": "v10",
+  "fight": "Magician's Island random group 4 (ForceBattle group, HeapTestingV1_0.State)",
+  "fightMenuFrees": ["0x8018a918", "0x8018a8a8", "0x8018a738", "0x8018a5c8", "0x8018a9f0", "0x8018a520", "0x8018a4f8", "0x8018a388", "0x8018a218", "0x8018a568", "0x8018a160", "0x8018a130", "0x80189fc0", "0x80189e50", "0x8018a1b8", "0x80189da0", "0x80189d70", "0x80189c00", "0x80189a90", "0x80189df0", "0x801899c0", "0x80189980", "0x80189810", "0x801896a0", "0x80189a30", "0x80189600", "0x801895d8", "0x80189468", "0x801892f8", "0x80189640", "0x80189270", "0x80189258", "0x801890e8", "0x80188f78", "0x80189298", "0x80188da8", "0x80188ce8", "0x80188b78", "0x80188a08", "0x80188f18", "0x801889d8", "0x8018aa50", "0x80187260", "0x80185ae8"],
+  "file": "magicians_island_g4_preconfirm.bin",
+  "freeListAfterMenuFrees": [["0x80182000", 6023]],
+  "freeListRaw": [["0x80182000", 1884]],
+  "menuState": "0x8018aa50",
+  "moment": "preconfirm (Free Will chosen, everyone Defends)",
+  "name": "magicians_island_g4_preconfirm",
+  "note": "free lists are { address, units of 8 bytes } as HeapModel:freeList() returns them, in list order",
+  "party": "base save",
+  "round": 1,
+  "rover": "0x80182000"
+}

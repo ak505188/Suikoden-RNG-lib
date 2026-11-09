@@ -1,0 +1,18 @@
+{
+  "arenaBase": "0x80182000",
+  "arenaSize": 98304,
+  "battleBlocks": ["0x80189c70", "0x801884f8"],
+  "build": "v11",
+  "fight": "SpellDuration.State (v1.1)",
+  "fightMenuFrees": ["0x8018d2f8", "0x8018d288", "0x8018d118", "0x8018cfa8", "0x8018d3d0", "0x8018cf20", "0x8018cf08", "0x8018cd98", "0x8018cc28", "0x8018cf48", "0x8018cb70", "0x8018cb40", "0x8018c9d0", "0x8018c860", "0x8018cbc8", "0x8018c7b0", "0x8018c780", "0x8018c610", "0x8018c4a0", "0x8018c800", "0x8018c3d0", "0x8018c390", "0x8018c220", "0x8018c0b0", "0x8018c440", "0x8018c010", "0x8018bfe8", "0x8018be78", "0x8018bd08", "0x8018c050", "0x8018bc80", "0x8018bc68", "0x8018baf8", "0x8018b988", "0x8018bca8", "0x8018b7b8", "0x8018b6f8", "0x8018b588", "0x8018b418", "0x8018b928", "0x8018b3e8", "0x8018d430", "0x80189c70", "0x801884f8"],
+  "file": "spellduration_preconfirm.bin",
+  "freeListAfterMenuFrees": [["0x80182000", 7363]],
+  "freeListRaw": [["0x80182000", 3230]],
+  "menuState": "0x8018d430",
+  "moment": "preconfirm",
+  "name": "spellduration_preconfirm",
+  "note": "free lists are { address, units of 8 bytes } as HeapModel:freeList() returns them, in list order",
+  "party": "save's own party (McDohl first)",
+  "round": 1,
+  "rover": "0x80182000"
+}

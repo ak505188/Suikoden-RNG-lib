@@ -1,0 +1,20 @@
+{
+  "arenaBase": "0x80182000",
+  "arenaSize": 98304,
+  "battleBlocks": ["0x80188d00", "0x80187588"],
+  "build": "v11",
+  "fight": "Neclord T1 (NeclordT1_1F_before_move_selection.State, v1.1), opening RNG 12345678, round 1 all Defend with RNG cc623a9b",
+  "fightMenuFrees": ["0x8018c388", "0x8018c318", "0x8018c1a8", "0x8018c038", "0x8018c460", "0x8018bfb0", "0x8018bf98", "0x8018be28", "0x8018bcb8", "0x8018bfd8", "0x8018bc00", "0x8018bbd0", "0x8018ba60", "0x8018b8f0", "0x8018bc58", "0x8018b840", "0x8018b810", "0x8018b6a0", "0x8018b530", "0x8018b890", "0x8018b460", "0x8018b420", "0x8018b2b0", "0x8018b140", "0x8018b4d0", "0x8018b0a0", "0x8018b078", "0x8018af08", "0x8018ad98", "0x8018b0e0", "0x8018ad10", "0x8018acf8", "0x8018ab88", "0x8018aa18", "0x8018ad38", "0x8018a848", "0x8018a788", "0x8018a618", "0x8018a4a8", "0x8018a9b8", "0x8018a478", "0x8018c4c0", "0x80188d00", "0x80187588"],
+  "file": "neclord_open12345678_r1_cc623a9b_preconfirm.bin",
+  "freeListAfterMenuFrees": [["0x80182000", 6869], ["0x8018f7e8", 646]],
+  "freeListRaw": [["0x8018f7e8", 646], ["0x80182000", 2736]],
+  "menuState": "0x8018c4c0",
+  "moment": "preconfirm (round 2, Free Will chosen)",
+  "name": "neclord_open12345678_r1_cc623a9b_preconfirm",
+  "note": "free lists are { address, units of 8 bytes } as HeapModel:freeList() returns them, in list order",
+  "party": "save's own party",
+  "round": 2,
+  "round1HeapAllocs": 129,
+  "round1HeapFrees": 126,
+  "rover": "0x8018f7e8"
+}

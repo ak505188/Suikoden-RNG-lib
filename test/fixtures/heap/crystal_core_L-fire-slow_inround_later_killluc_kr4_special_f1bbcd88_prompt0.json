@@ -1,0 +1,12 @@
+{
+  "frame": 0,
+  "freeListRaw": [["0x8018fe30", 673], ["0x80182000", 2797]],
+  "menuBlocks": ["0x8018c570", "0x8018c500", "0x8018c390", "0x8018c220", "0x8018c648", "0x8018c198", "0x8018c180", "0x8018c010", "0x8018bea0", "0x8018c1c0", "0x8018bde8", "0x8018bdb8", "0x8018bc48", "0x8018bad8", "0x8018be40", "0x8018ba28", "0x8018b9f8", "0x8018b888", "0x8018b718", "0x8018ba78", "0x8018b648", "0x8018b608", "0x8018b498", "0x8018b328", "0x8018b6b8", "0x8018b288", "0x8018b260", "0x8018b0f0", "0x8018af80", "0x8018b2c8", "0x8018aef8", "0x8018aee0", "0x8018ad70", "0x8018ac00", "0x8018af20", "0x8018aa30", "0x8018a970", "0x8018a800", "0x8018a690", "0x8018aba0", "0x8018a660", "0x8018c6a8", "0x80188ee8", "0x80187770"],
+  "menuFreedByThen": 0,
+  "moment": "preconfirm of the round (Free Will, Luc 2.1.7), before confirmRound",
+  "move": "special",
+  "name": "crystal_core_L-fire-slow_inround_later_killluc_kr4_special_f1bbcd88_prompt0",
+  "note": "arena = 0x80182000, 0x18000 bytes; free list = { address, units of 8 bytes } in list order; menuBlocks = the Fight menu's 44 blocks of THIS round's prompt, menuFreedByThen = how many of them were freed by this moment",
+  "rover": "0x8018fe30",
+  "seed": "0xf1bbcd88"
+}

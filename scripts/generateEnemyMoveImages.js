@@ -218,6 +218,77 @@ function repeatUnknownSpecial(next) {
 const specialNext = image('special_blocks_preconfirm_L-fire-slow');
 const specialRepeat = repeatUnknownSpecial(specialNext);
 
+/**
+ * The per-round recordings (heap_rounds/rounds_<scenario>_d0.tsv and the dumps crystal_core_L-fire-slow_<scenario>_<seed>_r<r>_preconfirm):
+ * the arena at the next prompt after a round, for the 4 recorded seeds of the 10 scenarios (luc1-5, vf1-5: kill in round k, first
+ * Special k + 1, cast round k + 2). Returns the dump names of the rounds that match `pick(scenario, round, idx0)`.
+ * @param {(kill: string, k: number, round: number, idx0: number) => boolean} pick
+ * @returns {string[]}
+ */
+function roundDumps(pick) {
+  const ROUNDS = `${DIR}/../heap_rounds`;
+  /** @type {string[]} */
+  const names = [];
+  for (const file of fs.readdirSync(ROUNDS).filter((f) => /_d0\.tsv$/.test(f))) {
+    const [, kill, k] = /** @type {RegExpMatchArray} */ (file.match(/rounds_(luc|vf)(\d)_d0/));
+    for (const line of fs.readFileSync(`${ROUNDS}/${file}`, 'utf8').split('\n').filter(Boolean)) {
+      const cells = line.split('\t');
+      const seed = cells[0];
+      const name = (/** @type {number} */ r) =>
+        `crystal_core_L-fire-slow_${kill}${k}_${seed}_r${r}_preconfirm`;
+      cells.slice(2).forEach((cell, i) => {
+        const idx0 = Number(/idx0=(\d)/.exec(cell)?.[1]);
+        // (HOLD_SEED: leave one seed out, to check the images against a seed they were not built from)
+        if (
+          seed !== process.env.HOLD_SEED &&
+          pick(kill, Number(k), i + 1, idx0) &&
+          fs.existsSync(`${DUMPS}/${name(i + 2)}.bin`)
+        )
+          names.push(name(i + 2));
+      });
+    }
+  }
+  return names;
+}
+
+/**
+ * The arena right after a round (the next prompt), as an image of the move's blocks and the Fight menu: a word constant over the dumps
+ * is known, a varying one unknown.
+ * @param {{ blocks: [number, number, string, number[]][], menu: [number, number, string, number[]][] }} like
+ * @param {string[]} names
+ */
+function imageAtPrompt(like, names) {
+  const arenas = names.map((n) => fs.readFileSync(`${DUMPS}/${n}.bin`));
+  /** @param {[number, number, string, number[]][]} blocks */
+  const from = (blocks) =>
+    blocks.map(([n, ptr, hex]) => {
+      let out = '';
+      /** @type {number[]} */
+      const varying = [];
+      for (let i = 0; i < hex.length / 8; i++) {
+        const words = arenas.map((a) => a.readUInt32LE(ptr + 4 * i - 0x80182000));
+        if (words.some((w) => w !== words[0])) varying.push(i);
+        out += words[0].toString(16).padStart(8, '0');
+      }
+      return /** @type {[number, number, string, number[]]} */ ([n, ptr, out, varying]);
+    });
+  return { blocks: from(like.blocks), menu: from(like.menu) };
+}
+
+// the arena after the round of Luc's kill (Crystal Core's Attack, then Luc's Flaming Arrow kills it: the cast allocates over the
+// Attack's blocks and the menu), and after the first Special by the draw buffer index of its round (the phase: 0 fast, 1 slow)
+const attackNext = image('attack_blocks_preconfirm_L-fire-slow');
+const afterKill = imageAtPrompt(
+  attackNext,
+  roundDumps((kill, k, round) => kill === 'luc' && round === k),
+);
+const specialNextByPhase = [0, 1].map((phase) =>
+  imageAtPrompt(
+    specialNext,
+    roundDumps((kill, k, round, idx0) => round === k + 1 && idx0 === phase),
+  ),
+);
+
 const images = {
   CRYSTAL_CORE: {
     Attack: {
@@ -225,7 +296,9 @@ const images = {
       'L-fire-slow': {
         inRound: attackSlow,
         // by 'camera % 3/target slot/draw parity'
-        next: image('attack_blocks_preconfirm_L-fire-slow'),
+        next: attackNext,
+        // the round in which Luc's Flaming Arrow kills Crystal Core after its Attack
+        nextKill: afterKill,
         // the words are the same when the Attack runs a second time (a cast in a later round: 0 known words wrong, 20 seeds)
         repeatable: true,
         repeatUnknown: repeatUnknown(attackSlow),
@@ -252,6 +325,9 @@ const images = {
           specialRepeat.stale,
         ),
         next: specialNext,
+        // the first Special's next-prompt image by the phase of its round (the draw buffer index at its confirm)
+        nextFast: specialNextByPhase[0],
+        nextSlow: specialNextByPhase[1],
       },
     },
   },
@@ -272,7 +348,7 @@ const header = `/**
  *   still hold the stale words the cast sees).
  * @typedef {[number, number, string, number[]] | [number, number, string, number[], number[]] | [number, number, string, number[], number[], number[]]} BlockImage
  * @typedef {{ blocks: BlockImage[], menu: BlockImage[], menuModeled?: BlockImage[] }} BlockSet
- * @typedef {{ next?: BlockSet, inRound?: BlockSet, inRoundFast?: BlockSet, inRoundSlow?: BlockSet, repeatable?: boolean, repeatUnknown?: number[] }} MoveImage
+ * @typedef {{ next?: BlockSet, inRound?: BlockSet, inRoundFast?: BlockSet, inRoundSlow?: BlockSet, nextKill?: BlockSet, nextFast?: BlockSet, nextSlow?: BlockSet, repeatable?: boolean, repeatUnknown?: number[] }} MoveImage
  */
 
 /** @type {Record<string, Record<string, Record<string, MoveImage>>>} enemy key -> move -> party recording -> image */

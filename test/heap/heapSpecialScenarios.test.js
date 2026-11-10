@@ -7,6 +7,7 @@ import Battle from '../../lib/Game/Battle/Battle.js';
 import { ACTION_TYPES } from '../../lib/Game/Battle/Actions.js';
 import { ENEMY_KEYS } from '../../lib/Game/Keys.js';
 import { RUNES } from '../../lib/Game/Magic/Runes.js';
+import { loaderImage } from '../../lib/Game/Heap/LoaderImage.js';
 import VfxHeap from '../../lib/Game/Heap/VfxHeap.js';
 import RNG from '../../lib/rng.js';
 import {
@@ -107,9 +108,20 @@ describe('the in-round castpre image of the second Special, five scenarios', () 
           });
           heap.roundStart();
           heap.enemyMove('CRYSTAL_CORE', 'Special', { repeat: true, phase });
+          // the castpre dump is taken after the cast's own loader buffer was filled with the constant loader image, at the place the Special's
+          // loader buffer was (the first fit); the heap before the cast does not hold that fill (the prediction applies it), so the words
+          // the image explains are not compared
+          const [loaderPtr] = heap.lastMoveBlocks[2];
+          const image = loaderImage();
+          const imageWord = (/** @type {number} */ off) =>
+            new DataView(image.buffer, image.byteOffset).getUint32(off, true);
           let wrong = 0;
-          for (const [addr, word] of heap.state.known)
-            if (word !== view.getUint32(addr - 0x80182000, true)) wrong++;
+          for (const [addr, word] of heap.state.known) {
+            const real = view.getUint32(addr - 0x80182000, true);
+            const off = addr - loaderPtr;
+            if (off >= 0 && off < 16384 && real === imageWord(off)) continue;
+            if (word !== real) wrong++;
+          }
           return wrong;
         };
         const phase = phaseOf(scenario, seed);

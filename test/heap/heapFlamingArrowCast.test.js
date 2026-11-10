@@ -2,6 +2,7 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import RNG from '../../lib/rng.js';
 import { flamingArrowCast, sqrt0 } from '../../lib/Game/Heap/FlamingArrowCast.js';
+import { flamingArrowParticles } from '../../lib/Game/Magic/SpellRNG/Fire.js';
 import { loadArena } from '../helpers/heapDumps.js';
 
 // Luc's Flaming Arrow kill cast as the game leaves its particle structs (kill_round note): the words of the first six particles equal the
@@ -35,5 +36,34 @@ describe('the Flaming Arrow cast particles', () => {
           word(end, ptrs[i] + 4 * k),
           `particle ${i} word ${k}`,
         );
+  });
+});
+
+// The RNG-only version in Magic/SpellRNG/Fire.js (what the searches use) and the word-level one here are the same cast: same rolls, same
+// trail word, for any start state and stale low bits.
+describe('the two Flaming Arrow cast models agree', () => {
+  it("the number of rolls and each particle struct's +0xc word, 200 start states", () => {
+    for (let n = 0; n < 200; n++) {
+      const raw = (Math.imul(n + 1, 0x9e3779b1) ^ (n << 7)) >>> 0;
+      const residual = Array.from(
+        { length: 20 },
+        (_, i) => (Math.imul(n + 3, i + 17) * 2654435761) & 0xfff,
+      );
+      const a = new RNG(0);
+      a.raw = raw;
+      const b = new RNG(0);
+      b.raw = raw;
+      const simple = flamingArrowParticles(a, residual);
+      const full = flamingArrowCast(
+        b,
+        residual.map((r) => [0, 0, 0, r, 0, 0, 0, 0, 0]),
+      );
+      assert.strictEqual(a.count, b.count, `start ${n}`);
+      assert.deepStrictEqual(
+        full.map((p) => p.words[3] | 0),
+        simple.trailX.map((x) => x | 0),
+        `start ${n}`,
+      );
+    }
   });
 });

@@ -3,7 +3,10 @@ import assert from 'node:assert';
 import RNG from '../../lib/rng.js';
 import { sqrt0 } from '../../lib/Game/Magic/SpellRNG/shared.js';
 import { flamingArrowParticles } from '../../lib/Game/Magic/SpellRNG/Fire.js';
+import fs from 'node:fs';
+import VfxHeap from '../../lib/Game/Heap/VfxHeap.js';
 import { loadArena } from '../helpers/heapDumps.js';
+import { loadHeapDump } from '../helpers/heapAfterMoves.js';
 
 // Luc's Flaming Arrow kill cast as the game leaves its particle structs (kill_round note): the words of the first six particles equal the
 // arena at the next prompt (party L-fire, seed 9e3779b1), from the RNG after the 19 rolls of the polls before the cast and the arena
@@ -67,4 +70,37 @@ describe('the plain and the detailed Flaming Arrow cast agree', () => {
       );
     }
   });
+});
+
+// Two Flaming Arrows in one round (heap_pairs, party L-fire, 6 seeds, with and without a round between): the second reads the first's trail
+// words in the six structs outside the loader buffer and the loader image (0) in the other 14, which the second cast's 16 KB loader
+// buffer covers.
+describe('a Flaming Arrow after a Flaming Arrow', () => {
+  for (const file of [
+    'heap_pairs_pair_FlamingArrow.txt',
+    'heap_pairs_pair_FlamingArrow_s456.txt',
+  ]) {
+    const rows = fs
+      .readFileSync(new URL(`../fixtures/heap/${file}`, import.meta.url), 'utf8')
+      .split('\n')
+      .filter((l) => l.startsWith('[first=FlamingArrow between=0] FlamingArrow seed'));
+    for (const row of rows) {
+      const seed = /** @type {RegExpMatchArray} */ (row.match(/seed (\w+)/))[1];
+      it(`seed ${seed}: the second cast's 20 stale words are the live ones`, () => {
+        const live = /** @type {RegExpMatchArray} */ (row.match(/live ([0-9a-f,]+) /))[1]
+          .split(',')
+          .map((x) => parseInt(x, 16));
+        const heap = new VfxHeap(loadHeapDump('crystal_core_L-fire_r1_prompt'), {
+          party: 'L-fire',
+          index: 0,
+        });
+        heap.roundStart();
+        const rng = new RNG(0);
+        rng.raw = (parseInt(seed, 16) + 1) >>> 0;
+        for (let i = 0; i < 19; i++) rng.next();
+        heap.castFlamingArrow(rng);
+        assert.deepStrictEqual(heap.predictParticles('FlamingArrow').residual, live);
+      });
+    }
+  }
 });

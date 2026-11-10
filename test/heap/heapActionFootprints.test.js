@@ -300,7 +300,7 @@ describe("a member killed by Crystal Core's Attack in round 1 (heap_more_seeds/d
     });
 });
 
-describe('a cast then a cast (heap_pairs, party L-fire): after any cast the next cast is changed but for Flaming Arrow <-> Explosion and Explosion -> Explosion', () => {
+describe('a cast then a cast (heap_pairs, party L-fire): after any cast the next cast is changed but for Flaming Arrow <-> Explosion, Explosion -> Explosion and Flaming Arrow (either caster) -> Flaming Arrow', () => {
   /** @type {Record<string, number>} */
   const live = {};
   for (const name of [
@@ -401,7 +401,8 @@ describe('a cast then a cast (heap_pairs, party L-fire): after any cast the next
       const exempt =
         (first.startsWith('FlamingArrow') && second === 'Explosion') ||
         (first === 'Explosion' && second === 'FlamingArrow') ||
-        (first === 'Explosion' && second === 'Explosion');
+        (first === 'Explosion' && second === 'Explosion') ||
+        (first.startsWith('FlamingArrow') && second === 'FlamingArrow');
       assert.strictEqual(sim.flagged, !exempt, key);
     }
     assert.ok(checked >= 300, `${checked}`);

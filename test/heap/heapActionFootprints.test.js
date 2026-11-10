@@ -300,7 +300,7 @@ describe("a member killed by Crystal Core's Attack in round 1 (heap_more_seeds/d
     });
 });
 
-describe('a cast then a cast (heap_pairs, party L-fire): after any cast the next cast is changed but for Flaming Arrow <-> Explosion', () => {
+describe('a cast then a cast (heap_pairs, party L-fire): after any cast the next cast is changed but for Flaming Arrow <-> Explosion and Explosion -> Explosion', () => {
   /** @type {Record<string, number>} */
   const live = {};
   for (const name of [
@@ -400,7 +400,8 @@ describe('a cast then a cast (heap_pairs, party L-fire): after any cast the next
       // the Special-less pairs: the second spell is flagged unless it is the exempt partner of the first
       const exempt =
         (first.startsWith('FlamingArrow') && second === 'Explosion') ||
-        (first === 'Explosion' && second === 'FlamingArrow');
+        (first === 'Explosion' && second === 'FlamingArrow') ||
+        (first === 'Explosion' && second === 'Explosion');
       assert.strictEqual(sim.flagged, !exempt, key);
     }
     assert.ok(checked >= 300, `${checked}`);

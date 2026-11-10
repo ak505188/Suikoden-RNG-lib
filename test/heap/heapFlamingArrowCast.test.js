@@ -1,7 +1,7 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import RNG from '../../lib/rng.js';
-import { flamingArrowCast, sqrt0 } from '../../lib/Game/Heap/FlamingArrowCast.js';
+import { sqrt0 } from '../../lib/Game/Magic/SpellRNG/shared.js';
 import { flamingArrowParticles } from '../../lib/Game/Magic/SpellRNG/Fire.js';
 import { loadArena } from '../helpers/heapDumps.js';
 
@@ -27,21 +27,21 @@ describe('the Flaming Arrow cast particles', () => {
     const stale = Array.from({ length: 20 }, (_, i) =>
       i < 6 ? Array.from({ length: 9 }, (_, k) => word(start, ptrs[i] + 4 * k)) : Array(9).fill(0),
     );
-    const particles = flamingArrowCast(rng, stale);
+    const { particles } = flamingArrowParticles(rng, undefined, stale);
     assert.strictEqual(rng.count - before, 468);
     for (let i = 0; i < 6; i++)
       for (let k = 0; k < 9; k++)
         assert.strictEqual(
-          particles[i].words[k],
+          /** @type {any} */ (particles)[i].words[k],
           word(end, ptrs[i] + 4 * k),
           `particle ${i} word ${k}`,
         );
   });
 });
 
-// The RNG-only version in Magic/SpellRNG/Fire.js (what the searches use) and the word-level one here are the same cast: same rolls, same
-// trail word, for any start state and stale low bits.
-describe('the two Flaming Arrow cast models agree', () => {
+// One cast: Magic/SpellRNG/Fire.js without the stale words (what the searches use) and with them (the heap's: every word of the struct)
+// roll the same and leave the same trail word, for any start state and stale low bits.
+describe('the plain and the detailed Flaming Arrow cast agree', () => {
   it("the number of rolls and each particle struct's +0xc word, 200 start states", () => {
     for (let n = 0; n < 200; n++) {
       const raw = (Math.imul(n + 1, 0x9e3779b1) ^ (n << 7)) >>> 0;
@@ -54,13 +54,14 @@ describe('the two Flaming Arrow cast models agree', () => {
       const b = new RNG(0);
       b.raw = raw;
       const simple = flamingArrowParticles(a, residual);
-      const full = flamingArrowCast(
+      const full = flamingArrowParticles(
         b,
+        residual,
         residual.map((r) => [0, 0, 0, r, 0, 0, 0, 0, 0]),
-      );
+      ).particles;
       assert.strictEqual(a.count, b.count, `start ${n}`);
       assert.deepStrictEqual(
-        full.map((p) => p.words[3] | 0),
+        /** @type {any[]} */ (full).map((p) => p.words[3] | 0),
         simple.trailX.map((x) => x | 0),
         `start ${n}`,
       );

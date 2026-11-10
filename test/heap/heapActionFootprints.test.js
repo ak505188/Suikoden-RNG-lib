@@ -273,6 +273,33 @@ describe('casts after a Special that kills party members (heap_deaths): the same
       });
 });
 
+describe("a member killed by Crystal Core's Attack in round 1 (heap_more_seeds/deaths deathattack): the casts two rounds later are flagged", () => {
+  for (const [name, member] of /** @type {const} */ ([
+    ['m2', 1],
+    ['m3', 2],
+  ]))
+    it(`Viktor / Flik (slot ${member + 1}) at 1 HP dies to the Attack in round 1: no known word wrong, every spell flagged`, () => {
+      const r = checkAll(`deathattack_${name}`, { k: 1, low: { members: [member], round: 1 } });
+      assert.ok(r.casts > 0);
+      // the death changes the later casts' words and counts (25 of 28 and 23 of 28 compared results differ): nothing is claimed exact
+      assert.strictEqual(r.exact, 0, 'a member died in round 1');
+      // (the seeds are the recorded ones: Crystal Core's scan picks the 1-HP member in each)
+      const live = liveWords('special', 'after_move', `_L-fire-slow_deathattack_${name}`);
+      for (const seed of Object.keys(live.FlamingArrow)) {
+        const heap = scenario(seed, {
+          k: 1,
+          low: { members: [member], round: 1 },
+          spell: 'Explosion',
+        }).heap;
+        assert.strictEqual(
+          heap.tainted.size,
+          5,
+          `${seed}: a death in an Attack round flags every spell`,
+        );
+      }
+    });
+});
+
 describe('a cast then a cast (heap_pairs, party L-fire): after any cast the next cast is changed but for Flaming Arrow <-> Explosion', () => {
   /** @type {Record<string, number>} */
   const live = {};
@@ -283,6 +310,12 @@ describe('a cast then a cast (heap_pairs, party L-fire): after any cast the next
     'BlackShadow',
     'Hell',
     'Thor_FA_fixed',
+    'FlamingArrow_s456',
+    'Explosion_s456',
+    'Thor_s456',
+    'BlackShadow_s456',
+    'Hell_s456',
+    'FlamingArrowOther',
   ]) {
     const text = fs.readFileSync(
       new URL(`../fixtures/heap/heap_pairs_pair_${name}.txt`, import.meta.url),
@@ -341,8 +374,8 @@ describe('a cast then a cast (heap_pairs, party L-fire): after any cast the next
       last = r === rounds;
       if (spell !== 'none') {
         if (spell !== 'Thor') setRune(battle, 3, 2);
-        for (const [i, id] of Object.entries(CASTS[spell].runes)) setRune(battle, Number(i), id);
-        for (const [i, a] of Object.entries(CASTS[spell].acts)) actions[Number(i)] = a;
+        for (const [i, id] of Object.entries(KILLS[spell].runes)) setRune(battle, Number(i), id);
+        for (const [i, a] of Object.entries(KILLS[spell].acts)) actions[Number(i)] = a;
       }
       rng.raw = (parseInt(seed, 16) + r) >>> 0;
       battle.playTurn(actions);
@@ -366,10 +399,10 @@ describe('a cast then a cast (heap_pairs, party L-fire): after any cast the next
         assert.strictEqual(sim.calls, calls, key);
       // the Special-less pairs: the second spell is flagged unless it is the exempt partner of the first
       const exempt =
-        (first === 'FlamingArrow' && second === 'Explosion') ||
+        (first.startsWith('FlamingArrow') && second === 'Explosion') ||
         (first === 'Explosion' && second === 'FlamingArrow');
       assert.strictEqual(sim.flagged, !exempt, key);
     }
-    assert.ok(checked >= 150, `${checked}`);
+    assert.ok(checked >= 300, `${checked}`);
   });
 });

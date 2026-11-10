@@ -1,0 +1,198 @@
+{
+ "structure": {
+  "battle_struct": "0x80196bd0 (13356-byte block, ra 0x800de178, same in every party and first prompt)",
+  "actor_record": "B + 0x50 + 0x8c * slot (slots 1..N party, N + 1 = Crystal Core: 7 for 6 members, 4 for 3 members)",
+  "res_header_ptr": "actor record +0x84",
+  "shadow_res_ptr": "actor record +0x88 (24-byte shadow resource, FUN_800e7630: +0x10 / +0x14 = its two arrays)",
+  "packet_blocks": "resource header +0x28 / +0x2c (header words 10 / 11)",
+  "sprite_count": "resource header +4 (slot 1 = 2 sprites: 80-byte arrays, others 1: 40-byte arrays in the observed parties)",
+  "alloc_order_per_slot": "52 (header, ra 0x800e2040), n*40 (0x800e2084), n*40 (0x800e2090), 24 (shadow header 0x800e7678), n*40 (0x800e76ac), n*40 (0x800e76f4), slots in order 1..N, then slot N + 1 (Crystal Core) last, all from the tail of the free block (each block = 8*units bytes, units = ((size+7)>>3)+1)",
+  "after": "the 5372-byte wipe pool (ra 0x800de9e4) then, 20 frames later, 6 x (52, 80, 80) for the Crystal Core's idle shards (cry_init, FUN_80018230)"
+ },
+ "parties": {
+  "L-fire-slow": [
+   {
+    "slot": 1,
+    "header": "0x80191b80",
+    "pk0": "0x80191b28",
+    "pk1": "0x80191ad0",
+    "n": 2,
+    "shadow": "0x80191ab0"
+   },
+   {
+    "slot": 2,
+    "header": "0x801919c0",
+    "pk0": "0x80191990",
+    "pk1": "0x80191960",
+    "n": 1,
+    "shadow": "0x80191940"
+   },
+   {
+    "slot": 3,
+    "header": "0x801918a0",
+    "pk0": "0x80191870",
+    "pk1": "0x80191840",
+    "n": 1,
+    "shadow": "0x80191820"
+   },
+   {
+    "slot": 4,
+    "header": "0x80191780",
+    "pk0": "0x80191750",
+    "pk1": "0x80191720",
+    "n": 1,
+    "shadow": "0x80191700"
+   },
+   {
+    "slot": 5,
+    "header": "0x80191660",
+    "pk0": "0x80191630",
+    "pk1": "0x80191600",
+    "n": 1,
+    "shadow": "0x801915e0"
+   },
+   {
+    "slot": 6,
+    "header": "0x80191540",
+    "pk0": "0x80191510",
+    "pk1": "0x801914e0",
+    "n": 1,
+    "shadow": "0x801914c0"
+   },
+   {
+    "slot": 7,
+    "header": "0x80191420",
+    "pk0": "0x801913f0",
+    "pk1": "0x801913c0",
+    "n": 1,
+    "shadow": "0x801913a0"
+   }
+  ],
+  "E-size3": [
+   {
+    "slot": 1,
+    "header": "0x80191b80",
+    "pk0": "0x80191b28",
+    "pk1": "0x80191ad0",
+    "n": 2,
+    "shadow": "0x80191ab0"
+   },
+   {
+    "slot": 2,
+    "header": "0x801919c0",
+    "pk0": "0x80191990",
+    "pk1": "0x80191960",
+    "n": 1,
+    "shadow": "0x80191940"
+   },
+   {
+    "slot": 3,
+    "header": "0x801918a0",
+    "pk0": "0x80191870",
+    "pk1": "0x80191840",
+    "n": 1,
+    "shadow": "0x80191820"
+   },
+   {
+    "slot": 4,
+    "header": "0x80191780",
+    "pk0": "0x80191750",
+    "pk1": "0x80191720",
+    "n": 1,
+    "shadow": "0x80191700"
+   }
+  ],
+  "E-size4": [
+   {
+    "slot": 1,
+    "header": "0x80191b80",
+    "pk0": "0x80191b28",
+    "pk1": "0x80191ad0",
+    "n": 2,
+    "shadow": "0x80191ab0"
+   },
+   {
+    "slot": 2,
+    "header": "0x801919c0",
+    "pk0": "0x80191990",
+    "pk1": "0x80191960",
+    "n": 1,
+    "shadow": "0x80191940"
+   },
+   {
+    "slot": 3,
+    "header": "0x801918a0",
+    "pk0": "0x80191870",
+    "pk1": "0x80191840",
+    "n": 1,
+    "shadow": "0x80191820"
+   },
+   {
+    "slot": 4,
+    "header": "0x80191780",
+    "pk0": "0x80191750",
+    "pk1": "0x80191720",
+    "n": 1,
+    "shadow": "0x80191700"
+   },
+   {
+    "slot": 5,
+    "header": "0x80191660",
+    "pk0": "0x80191630",
+    "pk1": "0x80191600",
+    "n": 1,
+    "shadow": "0x801915e0"
+   }
+  ],
+  "E-size5": [
+   {
+    "slot": 1,
+    "header": "0x80191b80",
+    "pk0": "0x80191b28",
+    "pk1": "0x80191ad0",
+    "n": 2,
+    "shadow": "0x80191ab0"
+   },
+   {
+    "slot": 2,
+    "header": "0x801919c0",
+    "pk0": "0x80191990",
+    "pk1": "0x80191960",
+    "n": 1,
+    "shadow": "0x80191940"
+   },
+   {
+    "slot": 3,
+    "header": "0x801918a0",
+    "pk0": "0x80191870",
+    "pk1": "0x80191840",
+    "n": 1,
+    "shadow": "0x80191820"
+   },
+   {
+    "slot": 4,
+    "header": "0x80191780",
+    "pk0": "0x80191750",
+    "pk1": "0x80191720",
+    "n": 1,
+    "shadow": "0x80191700"
+   },
+   {
+    "slot": 5,
+    "header": "0x80191660",
+    "pk0": "0x80191630",
+    "pk1": "0x80191600",
+    "n": 1,
+    "shadow": "0x801915e0"
+   },
+   {
+    "slot": 6,
+    "header": "0x80191540",
+    "pk0": "0x80191510",
+    "pk1": "0x801914e0",
+    "n": 1,
+    "shadow": "0x801914c0"
+   }
+  ]
+ }
+}

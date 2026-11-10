@@ -2,7 +2,6 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import fs from 'node:fs';
 import VfxHeap from '../../lib/Game/Heap/VfxHeap.js';
-import { HIT_KEY_TABLES } from '../../lib/Game/Heap/HitKeyTables.js';
 import { drawIndex, scanPrediction } from '../../lib/Game/Heap/ScanPrediction.js';
 import {
   SPELLS,
@@ -12,6 +11,10 @@ import {
   loadHeapDump,
   predictCast,
 } from '../helpers/heapAfterMoves.js';
+
+const HIT_PACKETS = JSON.parse(
+  fs.readFileSync(new URL('../fixtures/heap/tables/hit_key_packets.json', import.meta.url), 'utf8'),
+);
 
 // Crystal Core's Attack: the target slot, the failed scan passes and the camera class come from the round's RNG (ScanPredict.py in
 // Suikoden-Bizhawk-HUD), the hit effect's 24 forty-byte packets from the round-1 and round-2 key tables, and the second Special's
@@ -72,7 +75,7 @@ describe('the key tables give the hit effect packets (slow party, 20 seeds)', ()
           round === 1
             ? `${p.camera}/${p.slot}/${first}`
             : `${p.camera}/${p.slot}/${drawIndex(2, p.passes + p1.passes)}/${first}`;
-        const table = round === 1 ? HIT_KEY_TABLES.round1 : HIT_KEY_TABLES.round2;
+        const table = round === 1 ? HIT_PACKETS.round1 : HIT_PACKETS.round2;
         assert.strictEqual(table[key], PACKETS[`round${round}`][seed], `${seed} ${key}`);
       }
     });

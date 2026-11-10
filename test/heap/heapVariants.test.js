@@ -62,8 +62,16 @@ function roundOne(variant, seed) {
       [members[a].position, members[b].position] = [members[b].position, members[a].position];
   const rng = new RNG(0);
   const heap = new VfxHeap(
-    loadHeapDump(fast ? 'crystal_core_L-fire_r1_prompt' : 'crystal_core_L-fire-slow_r1_prompt'),
-    { party: fast ? 'L-fire' : 'L-fire-slow', ...(variant === 'ord' ? { index: 1 } : {}) },
+    // the other party order has its own first-prompt arena (its party change takes a frame more)
+    loadHeapDump(
+      fast
+        ? 'crystal_core_L-fire_r1_prompt'
+        : `crystal_core_L-fire-slow${variant === 'ord' ? '-ord_attack_9e3779b1_prompt' : '_r1_prompt'}`,
+    ),
+    {
+      party: fast ? 'L-fire' : 'L-fire-slow',
+      ...(variant === 'ord' ? { index: 1 } : {}),
+    },
   );
   /** @type {number | undefined} */
   let tick;

@@ -391,3 +391,39 @@ describe('the turn-order parties M-after-p* / M-before-p* played from round 1 (l
     });
   }
 });
+
+describe("why Viktor's Attack changes the heap in some seeds only (heap_trace_actions, recording brief 2 item A): the parity of its ticks", () => {
+  // the added ticks of Viktor's Attack in round 1 (luc2, party L-fire-slow): 46 for a hit by roll, 45 for an automatic hit, 81 for a
+  // critical hit; an odd count flips the buffer index of every later round, and only then do the later spells' words change
+  const recorded = /** @type {Record<string, number>} */ ({
+    '9e3779b1': 46,
+    '3c6ef362': 45,
+    daa66d13: 45,
+    '78dde6c4': 81,
+  });
+  /** @param {string} seed @param {boolean} attack */
+  function frames(seed, attack) {
+    const characters = structuredClone(/** @type {any} */ (run).characters);
+    characters[0].stats.SPD = 1;
+    characters[3].stats.SPD = 1;
+    const rng = new RNG(0);
+    const boss = new Enemy(ENEMY_KEYS.CRYSTAL_CORE);
+    const battle = new Battle({
+      party: PlayerParty.fromCharacterJSON(characters),
+      enemies: new EnemyParty([boss]),
+      rng,
+      freeWillGate: 10,
+    });
+    const actions = Array(6).fill({ type: ACTION_TYPES.DEFEND });
+    if (attack) actions[1] = { type: ACTION_TYPES.ATTACK, target: 0 };
+    rng.raw = (parseInt(seed, 16) + 1) >>> 0;
+    battle.playTurn(actions);
+    return battle.frames;
+  }
+  it("the Battle's own added ticks of Viktor's Attack have the recorded parity in all 4 seeds (48 / 47 / 47 / 81 against 46 / 45 / 45 / 81)", () => {
+    for (const [seed, ticks] of Object.entries(recorded)) {
+      const own = frames(seed, true) - frames(seed, false);
+      assert.strictEqual(own % 2, ticks % 2, `${seed}: ${own} against ${ticks}`);
+    }
+  });
+});

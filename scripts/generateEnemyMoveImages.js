@@ -46,6 +46,8 @@ function imageFromDumps(like, names, menu = [], changed = [], stale = []) {
     const keep = [];
     /** @type {number[]} */
     const topOnly = [];
+    /** @type {number[]} */
+    const low12 = [];
     for (let i = 0; i < hex.length / 8; i++) {
       const offset = ptr + 4 * i - 0x80182000;
       const words = arenas.map((a) => a.readUInt32LE(offset));
@@ -60,10 +62,13 @@ function imageFromDumps(like, names, menu = [], changed = [], stale = []) {
           )
         )
           topOnly.push(i);
+        // only the low 12 bits are the same in every seed (an animated particle position: the fractional part is 0): the spells that
+        // read a particle's residual read exactly these
+        else if (words.every((w) => (w & 0xfff) === (words[0] & 0xfff))) low12.push(i);
       } else if (prompts.every((a, k) => a.readUInt32LE(offset) === words[k])) keep.push(i);
       out += words[0].toString(16).padStart(8, '0');
     }
-    return [n, ptr, out, varying, keep, topOnly];
+    return [n, ptr, out, varying, keep, topOnly, low12];
   });
   /** @param {number[]} addresses */
   const menuImage = (addresses) => {
@@ -265,12 +270,26 @@ function imageAtPrompt(like, names) {
       let out = '';
       /** @type {number[]} */
       const varying = [];
+      /** @type {number[]} */
+      const low12 = [];
       for (let i = 0; i < hex.length / 8; i++) {
         const words = arenas.map((a) => a.readUInt32LE(ptr + 4 * i - 0x80182000));
-        if (words.some((w) => w !== words[0])) varying.push(i);
+        if (words.some((w) => w !== words[0])) {
+          varying.push(i);
+          // an animated particle position: the high bits differ, the low 12 bits (what the particle spells read) are the same
+          if (words.every((w) => (w & 0xfff) === (words[0] & 0xfff))) low12.push(i);
+        }
         out += words[0].toString(16).padStart(8, '0');
       }
-      return /** @type {[number, number, string, number[]]} */ ([n, ptr, out, varying]);
+      return /** @type {[number, number, string, number[], number[], number[], number[]]} */ ([
+        n,
+        ptr,
+        out,
+        varying,
+        [],
+        [],
+        low12,
+      ]);
     });
   return { blocks: from(like.blocks), menu: from(like.menu) };
 }
@@ -346,7 +365,9 @@ const header = `/**
  * - \`next\`: the arena at the NEXT Fight prompt, after the Fight menu was rebuilt (for a cast in a later round);
  * - \`inRound\`: the arena right before a cast in the SAME round as the move, the Fight menu freed and not rebuilt yet (its 44 blocks
  *   still hold the stale words the cast sees).
- * @typedef {[number, number, string, number[]] | [number, number, string, number[], number[]] | [number, number, string, number[], number[], number[]]} BlockImage
+ * (a block's elements: the request size, the pointer, the words as hex, the words that vary between seeds, the words the move did not
+ * write, the words whose low 24 bits the move wrote and whose top byte is history, the varying words whose low 12 bits are the same in every seed)
+ * @typedef {[number, number, string, number[]] | [number, number, string, number[], number[]] | [number, number, string, number[], number[], number[]] | [number, number, string, number[], number[], number[], number[]]} BlockImage
  * @typedef {{ blocks: BlockImage[], menu: BlockImage[], menuModeled?: BlockImage[] }} BlockSet
  * @typedef {{ next?: BlockSet, inRound?: BlockSet, inRoundFast?: BlockSet, inRoundSlow?: BlockSet, nextKill?: BlockSet, nextFast?: BlockSet, nextSlow?: BlockSet, repeatable?: boolean, repeatUnknown?: number[] }} MoveImage
  */
@@ -402,36 +423,67 @@ function ordTable(files) {
     }
   return out;
 }
+/**
+ * The child's four ordering-table link words per key (array 0 packet 0 and 1, array 1 packet 0 and 1): the only child words not derived
+ * @param {Record<string, string>} table
+ */
+const childOnly = (table) =>
+  Object.fromEntries(
+    Object.entries(table).map(([key, hex]) => {
+      const child = hex.slice(12 * 104);
+      const word = (/** @type {number} */ i) => child.slice(i * 8, i * 8 + 8);
+      return [key, word(13) + word(23) + word(33) + word(43)];
+    }),
+  );
+const packetTables = {
+  round1: keyTable(
+    'hit_key_table_round1.json',
+    ['cam', 'slot', 'idx'],
+    ['hit_key_table_slots456.json'],
+  ),
+  round2: keyTable('hit_key_table_round2.json', ['cam', 'slot', 'idx2', 'idx1']),
+  blocks: blockTable(),
+  ord: {
+    slow: ordTable([
+      'keys_variants/keys_L-fire-slow-ord_r1_d0.tsv',
+      'keys_variants/keys_L-fire-slow-ord_r1_d1.tsv',
+      // recording brief 2 item D: all 18 keys of slots 1-3 and, with the rot formation, of slots 4-6
+      '../heap_ord/tab_L-fire-slow-ord_keys_L-fire-slow-ord_r1_d0_D0.tsv',
+      '../heap_ord/tab_L-fire-slow-ord_keys_L-fire-slow-ord_r1_d0_D1.tsv',
+      '../heap_ord/rot_L-fire-slow-ord_keys_L-fire-slow-ord_r1_d0_D0_vrot.tsv',
+      '../heap_ord/rot_L-fire-slow-ord_keys_L-fire-slow-ord_r1_d0_D1_vrot.tsv',
+    ]),
+    fast: ordTable([
+      'keys_fast/ord_keys_L-fire-ord_r1_d0_D0.tsv',
+      'keys_fast/ord_keys_L-fire-ord_r1_d0_D1.tsv',
+      '../heap_ord/tab_L-fire-ord_keys_L-fire-ord_r1_d0_D0.tsv',
+      '../heap_ord/tab_L-fire-ord_keys_L-fire-ord_r1_d0_D1.tsv',
+      '../heap_ord/rot_L-fire-ord_keys_L-fire-ord_r1_d0_D0_vrot.tsv',
+      '../heap_ord/rot_L-fire-ord_keys_L-fire-ord_r1_d0_D1_vrot.tsv',
+    ]),
+  },
+};
+// the packet words are derived (HitEffect.js, SetupPool.js); the recorded key tables are kept as the test oracle only
+fs.writeFileSync(
+  new URL('../test/fixtures/heap/tables/hit_key_packets.json', import.meta.url),
+  JSON.stringify(packetTables),
+);
 fs.writeFileSync(
   new URL('../lib/Game/Heap/HitKeyTables.js', import.meta.url),
   `/**
- * Crystal Core's Attack hit effect: the 24 forty-byte GPU packets (12 sprite resources x 2 draw buffers, 10 words each, allocation
- * order) at the next prompt, per key (Suikoden-Bizhawk-HUD heap_attack_spawn/hit_key_table_round{1,2}.json; generated by
- * scripts/generateEnemyMoveImages.js). Words as hex, 8 digits each.
- * - round 1: 'camera/slot/index', the camera roll % 3, the party ARRAY slot hit (1..3, and 4..6 from hit_key_table_slots456.json), the
- * draw-buffer index at the last draw (36 keys)
- * - round 2, the second Attack: 'camera/slot/index/index of round 1' (36 keys)
- * - blocks: the 15 other blocks of the Attack (13 of 13 words, 2 of 20), per round-1 key (slots 1-3: they follow round 1's index in round 2 too;
- * slots 4-6 are recorded in round 1 only)
- * - ord: the other party order's round-1 packets and blocks, per party (slow / fast), key 'camera/slot/index'
+ * Crystal Core's Attack hit effect, the one table left: the child effect's four ordering-table link words per key (array 0 packet 0 and
+ * 1, array 1 packet 0 and 1), 4 x 8 hex digits, key 'camera/slot/index': a link is the previous head of an ordering-table bucket, i.e.
+ * another prim of the frame (a party member's packet). Everything else of the Attack (24 packets, 12 headers, the child's header and
+ * packet words) is derived by HitEffect.js and SetupPool.js; the recorded full tables are test/fixtures/heap/tables/hit_key_packets.json.
+ * Generated by scripts/generateEnemyMoveImages.js from Suikoden-Bizhawk-HUD heap_attack_spawn.
+ * - ord: the other party order's links, per party (slow / fast)
  */
 export const HIT_KEY_TABLES = ${JSON.stringify({
-    round1: keyTable(
-      'hit_key_table_round1.json',
-      ['cam', 'slot', 'idx'],
-      ['hit_key_table_slots456.json'],
-    ),
-    round2: keyTable('hit_key_table_round2.json', ['cam', 'slot', 'idx2', 'idx1']),
-    blocks: blockTable(),
+    // everything but the child's four ordering-table links is derived (HitEffect.js)
+    blocks: childOnly(packetTables.blocks),
     ord: {
-      slow: ordTable([
-        'keys_variants/keys_L-fire-slow-ord_r1_d0.tsv',
-        'keys_variants/keys_L-fire-slow-ord_r1_d1.tsv',
-      ]),
-      fast: ordTable([
-        'keys_fast/ord_keys_L-fire-ord_r1_d0_D0.tsv',
-        'keys_fast/ord_keys_L-fire-ord_r1_d0_D1.tsv',
-      ]),
+      slow: { blocks: childOnly(packetTables.ord.slow.blocks) },
+      fast: { blocks: childOnly(packetTables.ord.fast.blocks) },
     },
   })};
 `,

@@ -7,11 +7,14 @@ import Battle from '../../lib/Game/Battle/Battle.js';
 import { ACTION_TYPES } from '../../lib/Game/Battle/Actions.js';
 import { ENEMY_KEYS } from '../../lib/Game/Keys.js';
 import VfxHeap from '../../lib/Game/Heap/VfxHeap.js';
-import { HIT_KEY_TABLES } from '../../lib/Game/Heap/HitKeyTables.js';
 import { drawIndex, scanPrediction } from '../../lib/Game/Heap/ScanPrediction.js';
 import RNG from '../../lib/rng.js';
 import { loadHeapDump } from '../helpers/heapAfterMoves.js';
 import Rounds from '../fixtures/enemies/crystal_core_lv60_hp5000_rounds.json' with { type: 'json' };
+
+const HIT_PACKETS = JSON.parse(
+  fs.readFileSync(new URL('../fixtures/heap/tables/hit_key_packets.json', import.meta.url), 'utf8'),
+);
 
 // A third Attack (rounds 1, 2 and 3 all Defend, party L-fire-slow; heap_attack_spawn/hit_key_table_round3.json, keys_blocks/*_r3_*):
 // its 24 packets are the round-2 table's at (camera, slot, the round's own index, round 1's index), its 52/80-byte blocks the round-1
@@ -44,11 +47,8 @@ describe('third Attack: scan, draw index and tables (144 runs, menu delays 0 or 
       const first = drawIndex(1, s[0].passes);
       const third = drawIndex(3, sum(s.map((x) => x.passes)));
       const { camera, slot } = s[2];
-      assert.strictEqual(
-        HIT_KEY_TABLES.round2[`${camera}/${slot}/${third}/${first}`],
-        words.packets,
-      );
-      assert.strictEqual(HIT_KEY_TABLES.blocks[`${camera}/${slot}/${first}`], words.blocks);
+      assert.strictEqual(HIT_PACKETS.round2[`${camera}/${slot}/${third}/${first}`], words.packets);
+      assert.strictEqual(HIT_PACKETS.blocks[`${camera}/${slot}/${first}`], words.blocks);
     }
   });
 });

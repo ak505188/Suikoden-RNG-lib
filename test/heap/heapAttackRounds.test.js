@@ -12,7 +12,8 @@ import { loadHeapDump } from '../helpers/heapAfterMoves.js';
 import Rounds from '../fixtures/enemies/crystal_core_lv60_hp5000_rounds.json' with { type: 'json' };
 
 // The Attack's hit effect in rounds 1-5, everyone Defends in every round (RNG seed + r), the menu delays per round as recorded, with a
-// variant applied before round 1: heap_attack_spawn keys_rounds45, keys_menutime, keys_variants_rounds, keys_fast (1368 runs, columns
+// variant applied before round 1: heap_attack_spawn keys_rounds45, keys_menutime, keys_variants_rounds, keys_fast and heap_rounds_more/dead456
+// (1620 runs; a dead member of slots 4-6: dead4 / dead5 / dead6, every word known; columns
 // as in scripts/heap/HitVariantsAnalyze.py: slot, first draw frame, buffer index at the last draw, packets, 52/80-byte blocks).
 
 const table = JSON.parse(
@@ -56,11 +57,19 @@ function play(row) {
     ])
       [members[a].position, members[b].position] = [members[b].position, members[a].position];
   const rng = new RNG(0);
-  // the first prompt's buffer index is 0 in every recorded battle but the other party order's, which is 1 (the order changes the ticks
-  // before the first prompt: not decoded)
+  // the buffer index at the first confirm is 0 in every recorded battle but the other party order's, which is 1: its party change takes
+  // 240 frames against the standard party's 239 (heap_ord/prompt_index), so the index at the battle's start has the other parity
   const heap = new VfxHeap(
-    loadHeapDump(fast ? 'crystal_core_L-fire_r1_prompt' : 'crystal_core_L-fire-slow_r1_prompt'),
-    { party: fast ? 'L-fire' : 'L-fire-slow', index: row.variant === 'ord' ? 1 : 0 },
+    // the other party order has its own first-prompt arena (its party change takes a frame more)
+    loadHeapDump(
+      fast
+        ? `crystal_core_L-fire${row.variant === 'ord' ? '-ord_attack_9e3779b1_prompt' : '_r1_prompt'}`
+        : `crystal_core_L-fire-slow${row.variant === 'ord' ? '-ord_attack_9e3779b1_prompt' : '_r1_prompt'}`,
+    ),
+    {
+      party: fast ? 'L-fire' : 'L-fire-slow',
+      index: row.variant === 'ord' ? 1 : 0,
+    },
   );
   const battle = new Battle({
     party,
@@ -102,9 +111,9 @@ for (const row of rows) {
   groups.set(key, [...(groups.get(key) ?? []), row]);
 }
 
-// groups whose every word is known and right: the plain Attack in rounds 2-5, the swaps of the first two members, a dead second or third member
+// groups whose every word is known and right: the plain Attack in rounds 2-5, the swaps of the first two members, a dead second to sixth member
 const EXACT = (/** @type {string} */ key) =>
-  /none round [2-5]$/.test(key) || /swap12|slow dead[23]/.test(key);
+  /none round [2-5]$/.test(key) || /swap12|slow dead[2-6]/.test(key);
 
 describe('the Attack hit effect in rounds 1-5 against the recorded packets and blocks (menu delays 0, 1, 2, 3, 7, 60)', () => {
   for (const [key, group] of groups) {

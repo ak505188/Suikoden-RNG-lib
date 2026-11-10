@@ -54,10 +54,10 @@ function freeListAfterRound2(member, events) {
 }
 
 describe("a party member's Attack leaves the allocator where the game has it", () => {
-  for (const [member, tag] of [
+  for (const [member, tag] of /** @type {[number, string][]} */ ([
     [0, 'm1'],
     [1, 'm2'],
-  ]) {
+  ])) {
     const name = `crystal_core_L-fire-slow_inround_later_killluc_kr2_actr1${tag}A0t7_special_3c6ef362_prompt0`;
     it(`${tag}: the free list at the Special round's prompt`, () => {
       const real = loadArena(name)

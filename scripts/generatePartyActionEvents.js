@@ -19,14 +19,17 @@ for (const [name, seeds] of Object.entries(lists)) {
   const m = /^r([13])(m\d[AI]\d?t\d)$/.exec(name);
   if (!m) continue; // runes, the Unite and the death cases are not here
   const tag = m[2];
-  const variants = Object.values(/** @type {Record<string, any>} */ (seeds)).map((r) => toEvents(r.extra));
+  const variants = Object.values(/** @type {Record<string, any>} */ (seeds)).map((r) =>
+    toEvents(r.extra),
+  );
   if (variants.some((v) => JSON.stringify(v) !== JSON.stringify(variants[0])))
     throw new Error(`${name}: the two seeds differ`);
   const events = variants[0];
   if (out[tag] && JSON.stringify(out[tag]) !== JSON.stringify(events))
     throw new Error(`${tag}: rounds 1 and 3 differ`);
   // a free of a block that existed before the action has no own allocation: the agent's lists have none of those for these tags
-  if (events.some((e) => Number.isNaN(e))) throw new Error(`${name}: a free without an own allocation`);
+  if (events.some((e) => Number.isNaN(e)))
+    throw new Error(`${name}: a free without an own allocation`);
   out[tag] = events;
 }
 const sorted = Object.fromEntries(Object.entries(out).sort(([a], [b]) => a.localeCompare(b)));

@@ -12,7 +12,9 @@ import {
   WAR_TYPES,
   WAR_UNITS,
   WAR_UNIT_KEYS,
+  WAR_VERSIONS,
 } from '../../war.js';
+import { rcos, rcosV10, rsin, rsinV10 } from '../../lib/Game/War/WarField.js';
 
 /** @typedef {import('../../war.js').WarCharacterKey} WarCharacterKey */
 
@@ -268,5 +270,60 @@ describe('clone', () => {
     assert.strictEqual(war.matchup(WAR_UNIT_KEYS.COMMANDERS_TEAM), MATCHUP.TIE);
     const [magic] = war.units(WAR_TYPES.MAGIC);
     assert.strictEqual(war.matchup(magic), MATCHUP.WIN);
+  });
+});
+
+describe('game versions', () => {
+  it('runs v1.0 unless told otherwise', () => {
+    const war = WarBattle.start('KUWA', { recruited: KUWA_RECRUITS });
+    assert.strictEqual(war.version, WAR_VERSIONS.V1_0);
+  });
+
+  it('rejects an unknown version', () => {
+    assert.throws(
+      () =>
+        WarBattle.start('KUWA', { recruited: KUWA_RECRUITS, version: /** @type {any} */ ('v2') }),
+      /Unknown game version/,
+    );
+  });
+
+  it("reads v1.0's rcos and rsin one table entry off v1.1's, as the HUD measured them", () => {
+    // the PSN build's circle target for sprite 5 at angle 908: 725 on v1.1, 719 on v1.0
+    assert.strictEqual(rcos(908), 725);
+    assert.strictEqual(rcosV10(908), 719);
+    // the second quadrant's seam: v1.1 mirrors around 0x800 (sin 0x7ff is table[1] = 6), v1.0
+    // around 0x7ff (table[0] = 0)
+    assert.strictEqual(rsin(0x7ff), 6);
+    assert.strictEqual(rsinV10(0x7ff), 0);
+    // the first quadrant reads the same entries for sin
+    assert.strictEqual(rsinV10(0x3ff), rsin(0x3ff));
+    // an odd function, and a full turn is no turn
+    assert.strictEqual(rsinV10(-300), -rsinV10(300));
+    assert.strictEqual(rsinV10(300 + 0x1000), rsinV10(300));
+    assert.strictEqual(rcosV10(-300), rcosV10(300));
+  });
+
+  it('plays the same until a sprite takes a circle target, then the versions part', () => {
+    const play = (/** @type {any} */ version) => {
+      // the first 24 characters: a roster whose third round takes a circle target on a boundary
+      const recruited = /** @type {WarCharacterKey[]} */ (Object.keys(WAR_CHARACTERS).slice(0, 24));
+      const war = WarBattle.start('KUWA', { recruited, seed: 0x035c23aa, version });
+      const counts = [];
+      for (let i = 0; i < 4 && !war.outcome; i++) {
+        war.use(war.units(WAR_TYPES.CHARGE)[0]);
+        counts.push(`${war.rng.count}:${war.rng.raw}`);
+      }
+      return counts;
+    };
+    const old = play(WAR_VERSIONS.V1_0);
+    const current = play(WAR_VERSIONS.V1_1);
+    assert.deepStrictEqual(old.slice(0, 2), current.slice(0, 2));
+    assert.notDeepStrictEqual(old, current);
+    assert.deepStrictEqual(play(WAR_VERSIONS.V1_0), old);
+  });
+
+  it('keeps its version in a clone', () => {
+    const war = WarBattle.start('KUWA', { recruited: KUWA_RECRUITS, version: WAR_VERSIONS.V1_0 });
+    assert.strictEqual(war.clone().version, WAR_VERSIONS.V1_0);
   });
 });

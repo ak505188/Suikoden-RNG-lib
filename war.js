@@ -10,6 +10,7 @@ export {
   WAR_OUTCOMES,
   WAR_RESOLVERS,
   WAR_TYPES,
+  WAR_VERSIONS,
 } from './lib/Game/War/WarConstants.js';
 export { WAR_CHARACTERS, WAR_SCENARIOS, WAR_UNITS } from './lib/Game/War/WarData.js';
 export { default as RNG } from './lib/rng.js';
@@ -21,3 +22,4 @@ export { default as RNG } from './lib/rng.js';
 /** @typedef {import('./lib/Game/War/WarBattle.js').WarCommandOptions} WarCommandOptions */
 /** @typedef {import('./lib/Game/War/WarConstants.js').WarType} WarType */
 /** @typedef {import('./lib/Game/War/WarConstants.js').WarOutcome} WarOutcome */
+/** @typedef {import('./lib/Game/War/WarConstants.js').WarVersion} WarVersion */

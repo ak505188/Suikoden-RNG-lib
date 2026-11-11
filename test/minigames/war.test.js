@@ -76,6 +76,64 @@ describe('war data', () => {
   });
 });
 
+describe('who the war ids are', () => {
+  // The game's tables are indexed by war id and hold no names. The names were first taken from the
+  // recruitment flags' addresses, which are rotated for these three (Suikoden-Bizhawk-HUD's
+  // Addresses.lua gives their `Id` and their RecruitmentState offset differently). The `Id` names
+  // are the ones that fit the Teo 2 army below and the unit groupings.
+  it('puts Gremio at id 1, Cleo at id 3 and Eileen at id 19', () => {
+    assert.deepStrictEqual(
+      [1, 3, 19].map((id) => {
+        const key = keysById([id])[0];
+        const { type, base, extra, soldiers, speaking } = WAR_CHARACTERS[key];
+        return { key, type, base, extra, soldiers, speaking };
+      }),
+      [
+        {
+          key: 'GREMIO',
+          type: WAR_TYPES.CHARGE,
+          base: 10,
+          extra: 7,
+          soldiers: 80,
+          speaking: false,
+        },
+        { key: 'CLEO', type: WAR_TYPES.BOW, base: 14, extra: 3, soldiers: 170, speaking: false },
+        { key: 'EILEEN', type: WAR_TYPES.MAGIC, base: 13, extra: 7, soldiers: 150, speaking: true },
+      ],
+    );
+  });
+
+  it('groups them with the characters they are grouped with in the game', () => {
+    const ids = (/** @type {import('../war.js').WarUnitKey} */ unit) =>
+      WAR_UNITS[unit].members.map((m) => WAR_CHARACTERS[m].id);
+    assert.deepStrictEqual(WAR_UNITS[WAR_UNIT_KEYS.COMMANDERS_TEAM].members, [
+      'MCDOHL',
+      'PAHN',
+      'GREMIO',
+    ]);
+    assert.deepStrictEqual(ids(WAR_UNIT_KEYS.COMMANDERS_TEAM), [0, 2, 1]);
+    assert.deepStrictEqual(WAR_UNITS[WAR_UNIT_KEYS.LEPANT_FAMILY].members, [
+      'LEPANT',
+      'EILEEN',
+      'SHEENA',
+    ]);
+    assert.deepStrictEqual(WAR_UNITS[WAR_UNIT_KEYS.SOLDIER_BEAUTIES].members, [
+      'SONYA',
+      'CLEO',
+      'CAMILLE',
+    ]);
+  });
+
+  it("has Cleo and Eileen in the Teo 2 sheet's army, and not Gremio or Pahn, who are gone by then", () => {
+    for (const key of /** @type {WarCharacterKey[]} */ (['CLEO', 'EILEEN'])) {
+      assert.ok(TEO2_RECRUITS.includes(key), key);
+    }
+    for (const key of /** @type {WarCharacterKey[]} */ (['GREMIO', 'PAHN'])) {
+      assert.ok(!TEO2_RECRUITS.includes(key), key);
+    }
+  });
+});
+
 describe('war battle start', () => {
   it("starts kuwa at the game's first command menu", () => {
     // KwandaWBT1.State: 251 rand() calls after the start (seed 0x43), 19 + 31 sprites

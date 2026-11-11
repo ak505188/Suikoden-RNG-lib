@@ -9,8 +9,8 @@
       "soldiers": 700,
       "speaking": false
     },
-    "CLEO": {
-      "name": "Cleo",
+    "GREMIO": {
+      "name": "Gremio",
       "id": 1,
       "type": "CHARGE",
       "base": 10,
@@ -27,8 +27,8 @@
       "soldiers": 150,
       "speaking": false
     },
-    "EILEEN": {
-      "name": "Eileen",
+    "CLEO": {
+      "name": "Cleo",
       "id": 3,
       "type": "BOW",
       "base": 14,
@@ -171,8 +171,8 @@
       "soldiers": 900,
       "speaking": false
     },
-    "GREMIO": {
-      "name": "Gremio",
+    "EILEEN": {
+      "name": "Eileen",
       "id": 19,
       "type": "MAGIC",
       "base": 13,
@@ -977,7 +977,7 @@
     "COMMANDERS_TEAM": {
       "name": "Commander's Team",
       "id": 0,
-      "members": ["MCDOHL", "PAHN", "CLEO"]
+      "members": ["MCDOHL", "PAHN", "GREMIO"]
     },
     "HUMPHREYS_TEAM": {
       "name": "Humphrey's Team",
@@ -987,7 +987,7 @@
     "LEPANT_FAMILY": {
       "name": "Lepant Family",
       "id": 2,
-      "members": ["LEPANT", "GREMIO", "SHEENA"]
+      "members": ["LEPANT", "EILEEN", "SHEENA"]
     },
     "KNIGHTS_PARTY": {
       "name": "Knights Party",
@@ -1127,7 +1127,7 @@
     "SOLDIER_BEAUTIES": {
       "name": "Soldier Beauties",
       "id": 30,
-      "members": ["SONYA", "EILEEN", "CAMILLE"]
+      "members": ["SONYA", "CLEO", "CAMILLE"]
     },
     "MUSICIANS": {
       "name": "Musicians",

@@ -267,6 +267,13 @@ object's gradient words (0x8018c814, c8f4, c9d4, cac8, cbe4, ccc4, cf8c, cfa0, d
 Until then a party Attack in a Special round keeps the footprint and its taint. D (slot-1 start to child) is unchanged in Special rounds (McDohl 74, Viktor 48, Luc 77, Hellion 73) and Hellion's
 K = 1 was a round-1 artefact (K = 2 with a visible poll); a child never falls inside the Special's lag window (slow members' children come after the whole Special, at frames 500 to 507).
 
+Done after that (same day): the menu object's stale words come from the Special model whenever the Special's blocks are not where the recorded image had them (`sameLayout`
+in `roundEnd`; before, only when nothing unmodelled had used the heap), and a word of the Special's loader buffer that the table of its own loader words does not hold is
+unknown (the loader file's data, not the arena's word from before the decode). On the agent's atk round-3 prompt arena that gives the right top byte at 0x8018c8f4, c9d4 and
+cbe4, and an honest unknown at c814, cf8c and d51c (it was 0x404040 claimed). Not done: the luc2 round 3 oracle's LIVE cast words (Black Shadow, 7 words, top bytes e1 / fe / 02 / ff / fe)
+still disagree when the Attack is merged, so a party Attack in a Special round keeps the footprint and its taint (`_mergeAttacks` has the `beforeOnly` guard ready). Open question for
+the agent: how the cast's loader decode leaves the low 24 bits of the menu object's gradient words (404040) and sets the top byte from the image.
+
 ## 8. Where to read
 
 In `Suikoden-Bizhawk-HUD/notes/` (all `2026-11-0x_vfx_*.md`; the index lists them): `working_protocol`, `findings_index`,

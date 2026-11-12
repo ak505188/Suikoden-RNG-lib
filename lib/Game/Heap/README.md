@@ -252,6 +252,21 @@ order), a scheduler that applies party and enemy events in frame order (engine a
 each step), the enemy move applied lazily (at the round's end or when a cast needs the state) so a party action that comes after it in call order can still interleave,
 and the recorded images (`EnemyMoveImages.js`) applied after the merged events. Until then Attacks that do not end the fight keep the recorded footprint and its taint.
 
+### 7d.2 The Special round with a party Attack (ASK 12 answer, 2026-11-12)
+
+The agent recorded luc2 round 3 twice (`enemy_profiles/vfx_effects/luc2r3_trace/`: Viktor attacks vs everyone Defends; whole arenas at the round start, just before the
+round-end menu rebuild, and at the prompt). Findings: Viktor's Attack (child at frame 87) moves the Special's start (container at frame 152 against 43 without it; the simulator's
+A is 125) and, through the rover, its whole block layout (loader 0x8018b7e0 against 0x8018b890; the simulator reproduces that layout). So different Special blocks lie under the freed
+menu object, and the menu rebuild keeps the top byte of every gradient word it writes (RGB 404040): the byte is the Special's last write there (atk 0x8018c814 80061720, c8f4 2e7f7f7f,
+c9d4 7f7f0000, cbe4 66bb0020 ...; def 00). The simulator takes those words from the recorded image (the no-attack layout) because `objectDerived` is false once `partyAttackHistory` is
+set (any kill or Attack): it gives 0x404040 where the game holds 80/2e/7f/00/66... Using the model's words instead (objectDerived = derived) fixes 0x8018c8f4 and cbe4 but regresses
+luc1/3/5 and the vf rounds, so the guard needs its own derivation: which earlier events make the model's words not the dump's. The cast then reads those words through the loader pass
+(e1 / fe / 02 / ff / fe are loader image bytes, ASK 12). A scratch script that diffs the simulator's round 3 against the agent's arenas is kept out of the repo; the recipe: luc2 flow with
+Crystal Core at 5000 HP (1 HP in round 2), Luc's Flaming Arrow in round 2, Viktor Attacks in round 3, `diffArena(heap, { arena: atk_r3_prompt.bin, sidecar: { rover } })`; compare the menu
+object's gradient words (0x8018c814, c8f4, c9d4, cac8, cbe4, ccc4, cf8c, cfa0, d51c). The prompt arenas include the menu dwell, so the menu packet buffers differ from the preconfirm fixtures.
+Until then a party Attack in a Special round keeps the footprint and its taint. D (slot-1 start to child) is unchanged in Special rounds (McDohl 74, Viktor 48, Luc 77, Hellion 73) and Hellion's
+K = 1 was a round-1 artefact (K = 2 with a visible poll); a child never falls inside the Special's lag window (slow members' children come after the whole Special, at frames 500 to 507).
+
 ## 8. Where to read
 
 In `Suikoden-Bizhawk-HUD/notes/` (all `2026-11-0x_vfx_*.md`; the index lists them): `working_protocol`, `findings_index`,

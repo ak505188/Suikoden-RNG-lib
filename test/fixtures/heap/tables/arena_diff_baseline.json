@@ -10,7 +10,7 @@
    "menu": {
     "wrong": 0,
     "gap": 239,
-    "partialWrong": 6
+    "partialWrong": 0
    },
    "live": {
     "wrong": 506,
@@ -66,7 +66,7 @@
    "menu": {
     "wrong": 0,
     "gap": 239,
-    "partialWrong": 44
+    "partialWrong": 38
    },
    "live": {
     "wrong": 522,
@@ -140,7 +140,7 @@
    "menu": {
     "wrong": 0,
     "gap": 239,
-    "partialWrong": 7
+    "partialWrong": 1
    },
    "live": {
     "wrong": 558,
@@ -232,7 +232,7 @@
    "menu": {
     "wrong": 0,
     "gap": 240,
-    "partialWrong": 44
+    "partialWrong": 38
    },
    "live": {
     "wrong": 560,
@@ -342,7 +342,7 @@
    "menu": {
     "wrong": 0,
     "gap": 240,
-    "partialWrong": 6
+    "partialWrong": 0
    },
    "live": {
     "wrong": 560,

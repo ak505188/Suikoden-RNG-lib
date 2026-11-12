@@ -27,8 +27,8 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 681,
-    "partialWrong": 0
+    "gap": 851,
+    "partialWrong": 1
    },
    "live": {
     "wrong": 879,
@@ -83,8 +83,8 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 683,
-    "partialWrong": 137
+    "gap": 882,
+    "partialWrong": 3
    },
    "live": {
     "wrong": 877,
@@ -157,8 +157,8 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 680,
-    "partialWrong": 134
+    "gap": 894,
+    "partialWrong": 3
    },
    "live": {
     "wrong": 898,
@@ -249,8 +249,8 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 675,
-    "partialWrong": 137
+    "gap": 878,
+    "partialWrong": 3
    },
    "live": {
     "wrong": 886,
@@ -359,8 +359,8 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 683,
-    "partialWrong": 136
+    "gap": 891,
+    "partialWrong": 3
    },
    "live": {
     "wrong": 877,
@@ -397,8 +397,8 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 1245,
-    "partialWrong": 2
+    "gap": 1096,
+    "partialWrong": 3
    },
    "live": {
     "wrong": 875,
@@ -453,8 +453,8 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 1235,
-    "partialWrong": 3
+    "gap": 1089,
+    "partialWrong": 4
    },
    "live": {
     "wrong": 884,
@@ -527,8 +527,8 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 1246,
-    "partialWrong": 1
+    "gap": 1102,
+    "partialWrong": 2
    },
    "live": {
     "wrong": 898,
@@ -619,8 +619,8 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 1233,
-    "partialWrong": 2
+    "gap": 1091,
+    "partialWrong": 3
    },
    "live": {
     "wrong": 895,
@@ -729,8 +729,8 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 1249,
-    "partialWrong": 2
+    "gap": 1102,
+    "partialWrong": 3
    },
    "live": {
     "wrong": 884,

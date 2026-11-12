@@ -198,6 +198,23 @@ Constants the simulator must carry, never derive from a recording: 0x8017c48c = 
 rand counts by +1148 / +1896), and the heap-node words after the arena (0x801b8c60, 0x801b8c68, 0x801b9478: object lists every spell walks,
 +-500 rand when changed). Not covered: the per-kind scans for the rune, Explosion, Flaming Arrow, Thor, Black Shadow, Hell and Luc-kill rounds.
 
+## 7c. Derived since the diff harness (2026-11-12)
+
+- The Special's sobj x / y words come from the battle's own RNG: `specialRolls(rng)` in `SpecialObjects.js` (rand calls 23 + a after the round
+  start, xi = rand % 198 - 99, r = SquareRoot0(10000 - xi^2), yr = rand % (2r) - r; 200 of 200 recorded pairs). A later party action in the
+  round (`rollsInterleaved`) makes them unknown. The Special's other roll words (header / packet projected xy, OT links) are gaps, no longer
+  claimed from the recorded Luc run; the camera model (`special_camera.md`, verified for the G4 systems only) is the way to derive them.
+- The menu rebuild's gradient initialiser (FUN_800efad0) is derived (`gradientWord` in `VfxHeap.js`): RGB, the 0x30 code byte, and the kept top
+  byte of the cast's trail words.
+- The kill round at draw index 1 swaps the Fight menu's two packet buffers (`swapPacketBuffers`): the buffers hold neighbouring frames; links into
+  the own buffer follow, other links stay. The cursor rectangle (4 LINE_F2 over window 2, row 3 for Free Will) is written into the buffer of the
+  index at the rebuild: an assumption about the chosen command.
+- The Flaming Arrow particle model (words 0..8 of the 20 structs) is exact when it starts from the real stale words (179 of 180 are what the
+  simulator already has; the agent's `fa_particle_stale_words_v10.json` is the oracle). Not derived yet: the particle structs' LINE_F2 / DR_MODE
+  packets (about 84 words), the 30 spark-child sprite groups (about 1000 payload words; the agent gave a recorded table, not a formula, for
+  the xy words of groups 14..29 and the one-off top halfwords of w7 / w9), the Special's projected words.
+- Whole-arena diff after this: wrong partial words in the menu 1315 -> 29, free 90 (the sprite packets), wrong claims 0.
+
 ## 8. Where to read
 
 In `Suikoden-Bizhawk-HUD/notes/` (all `2026-11-0x_vfx_*.md`; the index lists them): `working_protocol`, `findings_index`,

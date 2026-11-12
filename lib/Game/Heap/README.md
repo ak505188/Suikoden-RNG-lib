@@ -274,6 +274,13 @@ cbe4, and an honest unknown at c814, cf8c and d51c (it was 0x404040 claimed). No
 still disagree when the Attack is merged, so a party Attack in a Special round keeps the footprint and its taint (`_mergeAttacks` has the `beforeOnly` guard ready). Open question for
 the agent: how the cast's loader decode leaves the low 24 bits of the menu object's gradient words (404040) and sets the top byte from the image.
 
+ASK 13 answer (agent, same day): the cast's loader decode (FUN_800c3330, an LZ decoder) writes whole words: after it the menu words equal the loader image at (address - 0x8018b890)
+(the loader buffer is at 0x8018b890 in round 4 with or without Viktor's Attack). The tops bytes e1 / 02 / ff / 3b / 80 / 08 of the words Black Shadow reads come from two later steps:
+the Black Shadow particle blocks (432 B, ra 0x80120b14, and 1296 B, ra 0x80120b00) are allocated over the freed loader area at frame 451 and their init writes whole words, the low 3
+bytes or the top byte only, per word (0x8018c814 e1eef101 -> e1000040, c8f4 80068012 -> 02068012, c9d4 800b800e -> 80000000, cac8 / d51c -> 3b000000, cbe4 b8 -> 08); then the round-end
+rebuild writes 0x404040 into the low 3 bytes and keeps the top byte. So predicting those words means porting the Soul Eater block builders (around 0x80120a50) as the Special's were:
+image at the buffer, the blocks' byte writes, their tick writes, then the rebuild (ASK 14 asks the agent for the field-by-field init).
+
 ## 8. Where to read
 
 In `Suikoden-Bizhawk-HUD/notes/` (all `2026-11-0x_vfx_*.md`; the index lists them): `working_protocol`, `findings_index`,

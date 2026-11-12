@@ -203,8 +203,12 @@ describe('party actions in round 1 and 3 (luc2): the spells the recorded footpri
         tag.slice(2)
       ];
       const heap = scenario('9e3779b1', { k: 2, spell: 'Explosion', job: jobOf(tag) }).heap;
-      for (const spell of changed)
-        assert.ok(heap.tainted.has(/** @type {any} */ (spell)), `${tag} ${spell}`);
+      // (a party Attack in a round of Crystal Core's Attack runs on the effect-script engine, which puts the hit child's words in the heap itself: the
+      // recorded footprint's spells are no longer flagged for it; checkAll above shows that no known word is wrong and every complete prediction is right.
+      // In a Special round the Attack still uses the footprint)
+      if (shape === 'special' || !tag.includes('A0'))
+        for (const spell of changed)
+          assert.ok(heap.tainted.has(/** @type {any} */ (spell)), `${tag} ${spell}`);
     });
   it('the actions that change nothing leave exact spells (all four Attack jobs and item 4 on target 1 are among 34 exact casts)', () => {
     assert.ok(exact >= 34, `${exact}`);

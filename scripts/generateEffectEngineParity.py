@@ -32,6 +32,22 @@ for code in codes:
             a, b = struct.unpack_from('<I', img, i)[0], struct.unpack_from('<I', heap.mem, i)[0]
             if a != b: words.append([E.ARENA + i, b])
         out['cases'].append({'code': code, 'parity': parity, 't0': t0, 'events': [list(e) for e in heap.events], 'words': words, 'rover': heap.rover})
+# the whole Attack (slot-1 walk and lunge, then the hit script) of the 6 members of the recorded party, at two parities
+out['attacks'] = []
+sp, info = R.make_space()
+for m in range(1, 7):
+    for parity in (0, 1):
+        t0 = 1000 + parity
+        heap = E.Heap(img, rover)
+        try:
+            eng, ctl = R.run_attack(heap, sp, info, m, 7, t0)
+        except Exception as ex:
+            out['attacks'].append({'member': m, 'parity': parity, 'error': repr(ex)[:80]}); continue
+        words = []
+        for i in range(0, E.ARENA_SIZE, 4):
+            a, b = struct.unpack_from('<I', img, i)[0], struct.unpack_from('<I', heap.mem, i)[0]
+            if a != b: words.append([E.ARENA + i, b])
+        out['attacks'].append({'member': m, 'parity': parity, 't0': t0, 'started': ctl.started, 'events': [list(e) for e in heap.events], 'words': words, 'rover': heap.rover})
 os.makedirs(os.path.join(FIX, 'tables'), exist_ok=True)
 json.dump(out, open(os.path.join(FIX, 'tables', 'effect_engine_parity.json'), 'w'), separators=(',', ':'))
 print(len(out['cases']), 'cases', sum(1 for c in out['cases'] if 'error' in c), 'errors')

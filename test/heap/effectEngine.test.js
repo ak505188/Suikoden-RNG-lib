@@ -3,7 +3,12 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import HeapModel, { ARENA, ARENA_SIZE } from '../../lib/Game/Heap/HeapModel.js';
 import { bindState } from '../../lib/Game/Heap/HeapPrediction.js';
-import { EngineMemory, makeSpace, runHit } from '../../lib/Game/Heap/Engine/EffectEngine.js';
+import {
+  EngineMemory,
+  makeSpace,
+  runAttack,
+  runHit,
+} from '../../lib/Game/Heap/Engine/EffectEngine.js';
 import { loadHeapDump } from '../helpers/heapAfterMoves.js';
 import { CHARACTER_FILES } from '../../lib/Game/Heap/Engine/EffectData.js';
 
@@ -36,6 +41,42 @@ describe('the effect-script engine port: the party Attack hit of every character
       const party = [c.code, ...PARTY.slice(1)].map((code, i) => ({ code, base: CHAR_BASE[i] }));
       const { sp, info } = makeSpace(party);
       runHit(mem, sp, info, { attacker: 1, target: 7, tick: c.t0, draw: false });
+      assert.deepEqual(
+        mem.events,
+        c.events.map((e) => [...e]),
+      );
+      mem.commit();
+      const words = [];
+      for (let a = ARENA; a < ARENA + ARENA_SIZE; a += 4) {
+        const now = (state.known.get(a) ?? state.heap.u32(a)) >>> 0;
+        if (now !== original.getUint32(a - ARENA, true)) words.push([a, now]);
+      }
+      assert.deepEqual(words, c.words);
+      assert.equal(state.heap.rover, c.rover);
+    });
+  }
+});
+
+describe('the effect-script engine port: the whole party Attack (slot-1 walk and lunge, then the hit)', () => {
+  const dump = loadHeapDump('crystal_core_L-fire-slow_r1_prompt');
+  const original = new DataView(new Uint8Array(dump.arena).buffer);
+  for (const c of parity.attacks) {
+    it(`member ${c.member} at parity ${c.parity}`, () => {
+      assert.equal(c.error, undefined);
+      const state = bindState({
+        heap: new HeapModel(dump.arena, dump.rover),
+        known: new Map(),
+        unknown: new Set(),
+      });
+      const mem = new EngineMemory(state);
+      const { sp, info } = makeSpace(PARTY.map((code, i) => ({ code, base: CHAR_BASE[i] })));
+      const { started } = runAttack(mem, sp, info, {
+        attacker: c.member,
+        target: 7,
+        tick: c.t0,
+        draw: false,
+      });
+      assert.equal(started, c.started);
       assert.deepEqual(
         mem.events,
         c.events.map((e) => [...e]),

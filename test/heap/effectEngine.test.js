@@ -35,7 +35,7 @@ describe('the effect-script engine port: the party Attack hit of every character
       const mem = new EngineMemory(state);
       const party = [c.code, ...PARTY.slice(1)].map((code, i) => ({ code, base: CHAR_BASE[i] }));
       const { sp, info } = makeSpace(party);
-      runHit(mem, sp, info, { attacker: 1, target: 7, tick: c.t0 });
+      runHit(mem, sp, info, { attacker: 1, target: 7, tick: c.t0, draw: false });
       assert.deepEqual(
         mem.events,
         c.events.map((e) => [...e]),

@@ -232,6 +232,26 @@ enemies' overlay data (only Crystal Core's is extracted).
 character files up to their resource tables, main.exe / battle.bin script tables, Crystal Core's overlay). The user decided to keep it in this repo until the
 heap work is done and to move it somewhere more appropriate then.
 
+### 7d.1 What blocks running every party Attack on the engine: ordering (ASK 11 answer, 2026-11-12)
+
+The engine runs a party Attack only when it ends the fight (no enemy move in the round). In other rounds the hit child's allocation (frame R + 48..77, R = the
+simulator's tick at the Attack's roll + 2) lies amid the allocations of Crystal Core's move, but the model applies a whole enemy move at its start. The agent's
+frame tables for Crystal Core's moves (`ask11_cc_move_frames_v10.json`, HUD repo), in ticks from A (the move's first allocation):
+
+- Attack: A = H + 8 (H = the hit roll frame = the simulator's dispatch tick + 2, so A = tick + 10): +0 the 12 launch groups (36 allocs), +34 its hit child (52/80/80),
+  +55 child freed, +98 the 12 groups freed. No lag frames in Attack rounds.
+- Special (first and repeated are identical, 974 events): A = last turn-order poll + 3 = the simulator's tick + 3: +0 the 8-byte container, +2 the 148 B struct and the
+  16384 B loader, +13 loader freed, +14 the whole bulk (466 allocs), +100 / +136 / +172 six 8-byte hit objects each (freed +132 / +168 / +204), +254 the bulk freed,
+  +257 the container freed. In frames: 0..3 lag frames before the bulk, about 93..98 more from about A + 98 (not computable).
+- A party hit child (alloc R + D, D = 74 / 48 / 72 / 77 / 73 for McDohl / Viktor / Flik / Luc / Hellion, freed 19-21 frames later) therefore falls after the Special's bulk
+  (+14) and before its 8-byte hit objects (+100 plus lag) for Viktor and Flik, and near that boundary for the others; in an Attack round Viktor's child falls between the
+  launch groups and Crystal Core's child.
+
+What the fix needs (not done): the enemy move's events with their ticks (expand the agent's table onto `EnemyMoveEvents.js`, which has the same 78 / 974 events in
+order), a scheduler that applies party and enemy events in frame order (engine attacks as steppable runs: `Engine.tick()` already is; commit the engine's words after
+each step), the enemy move applied lazily (at the round's end or when a cast needs the state) so a party action that comes after it in call order can still interleave,
+and the recorded images (`EnemyMoveImages.js`) applied after the merged events. Until then Attacks that do not end the fight keep the recorded footprint and its taint.
+
 ## 8. Where to read
 
 In `Suikoden-Bizhawk-HUD/notes/` (all `2026-11-0x_vfx_*.md`; the index lists them): `working_protocol`, `findings_index`,

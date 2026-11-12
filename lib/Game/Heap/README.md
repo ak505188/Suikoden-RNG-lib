@@ -215,6 +215,23 @@ rand counts by +1148 / +1896), and the heap-node words after the arena (0x801b8c
   the xy words of groups 14..29 and the one-off top halfwords of w7 / w9), the Special's projected words.
 - Whole-arena diff after this: wrong partial words in the menu 1315 -> 29, free 90 (the sprite packets), wrong claims 0.
 
+## 7d. The effect-script engine (2026-11-12)
+
+`lib/Game/Heap/Engine/EffectEngine.js` is a JS port of the battle's effect-script engine (start, interpreter, sprite builder, the decoded ops, the effect
+actors' flag countdown and buffer copy) from the RE agent's verified reference (`effect_script_engine_v10.py`). It equals the reference on the party
+Attack hit of all 78 characters at two parities, events and every changed word (`test/heap/effectEngine.test.js`, fixture from
+`scripts/generateEffectEngineParity.py`). It runs on the simulator's heap state with byte-level knowledge (`EngineMemory`): an unwritten byte keeps its
+knowledge, the placement / draw words are written unknown, a read of an unknown byte throws (`UnknownInput`), never a guess.
+
+Not wired into the party Attack yet: the hit script's start frame is the missing input (the simulator's tick at the Attack's rolls and the real frame differ
+by 73 / 47 / 71 / 76 / 71 for McDohl / Viktor / Flik / Luc / Hellion; ASK 9 asks the agent for the slot-1 walk and lunge of every attacker and the constant).
+Then: drop `forgetMoveBlocks` and the Attack footprints' taint for an engine-run Attack, and check with the arena diff (vf scenarios). Enemy attacks need the
+enemies' overlay data (only Crystal Core's is extracted).
+
+**The game data is generated into the repo on purpose, for now** (`lib/Game/Heap/Engine/EffectData.js` by `scripts/generateEffectData.js`, about 200 KB of
+character files up to their resource tables, main.exe / battle.bin script tables, Crystal Core's overlay). The user decided to keep it in this repo until the
+heap work is done and to move it somewhere more appropriate then.
+
 ## 8. Where to read
 
 In `Suikoden-Bizhawk-HUD/notes/` (all `2026-11-0x_vfx_*.md`; the index lists them): `working_protocol`, `findings_index`,

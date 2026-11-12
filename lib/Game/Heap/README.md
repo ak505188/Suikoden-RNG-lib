@@ -281,6 +281,14 @@ bytes or the top byte only, per word (0x8018c814 e1eef101 -> e1000040, c8f4 8006
 rebuild writes 0x404040 into the low 3 bytes and keeps the top byte. So predicting those words means porting the Soul Eater block builders (around 0x80120a50) as the Special's were:
 image at the buffer, the blocks' byte writes, their tick writes, then the rebuild (ASK 14 asks the agent for the field-by-field init).
 
+Resolved the same day (ASK 13 / 14 and a comparison with the real castpre arena of the luc2 round 3 oracle): (1) a repeated Special's recorded image holds the words the recorded first Special
+left, so when an earlier Special's blocks were not where its image was recorded (`specialShifted`, set when a party Attack moved them) the repeated Special comes from the model (with the
+history's top bytes kept), (2) the kill-pad byte is not applied to a word a shifted Special has written whole, (3) a party Attack in a Special round whose whole run ends before the Special starts
+is merged with it like in an Attack round (`_mergeAttacks(..., beforeOnly)`). Black Shadow's 40 scale words are now 0 wrong against the real castpre arena and the oracle passes untainted. Not
+yet ported: the Soul Eater ring builder's word rules (ASK 14: `ask14_word_rules_v10.json`, FUN_80120a50: 36-byte G4 packets, 12-byte link records, an 84-byte header; params BS = Hell:
+group rgb 0 / 0 abr 2, ring(10) rgb 0x20 / 0x50 abr 2, ring(36) rgb 0 / 0x7f abr 1; stale words = the loader image at (address - 0x8018b890)): needed to derive what a Black Shadow or Hell cast leaves
+for the spells after it.
+
 ## 8. Where to read
 
 In `Suikoden-Bizhawk-HUD/notes/` (all `2026-11-0x_vfx_*.md`; the index lists them): `working_protocol`, `findings_index`,

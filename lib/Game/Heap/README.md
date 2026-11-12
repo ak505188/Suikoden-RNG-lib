@@ -172,7 +172,7 @@ The right fix is the plan above (derive the Special from code), not another patc
 
 Open asks / known gaps:
 
-- Census (step 1), pending.
+- Census (step 1): done (see the HUD notes `2026-11-11_vfx_effect_census.md`); an effect with no port must be a hard "unsupported" error, never a per-word guess. The whole-arena diff harness (`scripts/heapArenaDiff.js`, `ArenaDiff.js`, ratchet `test/heap/heapArenaDiff.test.js`) is in place.
 - Rune spells: 3 of 12 families have byte-exact word models (Healing Wind, Clay Guardian, Earthquake); the other 9 need decoding and ports.
   The agent's pre-cast arenas for all rune tags (2550 files, `spell_casts_others_castpre/`) are the oracle.
 - Not decoded: physical Unites, deaths, formation moves, most enemy moves other than Crystal Core's, other parties / enemies / formations.
@@ -181,6 +181,22 @@ Open asks / known gaps:
 - Hellion in the fast parties (round 3 casts) does not match the plain-cast constants (agent's guess: draw buffer / OT state after the
   Special).
 - Flaming Arrow after a Flaming Arrow, Explosion pair, turn-order parties are exact only for the recorded orders.
+
+## 7b. Hidden inputs (2026-11-12, agent's perturbation test, `hidden_inputs_v10.json`)
+
+Besides the first-prompt arena (0x80182000, 0x18000 bytes) and the battle's own data (party, enemies, background grid), the simulator
+takes exactly two scalars:
+
+- the draw index at 0x8018023c at the first prompt (history dependent); within a round it is `idx0 xor (frame mod 2)`;
+- the RNG state at 0x80009010 (an input in all 15 round kinds tested).
+
+Everything else outside the arena is a constant (599 of 603 words in Crystal Core are identical in 3 builds; the other 4 are the tick and
+the parity family). The vblank counter matters only relatively. The menu dwell is not in RAM: it follows from the actions (CC: Defend 259,
+Attack 357, rune 567 frames).
+
+Constants the simulator must carry, never derive from a recording: 0x8017c48c = 4 (display setup; another value moves the Soul Eater spells'
+rand counts by +1148 / +1896), and the heap-node words after the arena (0x801b8c60, 0x801b8c68, 0x801b9478: object lists every spell walks,
++-500 rand when changed). Not covered: the per-kind scans for the rune, Explosion, Flaming Arrow, Thor, Black Shadow, Hell and Luc-kill rounds.
 
 ## 8. Where to read
 

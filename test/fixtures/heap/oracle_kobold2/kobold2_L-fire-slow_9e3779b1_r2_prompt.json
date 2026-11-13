@@ -1,0 +1,19 @@
+{
+  "arenaBase": "0x80182000",
+  "arenaSize": 98304,
+  "battleBlocks": ["0x8018a840", "0x801890c8"],
+  "build": "v10",
+  "fight": "kobold2, forced from HeapTestingV1_0.State",
+  "fightMenuFrees": ["0x8018def8", "0x8018de88", "0x8018dd18", "0x8018dba8", "0x8018dfd0", "0x8018db00", "0x8018dad8", "0x8018d968", "0x8018d7f8", "0x8018db48", "0x8018d740", "0x8018d710", "0x8018d5a0", "0x8018d430", "0x8018d798", "0x8018d380", "0x8018d350", "0x8018d1e0", "0x8018d070", "0x8018d3d0", "0x8018cfa0", "0x8018cf60", "0x8018cdf0", "0x8018cc80", "0x8018d010", "0x8018cbe0", "0x8018cbb8", "0x8018ca48", "0x8018c8d8", "0x8018cc20", "0x8018c850", "0x8018c838", "0x8018c6c8", "0x8018c558", "0x8018c878", "0x8018c388", "0x8018c2c8", "0x8018c158", "0x8018bfe8", "0x8018c4f8", "0x8018bfb8", "0x8018e030", "0x8018a840", "0x801890c8"],
+  "file": "kobold2_L-fire-slow_9e3779b1_r2_prompt.bin",
+  "freeListAfterMenuFrees": [["0x80182000", 7747]],
+  "freeListRaw": [["0x80182000", 3608]],
+  "menuState": "0x8018e030",
+  "moment": "Fight prompt of round 2",
+  "name": "kobold2_L-fire-slow_9e3779b1_r2_prompt",
+  "note": "free lists are { address, units of 8 bytes } as HeapModel:freeList() returns them, in list order",
+  "party": "L-fire-slow",
+  "round": 2,
+  "rover": "0x80182000",
+  "seed": "0x9e3779b1"
+}

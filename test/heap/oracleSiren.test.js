@@ -3,6 +3,7 @@ import assert from 'node:assert';
 import fs from 'node:fs';
 import VfxHeap from '../../lib/Game/Heap/VfxHeap.js';
 import RNG from '../../lib/rng.js';
+import { diffArena } from '../../lib/Game/Heap/ArenaDiff.js';
 
 /**
  * Siren Lv53 x2 (Suikoden-Bizhawk-HUD oracle_siren53, ASK 23): two monsters whose moves overlap (an Attack's spark and the other one's Special). The
@@ -222,5 +223,71 @@ describe('Siren played by Battle (two Lv53 Sirens, the slow party): the heap cal
       got,
       round.events.map((/** @type {any[]} */ e) => [e[0], e[3]]),
     );
+  });
+});
+
+describe('Siren played by Battle: the arena at every prompt (L-fire-slow seed 3c6ef362, rounds 1-3)', () => {
+  it("has the recorded layout, no wrong word in free memory and none in the menu: the next prompt's text and stream from the party HP", async () => {
+    const [
+      { default: Enemy },
+      { EnemyParty, PlayerParty },
+      { default: Battle },
+      { ACTION_TYPES },
+      { ENEMY_KEYS },
+      rounds,
+    ] = await Promise.all([
+      import('../../lib/Game/Battle/Enemy.js'),
+      import('../../lib/Game/Battle/Party.js'),
+      import('../../lib/Game/Battle/Battle.js'),
+      import('../../lib/Game/Battle/Actions.js'),
+      import('../../lib/Game/Keys.js'),
+      import('../fixtures/enemies/crystal_core_lv60_hp5000_rounds.json', {
+        with: { type: 'json' },
+      }),
+    ]);
+    const seed = '3c6ef362';
+    const load = (/** @type {number} */ r) => {
+      const stem = `siren53_L-fire-slow_${seed}_r${r}_prompt`;
+      return {
+        sidecar: JSON.parse(fs.readFileSync(new URL(`${stem}.json`, DIR), 'utf8')),
+        arena: new Uint8Array(fs.readFileSync(new URL(`${stem}.bin`, DIR))),
+      };
+    };
+    const first = load(1);
+    const heap = new VfxHeap(
+      {
+        arena: first.arena,
+        rover: Number(first.sidecar.rover),
+        menuState: Number(first.sidecar.menuState),
+        battleBlocks: [
+          Number(first.sidecar.battleBlocks[0]),
+          Number(first.sidecar.battleBlocks[1]),
+        ],
+      },
+      { party: 'L-fire-slow', index: 0 },
+    );
+    const run = /** @type {any} */ (rounds.default).runs.find(
+      (/** @type {any} */ r) => r.scenario === 'kill_spell',
+    );
+    const characters = structuredClone(run.characters);
+    characters[0].stats.SPD = 1;
+    characters[3].stats.SPD = 1;
+    const rng = new RNG(0);
+    const battle = new Battle({
+      party: PlayerParty.fromCharacterJSON(characters),
+      enemies: new EnemyParty([new Enemy(ENEMY_KEYS.SIREN_2), new Enemy(ENEMY_KEYS.SIREN_2)]),
+      rng,
+      freeWillGate: 10,
+      heap,
+    });
+    for (let r = 1; r <= 3; r++) {
+      for (const c of battle.party.combatants.slice(0, 6)) if (c.HP > 0) c.HP = c.stats.HP - 1;
+      rng.raw = (parseInt(seed, 16) + r) >>> 0;
+      battle.playTurn(Array(6).fill({ type: ACTION_TYPES.DEFEND }));
+      const report = diffArena(heap, load(r + 1));
+      assert.strictEqual(report.layoutDiffers, 0, `round ${r}`);
+      assert.strictEqual(report.byKind.free.wrong, 0, `round ${r} free`);
+      assert.strictEqual(report.byKind.menu.wrong, 0, `round ${r} menu`);
+    }
   });
 });

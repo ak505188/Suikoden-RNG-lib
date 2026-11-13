@@ -427,6 +427,13 @@ Attack that waits behind the other Siren's Special has its last two roll groups 
 219 ticks before that tick, and the members that gained Silence in the battle's own status rolls get an icon (`statusGained`; `slot` 0 / 1 puts the rings at the caster's y +0x32 / -0x32, so two Sirens of the same key
 work). Played by `Battle` the 18 recorded rounds of rounds 1-3 start every move on the recorded frame, have the recorded layout (0 blocks differ, 0 wrong word in free memory) and round 1 of 3c6ef362 (slow)
 allocates and frees the recorded 121 + 118 pointers (`oracleSiren.test.js`).
+The next prompt's menu from the party's HP (`drawMenu`, 2026-11-13). `Battle` gives the round's end the party's HP and the living enemies; the heap reads the names from the old prompt's text cells (`readMenuNames`) and writes
+the next prompt's three windows' text and attributes and the 2D stream into the rebuilt blocks with `MenuStream` (a text cell with a blank has no packet, so the stream's length follows the HP digits); past the
+stream's new end the words are the old ones with the closing menu's LINE_F2 packets over them. The closing draws are also in the heap from the round's start (`streamOverlay`: they stay in a block that the rebuild does not
+reuse), the packet blocks' pointers follow the rebuild, and the words of an old packet block that was freed are not known (the game's draws keep writing them). Played by `Battle` the Siren rounds 1-3 (L-fire-slow 3c6ef362,
+`oracleSiren.test.js`) and the other five oracle runs have the recorded arena at every prompt: 0 differing blocks, 0 wrong word in free memory, 0 wrong in the menu (before: up to 158 wrong menu words). Not used for a round with a
+recorded Crystal Core move or a party action (an Attack's or a cast's sprites own the stream's start, and the Crystal Core recordings compare against the `preconfirm` dumps, which hold several frames of the closing menu over the stream's
+start: the whole-arena ratchet there moved by one menu gap word, +1 in five Special rounds, -2 in the first rounds: the closing lines are in the heap now, the old known word was right by luck).
 The agent's best next oracle: Siren Lv53 x2 (9/49/2, group 4), where all five spells' words and the Soul Eater struct depend on the moves (5 distinct sets in 6 contexts).
 Still not generic: the Clay Doll moves themselves (Attack events with ticks, the shadow resource builder, the child's handler 0x8001409c: ASK 20).
 

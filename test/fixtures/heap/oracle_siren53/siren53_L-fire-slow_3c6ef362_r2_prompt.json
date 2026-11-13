@@ -1,0 +1,19 @@
+{
+  "arenaBase": "0x80182000",
+  "arenaSize": 98304,
+  "battleBlocks": ["0x801868e0", "0x80185168"],
+  "build": "v10",
+  "fight": "siren53, forced from HeapTestingV1_0.State",
+  "fightMenuFrees": ["0x80189f98", "0x80189f28", "0x80189db8", "0x80189c48", "0x8018a070", "0x80189ba0", "0x80189b78", "0x80189a08", "0x80189898", "0x80189be8", "0x801897e0", "0x801897b0", "0x80189640", "0x801894d0", "0x80189838", "0x80189420", "0x801893f0", "0x80189280", "0x80189110", "0x80189470", "0x80189040", "0x80189000", "0x80188e90", "0x80188d20", "0x801890b0", "0x80188c80", "0x80188c58", "0x80188ae8", "0x80188978", "0x80188cc0", "0x801888f0", "0x801888d8", "0x80188768", "0x801885f8", "0x80188918", "0x80188428", "0x80188368", "0x801881f8", "0x80188088", "0x80188598", "0x80188058", "0x8018a0d0", "0x801868e0", "0x80185168"],
+  "file": "siren53_L-fire-slow_3c6ef362_r2_prompt.bin",
+  "freeListAfterMenuFrees": [["0x80182000", 5719], ["0x8018d358", 1716]],
+  "freeListRaw": [["0x8018d358", 1716], ["0x80182000", 1580]],
+  "menuState": "0x8018a0d0",
+  "moment": "Fight prompt of round 2",
+  "name": "siren53_L-fire-slow_3c6ef362_r2_prompt",
+  "note": "free lists are { address, units of 8 bytes } as HeapModel:freeList() returns them, in list order",
+  "party": "L-fire-slow",
+  "round": 2,
+  "rover": "0x8018d358",
+  "seed": "0x3c6ef362"
+}

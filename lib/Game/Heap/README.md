@@ -332,6 +332,13 @@ tainted after either cast (the predictions stay incomplete: the unknown words ar
 Shadow -> Hell and Hell -> Black Shadow stay tainted: a Hell kill followed by a Black Shadow had two known words wrong (a scale word's top byte,
 `0x05195f60` against `0x02195f60`, and an xy word).
 
+**Why Black Shadow <-> Hell stay tainted (ASK 16 answer).** The two wrong words of a Hell kill then a Black Shadow are words of Crystal Core's Attack
+launch groups, not of the Hell struct: a packet's pad half in the other buffer is a whole COPY of the built buffer's block (the builder's
+`copy`), and a header's `+0x12` keeps the last draw's record xy of the slot under it. The recorded Attack image holds another run's pads, so when the
+Attack comes from the image they are wrong (`AttackLaunch.js` has the copy rule for the no-image path). Restoring them after the image (a guard
+over the pad words, the pre-move words and the draw buffer parity at the burst) fixed those two words and broke 13 other scenarios, so it is not
+done; the taint stays until the images are replaced by the rules (ASK 15's launch rules need the first Attack's image gone too).
+
 Still open here: the other-spell reads (a Hell struct read at a Black Shadow's slot offsets lands on the packets' words: links and
 projected points, which need the camera), the Defend round in between (its Attack overwrites part of the struct; the known part is
 right but conservative), and Flaming Arrow / Explosion / Thor after a Soul Eater cast.

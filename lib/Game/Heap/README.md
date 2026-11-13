@@ -412,6 +412,12 @@ reproduces 4 of 4 Specials' xy words exactly this way), so the quads are on: `en
 (`idx0 + the bulk's frame + 127`). The 90 Siren casts: 0 wrong words in Flaming Arrow, Thor, Black Shadow and Hell (known: Flaming Arrow 169 / 113 of 180, Thor 180 / 120 of 180, i.e.
 Thor complete against the slow party, Black Shadow 526 / 382 and Hell 521 / 381 of 720, slow / fast); Explosion 3 wrong of 475 known as before. (Before the caster: 35 wrong, ring 2's y
 was the other caster's.) The header's w0 = 0 and scale 0x1000 after the last draw are in (checked in the same timeline).
+ASK 28 (the closing menu, `closeMenuStream` / `castState`): the two 6000-byte packet blocks are not drawn again during a round, so a cast reads three overlaid draws: the prompt's stream, the draw after
+Free Will is chosen (window 2's 21 text cells replaced by four LINE_F2 packets at stream offset 24 K + 0, 16, 32, 48, K = the prompt's text cells - 21; nothing after them, the old cells and
+the cursor stay where they were) and the F1 draw (four LINE_F2 at offsets 0..63). The packets' second words are 0x40808080, their tag and points are not known: the words a cast reads are
+the prompt's, with those overlaid (the prompt's cell count from the cursor TILE packet's place in the block). That was the three Explosion words (0x20f in the stream vs the real 0x80).
+With it the 90 Siren casts have 0 wrong words in all five spells (`oracleSiren.test.js` has the daa66d13 round-3 cast of the slow party: Explosion and Thor complete). The words are given to
+the predictions on a copy of the state (`castState`), not written into the heap, since the next prompt's draw rewrites the stream.
 A guard against a bug this exposed: the rebuild's restore of the casts' words (`slotWords`) must not write over
 the allocator's header words of the rebuilt blocks (it overwrote a block's size word with a ring link record and broke the next round's free walk).
 The agent's best next oracle: Siren Lv53 x2 (9/49/2, group 4), where all five spells' words and the Soul Eater struct depend on the moves (5 distinct sets in 6 contexts).

@@ -76,3 +76,69 @@ describe('the ring update (FUN_80120d08, ASK 26)', () => {
     assert.strictEqual(seg.d, 251);
   });
 });
+
+describe('Siren, the cast of round 3 of L-fire-slow seed daa66d13: all five spells', () => {
+  const cast = JSON.parse(fs.readFileSync(new URL('cast_daa66d13_slow_r3.json', DIR), 'utf8'));
+  const stem = 'siren53_L-fire-slow_daa66d13_r3_prompt';
+  const sidecar = JSON.parse(fs.readFileSync(new URL(`${stem}.json`, DIR), 'utf8'));
+  const six = (
+    /** @type {{ rand: number[][], round: number }} */ rec,
+    /** @type {number} */ frame,
+  ) => {
+    let before = 0;
+    for (const [f, c] of rec.rand) if (f < frame) before += c;
+    const rng = new RNG((parseInt(cast.seed, 16) + rec.round) >>> 0).jump(before);
+    return Array.from({ length: 6 }, () => Math.trunc((rng.next().rand * 100) / 0x7fff) % 100);
+  };
+  const heap = new VfxHeap(
+    {
+      arena: new Uint8Array(fs.readFileSync(new URL(`${stem}.bin`, DIR))),
+      rover: Number(sidecar.rover),
+      menuState: Number(sidecar.menuState),
+      battleBlocks: [Number(sidecar.battleBlocks[0]), Number(sidecar.battleBlocks[1])],
+    },
+    { party: 'L-fire-slow', index: 0 },
+  );
+  // (the members that gained the status in the earlier rounds' Specials)
+  for (const rec of cast.rounds.slice(0, 2))
+    for (const m of rec.moves)
+      if (!m.attack) six(rec, m.frame + 221).forEach((r, i) => r < 10 && heap.statusHeld.add(i));
+  heap.index = (((cast.idx1[3] - 1) % 2) + 2) % 2;
+  heap.roundStart();
+  const round = cast.rounds[2];
+  for (const m of round.moves) {
+    const key = m.slot === 7 ? 'SIREN_1' : 'SIREN_2';
+    if (m.attack) heap.enemyMove(key, 'Attack', { landed: m.landed, tick: m.frame });
+    else heap.enemyMove(key, 'Special', { tick: m.frame, statusRolls: six(round, m.frame + 221) });
+  }
+
+  for (const spell of /** @type {const} */ (['FlamingArrow', 'Explosion', 'Thor'])) {
+    it(`${spell}: no known word is wrong`, () => {
+      const p = heap.predictParticles(spell);
+      let known = 0;
+      p.residual.forEach((/** @type {number} */ w, /** @type {number} */ i) => {
+        if (p.unknown[i]) return;
+        known++;
+        assert.strictEqual(w, cast.casts[spell][i] & 0xfff, `word ${i}`);
+      });
+      assert.ok(known >= { FlamingArrow: 10, Explosion: 30, Thor: 20 }[spell], `${known} known`);
+    });
+  }
+  for (const spell of /** @type {const} */ (['BlackShadow', 'Hell'])) {
+    it(`${spell}: no known word is wrong`, () => {
+      const p = heap.predictSoulEater(spell);
+      let known = 0;
+      for (let i = 0; i < 40; i++) {
+        if (!p.staleResidualUnknown[i]) {
+          known++;
+          assert.strictEqual(p.staleResidual[i], cast.casts[spell].posX[i], `posX ${i}`);
+        }
+        if (!p.staleScaleUnknown[i]) {
+          known++;
+          assert.strictEqual(p.staleScale[i], cast.casts[spell].scale[i] >>> 0, `scale ${i}`);
+        }
+      }
+      assert.ok(known >= 20, `${known} known`);
+    });
+  }
+});

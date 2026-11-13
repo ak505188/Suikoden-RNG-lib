@@ -289,6 +289,22 @@ yet ported: the Soul Eater ring builder's word rules (ASK 14: `ask14_word_rules_
 group rgb 0 / 0 abr 2, ring(10) rgb 0x20 / 0x50 abr 2, ring(36) rgb 0 / 0x7f abr 1; stale words = the loader image at (address - 0x8018b890)): needed to derive what a Black Shadow or Hell cast leaves
 for the spells after it.
 
+## 7e. The Soul Eater particle rings (ASK 14 answer, 2026-11-12)
+
+`SoulEaterRings.js` ports the ring builder (FUN_80120a50): each of a Black Shadow / Hell cast's eight rings (the group's six latitude
+segments, ring(10), ring(36)) is an 84-byte header plus, per draw buffer, n 36-byte POLY_G4 packets and n 12-byte link records. The
+builder's bytes are exact (packet code byte, rgb copies, link `0xe1000000 | abr << 5`, header counts / pointers / constants); every
+other word of a block keeps what it held, so those blocks are allocated with `applyEvents(..., { keep })` instead of being made unknown.
+Verified against the agent's setup-frame arenas (`test/fixtures/heap/soul_eater_rings`, `soulEaterRings.test.js`): every word the model
+knows in the blocks under the loader buffer is the game's, BS and Hell (3973 of 3973 each; the blocks below the loader buffer keep what
+the arena held, which no recording reaches). Hell's group headers carry a different `+0x1c` (-178 for segments 1-5), observed, not derived.
+After a cast the per-tick words (projected points, ordering-table links, group colours) are unknown (`ticked`).
+
+What this does NOT do: the pair interactions (`PAIR_TAINT`) stay. A second Black Shadow / Hell reads its 80 stale words from the FIRST
+cast's 2804-byte struct (same pointer, 0x80190840): the 40 particle slots' final position / scale words (`pairHarness`: 0 of 80 known
+for every first/second combination), not from the ring blocks. The agent's ctx word classes (ptr 7, const 171, stale 152, rng 320,
+oplink 25, proj 25, accum 1, all exact) are the next thing to port: the 320 "rng" words are the slots' spawn results.
+
 ## 8. Where to read
 
 In `Suikoden-Bizhawk-HUD/notes/` (all `2026-11-0x_vfx_*.md`; the index lists them): `working_protocol`, `findings_index`,

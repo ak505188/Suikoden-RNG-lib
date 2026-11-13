@@ -388,6 +388,13 @@ Flaming Arrow, Thor, Black Shadow and Hell complete and right in all 90; Explosi
 eleven that lie in the menu's stream differs between the move contexts; the other ten are static but not claimed in a round with moves). The moves overlap in time
 in the game (an enemy's spark and the next enemy's launch fall in the same frame); one after the other gives the same layout at the round's end because every block
 is freed by then, but an in-round cast would need the interleaving (ticks), as the Crystal Core path has it.
+ASK 23 (Siren Lv53 x2, `oracleSiren.test.js`): `ENEMY_MOVE_EVENTS` / `ENEMY_MOVE_EVENT_TICKS` for SIREN_1 / SIREN_2 (Attack: five 52-40-40 + 24-40-40 pairs, four freed at +11, one at +21, a hit
+builds the spark at +23, freed at +44; Special: 20 bytes, the bulk of 84 blocks at +22, freed at +221 and the 20 bytes at +224). Two monsters' moves overlap, so an enemy
+move whose table has no anchor and a given `tick` (the frame of its first allocation) is held in `pendingMoves` and applied with the round's other moves, group by group in
+tick order (`flushEnemyMoves`: at the round's end, before a cast, before a prediction). Check: round 1 of L-fire-slow seed 3c6ef362 allocates and frees exactly the 118 + 118
+recorded pointers. What breaks the rest: status icons (ASK 24: op 40 of the hit script rolls a 10% status per member in a frame after the six damage rolls, and an
+(52, 40, 40) icon is built, never freed, for each member that gains it; also an Attack hit once at the spark frame): they change the layout, so the next cast's loader and
+every spell's words move. Not modelled yet (needs the RNG state of the move, as the Special's rolls do).
 The agent's best next oracle: Siren Lv53 x2 (9/49/2, group 4), where all five spells' words and the Soul Eater struct depend on the moves (5 distinct sets in 6 contexts).
 Still not generic: the Clay Doll moves themselves (Attack events with ticks, the shadow resource builder, the child's handler 0x8001409c: ASK 20).
 

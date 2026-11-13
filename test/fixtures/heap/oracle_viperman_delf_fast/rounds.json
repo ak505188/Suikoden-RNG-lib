@@ -1,0 +1,245 @@
+{
+ "_note": "Viperman Lv30 + Delf Lv25 (ASK 36 part 4 / 38): per round the first allocation frame of each monster (Viperman 71 slow, Delf 57-59), Delf's spark frames (55 / 88 / 92 / 103 after his first allocation), a death block when Delf dies; from the rounds files",
+ "rounds": {
+  "9e3779b1": [
+   {
+    "round": 1,
+    "frames": 342,
+    "lag": 0,
+    "viperman": 77,
+    "delf": 63,
+    "sparks": [
+     155,
+     273
+    ],
+    "death": [],
+    "events": 104
+   },
+   {
+    "round": 2,
+    "frames": 342,
+    "lag": 0,
+    "viperman": 77,
+    "delf": 63,
+    "sparks": [
+     118,
+     273
+    ],
+    "death": [],
+    "events": 104
+   },
+   {
+    "round": 3,
+    "frames": 342,
+    "lag": 0,
+    "viperman": 77,
+    "delf": 63,
+    "sparks": [
+     118,
+     273
+    ],
+    "death": [],
+    "events": 104
+   },
+   {
+    "round": 4,
+    "frames": 342,
+    "lag": 0,
+    "viperman": 77,
+    "delf": 63,
+    "sparks": [
+     155,
+     273
+    ],
+    "death": [
+     211
+    ],
+    "events": 106
+   },
+   {
+    "round": 5,
+    "frames": 342,
+    "lag": 0,
+    "viperman": 77,
+    "delf": 273,
+    "sparks": [
+     273
+    ],
+    "death": [],
+    "events": 38
+   },
+   {
+    "round": 6,
+    "frames": 342,
+    "lag": 0,
+    "viperman": 77,
+    "delf": 273,
+    "sparks": [
+     273
+    ],
+    "death": [],
+    "events": 38
+   }
+  ],
+  "3c6ef362": [
+   {
+    "round": 1,
+    "frames": 342,
+    "lag": 0,
+    "viperman": 77,
+    "delf": 64,
+    "sparks": [
+     119,
+     273
+    ],
+    "death": [],
+    "events": 104
+   },
+   {
+    "round": 2,
+    "frames": 342,
+    "lag": 0,
+    "viperman": 77,
+    "delf": 63,
+    "sparks": [
+     118,
+     273
+    ],
+    "death": [],
+    "events": 104
+   },
+   {
+    "round": 3,
+    "frames": 342,
+    "lag": 0,
+    "viperman": 77,
+    "delf": 64,
+    "sparks": [
+     119,
+     273
+    ],
+    "death": [],
+    "events": 104
+   },
+   {
+    "round": 4,
+    "frames": 342,
+    "lag": 0,
+    "viperman": 77,
+    "delf": 63,
+    "sparks": [
+     118,
+     273
+    ],
+    "death": [],
+    "events": 104
+   },
+   {
+    "round": 5,
+    "frames": 342,
+    "lag": 0,
+    "viperman": 77,
+    "delf": 63,
+    "sparks": [
+     118,
+     273
+    ],
+    "death": [],
+    "events": 104
+   },
+   {
+    "round": 6,
+    "frames": 342,
+    "lag": 0,
+    "viperman": 77,
+    "delf": 63,
+    "sparks": [
+     151,
+     273
+    ],
+    "death": [],
+    "events": 104
+   }
+  ],
+  "daa66d13": [
+   {
+    "round": 1,
+    "frames": 342,
+    "lag": 0,
+    "viperman": 77,
+    "delf": 64,
+    "sparks": [
+     119,
+     273
+    ],
+    "death": [],
+    "events": 104
+   },
+   {
+    "round": 2,
+    "frames": 342,
+    "lag": 0,
+    "viperman": 77,
+    "delf": 63,
+    "sparks": [
+     151,
+     273
+    ],
+    "death": [],
+    "events": 104
+   },
+   {
+    "round": 3,
+    "frames": 342,
+    "lag": 0,
+    "viperman": 77,
+    "delf": 64,
+    "sparks": [
+     119,
+     273
+    ],
+    "death": [],
+    "events": 104
+   },
+   {
+    "round": 4,
+    "frames": 342,
+    "lag": 0,
+    "viperman": 77,
+    "delf": 64,
+    "sparks": [
+     119,
+     273
+    ],
+    "death": [],
+    "events": 104
+   },
+   {
+    "round": 5,
+    "frames": 342,
+    "lag": 0,
+    "viperman": 77,
+    "delf": 63,
+    "sparks": [
+     118,
+     273
+    ],
+    "death": [],
+    "events": 104
+   },
+   {
+    "round": 6,
+    "frames": 342,
+    "lag": 0,
+    "viperman": 77,
+    "delf": 63,
+    "sparks": [
+     118,
+     273
+    ],
+    "death": [],
+    "events": 104
+   }
+  ]
+ }
+}

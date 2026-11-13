@@ -1,0 +1,119 @@
+{
+ "_note": "Banshee Lv41 oracle (ASK 33 part 3): per round the frame of the six damage rolls (the recorded hit tick + 2), from summary_banshee.json",
+ "rounds": {
+  "3c6ef362": [
+   {
+    "round": 1,
+    "frames": 385,
+    "lag": 0,
+    "damageFrame": 276
+   },
+   {
+    "round": 2,
+    "frames": 385,
+    "lag": 0,
+    "damageFrame": 276
+   },
+   {
+    "round": 3,
+    "frames": 384,
+    "lag": 0,
+    "damageFrame": 275
+   },
+   {
+    "round": 4,
+    "frames": 384,
+    "lag": 0,
+    "damageFrame": 275
+   },
+   {
+    "round": 5,
+    "frames": 384,
+    "lag": 0,
+    "damageFrame": 275
+   },
+   {
+    "round": 6,
+    "frames": 384,
+    "lag": 0,
+    "damageFrame": 275
+   }
+  ],
+  "9e3779b1": [
+   {
+    "round": 1,
+    "frames": 384,
+    "lag": 0,
+    "damageFrame": 275
+   },
+   {
+    "round": 2,
+    "frames": 384,
+    "lag": 0,
+    "damageFrame": 275
+   },
+   {
+    "round": 3,
+    "frames": 384,
+    "lag": 0,
+    "damageFrame": 275
+   },
+   {
+    "round": 4,
+    "frames": 384,
+    "lag": 0,
+    "damageFrame": 275
+   },
+   {
+    "round": 5,
+    "frames": 384,
+    "lag": 0,
+    "damageFrame": 275
+   },
+   {
+    "round": 6,
+    "frames": 384,
+    "lag": 0,
+    "damageFrame": 275
+   }
+  ],
+  "daa66d13": [
+   {
+    "round": 1,
+    "frames": 384,
+    "lag": 0,
+    "damageFrame": 275
+   },
+   {
+    "round": 2,
+    "frames": 384,
+    "lag": 0,
+    "damageFrame": 275
+   },
+   {
+    "round": 3,
+    "frames": 384,
+    "lag": 0,
+    "damageFrame": 275
+   },
+   {
+    "round": 4,
+    "frames": 384,
+    "lag": 0,
+    "damageFrame": 275
+   },
+   {
+    "round": 5,
+    "frames": 384,
+    "lag": 0,
+    "damageFrame": 275
+   },
+   {
+    "round": 6,
+    "frames": 386,
+    "lag": 0,
+    "damageFrame": 277
+   }
+  ]
+ }
+}

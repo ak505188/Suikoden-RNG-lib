@@ -18,13 +18,13 @@ import Rounds from '../fixtures/enemies/crystal_core_lv60_hp5000_rounds.json' wi
  * The generality oracles of ASK 33 part 3 (party L-fire-slow, 3 seeds, six Defend rounds each, the Suikoden-Bizhawk-HUD oracle_gen packages): the arena at the next prompt after
  * each of rounds 1-3 against the one the simulator reaches by playing the rounds with `Battle` from the round-1 prompt, and the five spells cast after 1, 2 and 3 Defend rounds
  * (the party is slow: the monsters move first in the cast round) against the live words.
- *  - two Kobolds (bow), the generic basic Attack (the Clay Doll's blocks); the Fight menu offers "Let go" in place of "Run" there (the game's test is not modelled: `letGo`);
+ *  - two Kobolds (bow), the generic basic Attack (the Clay Doll's blocks); the Fight menu offers "Let go" in place of "Run" there (the battle's mean levels: ASK 34);
  *    free memory is exact (no wrong, no unknown word)
- *  - a Banshee, the ring Special every round: the layout, the HP and every known word are the recording's; its ring blocks' words are not modelled yet (ASK 34), so free
- *    memory and the menu keep unknown words (`gap` ceilings)
+ *  - a Banshee, the ring Special every round (the move's recorded hit frame as the battle's timing input): the layout, the HP and every known word are the recording's; its ring blocks' words are not modelled yet (ASK 34), so the
+ *    menu keeps unknown words (`gap` ceilings); the rings' words are (ASK 34): free memory has 36 unknown words, the links the party's bob phase decides
  *  - a Wyvern, the breath (Wind or Fire by the script's roll, the move's recorded hit frame as the battle's timing input): the layout, the HP and free memory are exact, the menu keeps 4 wrong
  *    words (the closing menu's frame-3 remnants of window 2 past the stream: the draw index of a round of this length is not modelled)
- * @type {{ name: string, label: string, dir: string, enemies: string[], letGo: boolean, timed?: boolean, gap: { free: number, menu: number }, menuWrong?: number }[]}
+ * @type {{ name: string, label: string, dir: string, enemies: string[], timed?: boolean, gap: { free: number, menu: number }, menuWrong?: number }[]}
  */
 const ORACLES = [
   {
@@ -32,7 +32,6 @@ const ORACLES = [
     label: 'two Kobolds (bow)',
     dir: 'oracle_kobold2',
     enemies: [ENEMY_KEYS.KOBOLD_BOW, ENEMY_KEYS.KOBOLD_BOW],
-    letGo: true,
     gap: { free: 0, menu: 300 },
   },
   {
@@ -40,15 +39,14 @@ const ORACLES = [
     label: 'a Banshee',
     dir: 'oracle_banshee',
     enemies: [ENEMY_KEYS.BANSHEE],
-    letGo: true,
-    gap: { free: 2961, menu: 6000 },
+    timed: true,
+    gap: { free: 36, menu: 6000 },
   },
   {
     name: 'wyvern',
     label: 'a Wyvern',
     dir: 'oracle_wyvern',
     enemies: [ENEMY_KEYS.WYVERN],
-    letGo: false,
     timed: true,
     gap: { free: 0, menu: 3000 },
     menuWrong: 4,
@@ -76,7 +74,7 @@ function start(oracle, seed) {
       menuState: Number(first.sidecar.menuState),
       battleBlocks: [Number(first.sidecar.battleBlocks[0]), Number(first.sidecar.battleBlocks[1])],
     },
-    { party: 'L-fire-slow', index: 0, letGo: oracle.letGo },
+    { party: 'L-fire-slow', index: 0 },
   );
   const characters = structuredClone(run.characters);
   characters[0].stats.SPD = 1;

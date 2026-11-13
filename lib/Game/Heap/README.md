@@ -407,10 +407,11 @@ quad xy and the bucket heads are not ported). With it the 90 Siren casts: Flamin
 0 wrong words in the four, Explosion 3 wrong of 475 known (the same three cells). ASK 26 (`RingUpdate.js`, the ring update FUN_80120d08 as the agent ported it): `ringTick` gives a ring's per-segment screen points and bucket depth; the agent's check value
 (ring segment 0 at its last tick, scale 0xfc1: xy `00c50061 00b80091 005d0041 0056005f`, depth 251) is a test. `applySirenRings(..., { bufferLast })` writes the last two ticks' packets
 (xy and the links to a previous record of the same ring; the first packet of a bucket links to the empty marker or another system's primitive: unknown) and matches the recorded first
-Special at frame 320 exactly (1656 exact words, 576 exact but the top byte, 0 wrong). It is NOT enabled in the heap: in other Specials ring 2's xy words differ (7 of the 18 Flaming
-Arrow words in L-fire-slow 9e3779b1 round 2, 35 wrong in the 90 casts with it), although the allocations, the draw buffer parity and the lag are the same. The Special rolls 16 times in its
-bulk's frame ("4 rings x 4 colours / angles"): the rings' orientation (header rotation / position / radius words, assumed constant here from the one recorded Special) probably follows them
-(ASK 27). The header's w0 = 0 and scale 0x1000 after the last draw are in (checked in the same timeline).
+Special at frame 320 exactly (1656 exact words, 576 exact but the top byte, 0 wrong). ASK 27: the rings' headers are the same in every Special except w8 (position y) = the CASTER's actor y (slot 7: +0x32, slot 8: -0x32; the 16 bulk rolls do not set them; the agent
+reproduces 4 of 4 Specials' xy words exactly this way), so the quads are on: `enemyMove` for SIREN_1 (slot 7) / SIREN_2 (slot 8) passes `casterY` and the draw buffer of the rings' last tick
+(`idx0 + the bulk's frame + 127`). The 90 Siren casts: 0 wrong words in Flaming Arrow, Thor, Black Shadow and Hell (known: Flaming Arrow 169 / 113 of 180, Thor 180 / 120 of 180, i.e.
+Thor complete against the slow party, Black Shadow 526 / 382 and Hell 521 / 381 of 720, slow / fast); Explosion 3 wrong of 475 known as before. (Before the caster: 35 wrong, ring 2's y
+was the other caster's.) The header's w0 = 0 and scale 0x1000 after the last draw are in (checked in the same timeline).
 A guard against a bug this exposed: the rebuild's restore of the casts' words (`slotWords`) must not write over
 the allocator's header words of the rebuilt blocks (it overwrote a block's size word with a ring link record and broke the next round's free walk).
 The agent's best next oracle: Siren Lv53 x2 (9/49/2, group 4), where all five spells' words and the Soul Eater struct depend on the moves (5 distinct sets in 6 contexts).

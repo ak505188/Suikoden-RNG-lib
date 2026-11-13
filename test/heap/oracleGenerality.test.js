@@ -107,6 +107,14 @@ const ORACLES = [
     index: 0,
     gap: { free: 0, menu: 3000 },
   },
+  {
+    name: 'dwarf',
+    label: 'a Dwarf',
+    dir: 'oracle_dwarf_slow',
+    enemies: [ENEMY_KEYS.DWARF],
+    index: 0,
+    gap: { free: 0, menu: 3000 },
+  },
   // Devil Armor Lv27 (ASK 36 part 4): the Multi-hit on three members every round
   {
     name: 'devil_armor',

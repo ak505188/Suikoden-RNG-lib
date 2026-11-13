@@ -1,0 +1,19 @@
+{
+  "arenaBase": "0x80182000",
+  "arenaSize": 98304,
+  "battleBlocks": ["0x80189dc0", "0x80188648"],
+  "build": "v10",
+  "fight": "viperman_delf, forced from HeapTestingV1_0.State",
+  "fightMenuFrees": ["0x8018d478", "0x8018d408", "0x8018d298", "0x8018d128", "0x8018d550", "0x8018d080", "0x8018d058", "0x8018cee8", "0x8018cd78", "0x8018d0c8", "0x8018ccc0", "0x8018cc90", "0x8018cb20", "0x8018c9b0", "0x8018cd18", "0x8018c900", "0x8018c8d0", "0x8018c760", "0x8018c5f0", "0x8018c950", "0x8018c520", "0x8018c4e0", "0x8018c370", "0x8018c200", "0x8018c590", "0x8018c160", "0x8018c138", "0x8018bfc8", "0x8018be58", "0x8018c1a0", "0x8018bdd0", "0x8018bdb8", "0x8018bc48", "0x8018bad8", "0x8018bdf8", "0x8018b908", "0x8018b848", "0x8018b6d8", "0x8018b568", "0x8018ba78", "0x8018b538", "0x8018d5b0", "0x80189dc0", "0x80188648"],
+  "file": "viperman_delf_L-fire_daa66d13_r2_prompt.bin",
+  "freeListAfterMenuFrees": [["0x80182000", 7411]],
+  "freeListRaw": [["0x80182000", 3272]],
+  "menuState": "0x8018d5b0",
+  "moment": "Fight prompt of round 2",
+  "name": "viperman_delf_L-fire_daa66d13_r2_prompt",
+  "note": "free lists are { address, units of 8 bytes } as HeapModel:freeList() returns them, in list order",
+  "party": "L-fire",
+  "round": 2,
+  "rover": "0x80182000",
+  "seed": "0xdaa66d13"
+}

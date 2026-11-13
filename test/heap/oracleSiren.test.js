@@ -291,3 +291,77 @@ describe('Siren played by Battle: the arena at every prompt (L-fire-slow seed 3c
     }
   });
 });
+
+describe('Siren played by Battle: the allocations of every recorded round (6 rounds x 3 seeds x 2 parties)', () => {
+  it("the enemies' moves, with the Special's and the Attack hit's status icons from the battle's own rolls, allocate the recorded number of blocks each round", async () => {
+    const [
+      { default: Enemy },
+      { EnemyParty, PlayerParty },
+      { default: Battle },
+      { ACTION_TYPES },
+      { ENEMY_KEYS },
+      rounds,
+    ] = await Promise.all([
+      import('../../lib/Game/Battle/Enemy.js'),
+      import('../../lib/Game/Battle/Party.js'),
+      import('../../lib/Game/Battle/Battle.js'),
+      import('../../lib/Game/Battle/Actions.js'),
+      import('../../lib/Game/Keys.js'),
+      import('../fixtures/enemies/crystal_core_lv60_hp5000_rounds.json', {
+        with: { type: 'json' },
+      }),
+    ]);
+    const counts = JSON.parse(fs.readFileSync(new URL('allocs_per_round.json', DIR), 'utf8'));
+    const stem = 'siren53_L-fire-slow_3c6ef362_r1_prompt';
+    const sidecar = JSON.parse(fs.readFileSync(new URL(`${stem}.json`, DIR), 'utf8'));
+    const arena = new Uint8Array(fs.readFileSync(new URL(`${stem}.bin`, DIR)));
+    const run = /** @type {any} */ (rounds.default).runs.find(
+      (/** @type {any} */ r) => r.scenario === 'kill_spell',
+    );
+    for (const party of ['L-fire-slow', 'L-fire']) {
+      for (const seed of ['9e3779b1', '3c6ef362', 'daa66d13']) {
+        const characters = structuredClone(run.characters);
+        if (party === 'L-fire-slow') {
+          characters[0].stats.SPD = 1;
+          characters[3].stats.SPD = 1;
+        }
+        const heap = new VfxHeap(
+          {
+            arena,
+            rover: Number(sidecar.rover),
+            menuState: Number(sidecar.menuState),
+            battleBlocks: [Number(sidecar.battleBlocks[0]), Number(sidecar.battleBlocks[1])],
+          },
+          { party: 'L-fire-slow', index: 0 },
+        );
+        const rng = new RNG(0);
+        const battle = new Battle({
+          party: PlayerParty.fromCharacterJSON(characters),
+          enemies: new EnemyParty([new Enemy(ENEMY_KEYS.SIREN_2), new Enemy(ENEMY_KEYS.SIREN_2)]),
+          rng,
+          freeWillGate: 10,
+          heap,
+        });
+        counts[`${party}_${seed}`].forEach(
+          (/** @type {number} */ want, /** @type {number} */ i) => {
+            for (const c of battle.party.combatants.slice(0, 6))
+              if (c.HP > 0) c.HP = c.stats.HP - 1;
+            rng.raw = (parseInt(seed, 16) + i + 1) >>> 0;
+            let got = 0;
+            const flush = heap.flushEnemyMoves.bind(heap);
+            heap.flushEnemyMoves = (until) => {
+              got += heap.pendingMoves.reduce(
+                (n, m) => n + m.events.filter((e) => e > 0).length,
+                0,
+              );
+              flush(until);
+            };
+            battle.playTurn(Array(6).fill({ type: ACTION_TYPES.DEFEND }));
+            heap.flushEnemyMoves = flush;
+            assert.strictEqual(got, want, `${party} ${seed} round ${i + 1}`);
+          },
+        );
+      }
+    }
+  });
+});

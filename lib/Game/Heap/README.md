@@ -434,6 +434,8 @@ reuse), the packet blocks' pointers follow the rebuild, and the words of an old 
 `oracleSiren.test.js`) and the other five oracle runs have the recorded arena at every prompt: 0 differing blocks, 0 wrong word in free memory, 0 wrong in the menu (before: up to 158 wrong menu words). Not used for a round with a
 recorded Crystal Core move or a party action (an Attack's or a cast's sprites own the stream's start, and the Crystal Core recordings compare against the `preconfirm` dumps, which hold several frames of the closing menu over the stream's
 start: the whole-arena ratchet there moved by one menu gap word, +1 in five Special rounds, -2 in the first rounds: the closing lines are in the heap now, the old known word was right by luck).
+The Attack hit's own status icon (one in 26 hits in the recording; `heap.statusIcon`, called when the battle's reaction roll lands a status; `ENEMY_STATUS_ICON.attackAt` 23): with it the heap's allocations per
+round from the battle's own rolls equal the recorded number in all 36 rounds (6 rounds x 3 seeds x 2 parties), icons included (`oracleSiren.test.js`; the one Attack hit icon is L-fire-slow 9e3779b1 round 6).
 The agent's best next oracle: Siren Lv53 x2 (9/49/2, group 4), where all five spells' words and the Soul Eater struct depend on the moves (5 distinct sets in 6 contexts).
 Still not generic: the Clay Doll moves themselves (Attack events with ticks, the shadow resource builder, the child's handler 0x8001409c: ASK 20).
 

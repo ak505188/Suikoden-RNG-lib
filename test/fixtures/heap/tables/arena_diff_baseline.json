@@ -27,7 +27,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 844,
+    "gap": 788,
     "partialWrong": 1
    },
    "live": {
@@ -83,7 +83,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 862,
+    "gap": 806,
     "partialWrong": 3
    },
    "live": {
@@ -157,7 +157,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 887,
+    "gap": 831,
     "partialWrong": 3
    },
    "live": {
@@ -249,7 +249,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 858,
+    "gap": 802,
     "partialWrong": 3
    },
    "live": {
@@ -359,7 +359,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 884,
+    "gap": 828,
     "partialWrong": 3
    },
    "live": {
@@ -397,7 +397,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 936,
+    "gap": 880,
     "partialWrong": 3
    },
    "live": {
@@ -453,7 +453,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 940,
+    "gap": 884,
     "partialWrong": 4
    },
    "live": {
@@ -527,7 +527,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 942,
+    "gap": 886,
     "partialWrong": 2
    },
    "live": {
@@ -619,7 +619,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 942,
+    "gap": 886,
     "partialWrong": 3
    },
    "live": {
@@ -729,7 +729,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 942,
+    "gap": 886,
     "partialWrong": 3
    },
    "live": {

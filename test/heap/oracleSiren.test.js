@@ -59,3 +59,20 @@ describe('Siren, round 1 of L-fire-slow seed 3c6ef362: the round-level scheduler
     assert.deepStrictEqual(got, want);
   });
 });
+
+describe('the ring update (FUN_80120d08, ASK 26)', () => {
+  it("projects a ring's first segment at its last tick to the agent's check value (xy words and bucket depth)", async () => {
+    const { ringTick } = await import('../../lib/Game/Heap/RingUpdate.js');
+    const [seg] = ringTick({
+      n: 24,
+      pos: [-0x80, -0x32, -0x28],
+      inner: [0xb4, -0x12c],
+      outer: [0x78, -0xc8],
+      rot: [0, -0x400, 0],
+      scale: 0xfc1,
+    });
+    const words = seg.xy.map(([x, y]) => (((y & 0xffff) << 16) | (x & 0xffff)) >>> 0);
+    assert.deepStrictEqual(words, [0x00c50061, 0x00b80091, 0x005d0041, 0x0056005f]);
+    assert.strictEqual(seg.d, 251);
+  });
+});

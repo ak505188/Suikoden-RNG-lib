@@ -380,6 +380,15 @@ menu's stream, whose words the rebuild restores only in a round without a move o
 stream differs from the later ones in animated scene primitives: 147 wrong words in the Attack round's arena when restored whole). The recording found the
 words do not depend on the move in any of the 9 move contexts per party, so these oracles do not yet exercise the moves; an enemy with a pool-sized Attack or a
 multi-enemy group (Clay Doll group 9: 3 Red Elementals + Clay Doll) would. Rock Buster's casts are recorded without arenas, so not run.
+ASK 22 (a four-enemy group; `oracleGroup9.test.js`, 90 casts): Clay Doll group 9 = three Red Elementals (slots 7-9) + the Clay Doll, both parties, every enemy
+attacks every round. `ENEMY_MOVE_EVENTS.RED_ELEMENTAL` is Clay Doll's list (the spark is freed 21 ticks after, not 18: ticks not modelled here). Replaying each
+round's four moves in the recorded order, one after the other, gives the arena at every round's end with 0 differing blocks and no wrong word in the free and menu
+kinds, in every round whose four moves are Attacks (18 of 18 rounds without a Special; the Special rounds have 19 wrong block-header words, as before). The casts:
+Flaming Arrow, Thor, Black Shadow and Hell complete and right in all 90; Explosion right, 17-30 words known. Only Explosion depends on the moves (one word of the
+eleven that lie in the menu's stream differs between the move contexts; the other ten are static but not claimed in a round with moves). The moves overlap in time
+in the game (an enemy's spark and the next enemy's launch fall in the same frame); one after the other gives the same layout at the round's end because every block
+is freed by then, but an in-round cast would need the interleaving (ticks), as the Crystal Core path has it.
+The agent's best next oracle: Siren Lv53 x2 (9/49/2, group 4), where all five spells' words and the Soul Eater struct depend on the moves (5 distinct sets in 6 contexts).
 Still not generic: the Clay Doll moves themselves (Attack events with ticks, the shadow resource builder, the child's handler 0x8001409c: ASK 20).
 
 Still open here: the other-spell reads (a Hell struct read at a Black Shadow's slot offsets lands on the packets' words: links and

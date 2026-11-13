@@ -300,10 +300,25 @@ knows in the blocks under the loader buffer is the game's, BS and Hell (3973 of 
 the arena held, which no recording reaches). Hell's group headers carry a different `+0x1c` (-178 for segments 1-5), observed, not derived.
 After a cast the per-tick words (projected points, ordering-table links, group colours) are unknown (`ticked`).
 
-What this does NOT do: the pair interactions (`PAIR_TAINT`) stay. A second Black Shadow / Hell reads its 80 stale words from the FIRST
-cast's 2804-byte struct (same pointer, 0x80190840): the 40 particle slots' final position / scale words (`pairHarness`: 0 of 80 known
-for every first/second combination), not from the ring blocks. The agent's ctx word classes (ptr 7, const 171, stale 152, rng 320,
-oplink 25, proj 25, accum 1, all exact) are the next thing to port: the 320 "rng" words are the slots' spawn results.
+### Slots left for the next cast (`SoulEaterSlots.js`)
+
+A second Black Shadow / Hell reads its 80 stale words from the FIRST cast's 2804-byte struct (same pointer, 0x80190840): the 40 particle
+slots' position, scale, velocity and life words (the agent's "rng" class). `blackShadowRand` / `hellRand` now simulate the whole slot state
+(y and z with `sqrt0`, the spawn keeping the low 12 bits of the old words) and, with a `final` argument, run the handler's remaining
+calls (BS: 10 calls down by the increment, 64 up, 59 plain; Hell: 271 plain) and hand back the slots and the accumulator;
+`applySlotWords` writes them into the struct. Hell's wind-up is 96 calls (it was 95: the RNG count does not see the difference, the
+final posX low 12 bits do). Checked against the agent's pair recordings (`soul_eater_pairs.json`, `soulEaterPairs.test.js`): the same
+spell in the next round is complete and exact (80 of 80 words, RNG count, 3 seeds, both spells); across the two spells and after an
+everyone-Defends round the words that are known are right (0 wrong in 24 cases), but 5-41 of 80 are known, so those predictions are
+incomplete. `PAIR_TAINT` keeps the other spells (and Flaming Arrow, Explosion and Thor after either).
+
+The words a cast writes into its struct are remembered (`slotWords`): a recorded menu-rebuild image over one of them is another run's cast
+history (the Hell kill scenarios showed 5 of 80 known words wrong, the image's `0x05195f5f` against the live `0xfff45f5f`), so
+such a word stays unknown after an image touches it, for good.
+
+Still open here: the other-spell reads (a Hell struct read at a Black Shadow's slot offsets lands on the packets' words: links and
+projected points, which need the camera), the Defend round in between (its Attack overwrites part of the struct; the known part is
+right but conservative), and Flaming Arrow / Explosion / Thor after a Soul Eater cast.
 
 ## 8. Where to read
 

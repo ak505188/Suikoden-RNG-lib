@@ -406,7 +406,12 @@ describe('a cast then a cast (heap_pairs, party L-fire): after any cast the next
         (first.startsWith('FlamingArrow') && second === 'Explosion') ||
         (first === 'Explosion' && second === 'FlamingArrow') ||
         (first === 'Explosion' && second === 'Explosion') ||
-        (first.startsWith('FlamingArrow') && second === 'FlamingArrow');
+        (first.startsWith('FlamingArrow') && second === 'FlamingArrow') ||
+        // (a Black Shadow / Hell after itself: its slots are modelled, so it is not flagged by the table; with a round between, the Attack
+        // overwrote part of them and the prediction reports unknown words itself)
+        (first === second && (first === 'BlackShadow' || first === 'Hell'));
+      if (first === second && (first === 'BlackShadow' || first === 'Hell') && between === '1')
+        assert.ok(p.staleResidualUnknown.some(Boolean) || p.staleScaleUnknown.some(Boolean), key);
       assert.strictEqual(sim.flagged, !exempt, key);
     }
     assert.ok(checked >= 300, `${checked}`);

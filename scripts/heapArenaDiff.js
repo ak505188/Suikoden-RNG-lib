@@ -29,12 +29,13 @@ const bad = (c) => ({ wrong: c.wrong, gap: c.gap, partialWrong: c.partialWrong }
 for (const scenario of SCENARIOS) {
   const k = Number(scenario.slice(-1));
   play(scenario, SEED, {
+    menuFrames: 19,
     after: (round, heap) => {
       if (round > k + 1) return;
       const real = loadArena(
         `rounds/crystal_core_L-fire-slow_${scenario}_${SEED}_r${round + 1}_preconfirm`,
       );
-      const report = diffArena(heap, real);
+      const report = diffArena(heap.closedMenu(), real);
       (baseline[scenario] ??= {})[round] = {
         layoutDiffers: report.layoutDiffers ?? -1,
         free: bad(report.byKind.free),

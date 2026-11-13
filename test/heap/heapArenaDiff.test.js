@@ -30,12 +30,13 @@ describe('the simulated arena against the recorded arena after every round (10 s
       const k = Number(scenario.slice(-1));
       let rounds = 0;
       play(scenario, SEED, {
+        menuFrames: 19,
         after: (round, heap) => {
           if (round > k + 1) return;
           const real = loadArena(
             `rounds/crystal_core_L-fire-slow_${scenario}_${SEED}_r${round + 1}_preconfirm`,
           );
-          const report = diffArena(heap, real);
+          const report = diffArena(heap.closedMenu(), real);
           const want = baseline[scenario][round];
           const at = `${scenario} after round ${round}`;
           assert.strictEqual(report.layoutDiffers, 0, `${at}: the block layout differs`);

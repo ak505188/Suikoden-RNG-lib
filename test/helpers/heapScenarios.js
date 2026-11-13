@@ -47,10 +47,10 @@ export const CASTS =
 /**
  * @param {string} scenario
  * @param {string} seed
- * @param {{ delay?: number, spell?: string, after?: (round: number, heap: VfxHeap) => void, calls?: { n: number } }} [options]
+ * @param {{ delay?: number, spell?: string, after?: (round: number, heap: VfxHeap) => void, calls?: { n: number }, menuFrames?: number }} [options]
  *   `delay`: the menu time before the cast round's confirm; `spell`: cast it in the cast round; `after`: called after each round
  */
-export function play(scenario, seed, { delay = 0, spell, after, calls } = {}) {
+export function play(scenario, seed, { delay = 0, spell, after, calls, menuFrames } = {}) {
   const kill = scenario.slice(0, -1);
   const k = Number(scenario.slice(-1));
   const characters = structuredClone(/** @type {any} */ (run).characters);
@@ -60,6 +60,7 @@ export function play(scenario, seed, { delay = 0, spell, after, calls } = {}) {
   const heap = new VfxHeap(loadHeapDump('crystal_core_L-fire-slow_r1_prompt'), {
     party: 'L-fire-slow',
     index: 0,
+    menuFrames,
   });
   if (calls) {
     for (const method of /** @type {const} */ (['castSpell', 'castFlamingArrow'])) {

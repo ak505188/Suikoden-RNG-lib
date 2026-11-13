@@ -366,6 +366,13 @@ pointers at its end and draws the same menu: the rebuilt blocks keep the words t
 scene primitives (the packet buffers' stream holds those); in another, only the words past the stream are restored (arena diff 0 wrong). Without it
 Explosion's 30 words were unknown (the rebuild marked the blocks unknown). The RNG counts were not run (the start state's pre-cast rolls need
 Clay Doll's AI), the words are what they follow from.
+Clay Doll's Attack is in too (`ENEMY_MOVE_EVENTS.CLAY_DOLL`: Attack = the 52 / 40 / 40 resource and its 24 / 40 / 40 shadow, AttackHit adds the
+52 / 80 / 80 spark; 14 of 14 recorded Attack rounds follow it): the hit result now reaches the heap (`resolveEnemyAttack` calls the move's start
+once the result is known, `enemyMove(..., { landed })`), and played through `Battle` the arena after round 1 and 2 has 0 differing blocks, free memory
+all right (7260 words) and no wrong word in the menu kind, for the seeds whose round is an Attack (`oracleClayDoll.test.js`; a round that is a Special is
+not modelled: 20 wrong block-header words in the menu kind, the Special's payload over the allocator's links). `Battle` reproduces the recorded
+move sequence for 2 of 3 seeds (the third, daa66d13, picks an Attack where the recording has the Special in round 2: not heap related).
+A move without recorded events marks its round `unmodelled`, so the rebuilt menu's stream is not restored whole in it.
 Still not generic: the Clay Doll moves themselves (Attack events with ticks, the shadow resource builder, the child's handler 0x8001409c: ASK 20).
 
 Still open here: the other-spell reads (a Hell struct read at a Black Shadow's slot offsets lands on the packets' words: links and

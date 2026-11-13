@@ -2,6 +2,7 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import fs from 'node:fs';
 import VfxHeap from '../../lib/Game/Heap/VfxHeap.js';
+import { diffArena } from '../../lib/Game/Heap/ArenaDiff.js';
 
 /**
  * The generality oracle: a battle that is not Crystal Core (Clay Doll Lv44, screen 4/1/10, party L-fire-slow, 3 seeds; Suikoden-Bizhawk-HUD
@@ -59,5 +60,28 @@ describe('Clay Doll (not Crystal Core): the five spells at the casts of rounds 2
         }
       });
     }
+  }
+});
+
+describe("Clay Doll's Attack (own script: a 52 / 40 / 40 resource and a 24 / 40 / 40 shadow; a hit builds the spark)", () => {
+  for (const [seed, landed] of /** @type {const} */ ([
+    ['9e3779b1', false],
+    ['daa66d13', true],
+  ])) {
+    it(`round 1, seed ${seed} (${landed ? 'hit' : 'miss'}): the layout at round 2's confirm is the game's, no wrong word in free memory`, () => {
+      const heap = heapAtCast(1);
+      heap.enemyMove('CLAY_DOLL', 'Attack', { landed });
+      heap.roundEnd();
+      const sidecar = JSON.parse(
+        fs.readFileSync(new URL(`clay_doll_L-fire-slow_${seed}_r2_preconfirm.json`, DIR), 'utf8'),
+      );
+      const arena = new Uint8Array(
+        fs.readFileSync(new URL(`clay_doll_L-fire-slow_${seed}_r2_preconfirm.bin`, DIR)),
+      );
+      const report = diffArena(heap, { arena, sidecar });
+      assert.strictEqual(report.layoutDiffers, 0);
+      assert.strictEqual(report.byKind.free.wrong, 0);
+      assert.strictEqual(report.byKind.menu.wrong, 0);
+    });
   }
 });

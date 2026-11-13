@@ -1,0 +1,19 @@
+{
+  "arenaBase": "0x80182000",
+  "arenaSize": 98304,
+  "battleBlocks": ["0x8018a8f0", "0x80189178"],
+  "build": "v10",
+  "fight": "clay_doll, forced from HeapTestingV1_0.State",
+  "fightMenuFrees": ["0x8018df78", "0x8018df08", "0x8018dd98", "0x8018dc28", "0x8018e050", "0x8018dba0", "0x8018db88", "0x8018da18", "0x8018d8a8", "0x8018dbc8", "0x8018d7f0", "0x8018d7c0", "0x8018d650", "0x8018d4e0", "0x8018d848", "0x8018d430", "0x8018d400", "0x8018d290", "0x8018d120", "0x8018d480", "0x8018d050", "0x8018d010", "0x8018cea0", "0x8018cd30", "0x8018d0c0", "0x8018cc90", "0x8018cc68", "0x8018caf8", "0x8018c988", "0x8018ccd0", "0x8018c900", "0x8018c8e8", "0x8018c778", "0x8018c608", "0x8018c928", "0x8018c438", "0x8018c378", "0x8018c208", "0x8018c098", "0x8018c5a8", "0x8018c068", "0x8018e0b0", "0x8018a8f0", "0x80189178"],
+  "file": "clay_doll_L-fire-slow_daa66d13_r2_preconfirm.bin",
+  "freeListAfterMenuFrees": [["0x80182000", 7763]],
+  "freeListRaw": [["0x80182000", 3630]],
+  "menuState": "0x8018e0b0",
+  "moment": "Free Will chosen, everyone Defends, before confirmRound",
+  "name": "clay_doll_L-fire-slow_daa66d13_r2_preconfirm",
+  "note": "free lists are { address, units of 8 bytes } as HeapModel:freeList() returns them, in list order",
+  "party": "L-fire-slow",
+  "round": 2,
+  "rover": "0x80182000",
+  "seed": "0xdaa66d13"
+}

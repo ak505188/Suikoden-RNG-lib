@@ -21,7 +21,7 @@ import Rounds from '../fixtures/enemies/crystal_core_lv60_hp5000_rounds.json' wi
  *  - two Kobolds (bow), the generic basic Attack (the Clay Doll's blocks); the Fight menu offers "Let go" in place of "Run" there (the battle's mean levels: ASK 34);
  *    free memory is exact (no wrong, no unknown word)
  *  - a Banshee, the ring Special every round (the move's recorded hit frame as the battle's timing input): the layout, the HP and every known word are the recording's; its ring blocks' words are not modelled yet (ASK 34), so the
- *    menu keeps unknown words (`gap` ceilings); the rings' words are (ASK 34): free memory has 16 unknown words
+ *    menu keeps unknown words (`gap` ceilings); the rings' words are (ASK 34): free memory has 1 unknown word (a pad word the game sets between the first prompt and the confirm)
  *  - a Clay Doll (Attack and Special rounds, the Special's recorded hit frame as timing input): the layout and free memory are exact in rounds 1-2; the Special's wrapper objects' words are not
  *    modelled yet (menu gap ceiling)
  *  - a Wyvern, the breath (Wind or Fire by the script's roll, the move's recorded hit frame as the battle's timing input): the layout, the HP, free memory and the menu are exact (the draw index follows the battle's ticks)
@@ -54,7 +54,7 @@ const ORACLES = [
     enemies: [ENEMY_KEYS.BANSHEE],
     index: 0,
     timed: true,
-    gap: { free: 16, menu: 6000 },
+    gap: { free: 1, menu: 6000 },
   },
   {
     name: 'wyvern',

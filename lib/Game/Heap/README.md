@@ -347,6 +347,13 @@ gap in the free and menu kinds drops from 23,051 to 21,526 words (vf2 / vf3 tail
 are the wrapper objects' header w2 / packet xy / links (1067 words) and the G4 systems' xy / links, which need the Special's per-object state at
 its last draw (ASK 18: position, rotation, scale, last draw call, the camera of ASK 17, bucket heads) and a port of the Spr drawing code.
 
+**Impact objects' header w2 (ASK 19).** FUN_801238d0 projects the object's position plus (120, 0, 0) through the Special's last camera
+(ASK 17 constants), so an impact's header w2 is `(Y << 19) | (2 << 16) | ((X & 0x1fff) << 3) | 4` (checked on the 3 intact impacts of vf3 round 4;
+`SpecialEffect.js`, given the rolls). The ring objects are redrawn from a trail (last draw L(g) = 184 for g = 0, 164 + 2g otherwise; the head at
+L - 1, trail j at L + j) with a draw-time z, scale and shake per call that are not derived, and the packet xy words need the GTE corner path
+(scale 3840 * res+0x14 >> 12, rotation z 1, width + 1): not ported. The agent also found that 48 of the 78 header-w2 and 269 of the 610 xy gap words
+lie in blocks that were overwritten after the Special (the menu rebuild), so no Special rule can produce them.
+
 Still open here: the other-spell reads (a Hell struct read at a Black Shadow's slot offsets lands on the packets' words: links and
 projected points, which need the camera), the Defend round in between (its Attack overwrites part of the struct; the known part is
 right but conservative), and Flaming Arrow / Explosion / Thor after a Soul Eater cast.

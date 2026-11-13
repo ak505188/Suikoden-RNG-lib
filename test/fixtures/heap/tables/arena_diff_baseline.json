@@ -83,7 +83,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 882,
+    "gap": 881,
     "partialWrong": 3
    },
    "live": {
@@ -249,7 +249,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 878,
+    "gap": 877,
     "partialWrong": 3
    },
    "live": {
@@ -397,7 +397,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 1096,
+    "gap": 1095,
     "partialWrong": 3
    },
    "live": {
@@ -527,7 +527,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 1102,
+    "gap": 1101,
     "partialWrong": 2
    },
    "live": {
@@ -729,7 +729,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 1102,
+    "gap": 1101,
     "partialWrong": 3
    },
    "live": {

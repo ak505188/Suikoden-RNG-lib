@@ -1,0 +1,19 @@
+{
+  "arenaBase": "0x80182000",
+  "arenaSize": 98304,
+  "battleBlocks": ["0x80189be8", "0x80188470"],
+  "build": "v10",
+  "fight": "devil_armor, forced from HeapTestingV1_0.State",
+  "fightMenuFrees": ["0x8018d270", "0x8018d200", "0x8018d090", "0x8018cf20", "0x8018d348", "0x8018ce98", "0x8018ce80", "0x8018cd10", "0x8018cba0", "0x8018cec0", "0x8018cae8", "0x8018cab8", "0x8018c948", "0x8018c7d8", "0x8018cb40", "0x8018c728", "0x8018c6f8", "0x8018c588", "0x8018c418", "0x8018c778", "0x8018c348", "0x8018c308", "0x8018c198", "0x8018c028", "0x8018c3b8", "0x8018bf88", "0x8018bf60", "0x8018bdf0", "0x8018bc80", "0x8018bfc8", "0x8018bbf8", "0x8018bbe0", "0x8018ba70", "0x8018b900", "0x8018bc20", "0x8018b730", "0x8018b670", "0x8018b500", "0x8018b390", "0x8018b8a0", "0x8018b360", "0x8018d3a8", "0x80189be8", "0x80188470"],
+  "file": "devil_armor_L-fire-slow_3c6ef362_r3_prompt.bin",
+  "freeListAfterMenuFrees": [["0x80182000", 7387]],
+  "freeListRaw": [["0x80190590", 41], ["0x80182000", 3213]],
+  "menuState": "0x8018d3a8",
+  "moment": "Fight prompt of round 3",
+  "name": "devil_armor_L-fire-slow_3c6ef362_r3_prompt",
+  "note": "free lists are { address, units of 8 bytes } as HeapModel:freeList() returns them, in list order",
+  "party": "L-fire-slow",
+  "round": 3,
+  "rover": "0x80190590",
+  "seed": "0x3c6ef362"
+}

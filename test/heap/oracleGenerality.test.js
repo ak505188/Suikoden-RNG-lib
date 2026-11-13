@@ -107,6 +107,26 @@ const ORACLES = [
     index: 0,
     gap: { free: 0, menu: 3000 },
   },
+  // Devil Armor Lv27 (ASK 36 part 4): the Multi-hit on three members every round
+  {
+    name: 'devil_armor',
+    label: 'a Devil Armor',
+    dir: 'oracle_devil_armor_slow',
+    enemies: [ENEMY_KEYS.DEVIL_ARMOR],
+    index: 1,
+    casts: [], // (the Devil Armor's AI waits for free members: the battle starts its move after the cast the recording started it before)
+    gap: { free: 80, menu: 3300 },
+  },
+  {
+    name: 'devil_armor',
+    label: 'a Devil Armor, fast party',
+    dir: 'oracle_devil_armor_fast',
+    enemies: [ENEMY_KEYS.DEVIL_ARMOR],
+    fast: true,
+    index: 1,
+    casts: [],
+    gap: { free: 80, menu: 3300 },
+  },
 ];
 const run = /** @type {any} */ (Rounds).runs.find(
   (/** @type {any} */ r) => r.scenario === 'kill_spell',

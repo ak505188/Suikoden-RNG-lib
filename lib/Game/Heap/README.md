@@ -339,6 +339,14 @@ Attack comes from the image they are wrong (`AttackLaunch.js` has the copy rule 
 over the pad words, the pre-move words and the draw buffer parity at the burst) fixed those two words and broke 13 other scenarios, so it is not
 done; the taint stays until the images are replaced by the rules (ASK 15's launch rules need the first Attack's image gone too).
 
+**Special words whose top byte is stale (ASK 18 classification).** 288 of the 293 tail-block gap words after a Special are the ring builder's colour words
+(w3 / w5 / w7: rgb in the low 24 bits, the top byte the arena's before the Special). The Special model already computed them, but a word that
+depends on an unknown never-written word was simply made unknown, with the arena's old value as the estimate. `specialEffectFrom` now keeps the
+words whose flipped run differs only in the top byte as partial (low 24 bits the model's, the top byte the best estimate): the whole-arena diff's
+gap in the free and menu kinds drops from 23,051 to 21,526 words (vf2 / vf3 tail block 293 -> 83, vf1 292 -> 4), 0 wrong. The rest of the gap
+are the wrapper objects' header w2 / packet xy / links (1067 words) and the G4 systems' xy / links, which need the Special's per-object state at
+its last draw (ASK 18: position, rotation, scale, last draw call, the camera of ASK 17, bucket heads) and a port of the Spr drawing code.
+
 Still open here: the other-spell reads (a Hell struct read at a Black Shadow's slot offsets lands on the packets' words: links and
 projected points, which need the camera), the Defend round in between (its Attack overwrites part of the struct; the known part is
 right but conservative), and Flaming Arrow / Explosion / Thor after a Soul Eater cast.

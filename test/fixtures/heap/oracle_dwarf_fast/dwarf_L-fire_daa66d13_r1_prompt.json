@@ -1,0 +1,19 @@
+{
+  "arenaBase": "0x80182000",
+  "arenaSize": 98304,
+  "battleBlocks": ["0x80189e50", "0x801886d8"],
+  "build": "v10",
+  "fight": "dwarf, forced from HeapTestingV1_0.State",
+  "fightMenuFrees": ["0x8018d4d8", "0x8018d468", "0x8018d2f8", "0x8018d188", "0x8018d5b0", "0x8018d100", "0x8018d0e8", "0x8018cf78", "0x8018ce08", "0x8018d128", "0x8018cd50", "0x8018cd20", "0x8018cbb0", "0x8018ca40", "0x8018cda8", "0x8018c990", "0x8018c960", "0x8018c7f0", "0x8018c680", "0x8018c9e0", "0x8018c5b0", "0x8018c570", "0x8018c400", "0x8018c290", "0x8018c620", "0x8018c1f0", "0x8018c1c8", "0x8018c058", "0x8018bee8", "0x8018c230", "0x8018be60", "0x8018be48", "0x8018bcd8", "0x8018bb68", "0x8018be88", "0x8018b998", "0x8018b8d8", "0x8018b768", "0x8018b5f8", "0x8018bb08", "0x8018b5c8", "0x8018d610", "0x80189e50", "0x801886d8"],
+  "file": "dwarf_L-fire_daa66d13_r1_prompt.bin",
+  "freeListAfterMenuFrees": [["0x80182000", 7423]],
+  "freeListRaw": [["0x80182000", 3290]],
+  "menuState": "0x8018d610",
+  "moment": "Fight prompt of round 1",
+  "name": "dwarf_L-fire_daa66d13_r1_prompt",
+  "note": "free lists are { address, units of 8 bytes } as HeapModel:freeList() returns them, in list order",
+  "party": "L-fire",
+  "round": 1,
+  "rover": "0x80182000",
+  "seed": "0xdaa66d13"
+}

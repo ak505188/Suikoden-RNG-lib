@@ -97,6 +97,16 @@ const ORACLES = [
     index: 1,
     gap: { free: 0, menu: 3000 },
   },
+  // Dwarf Lv21 (ASK 36 part 4): an Attack-only monster of another family (a hit builds the generic spark only, a miss nothing)
+  {
+    name: 'dwarf',
+    label: 'a Dwarf, fast party',
+    dir: 'oracle_dwarf_fast',
+    enemies: [ENEMY_KEYS.DWARF],
+    fast: true,
+    index: 0,
+    gap: { free: 0, menu: 3000 },
+  },
 ];
 const run = /** @type {any} */ (Rounds).runs.find(
   (/** @type {any} */ r) => r.scenario === 'kill_spell',
@@ -138,8 +148,11 @@ function start(oracle, seed) {
     // (a timed move's hit tick is the recorded input: the frame of its damage rolls, two ahead of the tick)
     timingEvents: hits
       ? () => {
-          const frame = hits.rounds[seed][round.n - 1].damageFrame;
-          return frame === null ? undefined : { hit: frame - 2 };
+          const { damageFrame: frame, lag = 0 } = /** @type {any} */ (
+            hits.rounds[seed][round.n - 1]
+          );
+          // (a lag frame before the hit is a frame the battle's ticks do not have)
+          return frame === null ? undefined : { hit: frame - 2 - lag };
         }
       : undefined,
     party: PlayerParty.fromCharacterJSON(characters),

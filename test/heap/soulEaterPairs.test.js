@@ -35,12 +35,26 @@ function heapAfterFirst(c) {
   return heap;
 }
 
+/** @type {Record<string, number>} */
+const MIN_KNOWN = {
+  'BlackShadow/0/BlackShadow': 80,
+  'BlackShadow/0/Hell': 41,
+  'Hell/0/BlackShadow': 0,
+  'Hell/0/Hell': 80,
+  'BlackShadow/1/BlackShadow': 45,
+  'BlackShadow/1/Hell': 33,
+  'Hell/1/BlackShadow': 27,
+  'Hell/1/Hell': 41,
+};
+
 describe('a Black Shadow / Hell cast leaves its slots for the next cast', () => {
   for (const c of cases) {
     const name = `${c.first} then ${c.second}, ${c.between} rounds between, seed ${c.seed}`;
     it(`${name}: no word it knows is wrong`, () => {
       const p = predictSoulEaterFrom(heapAfterFirst(c).state, c.second);
+      let known = 0;
       for (let i = 0; i < 40; i++) {
+        known += Number(!p.staleResidualUnknown[i]) + Number(!p.staleScaleUnknown[i]);
         if (!p.staleResidualUnknown[i])
           assert.strictEqual(p.staleResidual[i], c.posX[i], `posX ${i}`);
         if (!p.staleScaleUnknown[i])

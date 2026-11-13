@@ -316,6 +316,15 @@ The words a cast writes into its struct are remembered (`slotWords`): a recorded
 history (the Hell kill scenarios showed 5 of 80 known words wrong, the image's `0x05195f5f` against the live `0xfff45f5f`), so
 such a word stays unknown after an image touches it, for good.
 
+**The Attack in a round between (ASK 15 answer).** Crystal Core's Attack allocates 12 launch resources (52-byte header + two 40-byte packets,
+the engine's own sprite builder through the Core overlay) and a child (52 / 80 / 80) over the struct's slots 9..39. `AttackLaunch.js` applies the
+agent's per-word rules for the launch (E: the builder's exact words by party size; T: links, projected points and the header's placement words,
+unknown; S: the pad halves, which keep what was there, and the unbuilt packet copies the built one whole) to an Attack that has no recorded
+image. Known words of the second cast's 80 after a Defend round: BS->BS 23 -> 45, BS->Hell 13 -> 33, Hell->BS 5 -> 27, Hell->Hell 21 -> 41
+(heap-only run: the draw buffer parity at the burst is not known there; 0 wrong in all 12 cases; the Battle path knows it). The child's blocks are
+still wholly unknown (its S words are four pad halves), and the rest of the unknown words are the draws' xy / link words, which need the orb
+controller's placement (slot-1 script 0x8006b14c, handler FUN_80017b04, controller FUN_8001874c; not in the engine).
+
 Still open here: the other-spell reads (a Hell struct read at a Black Shadow's slot offsets lands on the packets' words: links and
 projected points, which need the camera), the Defend round in between (its Attack overwrites part of the struct; the known part is
 right but conservative), and Flaming Arrow / Explosion / Thor after a Soul Eater cast.

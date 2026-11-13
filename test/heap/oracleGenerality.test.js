@@ -22,7 +22,9 @@ import Rounds from '../fixtures/enemies/crystal_core_lv60_hp5000_rounds.json' wi
  *    free memory is exact (no wrong, no unknown word)
  *  - a Banshee, the ring Special every round: the layout, the HP and every known word are the recording's; its ring blocks' words are not modelled yet (ASK 34), so free
  *    memory and the menu keep unknown words (`gap` ceilings)
- * @type {{ name: string, label: string, dir: string, enemies: string[], letGo: boolean, gap: { free: number, menu: number } }[]}
+ *  - a Wyvern, the breath (Wind or Fire by the script's roll, the move's recorded hit frame as the battle's timing input): the layout, the HP and free memory are exact, the menu keeps 4 wrong
+ *    words (the closing menu's frame-3 remnants of window 2 past the stream: the draw index of a round of this length is not modelled)
+ * @type {{ name: string, label: string, dir: string, enemies: string[], letGo: boolean, timed?: boolean, gap: { free: number, menu: number }, menuWrong?: number }[]}
  */
 const ORACLES = [
   {
@@ -40,6 +42,16 @@ const ORACLES = [
     enemies: [ENEMY_KEYS.BANSHEE],
     letGo: true,
     gap: { free: 2961, menu: 6000 },
+  },
+  {
+    name: 'wyvern',
+    label: 'a Wyvern',
+    dir: 'oracle_wyvern',
+    enemies: [ENEMY_KEYS.WYVERN],
+    letGo: false,
+    timed: true,
+    gap: { free: 0, menu: 3000 },
+    menuWrong: 4,
   },
 ];
 const run = /** @type {any} */ (Rounds).runs.find(
@@ -70,14 +82,26 @@ function start(oracle, seed) {
   characters[0].stats.SPD = 1;
   characters[3].stats.SPD = 1;
   const rng = new RNG(0);
+  const round = { n: 1 };
+  /** @type {{ rounds: Record<string, { damageFrame: number | null }[]> } | undefined} */
+  const hits = oracle.timed
+    ? JSON.parse(fs.readFileSync(new URL('hits.json', dir), 'utf8'))
+    : undefined;
   const battle = new Battle({
+    // (a timed move's hit tick is the recorded input: the frame of its damage rolls, two ahead of the tick)
+    timingEvents: hits
+      ? () => {
+          const frame = hits.rounds[seed][round.n - 1].damageFrame;
+          return frame === null ? undefined : { hit: frame - 2 };
+        }
+      : undefined,
     party: PlayerParty.fromCharacterJSON(characters),
     enemies: new EnemyParty(oracle.enemies.map((key) => new Enemy(/** @type {any} */ (key)))),
     rng,
     freeWillGate: 10,
     heap,
   });
-  return { heap, battle, rng, load };
+  return { heap, battle, rng, load, round };
 }
 
 const setRune = (/** @type {Battle} */ battle, /** @type {number} */ i, /** @type {number} */ id) =>
@@ -89,15 +113,16 @@ for (const oracle of ORACLES) {
   for (const seed of ['9e3779b1', '3c6ef362', 'daa66d13']) {
     describe(`${oracle.label}, seed ${seed}`, () => {
       it('the recorded layout and HP, no wrong word in free memory or the menu', () => {
-        const { heap, battle, rng, load } = start(oracle, seed);
+        const { heap, battle, rng, load, round } = start(oracle, seed);
         for (let r = 1; r <= 3; r++) {
+          round.n = r;
           for (const c of battle.party.combatants.slice(0, 6)) if (c.HP > 0) c.HP = c.stats.HP - 1;
           rng.raw = (parseInt(seed, 16) + r) >>> 0;
           battle.playTurn(Array(6).fill(defend));
           const report = diffArena(heap, load(r + 1));
           assert.strictEqual(report.layoutDiffers, 0, `round ${r} layout`);
           assert.strictEqual(report.byKind.free.wrong, 0, `round ${r} free wrong`);
-          assert.strictEqual(report.byKind.menu.wrong, 0, `round ${r} menu wrong`);
+          assert.ok(report.byKind.menu.wrong <= (oracle.menuWrong ?? 0), `round ${r} menu wrong`);
           assert.ok(report.byKind.free.gap <= oracle.gap.free, `round ${r} free gap`);
           assert.ok(report.byKind.menu.gap <= oracle.gap.menu, `round ${r} menu gap`);
         }
@@ -107,7 +132,7 @@ for (const oracle of ORACLES) {
 
   /** @param {string} seed @param {number} before @param {string} spell */
   const cast = (seed, before, spell) => {
-    const { heap, battle, rng } = start(oracle, seed);
+    const { heap, battle, rng, round } = start(oracle, seed);
     const out = { calls: -1, pred: /** @type {any} */ (null) };
     let on = false;
     for (const method of /** @type {const} */ (['castSpell', 'castFlamingArrow'])) {
@@ -129,6 +154,7 @@ for (const oracle of ORACLES) {
       };
     }
     for (let r = 1; r <= before + 1; r++) {
+      round.n = r;
       for (const c of battle.party.combatants.slice(0, 6)) {
         if (c.HP > 0) c.HP = c.stats.HP - 1;
         // (the recording's caster is never silenced: the monsters' status rolls of the earlier rounds may land, the harness casts anyway)

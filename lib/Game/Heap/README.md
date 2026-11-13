@@ -325,6 +325,13 @@ image. Known words of the second cast's 80 after a Defend round: BS->BS 23 -> 45
 still wholly unknown (its S words are four pad halves), and the rest of the unknown words are the draws' xy / link words, which need the orb
 controller's placement (slot-1 script 0x8006b14c, handler FUN_80017b04, controller FUN_8001874c; not in the engine).
 
+**The particle spells after a Soul Eater cast.** Flaming Arrow, Explosion and Thor read the Soul Eater's ring blocks (the ring words the cast wrote, past
+the menu stream: the rebuild's recorded image must not replace them, `slotWords` / the packet-block restore in `roundEnd`). Known words of the
+residual lists (heap-only runs, 36 recorded pairs, 0 wrong): Flaming Arrow 17-19 of 20, Explosion 25-27 of 30, Thor 9-12 of 20, so they are no longer
+tainted after either cast (the predictions stay incomplete: the unknown words are the draws' xy / links in the struct and rings). The cross pairs Black
+Shadow -> Hell and Hell -> Black Shadow stay tainted: a Hell kill followed by a Black Shadow had two known words wrong (a scale word's top byte,
+`0x05195f60` against `0x02195f60`, and an xy word).
+
 Still open here: the other-spell reads (a Hell struct read at a Black Shadow's slot offsets lands on the packets' words: links and
 projected points, which need the camera), the Defend round in between (its Attack overwrites part of the struct; the known part is
 right but conservative), and Flaming Arrow / Explosion / Thor after a Soul Eater cast.

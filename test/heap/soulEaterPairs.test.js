@@ -3,7 +3,7 @@ import assert from 'node:assert';
 import fs from 'node:fs';
 import RNG from '../../lib/rng.js';
 import VfxHeap from '../../lib/Game/Heap/VfxHeap.js';
-import { predictSoulEaterFrom } from '../../lib/Game/Heap/HeapPrediction.js';
+import { predictParticlesFrom, predictSoulEaterFrom } from '../../lib/Game/Heap/HeapPrediction.js';
 import { blackShadowRand, hellRand } from '../../lib/Game/Magic/SpellRNG/SoulEater.js';
 import { loadHeapDump } from '../helpers/heapDumps.js';
 
@@ -11,7 +11,7 @@ import { loadHeapDump } from '../helpers/heapDumps.js';
  * A Black Shadow or Hell cast, then a second one a round later (or two, with an everyone-Defends round between): the second reads its
  * 80 slot words from the first cast's struct, which lands on the same pointer. The recorded live words and RNG counts (3 seeds).
  */
-const { cases } = JSON.parse(
+const { cases, particles } = JSON.parse(
   fs.readFileSync(
     new URL('../fixtures/heap/tables/soul_eater_pairs.json', import.meta.url),
     'utf8',
@@ -60,6 +60,9 @@ describe('a Black Shadow / Hell cast leaves its slots for the next cast', () => 
         if (!p.staleScaleUnknown[i])
           assert.strictEqual(p.staleScale[i], c.scale[i] >>> 0, `scale ${i}`);
       }
+      // (what the model knows: Crystal Core's Attack in a round between leaves the words its launch groups do not write; the draws' links and
+      // projected points are not known)
+      assert.ok(known >= MIN_KNOWN[`${c.first}/${c.between}/${c.second}`], `${known} words known`);
     });
     if (c.first !== c.second || c.between !== 0) continue;
     it(`${name}: complete, and the RNG count is the game's`, () => {
@@ -71,6 +74,37 @@ describe('a Black Shadow / Hell cast leaves its slots for the next cast', () => 
       if (c.second === 'BlackShadow') blackShadowRand(rng, p.scale, p.residual, p.scaleAccumInit);
       else hellRand(rng, p);
       assert.strictEqual(rng.count - before, c.calls);
+    });
+  }
+});
+
+/** @type {Record<string, number>} the words the model knows of the particle spells' residuals after a Soul Eater cast */
+const MIN_PARTICLES = {
+  'BlackShadow/0/FlamingArrow': 19,
+  'BlackShadow/0/Explosion': 25,
+  'BlackShadow/0/Thor': 12,
+  'BlackShadow/1/FlamingArrow': 19,
+  'BlackShadow/1/Explosion': 25,
+  'BlackShadow/1/Thor': 10,
+  'Hell/0/FlamingArrow': 17,
+  'Hell/0/Explosion': 27,
+  'Hell/0/Thor': 12,
+  'Hell/1/FlamingArrow': 17,
+  'Hell/1/Explosion': 27,
+  'Hell/1/Thor': 9,
+};
+
+describe('Flaming Arrow, Explosion and Thor after a Black Shadow / Hell cast: no known word is wrong', () => {
+  for (const c of particles) {
+    it(`${c.first} then ${c.second}, ${c.between} rounds between, seed ${c.seed}`, () => {
+      const p = predictParticlesFrom(heapAfterFirst(c).state, c.second);
+      let known = 0;
+      p.residual.forEach((/** @type {number} */ w, /** @type {number} */ i) => {
+        if (p.unknown[i]) return;
+        known++;
+        assert.strictEqual(w, c.words[i] & 0xfff, `word ${i}`);
+      });
+      assert.ok(known >= MIN_PARTICLES[`${c.first}/${c.between}/${c.second}`], `${known} known`);
     });
   }
 });

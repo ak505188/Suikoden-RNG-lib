@@ -1,0 +1,101 @@
+{
+ "_note": "Clay Doll Lv44 oracle (ASK 20 / 36): per round the frame of the six Special damage rolls (null: an Attack round), from the rounds files",
+ "rounds": {
+  "9e3779b1": [
+   {
+    "round": 1,
+    "frames": 211,
+    "damageFrame": null
+   },
+   {
+    "round": 2,
+    "frames": 211,
+    "damageFrame": null
+   },
+   {
+    "round": 3,
+    "frames": 386,
+    "damageFrame": 286
+   },
+   {
+    "round": 4,
+    "frames": 211,
+    "damageFrame": null
+   },
+   {
+    "round": 5,
+    "frames": 211,
+    "damageFrame": null
+   },
+   {
+    "round": 6,
+    "frames": 196,
+    "damageFrame": null
+   }
+  ],
+  "3c6ef362": [
+   {
+    "round": 1,
+    "frames": 197,
+    "damageFrame": null
+   },
+   {
+    "round": 2,
+    "frames": 389,
+    "damageFrame": 289
+   },
+   {
+    "round": 3,
+    "frames": 196,
+    "damageFrame": null
+   },
+   {
+    "round": 4,
+    "frames": 196,
+    "damageFrame": null
+   },
+   {
+    "round": 5,
+    "frames": 196,
+    "damageFrame": null
+   },
+   {
+    "round": 6,
+    "frames": 211,
+    "damageFrame": null
+   }
+  ],
+  "daa66d13": [
+   {
+    "round": 1,
+    "frames": 196,
+    "damageFrame": null
+   },
+   {
+    "round": 2,
+    "frames": 387,
+    "damageFrame": 287
+   },
+   {
+    "round": 3,
+    "frames": 196,
+    "damageFrame": null
+   },
+   {
+    "round": 4,
+    "frames": 196,
+    "damageFrame": null
+   },
+   {
+    "round": 5,
+    "frames": 386,
+    "damageFrame": 286
+   },
+   {
+    "round": 6,
+    "frames": 198,
+    "damageFrame": null
+   }
+  ]
+ }
+}

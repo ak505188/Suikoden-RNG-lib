@@ -22,10 +22,23 @@ import Rounds from '../fixtures/enemies/crystal_core_lv60_hp5000_rounds.json' wi
  *    free memory is exact (no wrong, no unknown word)
  *  - a Banshee, the ring Special every round (the move's recorded hit frame as the battle's timing input): the layout, the HP and every known word are the recording's; its ring blocks' words are not modelled yet (ASK 34), so the
  *    menu keeps unknown words (`gap` ceilings); the rings' words are (ASK 34): free memory has 16 unknown words
+ *  - a Clay Doll (Attack and Special rounds, the Special's recorded hit frame as timing input): the layout and free memory are exact in rounds 1-2; the Special's wrapper objects' words are not
+ *    modelled yet (menu gap ceiling)
  *  - a Wyvern, the breath (Wind or Fire by the script's roll, the move's recorded hit frame as the battle's timing input): the layout, the HP, free memory and the menu are exact (the draw index follows the battle's ticks)
- * @type {{ name: string, label: string, dir: string, enemies: string[], timed?: boolean, index: number, gap: { free: number, menu: number }, }[]}
+ * @type {{ name: string, label: string, dir: string, enemies: string[], timed?: boolean, index: number, rounds?: number, casts?: number[], gap: { free: number, menu: number }, }[]}
  */
 const ORACLES = [
+  {
+    name: 'clay_doll',
+    label: 'a Clay Doll',
+    dir: 'oracle_clay_doll_battle',
+    enemies: [ENEMY_KEYS.CLAY_DOLL],
+    index: 0,
+    timed: true,
+    rounds: 2,
+    casts: [1, 2],
+    gap: { free: 0, menu: 3000 },
+  },
   {
     name: 'kobold2',
     label: 'two Kobolds (bow)',
@@ -114,7 +127,7 @@ for (const oracle of ORACLES) {
     describe(`${oracle.label}, seed ${seed}`, () => {
       it('the recorded layout and HP, no wrong word in free memory or the menu', () => {
         const { heap, battle, rng, load, round } = start(oracle, seed);
-        for (let r = 1; r <= 3; r++) {
+        for (let r = 1; r <= (oracle.rounds ?? 3); r++) {
           round.n = r;
           for (const c of battle.party.combatants.slice(0, 6)) if (c.HP > 0) c.HP = c.stats.HP - 1;
           rng.raw = (parseInt(seed, 16) + r) >>> 0;
@@ -175,7 +188,7 @@ for (const oracle of ORACLES) {
     return out;
   };
 
-  for (const before of [1, 2, 3]) {
+  for (const before of oracle.casts ?? [1, 2, 3]) {
     const live = liveWords(
       /** @type {any} */ (oracle.name),
       'after_move',

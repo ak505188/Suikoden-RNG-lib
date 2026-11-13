@@ -1,0 +1,101 @@
+{
+ "_note": "banshee fast-party oracle (ASK 36 part 3): per round the frame of the six damage rolls, from the rounds files",
+ "rounds": {
+  "9e3779b1": [
+   {
+    "round": 1,
+    "frames": 386,
+    "damageFrame": 283
+   },
+   {
+    "round": 2,
+    "frames": 384,
+    "damageFrame": 281
+   },
+   {
+    "round": 3,
+    "frames": 384,
+    "damageFrame": 281
+   },
+   {
+    "round": 4,
+    "frames": 385,
+    "damageFrame": 282
+   },
+   {
+    "round": 5,
+    "frames": 384,
+    "damageFrame": 281
+   },
+   {
+    "round": 6,
+    "frames": 384,
+    "damageFrame": 281
+   }
+  ],
+  "3c6ef362": [
+   {
+    "round": 1,
+    "frames": 384,
+    "damageFrame": 281
+   },
+   {
+    "round": 2,
+    "frames": 384,
+    "damageFrame": 281
+   },
+   {
+    "round": 3,
+    "frames": 385,
+    "damageFrame": 282
+   },
+   {
+    "round": 4,
+    "frames": 385,
+    "damageFrame": 282
+   },
+   {
+    "round": 5,
+    "frames": 384,
+    "damageFrame": 281
+   },
+   {
+    "round": 6,
+    "frames": 385,
+    "damageFrame": 282
+   }
+  ],
+  "daa66d13": [
+   {
+    "round": 1,
+    "frames": 384,
+    "damageFrame": 281
+   },
+   {
+    "round": 2,
+    "frames": 384,
+    "damageFrame": 281
+   },
+   {
+    "round": 3,
+    "frames": 384,
+    "damageFrame": 281
+   },
+   {
+    "round": 4,
+    "frames": 384,
+    "damageFrame": 281
+   },
+   {
+    "round": 5,
+    "frames": 384,
+    "damageFrame": 281
+   },
+   {
+    "round": 6,
+    "frames": 385,
+    "damageFrame": 282
+   }
+  ]
+ }
+}

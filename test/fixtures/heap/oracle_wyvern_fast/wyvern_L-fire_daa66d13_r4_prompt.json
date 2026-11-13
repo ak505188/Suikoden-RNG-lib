@@ -1,0 +1,19 @@
+{
+  "arenaBase": "0x80182000",
+  "arenaSize": 98304,
+  "battleBlocks": ["0x8018a2d0", "0x80188b58"],
+  "build": "v10",
+  "fight": "wyvern, forced from HeapTestingV1_0.State",
+  "fightMenuFrees": ["0x8018d958", "0x8018d8e8", "0x8018d778", "0x8018d608", "0x8018da30", "0x8018d580", "0x8018d568", "0x8018d3f8", "0x8018d288", "0x8018d5a8", "0x8018d1d0", "0x8018d1a0", "0x8018d030", "0x8018cec0", "0x8018d228", "0x8018ce10", "0x8018cde0", "0x8018cc70", "0x8018cb00", "0x8018ce60", "0x8018ca30", "0x8018c9f0", "0x8018c880", "0x8018c710", "0x8018caa0", "0x8018c670", "0x8018c648", "0x8018c4d8", "0x8018c368", "0x8018c6b0", "0x8018c2e0", "0x8018c2c8", "0x8018c158", "0x8018bfe8", "0x8018c308", "0x8018be18", "0x8018bd58", "0x8018bbe8", "0x8018ba78", "0x8018bf88", "0x8018ba48", "0x8018da90", "0x8018a2d0", "0x80188b58"],
+  "file": "wyvern_L-fire_daa66d13_r4_prompt.bin",
+  "freeListAfterMenuFrees": [["0x80182000", 7567]],
+  "freeListRaw": [["0x80182000", 3434]],
+  "menuState": "0x8018da90",
+  "moment": "Fight prompt of round 4",
+  "name": "wyvern_L-fire_daa66d13_r4_prompt",
+  "note": "free lists are { address, units of 8 bytes } as HeapModel:freeList() returns them, in list order",
+  "party": "L-fire",
+  "round": 4,
+  "rover": "0x80182000",
+  "seed": "0xdaa66d13"
+}

@@ -1,0 +1,101 @@
+{
+ "_note": "wyvern fast-party oracle (ASK 36 part 3): per round the frame of the six damage rolls, from the rounds files",
+ "rounds": {
+  "9e3779b1": [
+   {
+    "round": 1,
+    "frames": 264,
+    "damageFrame": 160
+   },
+   {
+    "round": 2,
+    "frames": 264,
+    "damageFrame": 160
+   },
+   {
+    "round": 3,
+    "frames": 264,
+    "damageFrame": 160
+   },
+   {
+    "round": 4,
+    "frames": 310,
+    "damageFrame": 228
+   },
+   {
+    "round": 5,
+    "frames": 307,
+    "damageFrame": 225
+   },
+   {
+    "round": 6,
+    "frames": 307,
+    "damageFrame": 225
+   }
+  ],
+  "3c6ef362": [
+   {
+    "round": 1,
+    "frames": 307,
+    "damageFrame": 225
+   },
+   {
+    "round": 2,
+    "frames": 264,
+    "damageFrame": 160
+   },
+   {
+    "round": 3,
+    "frames": 264,
+    "damageFrame": 160
+   },
+   {
+    "round": 4,
+    "frames": 264,
+    "damageFrame": 160
+   },
+   {
+    "round": 5,
+    "frames": 264,
+    "damageFrame": 160
+   },
+   {
+    "round": 6,
+    "frames": 309,
+    "damageFrame": 227
+   }
+  ],
+  "daa66d13": [
+   {
+    "round": 1,
+    "frames": 307,
+    "damageFrame": 225
+   },
+   {
+    "round": 2,
+    "frames": 264,
+    "damageFrame": 160
+   },
+   {
+    "round": 3,
+    "frames": 307,
+    "damageFrame": 225
+   },
+   {
+    "round": 4,
+    "frames": 307,
+    "damageFrame": 225
+   },
+   {
+    "round": 5,
+    "frames": 308,
+    "damageFrame": 226
+   },
+   {
+    "round": 6,
+    "frames": 265,
+    "damageFrame": 161
+   }
+  ]
+ }
+}

@@ -25,7 +25,7 @@ import Rounds from '../fixtures/enemies/crystal_core_lv60_hp5000_rounds.json' wi
  *  - a Clay Doll (Attack and Special rounds, the Special's recorded hit frame as timing input): the layout and free memory are exact in rounds 1-2; the Special's wrapper objects' words are not
  *    modelled yet (menu gap ceiling)
  *  - a Wyvern, the breath (Wind or Fire by the script's roll, the move's recorded hit frame as the battle's timing input): the layout, the HP, free memory and the menu are exact (the draw index follows the battle's ticks)
- * @type {{ name: string, label: string, dir: string, enemies: string[], timed?: boolean, index: number, rounds?: number, casts?: number[], gap: { free: number, menu: number }, }[]}
+ * @type {{ name: string, label: string, dir: string, enemies: string[], timed?: boolean, fast?: boolean, index: number, rounds?: number, casts?: number[], gap: { free: number, menu: number }, }[]}
  */
 const ORACLES = [
   {
@@ -65,6 +65,38 @@ const ORACLES = [
     timed: true,
     gap: { free: 0, menu: 3000 },
   },
+  // the fast party (L-fire: McDohl and Luc act before the monsters): the same fights
+  {
+    name: 'kobold2',
+    label: 'two Kobolds (bow), fast party',
+    dir: 'oracle_kobold2_fast',
+    enemies: [ENEMY_KEYS.KOBOLD_BOW, ENEMY_KEYS.KOBOLD_BOW],
+    fast: true,
+    index: 0,
+    gap: { free: 0, menu: 300 },
+  },
+  {
+    name: 'banshee',
+    label: 'a Banshee, fast party',
+    dir: 'oracle_banshee_fast',
+    casts: [], // (the cast round's own hit tick, delayed by the fast caster, is not in the recording)
+    enemies: [ENEMY_KEYS.BANSHEE],
+    timed: true,
+    fast: true,
+    index: 0,
+    gap: { free: 1, menu: 6000 },
+  },
+  {
+    name: 'wyvern',
+    label: 'a Wyvern, fast party',
+    dir: 'oracle_wyvern_fast',
+    casts: [], // (the cast round's own hit tick, delayed by the fast caster, is not in the recording)
+    enemies: [ENEMY_KEYS.WYVERN],
+    timed: true,
+    fast: true,
+    index: 1,
+    gap: { free: 0, menu: 3000 },
+  },
 ];
 const run = /** @type {any} */ (Rounds).runs.find(
   (/** @type {any} */ r) => r.scenario === 'kill_spell',
@@ -74,7 +106,7 @@ const run = /** @type {any} */ (Rounds).runs.find(
 function start(oracle, seed) {
   const dir = new URL(`../fixtures/heap/${oracle.dir}/`, import.meta.url);
   const load = (/** @type {number} */ r) => {
-    const stem = `${oracle.name}_L-fire-slow_${seed}_r${r}_prompt`;
+    const stem = `${oracle.name}_${oracle.fast ? 'L-fire' : 'L-fire-slow'}_${seed}_r${r}_prompt`;
     return {
       sidecar: JSON.parse(fs.readFileSync(new URL(`${stem}.json`, dir), 'utf8')),
       arena: new Uint8Array(fs.readFileSync(new URL(`${stem}.bin`, dir))),
@@ -89,11 +121,13 @@ function start(oracle, seed) {
       battleBlocks: [Number(first.sidecar.battleBlocks[0]), Number(first.sidecar.battleBlocks[1])],
     },
     // (the draw index at the first prompt: the recorded F1 index of round 1; the later rounds' follow from the battle's ticks, ASK 35)
-    { party: 'L-fire-slow', index: oracle.index, menuFrames: 19 },
+    { party: oracle.fast ? 'L-fire' : 'L-fire-slow', index: oracle.index, menuFrames: 19 },
   );
   const characters = structuredClone(run.characters);
-  characters[0].stats.SPD = 1;
-  characters[3].stats.SPD = 1;
+  if (!oracle.fast) {
+    characters[0].stats.SPD = 1;
+    characters[3].stats.SPD = 1;
+  }
   const rng = new RNG(0);
   const round = { n: 1 };
   /** @type {{ rounds: Record<string, { damageFrame: number | null }[]> } | undefined} */
@@ -192,7 +226,7 @@ for (const oracle of ORACLES) {
     const live = liveWords(
       /** @type {any} */ (oracle.name),
       'after_move',
-      `_L-fire-slow_cast_r${before + 1}`,
+      `_${oracle.fast ? 'L-fire' : 'L-fire-slow'}_cast_r${before + 1}`,
     );
     describe(`${oracle.label}: the spells cast after ${before} Defend round(s)`, () => {
       for (const spell of /** @type {const} */ ([

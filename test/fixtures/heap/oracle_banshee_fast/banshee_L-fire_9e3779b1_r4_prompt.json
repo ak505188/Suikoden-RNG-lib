@@ -1,0 +1,19 @@
+{
+  "arenaBase": "0x80182000",
+  "arenaSize": 98304,
+  "battleBlocks": ["0x801874b8", "0x80185d40"],
+  "build": "v10",
+  "fight": "banshee, forced from HeapTestingV1_0.State",
+  "fightMenuFrees": ["0x8018ab40", "0x8018aad0", "0x8018a960", "0x8018a7f0", "0x8018ac18", "0x8018a768", "0x8018a750", "0x8018a5e0", "0x8018a470", "0x8018a790", "0x8018a3b8", "0x8018a388", "0x8018a218", "0x8018a0a8", "0x8018a410", "0x80189ff8", "0x80189fc8", "0x80189e58", "0x80189ce8", "0x8018a048", "0x80189c18", "0x80189bd8", "0x80189a68", "0x801898f8", "0x80189c88", "0x80189858", "0x80189830", "0x801896c0", "0x80189550", "0x80189898", "0x801894c8", "0x801894b0", "0x80189340", "0x801891d0", "0x801894f0", "0x80189000", "0x80188f40", "0x80188dd0", "0x80188c60", "0x80189170", "0x80188c30", "0x8018ac78", "0x801874b8", "0x80185d40"],
+  "file": "banshee_L-fire_9e3779b1_r4_prompt.bin",
+  "freeListAfterMenuFrees": [["0x80182000", 6092], ["0x8018dfa0", 1611]],
+  "freeListRaw": [["0x8018dfa0", 1611], ["0x80182000", 1959]],
+  "menuState": "0x8018ac78",
+  "moment": "Fight prompt of round 4",
+  "name": "banshee_L-fire_9e3779b1_r4_prompt",
+  "note": "free lists are { address, units of 8 bytes } as HeapModel:freeList() returns them, in list order",
+  "party": "L-fire",
+  "round": 4,
+  "rover": "0x8018dfa0",
+  "seed": "0x9e3779b1"
+}

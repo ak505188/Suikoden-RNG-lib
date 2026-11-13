@@ -133,7 +133,7 @@ for (const oracle of ORACLES) {
   /** @param {string} seed @param {number} before @param {string} spell */
   const cast = (seed, before, spell) => {
     const { heap, battle, rng, round } = start(oracle, seed);
-    const out = { calls: -1, pred: /** @type {any} */ (null) };
+    const out = { calls: -1, pred: /** @type {any} */ (null), uncertain: -1 };
     let on = false;
     for (const method of /** @type {const} */ (['castSpell', 'castFlamingArrow'])) {
       const original = /** @type {(...a: any[]) => any} */ (heap[method]).bind(heap);
@@ -171,6 +171,7 @@ for (const oracle of ORACLES) {
       rng.raw = (parseInt(seed, 16) + r) >>> 0;
       battle.playTurn(actions);
     }
+    out.uncertain = heap.uncertainCasts;
     return out;
   };
 
@@ -203,6 +204,8 @@ for (const oracle of ORACLES) {
               if (!flags[i] && w !== want[i]) wrong++;
             });
             assert.strictEqual(wrong, 0, 'known words wrong');
+            // (a cast that read a word the model could not give is counted: the search rates such a path uncertain)
+            assert.strictEqual(sim.uncertain, flags.some(Boolean) ? 1 : 0, 'uncertain casts');
             if (!flags.some(Boolean))
               assert.strictEqual(sim.calls, live[spell][seed].calls, 'calls');
           });

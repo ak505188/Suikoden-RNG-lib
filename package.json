@@ -8,6 +8,7 @@
   "exports": {
     ".": "./index.js",
     "./battle": "./battle.js",
+    "./heap": "./heap.js",
     "./war": "./war.js",
     "./encounters": "./encounters.js",
     "./enemy-images": "./enemy-images.js",

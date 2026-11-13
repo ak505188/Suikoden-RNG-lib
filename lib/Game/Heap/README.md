@@ -3,6 +3,12 @@
 Reference for whoever continues this work (a new agent or a new session). Written 2026-11-11 from the working sessions with the user.
 Read it before touching `lib/Game/Heap`. It states what we are building, what exists, what is wrong with it, and how we get to the goal.
 
+## 0. Using the model in a search (public API)
+
+`suikoden-rng-lib/heap` (`heap.js`): `readHeapDump(stem)` / `parseHeapDump({ arena, sidecar })` read a first-prompt vfxPool dump (the arena and its sidecar: rover, menuState, battleBlocks), `new VfxHeap(dump, { party, index })` makes the heap, and `new Battle({ ..., heap })` runs the battle on it (the heap is
+cloned with the battle and is part of its state key). `index` is the draw buffer index of the first round (the recorded F1 index, 0 or 1). A monster's timed moves (the Wyvern's and the Banshee's hit ticks, Devil Shield, mage Kobold) need the battle's `timingEvents` input as before. Everything the simulator derives is exact where it is known; where a spell reads a stale word it cannot give, `heap.uncertainCasts` counts
+the casts concerned (a search should rate such a path uncertain). Open: see sections 7e-7f (the Crystal Core Special's ring objects' packet words and G4 systems, the Clay Doll and Wyvern Wind objects, other monsters' moves without an oracle). Tests: `test/heap/publicApi.test.js`.
+
 ## 1. Why this exists
 
 The battle search (`../Suikoden-Battle-Search`, uses this library) brute-forces action sequences and needs the exact RNG state after every
@@ -473,6 +479,8 @@ ASK 35: (1) the party's bob is an x-offset curve, not a depth rule: slots 1-6 ge
 through the camera (`SirenObjects.partyDepth`; it replaces the Siren-only depth rule and unknown buckets of the Banshee: its free memory has 16 unknown words, was 36, 0 wrong). (2) The draw index toggles once per tick and a lag frame repeats it: the next prompt's index is the round's index plus the battle's ticks (`roundEnd({ ticks })`, `Battle` passes them except in Crystal Core's fight, where the recorded
 round shapes decide); lag is not predictable, but the battle's ticks are the frames without it. A Siren's turn is one tick short in the battle's model (the accepted 1-tick difference): its rounds add 1 (`roundMoves.parity`). With it the oracles use `menuFrames: 19` and `index` = the recorded F1 draw index of round 1 (Wyvern 1, Kobold and Banshee 0, Siren 1): the Wyvern's menu is exact too (was 4 wrong words). The rings' buffer
 is `(idx0 + start + 22 + 127 + 1) % 2` with the heap's start frame (the Banshee's `tick - 218`, the Siren's `tick - 219`).
+Window 2 of the Fight menu has 23 text cells with "Let go": the closing menu's frame-3 move of its rows and prims (`MenuClose.frame3(window2)`) is placed by it (before, the 21-cell layout's offsets left an Explosion word unknown in 5 of 9 Kobold contexts: now all five spells are fully known in the 27 Kobold contexts); `heap.uncertainCasts` counts the casts that read an unknown word
+(the Wyvern's Wind objects' blocks, 136 / 360 bytes of an undecoded handler, leave five Explosion words unknown).
 The Attack hit's own status icon (one in 26 hits in the recording; `heap.statusIcon`, called when the battle's reaction roll lands a status; `ENEMY_STATUS_ICON.attackAt` 23): with it the heap's allocations per
 round from the battle's own rolls equal the recorded number in all 36 rounds (6 rounds x 3 seeds x 2 parties), icons included (`oracleSiren.test.js`; the one Attack hit icon is L-fire-slow 9e3779b1 round 6).
 The agent's best next oracle: Siren Lv53 x2 (9/49/2, group 4), where all five spells' words and the Soul Eater struct depend on the moves (5 distinct sets in 6 contexts).

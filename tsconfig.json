@@ -19,6 +19,7 @@
     "scripts/**/*.js",
     "index.js",
     "battle.js",
+    "heap.js",
     "war.js",
     "encounters.js",
     "enemy-images.js"

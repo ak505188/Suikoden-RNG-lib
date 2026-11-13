@@ -288,6 +288,11 @@ describe('Siren played by Battle: the arena at every prompt (L-fire-slow seed 3c
       assert.strictEqual(report.layoutDiffers, 0, `round ${r}`);
       assert.strictEqual(report.byKind.free.wrong, 0, `round ${r} free`);
       assert.strictEqual(report.byKind.menu.wrong, 0, `round ${r} menu`);
+      // (round 1 holds the first Special's rings: with the wrapper objects and the actors' sprites their first-in-bucket links are known too, 148 words, ASK 32)
+      if (r === 1) {
+        assert.ok(report.byKind.free.verified >= 5134, `${report.byKind.free.verified} verified`);
+        assert.ok(report.byKind.free.gap <= 852, `${report.byKind.free.gap} gap`);
+      }
     }
   });
 });

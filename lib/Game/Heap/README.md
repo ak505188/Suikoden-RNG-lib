@@ -373,6 +373,13 @@ all right (7260 words) and no wrong word in the menu kind, for the seeds whose r
 not modelled: 20 wrong block-header words in the menu kind, the Special's payload over the allocator's links). `Battle` reproduces the recorded
 move sequence for 2 of 3 seeds (the third, daa66d13, picks an Attack where the recording has the Special in round 2: not heap related).
 A move without recorded events marks its round `unmodelled`, so the rebuilt menu's stream is not restored whole in it.
+ASK 21 (more parties; `oracleClayDollFast.test.js`, 90 casts): Clay Doll against the fast L-fire party (the cast runs before its round's move) and the 4-member party
+E-mcd-vik-luc-flik, casts in rounds 2-4 after the recorded moves (Attack hit / miss from the events, Special unmodelled): Flaming Arrow, Thor, Black Shadow and
+Hell are complete and right in every cast; Explosion has all 30 words right and 24 of 30 known with moves replayed (all 30 with none): its words lie in the
+menu's stream, whose words the rebuild restores only in a round without a move or a cast and only where both packet buffers hold the same word (a first-prompt
+stream differs from the later ones in animated scene primitives: 147 wrong words in the Attack round's arena when restored whole). The recording found the
+words do not depend on the move in any of the 9 move contexts per party, so these oracles do not yet exercise the moves; an enemy with a pool-sized Attack or a
+multi-enemy group (Clay Doll group 9: 3 Red Elementals + Clay Doll) would. Rock Buster's casts are recorded without arenas, so not run.
 Still not generic: the Clay Doll moves themselves (Attack events with ticks, the shadow resource builder, the child's handler 0x8001409c: ASK 20).
 
 Still open here: the other-spell reads (a Hell struct read at a Black Shadow's slot offsets lands on the packets' words: links and

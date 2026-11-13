@@ -399,6 +399,13 @@ every spell's words move. ASK 24's rule is in (`enemyMove(..., { statusRolls })`
 Round 1 of L-fire-slow 3c6ef362 then allocates and frees the recorded 121 + 118 pointers. The 90 Siren casts (single round from the real arena, harness not kept as a test: the
 move subset of a slow cast comes from `allocsBeforeCtx`): Flaming Arrow, Thor, Black Shadow, Hell 0 wrong words in all 90 (known 28-44 of 180 per spell: the Special's ring
 and object words are unknown), Explosion 3 wrong of 475 known (three cells, probably the Attack hit's 10% status icon, not modelled). The Attack hit's own status roll at the spark frame is not built.
+ASK 25 (the Siren Special's rings, `applySirenRings` in `SoulEaterRings.js`, hooked at the bulk's group of the Special's pending move): all four rings are the builder with the same
+parameters (24 segments, rgb0 (0x64, 0x90, 0), rgb1 black, abr 1; a segment's colours do not depend on its index), so after the Special the packets' init words, the link
+records (w0 = their own packet's address, w1 `0xe1000020`, w2 0) and the headers' owner words are known (2384 words written; against the recorded first-Special timeline at frame
+320: 825 exact, 576 partial with the stale top byte exact, 0 wrong); the packets' links and projected points (T) and the headers' activity and scale words stay unknown (the GTE
+quad xy and the bucket heads are not ported). With it the 90 Siren casts: Flaming Arrow 108 / 180 (slow) and 84 / 180 (fast) known, Thor 116 / 88, Black Shadow and Hell 312 / 276 of 720,
+0 wrong words in the four, Explosion 3 wrong of 475 known (the same three cells). A guard against a bug this exposed: the rebuild's restore of the casts' words (`slotWords`) must not write over
+the allocator's header words of the rebuilt blocks (it overwrote a block's size word with a ring link record and broke the next round's free walk).
 The agent's best next oracle: Siren Lv53 x2 (9/49/2, group 4), where all five spells' words and the Soul Eater struct depend on the moves (5 distinct sets in 6 contexts).
 Still not generic: the Clay Doll moves themselves (Attack events with ticks, the shadow resource builder, the child's handler 0x8001409c: ASK 20).
 

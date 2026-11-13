@@ -409,7 +409,8 @@ describe('a cast then a cast (heap_pairs, party L-fire): after any cast the next
         (first.startsWith('FlamingArrow') && second === 'FlamingArrow') ||
         // (a Black Shadow / Hell after itself: its slots are modelled, so it is not flagged by the table; with a round between, the Attack
         // overwrote part of them and the prediction reports unknown words itself)
-        (first === second && (first === 'BlackShadow' || first === 'Hell')) ||
+        ((first === 'BlackShadow' || first === 'Hell') &&
+          (second === 'BlackShadow' || second === 'Hell')) ||
         // (and the particle spells after either: the words it leaves them are right where known, the others are reported unknown)
         ((first === 'BlackShadow' || first === 'Hell') &&
           (second === 'FlamingArrow' || second === 'Explosion' || second === 'Thor'));

@@ -420,6 +420,13 @@ With it the 90 Siren casts have 0 wrong words in all five spells (`oracleSiren.t
 the predictions on a copy of the state (`castState`), not written into the heap, since the next prompt's draw rewrites the stream.
 A guard against a bug this exposed: the rebuild's restore of the casts' words (`slotWords`) must not write over
 the allocator's header words of the rebuilt blocks (it overwrote a block's size word with a ring link record and broke the next round's free walk).
+Siren through `Battle` (2026-11-13). Compared with the recording (two Lv53 Sirens = two `SIREN_2`, the slow party's McDohl and Luc at SPD 1, every living member topped up to max HP - 1 before each round as the
+recording script does): the battle's roll groups equal the recorded ones (frame = tick + 2) and the party's HP after the round is the recorded one in 35 and 36 of 36 rounds (the one difference: a missed
+Attack that waits behind the other Siren's Special has its last two roll groups a tick late in the battle, which the heap does not see). So `Battle` drives the heap: `enemyMove(..., { dispatchTick, slot })` for an Attack
+(the first allocation's frame = the dispatch tick + `ENEMY_START_OFFSET`: Siren 31, Clay Doll and Red Elemental about 40), and the Siren's Special (`heapAtApply`) tells the heap when its damage lands: it started
+219 ticks before that tick, and the members that gained Silence in the battle's own status rolls get an icon (`statusGained`; `slot` 0 / 1 puts the rings at the caster's y +0x32 / -0x32, so two Sirens of the same key
+work). Played by `Battle` the 18 recorded rounds of rounds 1-3 start every move on the recorded frame, have the recorded layout (0 blocks differ, 0 wrong word in free memory) and round 1 of 3c6ef362 (slow)
+allocates and frees the recorded 121 + 118 pointers (`oracleSiren.test.js`).
 The agent's best next oracle: Siren Lv53 x2 (9/49/2, group 4), where all five spells' words and the Soul Eater struct depend on the moves (5 distinct sets in 6 contexts).
 Still not generic: the Clay Doll moves themselves (Attack events with ticks, the shadow resource builder, the child's handler 0x8001409c: ASK 20).
 

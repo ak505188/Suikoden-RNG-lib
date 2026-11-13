@@ -142,3 +142,85 @@ describe('Siren, the cast of round 3 of L-fire-slow seed daa66d13: all five spel
     });
   }
 });
+
+describe('Siren played by Battle (two Lv53 Sirens, the slow party): the heap calls come from the battle', () => {
+  it("round 1 of seed 3c6ef362 allocates and frees the recorded pointers, the moves' start frames and the status icon from the battle's own rolls", async () => {
+    const [
+      { default: Enemy },
+      { EnemyParty, PlayerParty },
+      { default: Battle },
+      { ACTION_TYPES },
+      { ENEMY_KEYS },
+      rounds,
+    ] = await Promise.all([
+      import('../../lib/Game/Battle/Enemy.js'),
+      import('../../lib/Game/Battle/Party.js'),
+      import('../../lib/Game/Battle/Battle.js'),
+      import('../../lib/Game/Battle/Actions.js'),
+      import('../../lib/Game/Keys.js'),
+      import('../fixtures/enemies/crystal_core_lv60_hp5000_rounds.json', {
+        with: { type: 'json' },
+      }),
+    ]);
+    const round = JSON.parse(fs.readFileSync(new URL('round1_3c6ef362_slow.json', DIR), 'utf8'));
+    const stem = 'siren53_L-fire-slow_3c6ef362_r1_prompt';
+    const sidecar = JSON.parse(fs.readFileSync(new URL(`${stem}.json`, DIR), 'utf8'));
+    const heap = new VfxHeap(
+      {
+        arena: new Uint8Array(fs.readFileSync(new URL(`${stem}.bin`, DIR))),
+        rover: Number(sidecar.rover),
+        menuState: Number(sidecar.menuState),
+        battleBlocks: [Number(sidecar.battleBlocks[0]), Number(sidecar.battleBlocks[1])],
+      },
+      { party: 'L-fire-slow', index: 0 },
+    );
+    const run = /** @type {any} */ (rounds.default).runs.find(
+      (/** @type {any} */ r) => r.scenario === 'kill_spell',
+    );
+    const characters = structuredClone(run.characters);
+    characters[0].stats.SPD = 1;
+    characters[3].stats.SPD = 1;
+    const rng = new RNG(0);
+    const battle = new Battle({
+      party: PlayerParty.fromCharacterJSON(characters),
+      enemies: new EnemyParty([new Enemy(ENEMY_KEYS.SIREN_2), new Enemy(ENEMY_KEYS.SIREN_2)]),
+      rng,
+      freeWillGate: 10,
+      heap,
+    });
+    // the recording tops every living member up to max HP - 1 before the round
+    for (const c of battle.party.combatants.slice(0, 6)) if (c.HP > 0) c.HP = c.stats.HP - 1;
+    rng.raw = (parseInt(round.seed, 16) + 1) >>> 0;
+    /** @type {[string, number][]} */
+    const got = [];
+    let started = /** @type {number[]} */ ([]);
+    const flush = heap.flushEnemyMoves.bind(heap);
+    heap.flushEnemyMoves = (until) => {
+      if (heap.pendingMoves.length === 0) return;
+      started = heap.pendingMoves.map((m) => m.start);
+      const alloc = heap.state.heap.alloc.bind(heap.state.heap);
+      const free = heap.state.heap.free.bind(heap.state.heap);
+      heap.state.heap.alloc = (/** @type {number} */ n) => {
+        const p = alloc(n);
+        got.push(['a', /** @type {number} */ (p)]);
+        return p;
+      };
+      heap.state.heap.free = (/** @type {number | null} */ p) => {
+        got.push(['f', /** @type {number} */ (p)]);
+        return free(p);
+      };
+      flush(until);
+      heap.state.heap.alloc = alloc;
+      heap.state.heap.free = free;
+    };
+    battle.playTurn(Array(6).fill({ type: ACTION_TYPES.DEFEND }));
+    assert.deepStrictEqual(
+      started.sort((a, b) => a - b),
+      round.moves.map((/** @type {any} */ m) => m.frame),
+    );
+    assert.deepStrictEqual(
+      got,
+      round.events.map((/** @type {any[]} */ e) => [e[0], e[3]]),
+    );
+  });
+});

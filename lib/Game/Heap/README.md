@@ -354,6 +354,20 @@ L - 1, trail j at L + j) with a draw-time z, scale and shake per call that are n
 (scale 3840 * res+0x14 >> 12, rotation z 1, width + 1): not ported. The agent also found that 48 of the 78 header-w2 and 269 of the 610 xy gap words
 lie in blocks that were overwritten after the Special (the menu rebuild), so no Special rule can produce them.
 
+## 7f. The generality oracle: Clay Doll (ASK 20, 2026-11-12)
+
+A second battle (Clay Doll Lv44, screen 4/1/10, party L-fire-slow, 3 seeds; `test/fixtures/heap/oracle_clay_doll`, `oracleClayDoll.test.js`).
+The simulator gets the first-prompt arena and nothing about the enemy (no image, no heap events of its Attack or Special, no taint). Its five spells
+at the casts of rounds 2 and 3 (30 recorded casts, six contexts: Attack hit / no hit / Special): Flaming Arrow, Explosion and Thor 20 / 30 / 20 words known
+and right, Black Shadow and Hell all 80 words right, with the struct pointer and the accumulator, complete. The recorded words are the same in
+all six contexts: against this enemy the stale words come from the fight's own earlier heap (menu, loader), not from its moves.
+What it took: one rule, taken from the real arenas, not from a Clay Doll image. The Fight menu freed at a round's start is allocated again at the same
+pointers at its end and draws the same menu: the rebuilt blocks keep the words the menu held (`menuSnapshot`), in a round in which nothing modelled drew
+scene primitives (the packet buffers' stream holds those); in another, only the words past the stream are restored (arena diff 0 wrong). Without it
+Explosion's 30 words were unknown (the rebuild marked the blocks unknown). The RNG counts were not run (the start state's pre-cast rolls need
+Clay Doll's AI), the words are what they follow from.
+Still not generic: the Clay Doll moves themselves (Attack events with ticks, the shadow resource builder, the child's handler 0x8001409c: ASK 20).
+
 Still open here: the other-spell reads (a Hell struct read at a Black Shadow's slot offsets lands on the packets' words: links and
 projected points, which need the camera), the Defend round in between (its Attack overwrites part of the struct; the known part is
 right but conservative), and Flaming Arrow / Explosion / Thor after a Soul Eater cast.

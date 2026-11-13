@@ -397,7 +397,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 1095,
+    "gap": 956,
     "partialWrong": 3
    },
    "live": {
@@ -453,7 +453,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 1089,
+    "gap": 950,
     "partialWrong": 4
    },
    "live": {
@@ -527,7 +527,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 1101,
+    "gap": 962,
     "partialWrong": 2
    },
    "live": {
@@ -619,7 +619,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 1091,
+    "gap": 952,
     "partialWrong": 3
    },
    "live": {
@@ -729,7 +729,7 @@
    },
    "menu": {
     "wrong": 0,
-    "gap": 1101,
+    "gap": 962,
     "partialWrong": 3
    },
    "live": {

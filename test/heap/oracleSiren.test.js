@@ -2,12 +2,13 @@ import { describe, it } from 'node:test';
 import assert from 'node:assert';
 import fs from 'node:fs';
 import VfxHeap from '../../lib/Game/Heap/VfxHeap.js';
+import RNG from '../../lib/rng.js';
 
 /**
  * Siren Lv53 x2 (Suikoden-Bizhawk-HUD oracle_siren53, ASK 23): two monsters whose moves overlap (an Attack's spark and the other one's Special). The
  * round's moves, applied together in tick order from their recorded frames, allocate and free exactly the recorded pointers (round 1 of L-fire-slow, seed
- * 3c6ef362: an Attack with a hit by slot 7, a Special by slot 8). The three (52, 40, 40) blocks the Special leaves allocated at its end are not modelled
- * (ASK 24), so they are left out of the recorded list.
+ * 3c6ef362: an Attack with a hit by slot 7, a Special by slot 8), including the status icon (52, 40, 40) the Special builds for the one member
+ * that gains the status in the frame of its bulk's frees (ASK 24: six rolls of the round's RNG, a roll below 10 gains it).
  */
 const DIR = new URL('../fixtures/heap/oracle_siren53/', import.meta.url);
 
@@ -24,11 +25,18 @@ describe('Siren, round 1 of L-fire-slow seed 3c6ef362: the round-level scheduler
     },
     { party: 'L-fire-slow', index: 0 },
   );
+  /** the six status rolls of the frame: the round's RNG after the calls of the frames before it */
+  const rolls = (/** @type {number} */ frame) => {
+    let before = 0;
+    for (const [f, c] of round.randCallsPerFrame) if (f < frame) before += c;
+    const rng = new RNG((parseInt(round.seed, 16) + round.round) >>> 0).jump(before);
+    return Array.from({ length: 6 }, () => Math.trunc((rng.next().rand * 100) / 0x7fff) % 100);
+  };
   heap.roundStart();
   for (const m of round.moves) {
     const key = m.slot === 7 ? 'SIREN_1' : 'SIREN_2';
     if (m.attack) heap.enemyMove(key, 'Attack', { landed: m.landed, tick: m.frame });
-    else heap.enemyMove(key, 'Special', { tick: m.frame });
+    else heap.enemyMove(key, 'Special', { tick: m.frame, statusRolls: rolls(m.frame + 221) });
   }
   /** @type {[string, number][]} */
   const got = [];
@@ -44,12 +52,9 @@ describe('Siren, round 1 of L-fire-slow seed 3c6ef362: the round-level scheduler
     return free(p);
   };
   heap.flushEnemyMoves();
-  // (the recorded list without the Special's three leftover allocations in its last frame)
-  const want = round.events
-    .filter((/** @type {any[]} */ e) => !(e[0] === 'a' && e[1] === 387))
-    .map((/** @type {any[]} */ e) => [e[0], e[3]]);
+  const want = round.events.map((/** @type {any[]} */ e) => [e[0], e[3]]);
 
-  it('allocates and frees the recorded pointers, 118 and 118', () => {
+  it('allocates and frees the recorded pointers (121 allocations, 118 frees)', () => {
     assert.strictEqual(got.length, want.length);
     assert.deepStrictEqual(got, want);
   });

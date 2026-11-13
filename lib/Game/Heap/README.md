@@ -394,7 +394,11 @@ move whose table has no anchor and a given `tick` (the frame of its first alloca
 tick order (`flushEnemyMoves`: at the round's end, before a cast, before a prediction). Check: round 1 of L-fire-slow seed 3c6ef362 allocates and frees exactly the 118 + 118
 recorded pointers. What breaks the rest: status icons (ASK 24: op 40 of the hit script rolls a 10% status per member in a frame after the six damage rolls, and an
 (52, 40, 40) icon is built, never freed, for each member that gains it; also an Attack hit once at the spark frame): they change the layout, so the next cast's loader and
-every spell's words move. Not modelled yet (needs the RNG state of the move, as the Special's rolls do).
+every spell's words move. ASK 24's rule is in (`enemyMove(..., { statusRolls })`, `ENEMY_STATUS_ICON`, `statusHeld`): after the six damage rolls a second frame of six rolls
+(`((rand * 100) / 0x7fff) % 100`, party order); a roll below 10 on a member without the status builds a never-freed (52, 40, 40) icon, before the bulk's frees of the same frame.
+Round 1 of L-fire-slow 3c6ef362 then allocates and frees the recorded 121 + 118 pointers. The 90 Siren casts (single round from the real arena, harness not kept as a test: the
+move subset of a slow cast comes from `allocsBeforeCtx`): Flaming Arrow, Thor, Black Shadow, Hell 0 wrong words in all 90 (known 28-44 of 180 per spell: the Special's ring
+and object words are unknown), Explosion 3 wrong of 475 known (three cells, probably the Attack hit's 10% status icon, not modelled). The Attack hit's own status roll at the spark frame is not built.
 The agent's best next oracle: Siren Lv53 x2 (9/49/2, group 4), where all five spells' words and the Soul Eater struct depend on the moves (5 distinct sets in 6 contexts).
 Still not generic: the Clay Doll moves themselves (Attack events with ticks, the shadow resource builder, the child's handler 0x8001409c: ASK 20).
 

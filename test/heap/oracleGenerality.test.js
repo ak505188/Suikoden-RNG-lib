@@ -21,10 +21,9 @@ import Rounds from '../fixtures/enemies/crystal_core_lv60_hp5000_rounds.json' wi
  *  - two Kobolds (bow), the generic basic Attack (the Clay Doll's blocks); the Fight menu offers "Let go" in place of "Run" there (the battle's mean levels: ASK 34);
  *    free memory is exact (no wrong, no unknown word)
  *  - a Banshee, the ring Special every round (the move's recorded hit frame as the battle's timing input): the layout, the HP and every known word are the recording's; its ring blocks' words are not modelled yet (ASK 34), so the
- *    menu keeps unknown words (`gap` ceilings); the rings' words are (ASK 34): free memory has 36 unknown words, the links the party's bob phase decides
- *  - a Wyvern, the breath (Wind or Fire by the script's roll, the move's recorded hit frame as the battle's timing input): the layout, the HP and free memory are exact, the menu keeps 4 wrong
- *    words (the closing menu's frame-3 remnants of window 2 past the stream: the draw index of a round of this length is not modelled)
- * @type {{ name: string, label: string, dir: string, enemies: string[], timed?: boolean, gap: { free: number, menu: number }, menuWrong?: number }[]}
+ *    menu keeps unknown words (`gap` ceilings); the rings' words are (ASK 34): free memory has 16 unknown words
+ *  - a Wyvern, the breath (Wind or Fire by the script's roll, the move's recorded hit frame as the battle's timing input): the layout, the HP, free memory and the menu are exact (the draw index follows the battle's ticks)
+ * @type {{ name: string, label: string, dir: string, enemies: string[], timed?: boolean, index: number, gap: { free: number, menu: number }, }[]}
  */
 const ORACLES = [
   {
@@ -32,6 +31,7 @@ const ORACLES = [
     label: 'two Kobolds (bow)',
     dir: 'oracle_kobold2',
     enemies: [ENEMY_KEYS.KOBOLD_BOW, ENEMY_KEYS.KOBOLD_BOW],
+    index: 0,
     gap: { free: 0, menu: 300 },
   },
   {
@@ -39,17 +39,18 @@ const ORACLES = [
     label: 'a Banshee',
     dir: 'oracle_banshee',
     enemies: [ENEMY_KEYS.BANSHEE],
+    index: 0,
     timed: true,
-    gap: { free: 36, menu: 6000 },
+    gap: { free: 16, menu: 6000 },
   },
   {
     name: 'wyvern',
     label: 'a Wyvern',
     dir: 'oracle_wyvern',
     enemies: [ENEMY_KEYS.WYVERN],
+    index: 1,
     timed: true,
     gap: { free: 0, menu: 3000 },
-    menuWrong: 4,
   },
 ];
 const run = /** @type {any} */ (Rounds).runs.find(
@@ -74,7 +75,8 @@ function start(oracle, seed) {
       menuState: Number(first.sidecar.menuState),
       battleBlocks: [Number(first.sidecar.battleBlocks[0]), Number(first.sidecar.battleBlocks[1])],
     },
-    { party: 'L-fire-slow', index: 0 },
+    // (the draw index at the first prompt: the recorded F1 index of round 1; the later rounds' follow from the battle's ticks, ASK 35)
+    { party: 'L-fire-slow', index: oracle.index, menuFrames: 19 },
   );
   const characters = structuredClone(run.characters);
   characters[0].stats.SPD = 1;
@@ -120,7 +122,7 @@ for (const oracle of ORACLES) {
           const report = diffArena(heap, load(r + 1));
           assert.strictEqual(report.layoutDiffers, 0, `round ${r} layout`);
           assert.strictEqual(report.byKind.free.wrong, 0, `round ${r} free wrong`);
-          assert.ok(report.byKind.menu.wrong <= (oracle.menuWrong ?? 0), `round ${r} menu wrong`);
+          assert.ok(report.byKind.menu.wrong <= 0, `round ${r} menu wrong`);
           assert.ok(report.byKind.free.gap <= oracle.gap.free, `round ${r} free gap`);
           assert.ok(report.byKind.menu.gap <= oracle.gap.menu, `round ${r} menu gap`);
         }

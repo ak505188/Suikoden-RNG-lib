@@ -104,7 +104,7 @@ describe('Siren, the cast of round 3 of L-fire-slow seed daa66d13: all five spel
   for (const rec of cast.rounds.slice(0, 2))
     for (const m of rec.moves)
       if (!m.attack) six(rec, m.frame + 221).forEach((r, i) => r < 10 && heap.statusHeld.add(i));
-  heap.index = (((cast.idx1[3] - 1) % 2) + 2) % 2;
+  heap.index = ((cast.idx1[3] % 2) + 2) % 2;
   heap.roundStart();
   const round = cast.rounds[2];
   for (const m of round.moves) {
@@ -173,7 +173,7 @@ describe('Siren played by Battle (two Lv53 Sirens, the slow party): the heap cal
         menuState: Number(sidecar.menuState),
         battleBlocks: [Number(sidecar.battleBlocks[0]), Number(sidecar.battleBlocks[1])],
       },
-      { party: 'L-fire-slow', index: 0 },
+      { party: 'L-fire-slow', index: 1 },
     );
     const run = /** @type {any} */ (rounds.default).runs.find(
       (/** @type {any} */ r) => r.scenario === 'kill_spell',
@@ -264,7 +264,7 @@ describe('Siren played by Battle: the arena at every prompt (L-fire-slow seed 3c
           Number(first.sidecar.battleBlocks[1]),
         ],
       },
-      { party: 'L-fire-slow', index: 0 },
+      { party: 'L-fire-slow', index: 1 },
     );
     const run = /** @type {any} */ (rounds.default).runs.find(
       (/** @type {any} */ r) => r.scenario === 'kill_spell',
@@ -337,7 +337,7 @@ describe('Siren played by Battle: the allocations of every recorded round (6 rou
             menuState: Number(sidecar.menuState),
             battleBlocks: [Number(sidecar.battleBlocks[0]), Number(sidecar.battleBlocks[1])],
           },
-          { party: 'L-fire-slow', index: 0 },
+          { party: 'L-fire-slow', index: 1 },
         );
         const rng = new RNG(0);
         const battle = new Battle({
